@@ -1,0 +1,59 @@
+<?php
+echo $this->doctype();
+$listaContratos = $this->listaContratos;
+?>
+<body>
+    
+    <h3 class="navbar-brand"><?php echo $this->translate('Contratos')?></h3>
+<br/>
+<br/><form class="navbar-default" method="post">
+        <table class="table"> 
+     
+            
+            <tr>
+                <th>Inicio</th>
+                <th>Fim</th>
+                <th>Relatório</th>
+                <th>Termo Entregue?</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+                
+            </tr>
+            
+<?php foreach ($listaContratos as $f):?>
+             
+            <tr style="background: #cdffff">
+                <?php $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ; ?>
+                <?php $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ; ?>
+                <td><?php echo date_format($f->getInicio(), 'd/m/Y'); ?></td>
+                <td><?php echo date_format($f->getFim(),'d/m/Y') ; ?>     </td>
+                <td><?php echo $f->getRelatorio();?></td>
+                <td><?php echo $f->getEntregue();?></td>
+                <td><a class="btn" ><i class=" glyphicon glyphicon-pencil"></i></a></td>
+                <td><a class="btn" href="<?php echo $this->url('delete', array(
+                  'action' => 'excluir', 'iddelete' => $f->getIdencaminhamento()
+              )) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
+                 
+                
+            </tr>
+            
+
+             <?php endforeach;?>
+     
+            <td><input type="date" name="inicioEnc" /></td>
+            <td><input type="date" name="fimEnc" /></td>
+            <td><input type="text" name="relatorio" /></td>
+            <td><input type="text" name="entregue" /></td>
+            <td><input type="submit" name="lancar" class="btn-info" value="Lançar"/></td>
+            
+
+    </tr></table>
+    Recisão<br/> <input type="text" name="lancar" class="btn-info"/><br/>
+    <a href="<?php echo $this->url('perfil/default', 
+                  array('controller' => 'index', 'action' => 'perfil','id'=>$idalunoEncaminhamento, 'idVaga'=>$idVagaEncaminhamento)) ?>"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>
+                 
+</form> 
+
+
+<?php echo $this->resp; ?>
+</body>

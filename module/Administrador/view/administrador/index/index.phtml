@@ -1,0 +1,16 @@
+<body>
+    <h3 class="navbar-brand">Cadastro de Aluno</h3>
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="navbar-collapse" id="aluno">
+<form class="navbar-default" method="post">
+    <?php echo $this->translate('Nome')?><br/><input name="nome"type="text" class="navbar-default   " /><br/>
+        <?php echo $this->translate('Matricula')?><br/><input name="matricula" type="text" class="navbar-default" /><br/>
+            <?php echo $this->translate('Curso')?><br/><input name="curso" type="text" class="navbar-default"/><br/>
+            <input type="submit"class="navbar-btn" name="cadastrar" value="Cadastrar" type="button"/>
+</form>
+</div>
+<?php echo $this->resp; ?>
+</body>

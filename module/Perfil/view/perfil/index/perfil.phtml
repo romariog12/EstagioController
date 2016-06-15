@@ -1,0 +1,69 @@
+<?php
+echo $this->doctype();
+$lista = $this->lista;
+$listaVaga = $this->listaVaga;
+$listaEncaminhamento = $this->listaEncaminhamento;
+?>
+<head>  
+</head>
+<body>
+    <h3 class="navbar-brand"><?php echo $this->translate('Perfil do Aluno')?></h3>
+<br/>
+<br/>
+<div class="navbar-collapse" id="aluno">
+    <form class="navbar-default" method="post">
+    <table class="table">
+         <tr>
+          <th>ID</th>
+          <th>NOME</th>
+          <th>MATRICULA</th>
+          <th>CURSO</th>
+        </tr >
+         <?php if($lista):
+            foreach ($lista as $f): ?>   
+        <tr style="background: #cdffff">
+            <?php $getidaluno = $f->getidaluno(); ?>
+          <td><?php echo $f->getidaluno(); ?></td>
+          <td><?php echo $f->getNome(); ?></td>
+          <td><?php echo $f->getMatricula(); ?></td>
+          <td><?php echo $f->getCurso(); ?></td>
+        </tr>
+        </table>
+<br/>
+<a class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$f->getidaluno())); ?>"><i class="glyphicon glyphicon-edit"> Nova Vaga</i> </a>
+    <?php endforeach; endif;?><?php if ($listaVaga){?>
+    </form></div> <br/><br/><h3 class="navbar-brand"><?php echo $this->translate('Vagas Cadastradas')?></h3>
+<div class="navbar-collapse">
+    <form class="navbar-default" method="post">
+    <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>EMPRESA</th>
+          <th>AGENTE</th>
+          <th>CARGA</th>
+          <th>CONTRATOS</th>
+          <th>EXCLUIR</th>
+        </tr>
+        <?php foreach ($listaVaga as $f):?>
+        <tr class="table" style="background: #77fd84"> 
+            <td><?php echo $f->getidvaga();?></td>
+            <td><?php echo $f->getEmpresa(); ?></td>
+            <td><?php echo $f->getAgente(); ?></td>
+            <td><?php echo $f->getCarga(); ?></td>
+             <td><a href="<?php echo $this->url('vaga/default', 
+                    array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>
+             <td><a class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga()
+              )) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
+           
+            </tr><?php endforeach;?>
+        </table><?php }
+            else{?>        
+        <div class="alert-danger" style="margin: initial">
+           <br/>
+           <h4 style="text-align: center">Nenhum estágio lançado</h4><br/>      
+        </div>
+        <?php };?> 
+ </form> 
+</div>
+<?php echo $this->resp; ?>
+</body>
