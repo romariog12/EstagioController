@@ -16,13 +16,23 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-        $fetchRow = $em->getRepository("Aluno\Entity\Aluno")->findAll();
-     //   $row =$fetchRow ->fetch();
-        
+            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+            $findCurso = $em->getRepository("Aluno\Entity\Aluno")->findAll();
+            $findEmpresa = $em->getRepository("Empresa\Entity\Empresa")->findAll();
+            $recisaoRow1 = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
+            $recisaoRow2 = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('-');
+            $row = count($findCurso);
+            $rowRecisao1 = count($recisaoRow1); 
+            $rowRecisao2 = count($recisaoRow2);
+            $rowRecisao = $rowRecisao2 + $rowRecisao1;
+            $rowEmpresa = count($findEmpresa);
         return new ViewModel([
-            'fetchRow'=>$fetchRow,
-        //    'row'=>$row
+            'fetchRow'=>$findCurso,
+            'row'=> $row,
+            'recisaoRow'=>$rowRecisao,
+            'rowEmpresa' =>$rowEmpresa
         ]);
-    }
-}
+ 
+   }
+   }
+    

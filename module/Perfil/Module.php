@@ -48,13 +48,11 @@ class Module
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Aluno());
                     return new TableGateway('Aluno', $dbAdapter, null, $resultSetPrototype);
-                },
-                
-                        
-                    'Aluno'=>  function ($sm) {
-                    $aluno = $sm->get('Aluno\Enity\Aluno');
-                    return $aluno;
-                    
+                },          
+                'Params'=>  function ($sm) {
+                    $params = $sm->get('params');
+                    return $params;
+                     
                 }       
             )
         );

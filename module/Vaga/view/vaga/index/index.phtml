@@ -2,40 +2,47 @@
 $listaEmpresa = $this->listaEmpresa;
 $listaVaga = $this->vagas;
 $listaAluno = $this->listaAluno;
+$idaluno = $this->idaluno;
 ?>
 <body>
     <div class="navbar-default">
-        <a href="<?php echo $this->url('empresa'); ?>"><img style="margin-left: 4%; margin-top: 3%" src="<?php echo $this->basePath('img/empresa.png')?>" alt="Empresa"/><br/>&nbsp;&nbsp;&nbsp;Cadastrar Empresa</a>
+        
+          </div>
         <br/>
-    </div>
-        <br/>
-    <div><h3>Cadastrar Vaga</h3></div>
-      
-    
+        
+    <div><h3 class="navbar-brand"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Cadastrar Vaga</h3></div>
+    <br/>  
+    <br/>
+    <br/>
+    <br/>
     <div class="navbar-default" id="aluno" >
         <form style="margin-left: 2%" method="post" ><br/>  
-    <?php echo $this->translate('Empresa')?><br/>
-            <select name="emrpesa" class="navbar-default" >
-                       <option></option>
-                       <?php foreach ($listaEmpresa as $f): ?>
-                       <option><?php echo $f->getEmpresa(); ?></option>
-                       <?php endforeach; ?>  
-            </select><br/><br/>
+    
     <?php echo $this->translate('Agente de Integração')?><br/>
             <select name="agente" class="navbar-default" >
                        <option></option>
                        <?php foreach ($listaEmpresa as $f): ?>
                        <option><?php echo $f->getEmpresa(); ?></option>
                        <?php endforeach; ?>  
-            </select><br/><br/>
+            </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
+    <?php echo $this->translate('Empresa')?><br/>
+            <select name="emrpesa" class="navbar-default" >
+                       <option></option>
+                       <?php foreach ($listaEmpresa as $f): ?>
+                       <option><?php echo $f->getEmpresa(); ?></option>
+                       <?php endforeach; ?>  
+            </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
+    <br/><br/>
     
             
    <?php echo $this->translate('Carga')?><br/>&nbsp;<input name="carga" type="text" class="navbar-default   " /><br/>
    <?php echo $this->translate('Bolsa')?><br/>&nbsp;<input name="bolsa" type="text" class="navbar-default   " /><br/>
-   <?php echo $this->translate('Semestre')?><br/>&nbsp;<input name="semestre" type="text" class="navbar-default   " /><br/><br/><br/>
+   
+  
+   <br/><br/>
   
    
-    &nbsp;<input type="submit" class="navbar-btn" name="cadastrar" value="Cadastrar"/><br/>
+    &nbsp;<input type="submit" class="btn-info" name="cadastrar" value="Cadastrar"/><br/>
     
     
     

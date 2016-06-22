@@ -102,12 +102,12 @@ class Encaminhamento
         return $this->idalunoEncaminhamento;
     }
 
-    function setInicio(\DateTime $inicio) {
+    function setInicio(\DateTime $inicio = null) {
         $this->inicio = $inicio;
         return $this;
     }
 
-    function setFim(\DateTime $fim) {
+    function setFim(\DateTime $fim =null) {
         $this->fim = $fim;
         return $this;
     }

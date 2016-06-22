@@ -5,7 +5,7 @@ namespace Vaga\Entity;
 class VagaRepository extends \Doctrine\ORM\EntityRepository{
     
     public function findByIdalunovaga($id){
-        $resul = $this->createQueryBuilder('m')
+        $resul = $this->_em->createQueryBuilder('m')
                         >select('')
                          ->from('bundle:entity','m')
                          ->where('m.idAluno = :a1')
@@ -13,7 +13,7 @@ class VagaRepository extends \Doctrine\ORM\EntityRepository{
         return $resul;
     }
    public function findByIdvagaEncaminhamento($idVaga){
-        $resul = $this->createQueryBuilder('m')
+        $resul = $this->_em->createQueryBuilder('m')
                         >select('m.Empresa,m.Agente , m.Incio, m.Fim')
                          ->from('bundle:entity','m')
                          ->where('m.idVaga_Encaminhamento = :a1')
@@ -21,7 +21,9 @@ class VagaRepository extends \Doctrine\ORM\EntityRepository{
         return $resul;
     }
     
+      
     
+  
     
 }
 

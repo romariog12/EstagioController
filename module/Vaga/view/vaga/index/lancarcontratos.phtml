@@ -1,23 +1,27 @@
 <?php
 echo $this->doctype();
 $listaContratos = $this->listaContratos;
+$aluno = $this->aluno;
+$lista = $this->lista;
 ?>
-<body>
+<head>
     
-    <h3 class="navbar-brand"><?php echo $this->translate('Contratos')?></h3>
+<script>
+function noenter() {
+  return !(window.event && window.event.keyCode === 13);
+}
+</script>
+</head>
+<body> 
+    <h3 class="navbar-brand"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;<?php echo $this->translate('Contratos')?></h3><br/><br/>
 <br/>
-<br/><form class="navbar-default" method="post">
-        <table class="table"> 
-     
-            
+<br/><form class="navbar-default" method="post" onKeyPress="return noenter()">
+        <table class="table">   
             <tr>
                 <th>Inicio</th>
                 <th>Fim</th>
                 <th>Relatório</th>
                 <th>Termo Entregue?</th>
-                <th>Editar</th>
-                <th>Excluir</th>
-                
             </tr>
             
 <?php foreach ($listaContratos as $f):?>
@@ -27,33 +31,32 @@ $listaContratos = $this->listaContratos;
                 <?php $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ; ?>
                 <td><?php echo date_format($f->getInicio(), 'd/m/Y'); ?></td>
                 <td><?php echo date_format($f->getFim(),'d/m/Y') ; ?>     </td>
-                <td><?php echo $f->getRelatorio();?></td>
+                <td><?php echo sprintf($f->getRelatorio()) ;?></td>
                 <td><?php echo $f->getEntregue();?></td>
-                <td><a class="btn" ><i class=" glyphicon glyphicon-pencil"></i></a></td>
-                <td><a class="btn" href="<?php echo $this->url('delete', array(
+                <td><a style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array(
                   'action' => 'excluir', 'iddelete' => $f->getIdencaminhamento()
-              )) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
-                 
-                
+              )) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
             </tr>
-            
-
-             <?php endforeach;?>
-     
-            <td><input type="date" name="inicioEnc" /></td>
-            <td><input type="date" name="fimEnc" /></td>
-            <td><input type="text" name="relatorio" /></td>
-            <td><input type="text" name="entregue" /></td>
-            <td><input type="submit" name="lancar" class="btn-info" value="Lançar"/></td>
-            
+              <?php endforeach;?>
+                <td><input type="date" name="inicioEnc" /></td>
+                <td><input type="date" name="fimEnc" /></td>
+                <td><input type="text" name="relatorio" /></td>
+                <td><input type="radio" name="entregue" value="Sim" />Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 10%"/>Não</td>
+                <td><input type="submit" name="lancar" class="btn-info" value="Lançar"/></td>     
 
     </tr></table>
-    Recisão<br/> <input type="text" name="lancar" class="btn-info"/><br/>
+    <br/>Recisão<br/><input type="date" name="recisao" class="btn-info"   /><input type="submit" value="Salvar" name="salvar" class="info"/>
+    
+
+    <br/>
+    <br/>
+    <br/>
+   
+    <br/>
     <a href="<?php echo $this->url('perfil/default', 
-                  array('controller' => 'index', 'action' => 'perfil','id'=>$idalunoEncaminhamento, 'idVaga'=>$idVagaEncaminhamento)) ?>"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>
-                 
-</form> 
-
-
+                  array('controller' => 'index', 'action' => 'perfil','id'=>$aluno)) ?>"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>              
+    <br/>
+    <br/>
+                  </form> 
 <?php echo $this->resp; ?>
 </body>

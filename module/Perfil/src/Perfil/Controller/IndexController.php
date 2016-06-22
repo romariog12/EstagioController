@@ -37,23 +37,32 @@ public function indexAction()   {
             ]);  
         }
     }
-                      
+ 
+    //Vagas cadastradas no Perfil                  
     public function perfilAction(){
       $vaga = new Vaga();
       $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
       $id = $this->params()->fromRoute("id", 0);
       $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdalunovaga($id);
       $lista = $em->getRepository("Aluno\Entity\Aluno")->findByidaluno($id);
+      
       foreach ($listaVaga as $l){
                          $idVaga = $l->getidvaga();
                          $vaga->setIdvaga($idVaga);
                 }
       $listaEncaminhamento = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdvagaEncaminhamento($vaga->getIdvaga());
-      return new ViewModel([
+      
+              return new ViewModel([
             'listaVaga'=>$listaVaga,
             'lista'=>$lista,
             'listaEncaminhamento'=>$listaEncaminhamento
         ]);
+             
+             
+         
+      
+      
+      
     }
     
 }

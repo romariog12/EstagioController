@@ -21,6 +21,7 @@ class IndexController extends AbstractActionController
        {
           $result = array();
           $request = $this->getRequest();
+          $idaluno = $this->params()->fromRoute("id", 0);
           
           if ($request->isPost()){
               try {
@@ -49,7 +50,9 @@ class IndexController extends AbstractActionController
                     return new ViewModel(array(
                     'success' => $this->flashMessenger()->getSuccessMessages()
                 ));
-                } 
+                }
+                 return $this->redirect()->toRoute('vaga/default', 
+                  array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno));
             }
       
           return new ViewModel(['success' => $this->flashMessenger()->getSuccessMessages()]);

@@ -63,13 +63,11 @@ class Vaga
      */
     private $bolsa;
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="Semestre", type="integer", nullable=true)
+     * @ORM\Column(name="Recisao", type="string", nullable=true)
      */
-    private $semestre;
-
-    
+    private $recisao;
     function getIdvaga() {
         return $this->idvaga;
     }
@@ -98,8 +96,8 @@ class Vaga
         return $this->bolsa;
     }
 
-    function getSemestre() {
-        return $this->semestre;
+    function getRecisao() {
+        return $this->recisao;
     }
 
     function setIdvaga($idvaga) {
@@ -137,8 +135,8 @@ class Vaga
         return $this;
     }
 
-    function setSemestre($semestre) {
-        $this->semestre = $semestre;
+    function setRecisao($recisao) {
+        $this->recisao = $recisao;
         return $this;
     }
 

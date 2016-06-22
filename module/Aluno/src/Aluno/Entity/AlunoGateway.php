@@ -10,7 +10,7 @@ class AlunoGateway extends AbstractTableGateway {
     public  function  __construct () 
    { 
              $this -> table  =  'aluno' ; 
-             $this -> featureSet  =  new  Feature\FeatureSet (); 
+             $this -> featureSet  =  new  Feature\FeatureSet(); 
              $this -> featureSet -> addFeature ( new  Feature\GlobalAdapterFeature ()); 
              $this -> initialize(); 
    } 
