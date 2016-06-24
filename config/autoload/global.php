@@ -1,5 +1,4 @@
 <?php
-
   return array(
       'doctrine' => array(
           'connection' => array(
@@ -31,6 +30,3 @@
          }
       ),]
   );
-
-     
-
