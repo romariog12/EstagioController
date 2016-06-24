@@ -4,14 +4,14 @@ $listaContratos = $this->listaContratos;
 $aluno = $this->aluno;
 $lista = $this->lista;
 ?>
-<head>
-    
+<html lang="pt-br">
+<meta charset="utf-8">
 <script>
 function noenter() {
   return !(window.event && window.event.keyCode === 13);
 }
 </script>
-</head>
+
 <body> 
     <h3 class="navbar-brand"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;<?php echo $this->translate('Contratos')?></h3><br/><br/>
 <br/>
@@ -60,3 +60,4 @@ function noenter() {
                   </form> 
 <?php echo $this->resp; ?>
 </body>
+</html>

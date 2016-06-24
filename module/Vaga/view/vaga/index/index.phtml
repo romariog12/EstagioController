@@ -4,12 +4,12 @@ $listaVaga = $this->vagas;
 $listaAluno = $this->listaAluno;
 $idaluno = $this->idaluno;
 ?>
+<html lang="pt-br">
+<meta charset="utf-8">
 <body>
     <div class="navbar-default">
-        
           </div>
         <br/>
-        
     <div><h3 class="navbar-brand"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Cadastrar Vaga</h3></div>
     <br/>  
     <br/>
@@ -21,35 +21,25 @@ $idaluno = $this->idaluno;
     <?php echo $this->translate('Agente de Integração')?><br/>
             <select name="agente" class="navbar-default" >
                        <option></option>
-                       <?php foreach ($listaEmpresa as $f): ?>
-                       <option><?php echo $f->getEmpresa(); ?></option>
+                       <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
+                       <option><?php print_r($f->getEmpresa()); ?></option>
                        <?php endforeach; ?>  
             </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
     <?php echo $this->translate('Empresa')?><br/>
             <select name="emrpesa" class="navbar-default" >
                        <option></option>
-                       <?php foreach ($listaEmpresa as $f): ?>
-                       <option><?php echo $f->getEmpresa(); ?></option>
+                       <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
+                       <option><?php print_r($f->getEmpresa()); ?></option>
                        <?php endforeach; ?>  
             </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
-    <br/><br/>
-    
-            
+    <br/><br/>         
    <?php echo $this->translate('Carga')?><br/>&nbsp;<input name="carga" type="text" class="navbar-default   " /><br/>
    <?php echo $this->translate('Bolsa')?><br/>&nbsp;<input name="bolsa" type="text" class="navbar-default   " /><br/>
-   
-  
    <br/><br/>
-  
-   
-    &nbsp;<input type="submit" class="btn-info" name="cadastrar" value="Cadastrar"/><br/>
-    
-    
-    
-        
-           
-            
+  &nbsp;<input type="submit" class="btn-info" name="cadastrar" value="Cadastrar"/><br/>
+         
 </form>
 </div>
 <?php echo $this->resp; ?>
 </body>
+</html>

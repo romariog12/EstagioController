@@ -2,7 +2,10 @@
 echo $this->doctype();
 $lista = $this->lista;
 ?>
+<html lang="pt-br">
+<meta charset="utf-8">
 <body>
+    
     <h3 class="navbar-brand"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<?php echo $this->translate('Buscar Aluno')?></h3>
 <br/><br/>
 <br/><br/>
@@ -35,3 +38,4 @@ $lista = $this->lista;
         <?php endforeach; endif;?> 
         <?php echo $this->resp; ?>
 </body>
+</html>
