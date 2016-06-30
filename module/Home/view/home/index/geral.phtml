@@ -1,0 +1,71 @@
+<?php $fetchRow = $this->fetchRow;
+       $row = $this->row;
+       $listaAluno = $this->listaAluno;
+       $recisaoRow = $this->recisaoRow;
+       $rowEmpresa = $this->rowEmpresa;
+       $rowListaAluno = $this->rowListaAluno;
+       ?>
+<html lang="pt-br">
+<meta charset="utf-8">
+ <body><?php?>
+    <br/>  
+    <form>
+        <div><h4><i class="glyphicon glyphicon-globe   "></i>&nbsp;&nbsp;Geral</h4></div>
+    <br/>  
+        <table class="table">
+            <tr>
+            <th> Alunos cadastrados </th>
+            <th>Empresas Cadastradas</th>
+            <th>Alunos em estágios</th>     
+            </tr>
+        <tr>
+            <td style="font-size: 60px; color: #3373ea"><?php echo $row;?></td>
+            <td style="font-size: 60px; color: #3373ea"><?php echo $rowEmpresa;?></td>
+            <td style="font-size: 60px; color:  #33cd6d"><?php echo $recisaoRow;?></td>   
+        </tr>
+        </table></form>
+    <br/> 
+    <br/> 
+        <form method="post" class="table-striped"> 
+            <div><h4><i class="glyphicon glyphicon-book  "></i>&nbsp;&nbsp;Curso</h4></div>
+           
+        <select name="curso" class="active">
+            <option></option>
+            <option>EAD - ADMINISTRAÇÃO</option>
+            <option>EAD - PEDAGOGIA</option>
+            <option>EAD - GESTAO DE RECURSOS HUMANOS</option>
+            <option>EAD - TURISMO</option>
+            <option>EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO</option>
+            <option>EAD - ANÁLISE E DESENV. DE SISTEMAS</option>
+            <option>EAD - CIÊNCIAS CONTÁBEIS</option>
+            <option>EAD - CIENCIAS ECONÔMICAS</option>
+            <option>EAD - FILOSOFIA</option>
+            <option>EAD - GESTÃO PÚBLICA</option>
+            <option>EAD - GESTÃO DO COMÉRCIO EXTERIOR</option>
+            <option>EAD - GESTÃO FINANCEIRA</option>
+            <option>EAD - LETRAS PORTUGUÊS</option>
+            <option>EAD - PROFORM</option>
+            <option>EAD - SEGURANÇA DA INFORMAÇÃO</option>
+            <option>EAD - SEGURANÇA PÚBLICA</option>
+                
+        </select><input type="submit" value="OK" class="active"/>  <br/><br/>
+        <?php  
+          if ($rowListaAluno):
+             foreach ($listaAluno as $c){
+                     $curso = $c->getcurso();
+                 }
+         ?>
+        <table class="table">
+            
+          
+            <div><h4><i class="glyphicon glyphicon-bookmark  "></i>&nbsp;&nbsp;<?php echo $curso?></h4></div>
+            <tr>
+                <th>Alunos cadastrados</th>
+            </tr>
+            <tr>
+                <td style="font-size: 60px; color:  #3373ea"><?php echo $rowListaAluno;?></td><?php endif;?>
+            </tr>
+        </table>  
+    </form>   
+</body>
+</html>

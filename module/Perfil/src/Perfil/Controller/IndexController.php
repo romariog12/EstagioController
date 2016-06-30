@@ -18,7 +18,6 @@ class IndexController extends AbstractActionController {
    
 public function indexAction()   {
     
-    
     $request = $this->getRequest();
    
     if($request->isPost()){
@@ -31,13 +30,11 @@ public function indexAction()   {
                    $lista = $em->getRepository("Aluno\Entity\Aluno")->findByMatricula($aluno->getMatricula());
                    
         }
-
         return new ViewModel([
         'lista' => $lista,
             ]);  
         }
     }
- 
     //Vagas cadastradas no Perfil                  
     public function perfilAction(){
       $vaga = new Vaga();
@@ -46,23 +43,16 @@ public function indexAction()   {
       $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdalunovaga($id);
       $lista = $em->getRepository("Aluno\Entity\Aluno")->findByidaluno($id);
       
-      foreach ($listaVaga as $l){
-                         $idVaga = $l->getidvaga();
-                         $vaga->setIdvaga($idVaga);
-                }
-      $listaEncaminhamento = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdvagaEncaminhamento($vaga->getIdvaga());
-      
-              return new ViewModel([
-            'listaVaga'=>$listaVaga,
-            'lista'=>$lista,
-            'listaEncaminhamento'=>$listaEncaminhamento
-        ]);
-             
-             
-         
-      
-      
-      
+        foreach ($listaVaga as $l){
+                             $idVaga = $l->getidvaga();
+                             $vaga->setIdvaga($idVaga);
+                    }
+                    $listaEncaminhamento = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdvagaEncaminhamento($vaga->getIdvaga());
+        return new ViewModel([
+                'listaVaga'=>$listaVaga,
+                'lista'=>$lista,
+                'listaEncaminhamento'=>$listaEncaminhamento
+            ]);        
     }
     
 }

@@ -7,33 +7,19 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Home;
+namespace Auth;
 
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        'controller' => 'Home\Controller\Index',
-                        'action'     => 'geral',
-                    ),
-                ),
-            ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
+            'auth' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/home',
+                    'route'    => '/login',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Home\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
+                        '__NAMESPACE__' => 'Auth\Controller',
+                        'controller'    => 'Auth\Controller\Index',
+                        'action'        => 'login',
                     ),
                 ),
                 'may_terminate' => true,
@@ -75,7 +61,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Home\Controller\Index' => Controller\IndexController::class
+            'Auth\Controller\Index' => Controller\IndexController::class
         ),
     ),
     'view_manager' => array(
@@ -86,7 +72,7 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'home/index/index' => __DIR__ . '/../view/home/index/index.phtml',
+            
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
@@ -102,6 +88,19 @@ return array(
             ),
         ),
     ),
-  
+        'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
+    ),
 );
 

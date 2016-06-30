@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="empresa", indexes={@ORM\Index(name="Empresa_FKIndex1", columns={"Administrador_idAdministrador"}), @ORM\Index(name="Empresa_FKIndex2", columns={"Vaga_idVaga"})})
  * @ORM\Entity
+ * 
  */
 class Empresa
 {
@@ -18,6 +19,7 @@ class Empresa
      * @ORM\Column(name="idEmpresa", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     *
      */
     private $idempresa;
 
@@ -39,6 +41,7 @@ class Empresa
      * @var string
      *
      * @ORM\Column(name="Empresa", type="string", length=50, nullable=true)
+     * 
      */
     private $empresa;
 

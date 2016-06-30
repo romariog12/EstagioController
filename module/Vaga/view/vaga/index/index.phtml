@@ -21,16 +21,16 @@ $idaluno = $this->idaluno;
     <?php echo $this->translate('Agente de Integração')?><br/>
             <select name="agente" class="navbar-default" >
                        <option></option>
-                       <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
+    <?php foreach ($listaEmpresa as $f): ?>
                        <option><?php print_r($f->getEmpresa()); ?></option>
-                       <?php endforeach; ?>  
+    <?php endforeach; ?>  
             </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
     <?php echo $this->translate('Empresa')?><br/>
             <select name="emrpesa" class="navbar-default" >
                        <option></option>
-                       <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
+    <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
                        <option><?php print_r($f->getEmpresa()); ?></option>
-                       <?php endforeach; ?>  
+    <?php endforeach; ?>  
             </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
     <br/><br/>         
    <?php echo $this->translate('Carga')?><br/>&nbsp;<input name="carga" type="text" class="navbar-default   " /><br/>

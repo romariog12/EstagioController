@@ -1,21 +1,40 @@
 <?php
-echo $this->doctype();
-$listaContratos = $this->listaContratos;
-$aluno = $this->aluno;
-$lista = $this->lista;
+    echo $this->doctype();
+    $listaContratos = $this->listaContratos;
+    $aluno = $this->aluno;
+    $listaVaga = $this->listaVaga;
 ?>
 <html lang="pt-br">
-<meta charset="utf-8">
+    <meta charset="utf-8">
 <script>
-function noenter() {
-  return !(window.event && window.event.keyCode === 13);
-}
-</script>
+    function noenter() {
+      return !(window.event && window.event.keyCode === 13);
+    }
+    function mascaraData( campo, e )
+    {
+            var kC = (document.all) ? event.keyCode : e.keyCode;
+            var data = campo.value;
 
+            if( kC!=8 && kC!=46 )
+            {
+                    if( data.length==2 )
+                    {
+                            campo.value = data += '/';
+                    }
+                    else if( data.length==5 )
+                    {
+                            campo.value = data += '/';
+                    }
+                    else
+                            campo.value = data;
+            }
+    }
+</script>
 <body> 
     <h3 class="navbar-brand"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;<?php echo $this->translate('Contratos')?></h3><br/><br/>
 <br/>
-<br/><form class="navbar-default" method="post" onKeyPress="return noenter()">
+<br/>
+<form class="navbar-default" method="post" onKeyPress="return noenter()">
         <table class="table">   
             <tr>
                 <th>Inicio</th>
@@ -25,39 +44,38 @@ function noenter() {
             </tr>
             
 <?php foreach ($listaContratos as $f):?>
-             
-            <tr style="background: #cdffff">
-                <?php $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ; ?>
-                <?php $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ; ?>
-                <td><?php echo date_format($f->getInicio(), 'd/m/Y'); ?></td>
-                <td><?php echo date_format($f->getFim(),'d/m/Y') ; ?>     </td>
-                <td><?php echo sprintf($f->getRelatorio()) ;?></td>
-                <td><?php echo $f->getEntregue();?></td>
-                <td><a style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array(
-                  'action' => 'excluir', 'iddelete' => $f->getIdencaminhamento()
-              )) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
-            </tr>
-              <?php endforeach;?>
-                <td><input type="date" name="inicioEnc" /></td>
-                <td><input type="date" name="fimEnc" /></td>
-                <td><input type="text" name="relatorio" /></td>
-                <td><input type="radio" name="entregue" value="Sim" />Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 10%"/>Não</td>
-                <td><input type="submit" name="lancar" class="btn-info" value="Lançar"/></td>     
-
-    </tr></table>
-    <br/>Recisão<br/><input type="date" name="recisao" class="btn-info"   /><input type="submit" value="Salvar" name="salvar" class="info"/>
-    
-
-    <br/>
-    <br/>
-    <br/>
-   
-    <br/>
-    <a href="<?php echo $this->url('perfil/default', 
+     
+        <tr style="background: #cdffff">
+            <?php $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ; ?>
+            <?php $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ; ?>
+            <td> <?php echo date_format($f->getInicio(), 'd/m/Y'); ?>    </td>
+            <td>  <?php echo date_format($f->getFim(),'d/m/Y') ; ?>       </td>
+            <td>  <?php echo sprintf($f->getRelatorio()) ;?>              </td>
+            <td>  <?php echo $f->getEntregue();?>                         </td>
+            <td>  <a style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array(
+              'action' => 'excluir', 'iddelete' => $f->getIdencaminhamento()
+          )) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
+        </tr>
+<?php endforeach;?>
+        <tr>
+            <td><input type="text" name="inicioEnc" maxlength="10" onkeypress="mascaraData(this, event)" /></td>
+            <td><input type="text" name="fimEnc" maxlength="10" onkeypress="mascaraData(this, event)" /></td>
+            <td><input type="text" name="relatorio" /></td>
+            <td><input type="radio" name="entregue" value="Sim" />Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 10%"/>Não</td>
+            <td><input type="submit" name="lancar" class="btn-info" value="Lançar"/></td>    
+        </tr>
+        </table>
+   <?php foreach ($listaVaga as $l):?>
+    <br/>Recisão<br/><input value="<?php echo $l->getRecisao();?>" type="text" name="recisao" class="btn-info" maxlength="10" onkeypress="mascaraData(this, event)"  /><input type="submit" value="Salvar" name="salvar" class="info"/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <a style="margin-left: 45%" href="<?php echo $this->url('perfil/default', 
                   array('controller' => 'index', 'action' => 'perfil','id'=>$aluno)) ?>"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>              
-    <br/>
-    <br/>
-                  </form> 
-<?php echo $this->resp; ?>
+        <br/>
+        <br/>
+    </form> 
+<?php endforeach; echo $this->resp; ?>
 </body>
 </html>

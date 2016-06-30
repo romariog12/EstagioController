@@ -13,7 +13,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Empresa\Entity\Empresa;
 
-
 class IndexController extends AbstractActionController
 {
       public function indexAction()
@@ -41,11 +40,8 @@ class IndexController extends AbstractActionController
                     $this->flashMessenger()->addSuccessMessage('Cadastrado com Sucesso');
                   
               } catch (Exception $ex) {
-                  echo $this->flashMessenger()->render();
-                  
-              }
-            
-              
+                  echo $this->flashMessenger()->render();     
+              }   
                 if ($this->flashMessenger()->hasSuccessMessages()) {
                     return new ViewModel(array(
                     'success' => $this->flashMessenger()->getSuccessMessages()

@@ -5,11 +5,12 @@ $listaVaga = $this->listaVaga;
 $listaEncaminhamento = $this->listaEncaminhamento;
 ?>
 <html lang="pt-br">
+    <head>
 <meta charset="utf-8">
-
+</head>
 <body>
 <br/>
-<div class="navbar-collapse" id="aluno">
+<div class="navbar-brand" id="aluno">
 
          <?php if($lista):
             foreach ($lista as $f): 
@@ -17,7 +18,7 @@ $listaEncaminhamento = $this->listaEncaminhamento;
                  ?>
          
  </div> 
-<div>
+<div >
     <h3 class="table-borderless"><br/><i class="glyphicon glyphicon-user" style="color: #2863f2"></i>&nbsp;&nbsp;<?php echo $f->getNome(); ?><br/></h3><br/><br/>
     <p class="navbar-brand"><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;<?php echo $f->getCurso(); ?></p>
     <p class="navbar-brand"><i class="glyphicon glyphicon-bookmark"></i>&nbsp;&nbsp;<?php echo $f->getMatricula(); ?></p>
@@ -28,10 +29,13 @@ $listaEncaminhamento = $this->listaEncaminhamento;
  <?php endforeach;
          endif;
          ?>
-  <?php if ($listaVaga){?>
-<h3 class="navbar-brand"><?php echo $this->translate('Vagas Cadastradas')?><a class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h3>
-
-  <div class="navbar-collapse" >
+<?php if ($listaVaga){?>
+<div class="navbar-default">
+    <br/>
+<h4 style="text-align: center; margin-top: 2%" ><?php echo $this->translate('Vagas Cadastradas')?><br/>
+    <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h4>
+<br/>
+  
       <form class="navbar-default" method="post" style="background-color: #cddbff">
     <table class="table" >
        
@@ -60,7 +64,7 @@ $listaEncaminhamento = $this->listaEncaminhamento;
             <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>
             
             
-            <td><a class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
+            <td><a  class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
             
         </tr>
         

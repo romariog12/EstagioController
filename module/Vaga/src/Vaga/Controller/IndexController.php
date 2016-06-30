@@ -14,32 +14,26 @@ class IndexController extends AbstractActionController
        $idalunovaga = $this->params()->fromRoute("id", 0);
         if($request->isPost()){    
             try {
-               
                 $empresa = $request->getPost('emrpesa');
                 $agente = $request->getPost('agente');
                 $carga = $request->getPost('carga');
-                $bolsa = $request->getPost('bolsa') ;
-               
+                $bolsa = $request->getPost('bolsa') ;  
                     $vaga = new Vaga();
-                    
                     $vaga->setIdalunovaga($idalunovaga);
                     $vaga->setEmpresa($empresa);
                     $vaga->setAgente($agente);
                     $vaga->setCarga($carga);
                     $vaga->setBolsa($bolsa);
                     $vaga->setRecisao('-');
-
-               
                 $em->persist($vaga);
                 $em->flush();                  
                 return $this->redirect()->toRoute('perfil/default', 
                   array('controller' => 'index', 'action' => 'perfil', 'id'=>$vaga->getIdalunovaga(), 'idVaga'=>$vaga->getIdvaga()));
-       
               }
            catch (Exception $ex) {
                echo $this->flashMessenger()->render();
-          }    
-           }  
+            }    
+        }  
           $lista = $em->getRepository("Empresa\Entity\Empresa")->findAll();
           $listavagas = $em->getRepository("Vaga\Entity\Vaga")->findAll();
           $listaAlunos = $em->getRepository("Aluno\Entity\Aluno")->findAll(); 
@@ -49,7 +43,6 @@ class IndexController extends AbstractActionController
               'listaAluno'=>$listaAlunos,
               'idaluno'=>$idalunovaga]);
       }
-      
       //Lançar contratos
     public function lancarcontratosAction(){
         $request = $this->getRequest();
@@ -64,12 +57,12 @@ class IndexController extends AbstractActionController
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdalunovaga($idaluno);
         if ($request->isPost()){ 
           
-          $data = $this->params()->fromPost();
-          if ($data['salvar']=='Salvar'):
-          $recisao = $request->getPost("recisao");
-          
-          $select = $em->find("Vaga\Entity\Vaga", $idvagaEncaminhamento);
-          $select->setRecisao($recisao);
+            $data = $this->params()->fromPost();
+            if ($data['salvar']=='Salvar'):
+            $recisao = $request->getPost("recisao");
+
+            $select = $em->find("Vaga\Entity\Vaga", $idvagaEncaminhamento);
+            $select->setRecisao($recisao);
                 $em->persist($select);
                 $em->flush();
                 $this->redirect()->toRoute('perfil/default', 
@@ -103,7 +96,7 @@ class IndexController extends AbstractActionController
           return new ViewModel([
             'listaContratos'=>$listaContratos,
               'aluno'=>$idaluno,
-              'lista'=>$listaVaga
+              'listaVaga'=>$listaVaga
         ]);
     }
      //excluir contratos

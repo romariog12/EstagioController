@@ -9,9 +9,28 @@
 <div class="navbar-collapse" id="aluno">
 <form class="navbar-default" method="post">
     <?php echo $this->translate('Nome')?><br/><input name="nome"type="text" class="navbar-default   " /><br/>
-        <?php echo $this->translate('Matricula')?><br/><input name="matricula" type="text" class="navbar-default" /><br/>
-            <?php echo $this->translate('Curso')?><br/><input name="curso" type="text" class="navbar-default"/><br/>
-            <input type="submit"class="navbar-btn" name="cadastrar" value="Cadastrar" type="button"/>
+        <?php echo $this->translate('Matricula UCB')?><br/><input name="matricula" type="text" class="navbar-default" /><br/>
+            <?php echo $this->translate('Curso')?><br/><select name="curso" class="active">
+            <option></option>
+            <option>EAD - ADMINISTRAÇÃO</option>
+            <option>EAD - PEDAGOGIA</option>
+            <option>EAD - GESTAO DE RECURSOS HUMANOS</option>
+            <option>EAD - TURISMO</option>
+            <option>EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO</option>
+            <option>EAD - ANÁLISE E DESENV. DE SISTEMAS</option>
+            <option>EAD - CIÊNCIAS CONTÁBEIS</option>
+            <option>EAD - CIENCIAS ECONÔMICAS</option>
+            <option>EAD - FILOSOFIA</option>
+            <option>EAD - GESTÃO PÚBLICA</option>
+            <option>EAD - GESTÃO DO COMÉRCIO EXTERIOR</option>
+            <option>EAD - GESTÃO FINANCEIRA</option>
+            <option>EAD - LETRAS PORTUGUÊS</option>
+            <option>EAD - PROFORM</option>
+            <option>EAD - SEGURANÇA DA INFORMAÇÃO</option>
+            <option>EAD - SEGURANÇA PÚBLICA</option>
+                
+        </select><br/>
+            <input type="submit" class="navbar-btn" name="cadastrar" value="Cadastrar" />
            <?php 
           
           // $this->flashMessenger()->addSuccessMessage('Cadastrado com Sucesso');?>
