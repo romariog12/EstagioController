@@ -1,32 +1,13 @@
-<body>
-    
-    <script>
-    function validar(){
-        var login = document.getElementById('login');
-        var senha = document.getElementById('senha');
-        if (login === '' && senha === '' ){
-            alert "Preencha login e senha";
-        }
-        if (login === ''){
-            alert "Preencha login!"
-        }
-        if (senha === ''){
-            alert "Preencha senha!"
-        }
-            return false;
-    }
- 
-    </script>
-        
+<body>       
 <br/>
 <br/>
 <br/>
 <br/>
-<div class="navbar-collapse" id="aluno" style="margin-left: 40%;">
+<div class="navbar-collapse" >
      <h3 style=" color: #c2c2c2"><i class="glyphicon glyphicon-log-in"></i></h3>
 <form class="col-lg-4" method="post">
-    <input name="login" type="text" class="form-control " placeholder="Login"/>
-    <br/><input name="senha" type="password" class=" form-control" placeholder="Senha"/><br/>
+    <input id="login" name="login" type="text" class="form-control " placeholder="Login"/>
+    <br/><input id="senha" name="senha" type="password" class=" form-control" placeholder="Senha"/><br/>
             
             <input type="submit" class="btn btn-default" name="Entrar" value="Entrar"/>
             <?php
