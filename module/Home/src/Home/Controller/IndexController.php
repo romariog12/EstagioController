@@ -9,6 +9,9 @@ class IndexController extends AbstractActionController {
     
     public function geralAction()
     {
+        if(!isset($this->session()->item)){
+           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+       }
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $findCurso = $em->getRepository("Aluno\Entity\Aluno")->findAll();
             $findEmpresa = $em->getRepository("Empresa\Entity\Empresa")->findAll();

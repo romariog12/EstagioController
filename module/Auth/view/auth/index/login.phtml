@@ -1,16 +1,34 @@
 <body>
-    <h3 class="navbar-brand">Login</h3>
+    
+    <script>
+    function validar(){
+        var login = document.getElementById('login');
+        var senha = document.getElementById('senha');
+        if (login === '' && senha === '' ){
+            alert "Preencha login e senha";
+        }
+        if (login === ''){
+            alert "Preencha login!"
+        }
+        if (senha === ''){
+            alert "Preencha senha!"
+        }
+            return false;
+    }
+ 
+    </script>
+        
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="navbar-collapse" id="aluno" style="margin-left: 40%;">
+     <h3 style=" color: #c2c2c2"><i class="glyphicon glyphicon-log-in"></i></h3>
+<form class="col-lg-4" method="post">
+    <input name="login" type="text" class="form-control " placeholder="Login"/>
+    <br/><input name="senha" type="password" class=" form-control" placeholder="Senha"/><br/>
             
-<br/>
-<br/>
-<br/>
-<br/>
-<div class="navbar-collapse" id="aluno">
-<form class="navbar-default" method="post">
-    <?php echo $this->translate('Login')?><br/><input name="login" type="text" class="navbar-default   " /><br/>
-        <?php echo $this->translate('Senha')?><br/><input name="senha" type="password" class="navbar-default" /><br/>
-            
-            <input type="submit" class="navbar-btn" name="Entrar" value="Entrar"/>
+            <input type="submit" class="btn btn-default" name="Entrar" value="Entrar"/>
             <?php
     echo $this->flashMessenger()
         ->setMessageOpenFormat("<div %s>")
@@ -19,5 +37,6 @@
         ->render('error', array('alert alert-danger'));?>
 </form>
 </div>
+<br/><br/>
 <?php echo $this->resp; ?>
 </body>

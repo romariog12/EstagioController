@@ -39,18 +39,27 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="<?php echo $this->url('perfil') ?>"><?php echo $this->translate('Perfil do Aluno') ?></a></li>
-                        <li class="active"><a href="<?php echo $this->url('aluno') ?>"><?php echo $this->translate('Cadastrar Aluno') ?></a></li>
-                        
+                        <li class="active"><a href="<?php echo $this->url('aluno') ?>"><?php echo $this->translate('Cadastrar Aluno') ?></a></li>  
                     </ul>
-                   
+                    <ul class=" nav navbar-nav navbar-right">
+                        <li> <a aria-haspopup="true" style="color:  #e2a8b3; " href="<?php echo $this->url('sair', array(
+              'action' => 'logout'
+                            )) ?>">Sair&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></a></li>
+                    </ul>
                 </div><!--/.nav-collapse -->
+                
             </div>
+            
+                    
+             
+            
         </nav>
         <div class="container" >
             <?php echo $this->content; ?>
             
             <footer><hr>
                 <p>&copy; <?php echo date('Y') ?> PROJEM - UCB. </p>
+              
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>

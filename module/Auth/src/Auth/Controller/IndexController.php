@@ -28,7 +28,7 @@ class IndexController extends AbstractActionController
                     
                     
                     $this->session()->item = $nome;
-                    return $this->redirect()->toRoute('home', array('controller' => 'home', 'action' => 'index'));
+                    return $this->redirect()->toRoute('geral', array('controller' => 'home', 'action' => 'index'));
                 }
                 $mensagem = $auth->authenticate()->getMessages();
                     $this->flashMessenger()->addErrorMessage($mensagem[0]);
