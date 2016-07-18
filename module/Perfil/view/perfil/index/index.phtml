@@ -6,14 +6,21 @@ $lista = $this->lista;
 <meta charset="utf-8">
 <body>
     
-    <h3 class="navbar-brand"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<?php echo $this->translate('Buscar Aluno')?></h3>
-<br/><br/>
-<br/><br/>
+ <h3 class="navbar-brand"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;<?php echo $this->translate('Buscar Aluno')?></h3>
+<br/><br/><br/> <br/><br/>     
+<form class="navbar-collapse" method="post">
+
 <div class="navbar-collapse" id="aluno">
-<form class="navbar-default" method="post">
-    <br/><input name="busca" type="text" class="navbar-default "placeholder="Matrícula" />
-    <input type="submit" class="btn-info" name="buscar" value="Buscar"/>
-    <br/><br/>
+   <div class="col-lg-4">
+    <div class="input-group">
+      <input name="busca" type="text" class="form-control" placeholder="Matrícula" >
+      <span class="input-group-btn">
+          <button class="btn btn-default" name="buscar" value="Buscar" type="submit">Buscar</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+<br/><br/><br/>
     <?php if($lista):?>
 <table class="table">
          <tr>
@@ -34,7 +41,8 @@ $lista = $this->lista;
         </tr>
     </table>
 <br/>
-</form></div>
+</form>
+
         <?php endforeach; endif;?> 
         <?php echo $this->resp; ?>
 </body>

@@ -7,39 +7,52 @@ $idaluno = $this->idaluno;
 <html lang="pt-br">
 <meta charset="utf-8">
 <body>
-    <div class="navbar-default">
-          </div>
         <br/>
     <div><h3 class="navbar-brand"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Cadastrar Vaga</h3></div>
     <br/>  
     <br/>
     <br/>
     <br/>
-    <div class="navbar-default" id="aluno" >
-        <form style="margin-left: 2%" method="post" ><br/>  
-    
-    <?php echo $this->translate('Agente de Integração')?><br/>
-            <select name="agente" class="navbar-default" >
-                       <option></option>
-    <?php foreach ($listaEmpresa as $f): ?>
-                       <option><?php print_r($f->getEmpresa()); ?></option>
-    <?php endforeach; ?>  
-            </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
-    <?php echo $this->translate('Empresa')?><br/>
-            <select name="emrpesa" class="navbar-default" >
-                       <option></option>
-    <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
-                       <option><?php print_r($f->getEmpresa()); ?></option>
-    <?php endforeach; ?>  
-            </select>&nbsp;&nbsp;<a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i></a><br/><br/>
-    <br/><br/>         
-   <?php echo $this->translate('Carga')?><br/>&nbsp;<input name="carga" type="text" class="navbar-default   " /><br/>
-   <?php echo $this->translate('Bolsa')?><br/>&nbsp;<input name="bolsa" type="text" class="navbar-default   " /><br/>
-   <br/><br/>
-  &nbsp;<input type="submit" class="btn-info" name="cadastrar" value="Cadastrar"/><br/>
-         
+    <form style="margin-left: 2%" method="post" class="navbar-collapse"><br/> 
+        <div class="navbar-collapse">    
+        <div class="col-lg-5">
+                <?php echo $this->translate('Agente de Integração')?>
+                <br/>
+                        <select name="agente" class="form-control" >
+                                   <option></option>
+                <?php foreach ($listaEmpresa as $f): ?>
+                                   <option><?php print_r($f->getEmpresa()); ?></option>
+                <?php endforeach; ?>  
+                        
+                                   
+                        </select><br/>
+                           <?php echo $this->translate('Empresa')?>
+                        <select name="emrpesa" class="form-control" >
+                                   <option></option>
+                <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
+                                   <option><?php print_r($f->getEmpresa()); ?></option>
+                <?php endforeach; ?>  
+                        </select><span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus">Cadastrar Empresa</i></a></span><br/>
+                <br/>
+                <?php echo $this->translate('Carga')?>&nbsp;<input name="carga" type="text" class="form-control" /><br/>
+                <?php echo $this->translate('Bolsa')?>&nbsp;<input name="bolsa" type="text" class="form-control" /><br/>
+                        <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar"/><br/>
+                <nav>
+                    <ul class="pager">
+                      <li class="previous"><a href="<?php echo $this->url('perfil/default', 
+                          array('controller' => 'index', 'action' => 'perfil','id'=>$idaluno)) ?>"><span aria-hidden="true">&larr;</span>&nbsp;&nbsp;Voltar</a></li> 
+                    </ul>
+                </nav>
+                        
+            </div>
+        </div>
 </form>
-</div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    
 <?php echo $this->resp; ?>
 </body>
 </html>

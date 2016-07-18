@@ -1,15 +1,22 @@
 <body>
     <h3 class="navbar-brand">Login</h3>
+            
 <br/>
 <br/>
 <br/>
 <br/>
 <div class="navbar-collapse" id="aluno">
 <form class="navbar-default" method="post">
-    <?php echo $this->translate('Login')?><br/><input name="login"type="text" class="navbar-default   " /><br/>
+    <?php echo $this->translate('Login')?><br/><input name="login" type="text" class="navbar-default   " /><br/>
         <?php echo $this->translate('Senha')?><br/><input name="senha" type="password" class="navbar-default" /><br/>
             
             <input type="submit" class="navbar-btn" name="Entrar" value="Entrar"/>
+            <?php
+    echo $this->flashMessenger()
+        ->setMessageOpenFormat("<div %s>")
+        ->setMessageSeparatorString('<p></p>')
+        ->setMessageCloseString('<button type="button" class="close" data-dismiss="alert">x</button></div>')
+        ->render('error', array('alert alert-danger'));?>
 </form>
 </div>
 <?php echo $this->resp; ?>

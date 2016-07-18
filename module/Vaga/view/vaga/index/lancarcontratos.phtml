@@ -58,24 +58,31 @@
         </tr>
 <?php endforeach;?>
         <tr>
-            <td><input type="text" name="inicioEnc" maxlength="10" onkeypress="mascaraData(this, event)" /></td>
-            <td><input type="text" name="fimEnc" maxlength="10" onkeypress="mascaraData(this, event)" /></td>
+            <td><input type="date" name="inicioEnc"  onkeypress="mascaraData(this, event)" /></td>
+            <td><input type="date" name="fimEnc" onkeypress="mascaraData(this, event)" /></td>
             <td><input type="text" name="relatorio" /></td>
             <td><input type="radio" name="entregue" value="Sim" />Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 10%"/>Não</td>
             <td><input type="submit" name="lancar" class="btn-info" value="Lançar"/></td>    
         </tr>
         </table>
-   <?php foreach ($listaVaga as $l):?>
-    <br/>Recisão<br/><input value="<?php echo $l->getRecisao();?>" type="text" name="recisao" class="btn-info" maxlength="10" onkeypress="mascaraData(this, event)"  /><input type="submit" value="Salvar" name="salvar" class="info"/>
+    <br/>Recisão<br/><input value="" type="text" name="recisao" class="btn-info" maxlength="10" onkeypress="mascaraData(this, event)"  /><input type="submit" value="Salvar" name="salvar" class="info"/>
         <br/>
         <br/>
         <br/>
         <br/>
-        <a style="margin-left: 45%" href="<?php echo $this->url('perfil/default', 
-                  array('controller' => 'index', 'action' => 'perfil','id'=>$aluno)) ?>"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>              
-        <br/>
+                 
+        
+                  
+        <nav>
+            <ul class="pager">
+              <li class="previous"><a href="<?php echo $this->url('perfil/default', 
+                  array('controller' => 'index', 'action' => 'perfil','id'=>$aluno)) ?>"><span aria-hidden="true">&larr;</span>&nbsp;&nbsp;Voltar</a></li> 
+            </ul>
+        </nav>   
+                  
+                  <br/>
         <br/>
     </form> 
-<?php endforeach; echo $this->resp; ?>
+<?php  echo $this->resp; ?>
 </body>
 </html>

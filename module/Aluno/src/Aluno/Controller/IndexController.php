@@ -17,7 +17,9 @@ class IndexController extends AbstractActionController
 {
     
     public function indexAction() {
-       
+       if(!isset($this->session()->item)){
+           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+       }
           $request = $this->getRequest();
           $result = array();
           if($request->isPost())

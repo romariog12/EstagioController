@@ -7,12 +7,13 @@
  */
 return array(
     'modules' => array(
-        'Auth',
+        'Administrador',
         'Home',
         'Perfil',
         'Aluno',
         'Empresa',
         'Vaga',
+        'Auth',
         'DoctrineModule',
         'DoctrineORMModule'
     ),

@@ -8,38 +8,38 @@
  */
 
 namespace Home;
+use Zend\Mvc\Router\Http\Literal;
+use Zend\Mvc\Router\Http\Segment;
 
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+            'geral' => array(
+                'type' => Literal::class,
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Home\Controller\Index',
+                        '__NAMESPACE__' => 'Home\Controller',
+                        'controller' => 'Index',
                         'action'     => 'geral',
                     ),
                 ),
-            ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
-                'type'    => 'Literal',
+            
+                ),
+            'home' => array(
+                'type'    => Literal::class,
                 'options' => array(
                     'route'    => '/home',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Home\Controller',
                         'controller'    => 'Index',
-                        'action'        => 'index',
+                        'action'        => 'home',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
                     'default' => array(
-                        'type'    => 'Segment',
+                        'type'    => Segment::class,
                         'options' => array(
                             'route'    => '/[:controller[/:action]]',
                             'constraints' => array(
@@ -52,6 +52,16 @@ return array(
                     ),
                 ),
             ),
+            'sair' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/home/flag/[:action][/]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Home\Controller',
+                          'controller'    => 'Index',
+                      ),
+                  ),
+              ),
         ),
     ),
     'service_manager' => array(
@@ -64,7 +74,7 @@ return array(
         ),
     ),
     'translator' => array(
-        'locale' => 'en_US',
+        'locale' => 'pt-br',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',
@@ -86,7 +96,8 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'home/index/index' => __DIR__ . '/../view/home/index/index.phtml',
+            'home/index/home' => __DIR__ . '/../view/home/index/home.phtml',
+            'home/index/geral' => __DIR__ . '/../view/home/index/geral.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

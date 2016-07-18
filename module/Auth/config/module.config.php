@@ -38,6 +38,7 @@ return array(
                     ),
                 ),
             ),
+            
         ),
     ),
     'service_manager' => array(
@@ -45,8 +46,10 @@ return array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
+        
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
+            'AuthenticationService'=> 'Auth\Model\Factory\AuthenticationFactory'
         ),
     ),
     'translator' => array(
@@ -71,7 +74,6 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',

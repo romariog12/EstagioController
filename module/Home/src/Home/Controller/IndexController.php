@@ -5,8 +5,8 @@ namespace Home\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
-{
+class IndexController extends AbstractActionController {
+    
     public function geralAction()
     {
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
@@ -34,22 +34,31 @@ class IndexController extends AbstractActionController
                         'listaAluno' => $listaAlunos
                 ]);
                 
-            }
-            
+            }   
             
         return new ViewModel([
             'fetchRow'=>$findCurso,
             'row'=> $row,
             'recisaoRow'=>$rowRecisao,
-            'rowEmpresa' =>$rowEmpresa
-            
-            
+            'rowEmpresa' =>$rowEmpresa           
         ]);
  
    }
    
-   public function cursograficoAction(){
-        
+   public function homeAction(){
+       if(!isset($this->session()->item)){
+           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+       }
+      $nome = $this->session()->item;
+       return new viewModel([
+           'nome' =>$nome
+               
+       ]);  
    }
+   public function logoutAction(){
+       unset($this->session()->item);
+       return $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+   }
+   
 }
     

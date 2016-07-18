@@ -34,22 +34,23 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>">&nbsp;<?php echo $this->translate('PROJEM') ?></a>
+                    <a class="navbar-brand" href="<?php echo $this->url('geral') ?>">&nbsp;<?php echo $this->translate('PROJEM') ?></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="<?php echo $this->url('perfil') ?>"><?php echo $this->translate('Perfil do Aluno') ?></a></li>
                         <li class="active"><a href="<?php echo $this->url('aluno') ?>"><?php echo $this->translate('Cadastrar Aluno') ?></a></li>
-                       
+                        
                     </ul>
+                   
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
         <div class="container" >
             <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; <?php echo date('Y') ?> Romário Macêdo. </p>
+            
+            <footer><hr>
+                <p>&copy; <?php echo date('Y') ?> PROJEM - UCB. </p>
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>

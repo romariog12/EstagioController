@@ -18,22 +18,15 @@ class AdministradorRepository extends EntityRepository{
     
     public function findByLoginAndPassword($login, $password) {
         $userLogin = $this->createQueryBuilder('u')
-                        ->join('u.login', 'l')
-                        ->where('l.login = :a1')
-                        ->setParameter('a1', $login)->getQuery()->getOneOrNullResult();
+                        ->select('u.login','u.senha', 'l')
+                        ->from('Administrador\Entity\Administrador','l')
+                        ->where('l.login = :a1','l.senha = :a2')
+                        ->setParameter('a1', $login)->setParameter('a2', $password)->getQuery()->getResult();
         if (!is_null($userLogin)) {
-            if ($userLogin->getLogin()->encryptPassword($password) == $userLogin->getLogin()->getSenha()) {
-               
-                $session = new Session;
-                $session->setNome($userLogin->getNome());
-                $session->setLogin($userLogin->getLogin()->getLogin());
-                $session->setNivel($userLogin->getNivel()->getId());
-                return $session;
-            }
+                return $userLogin;
+            
         }
         return false;
     }
-    
-    
     
 }

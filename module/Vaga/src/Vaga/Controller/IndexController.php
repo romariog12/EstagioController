@@ -9,6 +9,9 @@ use Vaga\Entity\Encaminhamento;
 class IndexController extends AbstractActionController
 {
     public function indexAction(){
+        if(!isset($this->session()->item)){
+           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+       }
        $request = $this->getRequest();
        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
        $idalunovaga = $this->params()->fromRoute("id", 0);
@@ -45,6 +48,9 @@ class IndexController extends AbstractActionController
       }
       //Lançar contratos
     public function lancarcontratosAction(){
+        if(!isset($this->session()->item)){
+           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+       }
         $request = $this->getRequest();
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $idvagaEncaminhamento = $this->params()->fromRoute("idVaga", 0);

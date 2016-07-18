@@ -11,11 +11,12 @@
  *
  * @author romario
  */
-namespace Auth\Adapter;
+namespace Auth\Model;
 
 use Zend\Authentication\Adapter\AdapterInterface;
 use Doctrine\ORM\EntityManager;
 use Zend\Authentication\Result;
+
 
 class Adapter implements AdapterInterface{
     
