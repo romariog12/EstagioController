@@ -15,12 +15,9 @@ class IndexController extends AbstractActionController {
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $findCurso = $em->getRepository("Aluno\Entity\Aluno")->findAll();
             $findEmpresa = $em->getRepository("Empresa\Entity\Empresa")->findAll();
-            $recisaoRow1 = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
-            $recisaoRow2 = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('-');
+            $recisaoRow = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
             $row = count($findCurso);
-            $rowRecisao1 = count($recisaoRow1); 
-            $rowRecisao2 = count($recisaoRow2);
-            $rowRecisao = $rowRecisao2 + $rowRecisao1;
+            $rowRecisao= count($recisaoRow);
             $rowEmpresa = count($findEmpresa);
             
             $request = $this->getRequest();

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="encaminhamento")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vaga\Entity\VagaRepository")
  */
 class Encaminhamento
 {
@@ -34,9 +35,9 @@ class Encaminhamento
     private $recisao;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="Relatorio", type="integer", nullable=false)
+     * @ORM\Column(name="Relatorio", type="string", nullable=false)
      */
     private $relatorio;
 

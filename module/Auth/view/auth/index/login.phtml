@@ -6,8 +6,9 @@
 <div class="navbar-collapse" >
      <h3 style=" color: #c2c2c2"><i class="glyphicon glyphicon-log-in"></i></h3>
 <form class="col-lg-4" method="post">
-    <input id="login" name="login" type="text" class="form-control " placeholder="Login"/>
-    <br/><input id="senha" name="senha" type="password" class=" form-control" placeholder="Senha"/><br/>
+    <div>
+        <input id="login" name="login" type="text" class="form-control " placeholder="Login" required=""/>
+        <br/><input id="senha" name="senha" type="password" class=" form-control" placeholder="Senha" required=""/><br/>
             
             <input type="submit" class="btn btn-default" name="Entrar" value="Entrar"/>
             <?php
@@ -16,6 +17,8 @@
         ->setMessageSeparatorString('<p></p>')
         ->setMessageCloseString('<button type="button" class="close" data-dismiss="alert">x</button></div>')
         ->render('error', array('alert alert-danger'));?>
+    </div>
+    <div></div>
 </form>
 </div>
 <br/><br/>

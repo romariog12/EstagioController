@@ -19,7 +19,7 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Empresa\Controller',
                         'controller'    => 'Index',
-                        'action'        => 'index',
+                        'action'        => 'empresa',
                     ),
                 ),
                 'may_terminate' => true,
@@ -72,7 +72,8 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'Home/index/index' => __DIR__ . '/../view/home/index/index.phtml',
+            'Emrpesa/index/index' => __DIR__ . '/../view/empresa/index/empresa.phtml',
+            'Empresa/index/index' => __DIR__ . '/../view/empresa/index/agente.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

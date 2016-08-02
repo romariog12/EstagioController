@@ -64,15 +64,11 @@ $listaEncaminhamento = $this->listaEncaminhamento;
             <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>
             
             
-            <td><a  class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
-            
-        </tr>
-        
+            <td><a  class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td> 
+        </tr> 
             <?php endforeach;?>
-        
-    </table>
+    </table>      
 </form>
-    
             <?php }
             else{?>        
 <div class="alert-danger" style="margin: initial">

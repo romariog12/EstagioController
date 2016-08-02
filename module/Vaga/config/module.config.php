@@ -48,6 +48,7 @@ return array(
                       ),
                   ),
               ),
+           
             
         ),
         
@@ -84,7 +85,10 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'Home/index/index' => __DIR__ . '/../view/home/index/index.phtml',
+            'vaga/index/index' => __DIR__ . '/../view/vaga/index/index.phtml',
+            'vaga/index/editar-contratos' => __DIR__ . '/../view/vaga/index/editarContratos.phtml',
+            'vaga/index/contrato-completo' => __DIR__ . '/../view/vaga/index/contratoCompleto.phtml',
+            
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

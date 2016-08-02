@@ -15,13 +15,12 @@ use Empresa\Entity\Empresa;
 
 class IndexController extends AbstractActionController
 {
-      public function indexAction()
+      public function empresaAction()
       {
           if(!isset($this->session()->item)){
            $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
        }
        {
-          $result = array();
           $request = $this->getRequest();
           $idaluno = $this->params()->fromRoute("id", 0);
           
@@ -39,22 +38,51 @@ class IndexController extends AbstractActionController
                   $em->persist($empresa);
                   $em->flush();
                   
-                  
-                    $this->flashMessenger()->addSuccessMessage('Cadastrado com Sucesso');
-                  
               } catch (Exception $ex) {
                   echo $this->flashMessenger()->render();     
-              }   
-                if ($this->flashMessenger()->hasSuccessMessages()) {
-                    return new ViewModel(array(
-                    'success' => $this->flashMessenger()->getSuccessMessages()
-                ));
-                }
+              }
                  return $this->redirect()->toRoute('vaga/default', 
                   array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno));
             }
       
-          return new ViewModel(['success' => $this->flashMessenger()->getSuccessMessages()]);
-        }
+          return new ViewModel([
+              'idaluno'=>$idaluno
+          ]);
+        }   
     }
+    public function agenteAction(){
+        if(!isset($this->session()->item)){
+           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+       }
+       {
+          $request = $this->getRequest();
+          $idaluno = $this->params()->fromRoute("id", 0);
+          
+          if ($request->isPost()){
+              try {
+              $nomeAgente = $request->getPost("agente");
+              $cnpj = $request->getPost("cnpj");
+              $telefone = $request->getPost("telefone");
+              $agente = new \Empresa\Entity\Agente();
+              $agente ->setAgente($nomeAgente);
+              $agente ->setCnpj($cnpj);
+              $agente ->setTelefone($telefone);
+              
+              $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+                  $em->persist($agente);
+                  $em->flush();
+                  
+              } catch (Exception $ex) {
+                  echo $this->flashMessenger()->render();     
+              }
+                 return $this->redirect()->toRoute('vaga/default', 
+                  array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno));
+            }
+      
+          return new ViewModel([
+              'idaluno'=>$idaluno
+          ]);
+        }   
+            
+        }
 }

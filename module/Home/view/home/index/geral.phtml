@@ -4,6 +4,7 @@
        $recisaoRow = $this->recisaoRow;
        $rowEmpresa = $this->rowEmpresa;
        $rowListaAluno = $this->rowListaAluno;
+       
        ?>
 <html lang="pt-br">
 <meta charset="utf-8">
@@ -12,7 +13,7 @@
     <form>
         <div><h4><i class="glyphicon glyphicon-globe   "></i>&nbsp;&nbsp;Geral</h4></div>
     <br/>  
-        <table class="table">
+        <table class="table ">
             <tr>
             <th> Alunos cadastrados </th>
             <th>Empresas Cadastradas</th>
@@ -62,9 +63,11 @@
             <div><h4><i class="glyphicon glyphicon-bookmark  "></i>&nbsp;&nbsp;<?php echo $curso?></h4></div>
             <tr>
                 <th>Alunos cadastrados</th>
+                <th>Alunos em estágios</th>
             </tr>
             <tr>
-                <td style="font-size: 60px; color:  #3373ea"><?php echo $rowListaAluno;?></td><?php endif;?>
+                <td style="font-size: 60px; color:  #3373ea"><?php echo $rowListaAluno;?></td>
+                <td style="font-size: 60px; color:  #3373ea"><?php echo $this->recisaoRowCurso;?></td><?php endif;?>
             </tr>
         </table>
        

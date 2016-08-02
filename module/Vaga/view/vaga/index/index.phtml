@@ -5,7 +5,7 @@ $listaAluno = $this->listaAluno;
 $idaluno = $this->idaluno;
 ?>
 <html lang="pt-br">
-<meta charset="utf-8">
+    <meta charset="utf-8" ng-app="">
 <body>
         <br/>
     <div><h3 class="navbar-brand"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Cadastrar Vaga</h3></div>
@@ -14,43 +14,48 @@ $idaluno = $this->idaluno;
     <br/>
     <br/>
     <form style="margin-left: 2%" method="post" class="navbar-collapse"><br/> 
-        <div class="navbar-collapse">    
-        <div class="col-lg-5">
-                <?php echo $this->translate('Agente de Integração')?>
+        <div class="col-lg-6">
+                                    <?php echo $this->translate('Agente de Integração')?>
                 <br/>
-                        <select name="agente" class="form-control" >
-                                   <option></option>
-                <?php foreach ($listaEmpresa as $f): ?>
-                                   <option><?php print_r($f->getEmpresa()); ?></option>
-                <?php endforeach; ?>  
-                        
-                                   
-                        </select><br/>
-                           <?php echo $this->translate('Empresa')?>
-                        <select name="emrpesa" class="form-control" >
-                                   <option></option>
-                <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
-                                   <option><?php print_r($f->getEmpresa()); ?></option>
-                <?php endforeach; ?>  
-                        </select><span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus">Cadastrar Empresa</i></a></span><br/>
+                <select name="agente" class="form-control" >
+                           <option></option>
+                            <?php foreach ($this->listaAgente as $f): ?>
+                           <option><?php print_r($f->getAgente()); ?></option>
+                            <?php endforeach; ?>         
+                </select><span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'agente', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Agente de Integração</a></span><br/>
+
                 <br/>
-                <?php echo $this->translate('Carga')?>&nbsp;<input name="carga" type="text" class="form-control" /><br/>
-                <?php echo $this->translate('Bolsa')?>&nbsp;<input name="bolsa" type="text" class="form-control" /><br/>
-                        <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar"/><br/>
-                <nav>
-                    <ul class="pager">
-                      <li class="previous"><a href="<?php echo $this->url('perfil/default', 
-                          array('controller' => 'index', 'action' => 'perfil','id'=>$idaluno)) ?>"><span aria-hidden="true">&larr;</span>&nbsp;&nbsp;Voltar</a></li> 
-                    </ul>
-                </nav>
-                        
-            </div>
-        </div>
+                <br/>
+                                    <?php echo $this->translate('Empresa')?>
+                        <select required="" name="emrpesa" class="form-control" >
+                                   <option></option>
+                                    <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
+                                   <option><?php print_r($f->getEmpresa()); ?></option>
+                                    <?php endforeach; ?>  
+                        </select><span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'empresa', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Empresa Concedente</a></span><br/>
+                <br/>
+                <br/>
+                    <span class="col-lg-6"><input required="" id="carga" name="carga" type="text" class="form-control" placeholder="Carga Horária"/></span>
+                    <span class="col-lg-6"><input required="" id="bolsa" name="bolsa" type="number" class="form-control" placeholder="Bolsa-Auxílio"/></span>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                    <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar"/>
+                       </div>
 </form>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <nav>
+        <div style=" margin-top: 15%">
+            <ul class="pager">
+
+                <li ><a href="<?php echo $this->url('perfil/default',array('controller' => 'index', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+            </ul>
+        </div> 
+    </nav>
+
+            
+ 
     <br/>
     
 <?php echo $this->resp; ?>

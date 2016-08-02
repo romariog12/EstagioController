@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+    <title>
+        
+    </title>
+      <?php
+      foreach ($this->listaContratos as $f){
+          $inicio = date_format($f->getInicio(), 'd/m/Y');
+          $fim = date_format($f->getInicio(), 'd/m/Y');
+          $tipoDoc = $f->getRelatorio();
+          $entregue = $f->getEntregue();    
+      }
+        foreach ($this->listaVaga as $f){
+          $empresa = $f->getEmpresa();
+          $agente = $f->getAgente();
+          $carga = $f->getCarga();
+          $Bolsa = $f->getBolsa();    
+      }
+       foreach ($this->aluno as $f){
+          $nome = $f->getNome();
+          $matricula = $f->getMatricula();
+          $curso = $f->getCurso();
+            
+      }
+       foreach ($this->listaEmpresa as $f){
+          $empresa = $f->getEmpresa();
+          $cnpj = $f->getCnpj();
+          $telefone = $f->getTelefone();
+          
+            
+      }
+      
+      ?>
+    <body>
+        <div class="modal-body form-inline">
+            <h1 style=" text-align: center"> <?php echo $tipoDoc;?></h1>
+                  <hr>
+                  <div>
+                  <h3>Dados do Aluno</h3>
+                  <p><label>Nome: </label> <?php echo $nome;?></p>
+                  <p><label>Curso:</label> <?php echo $curso;?></p>
+                  <p><label>Matrícula:</label> <?php echo $matricula;?></p><hr>
+                  </div>
+                  <h3>Dados da Empresa</h3>
+                  <p><label>Nome: <?php echo $empresa;?></label></p>
+                  <p><label>Telefone: <?php echo $telefone;?></label></p>
+                  <p><label>Cnpj: <?php echo $cnpj;?></label></p>
+                  
+              </div>
+    </body>
+</html>

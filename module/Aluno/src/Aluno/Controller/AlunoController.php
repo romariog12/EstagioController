@@ -13,10 +13,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Perfil\Entity\Perfil;
 
-class IndexController extends AbstractActionController
+class AlunoController extends AbstractActionController
 {
     
-    public function indexAction() {
+    public function cadastrarAction() {
        if(!isset($this->session()->item)){
            $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
        }

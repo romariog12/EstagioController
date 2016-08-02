@@ -5,10 +5,11 @@ namespace Aluno\Entity;
 class AlunoRepository extends \Doctrine\ORM\EntityRepository
 {   
     public function findByMatricula($matricula) {
-        $userLogin = $this->createQueryBuilder('m')
-                        >select('m.Matricula,m.Nome , m.Id, m.Curso')
-                         ->from('bundle:entity','m')
-                         ->where('m.Matricula = :a1')
+        $userLogin = $this
+                        ->createQueryBuilder('m')
+                        ->select('m.Matricula,m.Nome , m.Id, m.Curso')
+                        ->from('bundle:entity','m')
+                        ->where('m.Matricula = :a1')
                         ->setParameter('a1', $matricula)->getQuery()->getResult();
         return $userLogin;
     }
