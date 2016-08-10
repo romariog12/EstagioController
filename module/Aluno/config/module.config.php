@@ -62,7 +62,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Aluno\Controller\Aluno' => Controller\AlunoController::class
+            'Aluno\Controller\Aluno' => Controller\AlunoController::class,
+            
         ),
     ),
     'view_manager' => array(

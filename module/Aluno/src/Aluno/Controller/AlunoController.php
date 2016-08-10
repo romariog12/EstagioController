@@ -20,8 +20,7 @@ class AlunoController extends AbstractActionController
        if(!isset($this->session()->item)){
            $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
        }
-          $request = $this->getRequest();
-          $result = array();
+          $request = $this->getRequest();  
           if($request->isPost())
           {         
                try{  
@@ -42,10 +41,9 @@ class AlunoController extends AbstractActionController
                         $em->flush();                
                   
           }catch (Exception $e){
-              echo $this->flashMessenger()->render();
+             
           }         
-         }
-    
-        return new ViewModel($result);
+         } 
+        return new ViewModel();
     }
 }

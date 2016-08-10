@@ -40,7 +40,6 @@
             <td> <?php echo date_format($f->getFim(),'d/m/Y') ; ?></td>
             <td>  <?php echo sprintf($f->getRelatorio()) ;?></td>
             <td>  <?php echo $f->getEntregue();?> </td>
-           
             <td><a data-toggle="modal" data-target="#becomeamember" ><i  class="glyphicon glyphicon-edit"></i></a></td>
             <td><a style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array('action' => 'excluir', 'iddelete' => $f->getIdencaminhamento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
         </tr><?php endforeach;?> 

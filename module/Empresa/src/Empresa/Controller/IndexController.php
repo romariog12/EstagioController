@@ -15,15 +15,14 @@ use Empresa\Entity\Empresa;
 
 class IndexController extends AbstractActionController
 {
-      public function empresaAction()
-      {
-          if(!isset($this->session()->item)){
-           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
-       }
-       {
+    
+ 
+    public function empresaAction(){
+        $this->sairAction();
+          
           $request = $this->getRequest();
           $idaluno = $this->params()->fromRoute("id", 0);
-          
+          $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
           if ($request->isPost()){
               try {
               $nomeEmpresa = $request->getPost("empresa");
@@ -33,8 +32,6 @@ class IndexController extends AbstractActionController
               $empresa ->setEmpresa($nomeEmpresa);
               $empresa ->setCnpj($cnpj);
               $empresa ->setTelefone($telefone);
-              
-              $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
                   $em->persist($empresa);
                   $em->flush();
                   
@@ -44,17 +41,15 @@ class IndexController extends AbstractActionController
                  return $this->redirect()->toRoute('vaga/default', 
                   array('controller' => 'index', 'action' => 'index', 'id'=>$idaluno));
             }
+            
       
           return new ViewModel([
               'idaluno'=>$idaluno
           ]);
         }   
-    }
+    
     public function agenteAction(){
-        if(!isset($this->session()->item)){
-           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
-       }
-       {
+          $this->sairAction();
           $request = $this->getRequest();
           $idaluno = $this->params()->fromRoute("id", 0);
           
@@ -84,5 +79,5 @@ class IndexController extends AbstractActionController
           ]);
         }   
             
-        }
+        
 }

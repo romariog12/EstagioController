@@ -7,9 +7,12 @@ return [
             ],
         ],
         'factories' => array(
-            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory'
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+            
             
         ),
+        
+        
     ],
     'doctrine' => array(
         'connection' => array(
@@ -25,4 +28,5 @@ return [
             )
         )
     ),
+  
 ];

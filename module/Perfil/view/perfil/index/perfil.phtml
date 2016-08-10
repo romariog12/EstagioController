@@ -1,42 +1,33 @@
 <?php
-echo $this->doctype();
-$lista = $this->lista;
-$listaVaga = $this->listaVaga;
-$listaEncaminhamento = $this->listaEncaminhamento;
+    echo $this->doctype();
+    $lista = $this->lista;
+    $listaVaga = $this->listaVaga;
+    $listaEncaminhamento = $this->listaEncaminhamento;
 ?>
 <html lang="pt-br">
     <head>
 <meta charset="utf-8">
 </head>
 <body>
-<br/>
-<div class="navbar-brand" id="aluno">
-
          <?php if($lista):
             foreach ($lista as $f): 
              $getidaluno = $f->getidAluno();
-                 ?>
-         
- </div> 
-<div >
-    <h3 class="table-borderless"><br/><i class="glyphicon glyphicon-user" style="color: #2863f2"></i>&nbsp;&nbsp;<?php echo $f->getNome(); ?><br/></h3><br/><br/>
+          ?>
+        
+<div class="navbar">
+    <h4 class="navbar-brand"><i class="glyphicon glyphicon-user" style="color: #2863f2"></i>&nbsp;&nbsp;<?php echo $f->getNome(); ?></h4><br/><br/><br/><br/>
     <p class="navbar-brand"><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;<?php echo $f->getCurso(); ?></p>
     <p class="navbar-brand"><i class="glyphicon glyphicon-bookmark"></i>&nbsp;&nbsp;<?php echo $f->getMatricula(); ?></p>
     <br/>
-    <br/>
-    <br/>
 </div> 
- <?php endforeach;
-         endif;
-         ?>
+ <?php endforeach; endif;?>
 <?php if ($listaVaga){?>
-<div class="navbar-default">
-    <br/>
-<h4 style="text-align: center; margin-top: 2%" ><?php echo $this->translate('Vagas Cadastradas')?><br/>
-    <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h4>
-<br/>
-  
-      <form class="navbar-default" method="post" style="background-color: #cddbff">
+    <div class="navbar-default" style="margin-top: 5%">
+        <div>
+            <h4 style="text-align: center; " ><?php echo $this->translate('Vagas Cadastradas')?><br/>
+            <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h4>
+        </div> 
+      <form method="post" >
     <table class="table" >
        
         <tr>
@@ -46,24 +37,20 @@ $listaEncaminhamento = $this->listaEncaminhamento;
           <th>RECISÃO</th>
           <th>CONTRATOS</th>
           <th>EXCLUIR</th>
-          
-          
         </tr>
             <?php foreach ($listaVaga as $f):?>
             <?php  if($f->getRecisao() !=(null)){ ?>
         <tr class="table" style="background: #ab1c1c; color: white">
             <?php } ?>
             
-            <?php  if($f->getRecisao() ==('')||$f->getRecisao() ==('-')){ ?>
+            <?php  if($f->getRecisao() ==('')){ ?>
         <tr class="table" style="background: #8fee8f; ">
             <?php } ?>
             <td><?php echo $f->getidvaga();?></td>
             <td><?php echo $f->getEmpresa(); ?></td>
             <td><?php echo $f->getAgente(); ?></td>
             <td><?php echo $f-> getRecisao(); ?></td>
-            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>
-            
-            
+            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
             <td><a  class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td> 
         </tr> 
             <?php endforeach;?>
@@ -76,7 +63,6 @@ $listaEncaminhamento = $this->listaEncaminhamento;
            <h4 style="text-align: center">Nenhum estágio lançado <a class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h4><br/>      
 </div>
         <?php };?> 
-  
 </div>
 <?php echo $this->resp; ?>
 </body>

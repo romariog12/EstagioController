@@ -69,6 +69,29 @@ class Vaga
      * @ORM\Column(name="Recisao", type="string", nullable=true)
      */
     private $recisao;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cursoVaga",  type="string", nullable=true)
+     */
+    private $cursoVaga;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mesVaga",  type="string", nullable=true)
+     */
+    private $mesVaga;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="anoVaga",  type="string", nullable=true)
+     */
+    private $anoVaga;
+    
+    
+    
     function getIdvaga() {
         return $this->idvaga;
     }
@@ -100,8 +123,19 @@ class Vaga
     function getRecisao() {
         return $this->recisao;
     }
+    function getCursoVaga() {
+        return $this->cursoVaga;
+    }
+    function getMesVaga() {
+        return $this->mesVaga;
+    }
 
-    function setIdvaga($idvaga) {
+    function getAnoVaga() {
+        return $this->anoVaga;
+    }
+
+    
+        function setIdvaga($idvaga) {
         $this->idvaga = $idvaga;
         return $this;
     }
@@ -138,6 +172,21 @@ class Vaga
 
     function setRecisao($recisao) {
         $this->recisao = $recisao;
+        return $this;
+    }
+
+    function setCursoVaga($cursoVaga) {
+        $this->cursoVaga = $cursoVaga;
+        return $this;
+    }
+
+    function setMesVaga($mesVaga) {
+        $this->mesVaga = $mesVaga;
+        return $this;
+    }
+
+    function setAnoVaga($anoVaga) {
+        $this->anoVaga = $anoVaga;
         return $this;
     }
 

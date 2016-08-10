@@ -1,6 +1,11 @@
 <?php echo $this->doctype(); ?>
 
 <html lang="en">
+    <!--
+    Autor: Romário Macedo Portela
+    Estudante de Análise e Desenv. de Sistemas
+    Framework utilizado: Zend 2
+    -->
     <head>
         <meta charset="utf-8">
         <?php echo $this->headTitle('UCB -  '. $this->translate('Projem'))->setSeparator(' - ')->setAutoEscape(false) ?>
@@ -18,7 +23,8 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-                ->prependFile($this->basePath('js/Mascaras.js'))
+            ->prependFile($this->basePath('js/Chart.min.js'))
+            ->prependFile($this->basePath('js/Mascaras.js'))
             ->prependFile($this->basePath('js/jquery.maskedinput.js'))
             ->prependFile($this->basePath('js/bootstrap.min.js'))
             ->prependFile($this->basePath('js/jquery.min.js'))
@@ -36,7 +42,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('geral') ?>">&nbsp;<?php echo $this->translate('PROJEM') ?></a>
+                    <a class="navbar-brand" href="<?php echo $this->url('geral') ?>">&nbsp;<?php echo $this->translate('Início') ?></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
@@ -60,10 +66,11 @@
             <?php echo $this->content; ?>
             
             <footer><hr>
-                <p>&copy; <?php echo date('Y') ?> PROJEM - UCB. </p>
+                <p>&copy; <?php echo date('Y') ?> <a href="http://www.ucb.br/Cursos/58ProjetoDeEmpregabilidadeProjem/">PROJEM - UCB</a>. </p>
               
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>
     </body>
+    
 </html>

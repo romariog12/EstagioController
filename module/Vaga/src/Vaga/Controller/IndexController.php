@@ -9,9 +9,7 @@ use Vaga\Entity\Encaminhamento;
 class IndexController extends AbstractActionController
 {
     public function indexAction(){
-        if(!isset($this->session()->item)){
-           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
-       }
+        $this->sairAction();
        $request = $this->getRequest();
        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
        $idalunovaga = $this->params()->fromRoute("id", 0);
@@ -20,7 +18,8 @@ class IndexController extends AbstractActionController
                 $empresa = $request->getPost('emrpesa');
                 $agente = $request->getPost('agente');
                 $carga = $request->getPost('carga');
-                $bolsa = $request->getPost('bolsa') ;  
+                $bolsa = $request->getPost('bolsa') ;
+                $cursoVaga = $request->getPost('curso') ;
                     $vaga = new Vaga();
                     $vaga->setIdalunovaga($idalunovaga);
                     $vaga->setEmpresa($empresa);
@@ -28,6 +27,9 @@ class IndexController extends AbstractActionController
                     $vaga->setCarga($carga);
                     $vaga->setBolsa($bolsa);
                     $vaga->setRecisao('');
+                    $vaga->setCursoVaga($cursoVaga);
+                    $vaga->setMesVaga(date('m'));
+                    $vaga->setAnoVaga(date('Y'));
                 $em->persist($vaga);
                 $em->flush();                  
                 return $this->redirect()->toRoute('perfil/default', 
@@ -51,9 +53,7 @@ class IndexController extends AbstractActionController
       }
       //Lançar contratos
     public function lancarcontratosAction(){
-        if(!isset($this->session()->item)){
-           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
-       }
+        $this->sairAction();
         $request = $this->getRequest();
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $idvagaEncaminhamento = $this->params()->fromRoute("idVaga", 0);
@@ -160,20 +160,16 @@ class IndexController extends AbstractActionController
             'listaContratos' =>$listaContratos
         ]);
     }
-    public function contratoCompletoAction(){
+    public function infoAction(){
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-        $idAluno = $this->params()->fromRoute("id", 0);
-        $idVaga =  $this->params()->fromRoute("idVaga", 0);
-        $aluno = $em->getRepository("Aluno\Entity\Aluno")->findByIdaluno($idAluno);   
-        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdvaga($idVaga);
-        $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdvagaEncaminhamento($idVaga);
-        $listaEmpresa = $em->getRepository("Empresa\Entity\Empresa")->findByVagaIdvaga($idVaga);
+        $curso = $this->params()->fromRoute("curso", 0);
+        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
+     
         return new ViewModel(
                 array(
-                    'aluno'=> $aluno,
-                    'listaContratos'=>$listaContratos,
+               
                     'listaVaga'=>$listaVaga,
-                    'listaEmpresa'=>$listaEmpresa
+                    'mensagem'=>$menstagem=  '<p class="navbar-brand" style="color: red">Nenhuma dado encontrado!</p>'
                 )
                 );
     }

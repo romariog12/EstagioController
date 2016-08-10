@@ -7,8 +7,7 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractActionController
 {
         
-    public function loginAction() {
-    $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");    
+    public function loginAction() {  
     $request = $this->getRequest();  
     if($request->isPost())
         { 
@@ -21,13 +20,6 @@ class IndexController extends AbstractActionController
                  
                 if ($auth->authenticate()->isValid()) {
                     $this->flashMessenger()->addSuccessMessage('Login realizado com sucesso!');
-                    $user = $em->getRepository('Administrador\Entity\Administrador')->findBySenha($senha);
-                    foreach ($user as $u){
-                        $nome = $u->getNome();
-                    }
-                    
-                    
-                    $this->session()->item = $nome;
                     return $this->redirect()->toRoute('geral', array('controller' => 'home', 'action' => 'index'));
                 }
                 $mensagem = $auth->authenticate()->getMessages();

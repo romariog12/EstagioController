@@ -17,9 +17,7 @@ use Vaga\Entity\Vaga;
 class IndexController extends AbstractActionController {
    
 public function indexAction()   {
-    if(!isset($this->session()->item)){
-           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
-       }
+    $this->sairAction();
     
     $request = $this->getRequest();
    
@@ -40,9 +38,7 @@ public function indexAction()   {
     }
     //Vagas cadastradas no Perfil                  
     public function perfilAction(){
-        if(!isset($this->session()->item)){
-           $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
-       }
+       $this->sairAction();
       $vaga = new Vaga();
       $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
       $id = $this->params()->fromRoute("id", 0);

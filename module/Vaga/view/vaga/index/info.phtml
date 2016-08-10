@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">  
+    <title>Info</title>
+    <meta charset="utf-8">
+     <body>
+         <br/>
+     <div><h4>Vagas Cadastradas</h4></div>
+     <br/>
+         <table class="table "> 
+    <?php
+    if($this->listaVaga == null ){
+    echo $this->mensagem;}
+    ?>  
+             <tr>
+                 <th>Aluno</th>
+                 <th>Empresa</th>
+                 <th>Agente de Integração</th>
+                 <th>Recisão</th>  
+             </tr>
+
+    <?php     
+        foreach ($this->listaVaga as $f){
+              if($f->getRecisao()== ''){ ?>            
+            
+            <tr style="background-color: #c4ffc2;"><?php } else{?>
+                 <tr style="background-color:  #ae1111; color: white"><?php };?>
+                    
+                    <td><a href="<?php echo $this->url('perfil/default', 
+                         array('controller' => 'index', 'action' => 'perfil', 'id'=>$f->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a></td>
+                    <td><?php echo  $f->getEmpresa();?></td>
+                    <td><?php echo  $f->getAgente();?></td>  
+                    <td><?php echo  $f->getRecisao();?></td> 
+                
+                 </tr>   
+
+    <?php  } ?>
+          
+         </table>
+         <div style=" margin-top: 30%"><br/>
+            <ul class="pager">
+                
+                <li ><a href="<?php echo $this->url('geral') ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+            </ul>
+            </div> 
+     
+    </body>
+</html>

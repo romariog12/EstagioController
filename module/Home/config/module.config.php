@@ -71,6 +71,7 @@ return array(
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
+            'session'=>  \Auth\Model\Session::class
         ),
     ),
     'translator' => array(

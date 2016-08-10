@@ -48,6 +48,16 @@ return array(
                       ),
                   ),
               ),
+            'select' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/curso/[:action]/[:curso][/]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Vaga\Controller',
+                          'controller'    => 'Index',
+                      ),
+                  ),
+              ),
            
             
         ),
@@ -57,9 +67,11 @@ return array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
+            
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
+            'session' =>  \Auth\Model\Session::class
         ),
     ),
     'translator' => array(

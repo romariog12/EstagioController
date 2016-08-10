@@ -4,14 +4,14 @@ namespace Vaga\Entity;
 
 class VagaRepository extends \Doctrine\ORM\EntityRepository{
     
-    public function findByAtivo() {
-        $valor = $this->createQueryBuilder('u')
+    public function findByRecisaoAndCursoVaga($recisao, $curso) {
+        $userLogin = $this->createQueryBuilder('u')
                         ->select('u.recisao', 'l')
-                        ->from('Vaga\Entity\Encaminhamento','l')
-                        ->where('l.recisao = :a1')
-                        ->setParameter('a1','')->getQuery()->getResult();
-        return $valor;
-       
+                        ->from('Vaga\Entity\Vaga','l')
+                        ->where('l.cursoVaga = :a1','l.recisao = :a2')
+                        ->setParameter('a1', $curso)
+                        ->setParameter('a2', $recisao)->getQuery()->getResult();
+        return $userLogin;
     }
     
 }

@@ -26,4 +26,5 @@ return array(
             'config/autoload/{{,*.}global,{,*.}local}.php',
         ),
     ),
+    
 );
