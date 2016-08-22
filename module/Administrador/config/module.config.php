@@ -12,13 +12,13 @@ namespace Administrador;
 return array(
     'router' => array(
         'routes' => array(
-            'aluno' => array(
+            'administrador' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/aluno',
+                    'route'    => '/administrador',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Aluno\Controller',
-                        'controller'    => 'Index',
+                        '__NAMESPACE__' => 'Administrador\Controller',
+                        'controller'    => 'Administrador',
                         'action'        => 'index',
                     ),
                 ),
@@ -61,7 +61,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Aluno\Controller\Index' => Controller\IndexController::class
+            'Administrador\Controller\Administrador' => Controller\AdministradorController::class
         ),
     ),
     'view_manager' => array(
@@ -72,7 +72,7 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'Home/index/index' => __DIR__ . '/../view/home/index/index.phtml',
+            'administrador/administrador/index' => __DIR__ . '/../view/administrador/index/administrador.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

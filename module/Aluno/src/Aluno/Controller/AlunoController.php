@@ -12,11 +12,52 @@ namespace Aluno\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Perfil\Entity\Perfil;
+use Vaga\Entity\Vaga;
+use Aluno\Entity\Aluno;
 
 class AlunoController extends AbstractActionController
 {
+    public function indexAction()   {
+    $this->sairAction();
     
-    public function cadastrarAction() {
+    $request = $this->getRequest();
+   
+    if($request->isPost()){
+        $data = $this->params()->fromPost();
+        $aluno = new Aluno(); 
+        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        if ($data['buscar']=='Buscar'){
+                   $matricula = $request->getPost('busca');
+                   $aluno->setMatricula($matricula);
+                   $lista = $em->getRepository("Aluno\Entity\Aluno")->findByMatricula($aluno->getMatricula());
+                   
+        }
+        return new ViewModel([
+        'lista' => $lista,
+            ]);  
+        }
+    }
+    //Vagas cadastradas no Perfil                  
+    public function perfilAction(){
+       $this->sairAction();
+      $vaga = new Vaga();
+      $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+      $id = $this->params()->fromRoute("id", 0);
+      $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdalunovaga($id);
+      $lista = $em->getRepository("Aluno\Entity\Aluno")->findByidaluno($id);
+      
+        foreach ($listaVaga as $l){
+                             $idVaga = $l->getidvaga();
+                             $vaga->setIdvaga($idVaga);
+                    }
+                    $listaEncaminhamento = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdvagaEncaminhamento($vaga->getIdvaga());
+        return new ViewModel([
+                'listaVaga'=>$listaVaga,
+                'lista'=>$lista,
+                'listaEncaminhamento'=>$listaEncaminhamento
+            ]);        
+    }
+     public function cadastrarAction() {
        if(!isset($this->session()->item)){
            $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
        }

@@ -40,6 +40,20 @@ class Administrador
      * @ORM\Column(name="Senha", type="string", length=50, nullable=true)
      */
     private $senha;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Nivel", type="integer", nullable=true)
+     */
+    private $nivel;
+    
+    function getNivel() {
+        return $this->nivel;
+    }
+
+        
+    
     function getIdadministrador() {
         return $this->idadministrador;
     }
@@ -54,8 +68,12 @@ class Administrador
     function getSenha() {
         return $this->senha;
     }
+    function setNivel($nivel) {
+        $this->nivel = $nivel;
+        return $this;
+    }
 
-    function setIdadministrador($idadministrador) {
+        function setIdadministrador($idadministrador) {
         $this->idadministrador = $idadministrador;
         return $this;
     }

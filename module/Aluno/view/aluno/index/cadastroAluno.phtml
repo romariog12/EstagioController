@@ -1,0 +1,47 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+          
+    <h3 class="navbar-brand"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Cadastro de Aluno</h3>
+<br/>
+<br/>
+<br/>
+<br/><br/>
+<form class="navbar-collapse" method="post">
+    <div class="col-lg-4">
+        <div>
+    <?php echo $this->translate('Nome')?><br/><input name="nome" type="text" class="form-control " required="" /><br/>
+        <?php echo $this->translate('Matricula UCB')?><br/><input name="matricula" type="text" class="form-control" required=""/><br/>
+            <?php echo $this->translate('Curso')?><br/><select name="curso" class="form-control">
+            <option></option>
+            <option>EAD - ADMINISTRAÇÃO</option>
+            <option>EAD - PEDAGOGIA</option>
+            <option>EAD - GESTAO DE RECURSOS HUMANOS</option>
+            <option>EAD - TURISMO</option>
+            <option>EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO</option>
+            <option>EAD - ANÁLISE E DESENV. DE SISTEMAS</option>
+            <option>EAD - CIÊNCIAS CONTÁBEIS</option>
+            <option>EAD - CIENCIAS ECONÔMICAS</option>
+            <option>EAD - FILOSOFIA</option>
+            <option>EAD - GESTÃO PÚBLICA</option>
+            <option>EAD - GESTÃO DO COMÉRCIO EXTERIOR</option>
+            <option>EAD - GESTÃO FINANCEIRA</option>
+            <option>EAD - LETRAS PORTUGUÊS</option>
+            <option>EAD - PROFORM</option>
+            <option>EAD - SEGURANÇA DA INFORMAÇÃO</option>
+            <option>EAD - SEGURANÇA PÚBLICA</option>        
+        </select><br/>
+            <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar" />
+        </div>
+    </div>          
+</form>
+<nav>
+        <div style="">
+            <ul class="pager">
+
+                <li ><a href="<?php echo $this->url('perfil') ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+            </ul>
+        </div> 
+    </nav>
+<?php echo $this->resp; ?>
+</body></html>

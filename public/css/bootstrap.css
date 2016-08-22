@@ -810,13 +810,13 @@ pre code {
 
 @media (min-width: 768px) {
   .container {
-    width: 750px;
+    width: 500px;
   }
 }
 
 @media (min-width: 992px) {
   .container {
-    width: 970px;
+    width: 500px;
   }
 }
 

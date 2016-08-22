@@ -17,7 +17,7 @@ return array(
             'geral' => array(
                 'type' => Literal::class,
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/geral',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Home\Controller',
                         'controller' => 'Index',
@@ -29,7 +29,7 @@ return array(
             'home' => array(
                 'type'    => Literal::class,
                 'options' => array(
-                    'route'    => '/home',
+                    'route'    => '/',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Home\Controller',
                         'controller'    => 'Index',

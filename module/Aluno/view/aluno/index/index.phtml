@@ -1,38 +1,56 @@
+<?php
+echo $this->doctype();
+$lista = $this->lista;
+?>
 <html lang="pt-br">
 <meta charset="utf-8">
 <body>
-    <h3 class="navbar-brand"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Cadastro de Aluno</h3>
-<br/>
-<br/>
-<br/>
-<br/><br/>
+          
+ <h3 class="navbar-brand">&nbsp;&nbsp;<?php echo $this->translate('Buscar Aluno')?></h3>
+        <br/><br/><br/> <br/><br/>     
 <form class="navbar-collapse" method="post">
-    <div class="col-lg-4">
-        <div>
-    <?php echo $this->translate('Nome')?><br/><input name="nome" type="text" class="form-control " required="" /><br/>
-        <?php echo $this->translate('Matricula UCB')?><br/><input name="matricula" type="text" class="form-control" required=""/><br/>
-            <?php echo $this->translate('Curso')?><br/><select name="curso" class="form-control">
-            <option></option>
-            <option>EAD - ADMINISTRAÇÃO</option>
-            <option>EAD - PEDAGOGIA</option>
-            <option>EAD - GESTAO DE RECURSOS HUMANOS</option>
-            <option>EAD - TURISMO</option>
-            <option>EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO</option>
-            <option>EAD - ANÁLISE E DESENV. DE SISTEMAS</option>
-            <option>EAD - CIÊNCIAS CONTÁBEIS</option>
-            <option>EAD - CIENCIAS ECONÔMICAS</option>
-            <option>EAD - FILOSOFIA</option>
-            <option>EAD - GESTÃO PÚBLICA</option>
-            <option>EAD - GESTÃO DO COMÉRCIO EXTERIOR</option>
-            <option>EAD - GESTÃO FINANCEIRA</option>
-            <option>EAD - LETRAS PORTUGUÊS</option>
-            <option>EAD - PROFORM</option>
-            <option>EAD - SEGURANÇA DA INFORMAÇÃO</option>
-            <option>EAD - SEGURANÇA PÚBLICA</option>        
-        </select><br/>
-            <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar" />
+    <div class="navbar-collapse" id="aluno">
+       <div class="col-lg-3">
+        <div class="input-group">
+            <input name="busca" type="text" class="form-control" placeholder="Matrícula" required="" >
+          <span class="input-group-btn">
+              <button class="btn btn-default" name="buscar" value="Buscar" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+          </span>
+         
+            
         </div>
-    </div>          
+          <!-- /input-group -->
+      </div>
+           <span class=" pager">
+               <a href="<?php echo $this->url('aluno') ?>"><span class="btn btn-default"><i class=" glyphicon glyphicon-plus"></i> Cadastro de Aluno</span></a>
+        </span> 
+        <!-- /.col-lg-6 -->
+    </div>
+  
+             
+         <!-- /.row -->
+    <br/><br/><br/>
+    <?php if($lista):?>
+<table class="table">
+         <tr>
+          <th><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;ALUNO</th>
+          <th>MATRICULA</th>
+          <th>CURSO</th>
+        </tr>
+         
+           <?php foreach ($lista as $f): ?>   
+        <tr  style="background: #cdffff">
+          
+          <td><?php echo $f->getNome(); ?></td>
+          <td><?php echo $f->getMatricula(); ?></td>
+          <td><?php echo $f->getCurso(); ?></td>
+          <td><a href="<?php echo $this->url('perfil/default', 
+                  array('controller' => 'aluno', 'action' => 'perfil', 'id'=>$f->getidaluno(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
+        </tr>
+    </table>
+<br/>
 </form>
-<?php echo $this->resp; ?>
-</body></html>
+        <?php endforeach; endif;?> 
+        <?php echo $this->resp; ?>
+</body>
+</html>

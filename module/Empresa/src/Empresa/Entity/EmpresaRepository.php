@@ -11,24 +11,15 @@ namespace Empresa\Entity;
 class EmpresaRepository extends \Doctrine\ORM\EntityRepository
 {
     
-    public function findByEmpresa($empresa) {
+    public function findByEmpresa() {
    
-        $userLogin = $this->createQueryBuilder('m')
-                        >select('m.Matricula,m.Nome , m.Id')
-                         ->from('bundle:entity','m')
-                         ->where('m.Matricula = :a1')
-                        ->setParameter('a1', $matricula)->getQuery()->getResult();
+         $userLogin = $this->createQueryBuilder('u')
+                        ->select('u.empresa', 'l')
+                        ->from('Empresa\Entity\Empresa','l')
+                        ->where('empresa == Senado Federal')
+                        ->orderBy('u.empresa', 'ASC');
+                        
         return $userLogin;
     }
-    public function findByPerfil($matricula) {
-   
-        $userLogin = $this->createQueryBuilder('m')
-                        >select('m.Matricula,m.Nome , m.Id')
-                         ->from('bundle:entity','m')
-                         ->where('m.Matricula = :a1')
-                        ->setParameter('a1', $matricula)->getQuery()->getResult();
-        return $userLogin;
-    }
-    
-    
+ 
 }

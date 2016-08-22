@@ -58,7 +58,8 @@ class Adapter implements AdapterInterface{
     public function authenticate() {
         $user = $this->em->getRepository('Administrador\Entity\Administrador')->findByLoginAndPassword($this->getLogin(), $this->getSenha());
         if ($user) {
-            return new Result(Result::SUCCESS, $user, array());
+            
+            return new Result(Result::SUCCESS, $user, array())   ;
         } else {
            
             return new Result(Result::FAILURE_CREDENTIAL_INVALID, null, array('Login e/ou senha nao encontrados'));
