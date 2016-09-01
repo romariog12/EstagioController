@@ -7,17 +7,15 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Administrador\Controller;
+namespace Base\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-
-
-
-
 class BaseController extends AbstractActionController
 {
-      public function indexAction(){
-          
-        
+      public function indexAction(){   
       }
+      public function logoutAction(){
+       unset($this->session()->item);
+       return $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+   }
 }

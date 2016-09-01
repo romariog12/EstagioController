@@ -1,0 +1,50 @@
+<?php echo $this->doctype(); ?>
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+    <div class="navbar-collapse">
+        <h3><i class=" glyphicon glyphicon-book"></i> Alunos</h3>
+    </div>
+    <div class="thumbnail">
+      <div class="caption">
+        <table class="table">
+            <tr>
+                <th>Perfil</th>
+                <th>Aluno</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+                
+            </tr>
+                <?php foreach ($this->pagination as $l):?>
+            <tr style=" background-color: #b6fffd">
+                <td><a href="<?php echo $this->url('perfil/default',['controller'=>'aluno', 'action'=>'perfil', 'id'=>$l->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
+                <td><?php echo $l->getNome()?></td>
+                <td><a href="<?php echo $this->url('administrador/default', ['controller'=>'administrador', 'action'=>'editarAluno', 'id'=>$l->getIdaluno(),'page'=>$this->pageNumber])?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
+                <td><a  style="color: #c81616" href="<?php echo $this->url('excluirAluno',['action'=>'excluirAluno', 'deleteAluno'=>$l->getIdaluno(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
+            </tr><?php    endforeach;?>
+
+        </table>     
+      </div>
+    </div>
+    
+    <nav aria-label="Page navigation">
+         <ul  class="pager">
+             <li  <?php if ($this->pageNumber == 1|| $this->pageNumber == 0 ){
+     echo "class='disabled'". "style='pointer-events: none'";
+    }
+    ?>>
+      <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
+          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
+      </a>
+    </li>
+    <li  <?php if ($this->pageNumber >= $this->count){ echo "class='disabled'". "style='pointer-events: none'";}?>>
+      <a href="<?php echo $this->pageNumber + 1?>" aria-label="Next">
+          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
+      </a>
+    </li> 
+  </ul>
+          
+</nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
+<?php echo $this->resp; ?>
+</body>
+</html>

@@ -10,6 +10,24 @@
 namespace Base;
 
 return array(
+    
+     'router' => array(
+        'routes' => array( 
+            'sair' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/home/flag/[:action][/]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Base\Controller',
+                          'controller'    => 'Base',
+                      ),
+                  ),
+              ),
+        ),
+    ),
+    
+    
+    
     'service_manager' => array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',

@@ -1,0 +1,211 @@
+<?php 
+       $fetchRow = $this->fetchRow;
+       $row = $this->row;
+       $listaAluno = $this->listaAluno;
+       $recisaoRow = $this->recisaoRow;
+       $rowEmpresa = $this->rowEmpresa;
+       $rowListaAluno = $this->rowListaAluno;
+       $rowAgente = $this->rowAgente;
+          
+       ?>
+<html lang="pt-br">
+<meta charset="utf-8">
+ <body>
+     <div class="row" style=" color: black">
+        <div>
+          <div class="thumbnail">
+            <div class="caption">
+            <ul class="nav nav-pills nav-tabs">
+                <li role="presentation"><a href="#">Relatório Geral</a></li>
+                <li role="presentation" ><a href="#">Relatório</a></li>
+                <li role="presentation" ><a href="#">Relatório</a></li>
+            </ul> 
+
+            </div>
+          </div>
+        </div>
+ </div>
+     <div class="navbar-collapse">
+        <h3><i class=" glyphicon glyphicon-stats"></i> Relatório Geral</h3>
+    </div> 
+     
+     <div class="thumbnail">
+      <div class="caption">
+          <h4>Contratos</h4>
+<div  class="nav" id="geral" >
+    <table class="table" style="font-size: 12px; text-align: center;">
+            <tr>
+                <th>Curso</th>
+                <th style="font-size: 12px;  text-align: center">Detalhes</th>
+                <th  style="font-size: 12px;  text-align: center;">Ativo</th>
+                <th  style="font-size: 12px;  text-align: center; ">Enc.</th>
+                <th  style="font-size: 12px;  text-align: center">Total</th>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - ADMINISTRAÇÃO</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '1')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->administracaoOn;?></td>
+                <td style=" background-color: #f8cbcb; color: #ae1111"><?php echo $this->administracao - $this->administracaoOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">  <?php echo $this->administracao;?></td>
+                
+            </tr>
+             <tr>
+                <td style="text-align: initial">EAD - PEDAGOGIA</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '2')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->pedagogiaOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111"><?php echo  $this->pedagogia - $this->pedagogiaOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">  <?php echo $this->pedagogia;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - GESTAO DE RECURSOS HUMANOS</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '3')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->rhOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111"><?php echo $this->rh - $this->rhOn;?></td>
+                <td style=" background-color: #d3e6ff;color:#18b0ee">  <?php echo $this->rh;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - TURISMO</td> 
+               <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '4')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>    
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->turismoOn;?></td>              
+                <td  style=" background-color: #f8cbcb; color: #ae1111"><?php echo $this->turismo - $this->turismoOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">  <?php echo $this->turismo;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial"> EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO&nbsp;&nbsp;&nbsp;&nbsp; </td>
+               <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '5')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2">  <?php echo $this->gtiOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111"> <?php echo $this->gti - $this->gtiOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">    <?php echo $this->gti;?></td>
+            </tr>
+            <tr >
+                <td style="text-align: initial">EAD - ANÁLISE E DESENV. DE SISTEMAS</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '6')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2">   <?php echo $this->adsOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">   <?php echo $this->ads - $this->adsOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">     <?php echo $this->ads;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial"> EAD - CIÊNCIAS CONTÁBEIS</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '7')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2">  <?php echo $this->contabeisOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">   <?php echo $this->contabeis - $this->contabeisOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">       <?php echo $this->contabeis;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial"> EAD - CIENCIAS ECONÔMICAS</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '8')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"> <?php echo $this->economiaOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111"> <?php echo $this->economia - $this->economiaOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">     <?php echo $this->economia;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - FILOSOFIA</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '9')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"> <?php echo $this->filosofiaOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">  <?php echo $this->filosofia - $this->filosofiaOn;?></td>
+                <td style=" background-color: #d3e6ff;color:#18b0ee">      <?php echo $this->filosofia;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial"> EAD - GESTÃO PÚBLICA</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '10')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2">  <?php echo $this->gestaoPublicaOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">   <?php echo  $this->gestaoPublica - $this->gestaoPublicaOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">    <?php echo $this->gestaoPublica;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - GESTÃO DO COMÉRCIO EXTERIOR</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '11')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->gestaoComercioOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">  <?php echo $this->gestaoComercio - $this->gestaoComercioOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">     <?php echo $this->gestaoComercio;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - GESTÃO FINANCEIRA</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '12')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"> <?php echo $this->gestaoFinanceiraOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">   <?php echo $this->gestaoFinanceira - $this->gestaoFinanceiraOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">     <?php echo $this->gestaoFinanceira;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - LETRAS PORTUGUÊS</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '13')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->letrasOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">   <?php echo $this->letras - $this->letrasOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">     <?php echo $this->letras;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - PROFORM</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '14')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->proformOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">    <?php echo $this->proform -$this->proformOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">      <?php echo $this->proform;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - SEGURANÇA DA INFORMAÇÃO</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '15')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"> <?php echo $this->segurancaInformacaoOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">    <?php echo $this->segurancaInformacao - $this->segurancaInformacaoOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">     <?php echo $this->segurancaInformacao;?></td>
+            </tr>
+            <tr>
+                <td style="text-align: initial">EAD - SEGURANÇA PÚBLICA</td>
+                <td style="color: #c6ced7"><a href="<?php echo $this->url('select', array('action' => 'info', 'curso' => '16')) ?>"><i class="glyphicon glyphicon-info-sign "></i></a></td>
+                <td  style=" color:  #167213; background-color:  #c4ffc2"><?php echo $this->segurancaPublicaOn;?></td>
+                <td  style=" background-color: #f8cbcb; color: #ae1111">    <?php echo $this->segurancaPublica - $this->segurancaPublicaOn;?></td>
+                <td style=" background-color: #d3e6ff;color: #18b0ee">    <?php echo $this->segurancaPublica;?></td>
+            </tr>
+            <tr  style=" font-size: 20px; color:  #989597">
+            <td style="color:  #989597">Total</td>
+            <td></td>
+            <td style="font-size: 20px;"><?php echo $recisaoRow;?></td> 
+            <td style="font-size: 20px; "><?php echo $this->rowContratosEncerrados;?></td>
+            <td style="font-size: 20px; "><?php echo $this->rowVaga;?></td>
+            </tr>
+         </table>
+</div>
+    </div>
+        </div>
+     <a><div class="col-sm-6 col-md-4">
+     <div class="thumbnail">
+      <div class="caption">
+     <table class="table">
+         <tr>
+             <td>Alunos Cadastrados</td>
+         </tr>
+         <tr>
+             <th><?php echo $row?></th>
+         </tr>
+     </table>
+      </div></div></div></a>
+     <div class="navbar-collapse">
+       <div class="col-sm-6 col-md-4">
+     <div class="thumbnail">
+      <div class="caption">
+     <table class="table">
+         <tr>
+             <td>Empresas Concedente</td>
+         </tr>
+         <tr>
+             <th><?php echo $rowEmpresa?></th>
+         </tr>
+     </table>
+      </div></div></div>
+      <div class="col-sm-6 col-md-4">
+     <div class="thumbnail">
+      <div class="caption">
+     <table class="table">
+         <tr>
+             <td>Agentes de Integração</td>
+         </tr>
+         <tr>
+             <th><?php echo $rowAgente?></th>
+         </tr>
+     </table>
+      </div></div></div></div>
+     
+     <!--Fim -->
+  
+
+     
+ </body>
+</html>

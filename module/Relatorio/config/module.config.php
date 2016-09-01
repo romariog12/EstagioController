@@ -7,27 +7,29 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Vaga;
+namespace Relatorio;
+use Zend\Mvc\Router\Http\Literal;
+use Zend\Mvc\Router\Http\Segment;
 
 return array(
     'router' => array(
         'routes' => array(
-            'vaga' => array(
-                'type'    => 'Segment',
+            'relatorio' => array(
+                'type'    => Literal::class,
                 'options' => array(
-                    'route'    => '/vaga',
+                    'route'    => '/relatorio',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Vaga\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
+                        '__NAMESPACE__' => 'Relatorio\Controller',
+                        'controller'    => 'Relatorio',
+                        'action'        => 'relatorio',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
                     'default' => array(
-                        'type'    => 'Segment',
+                        'type'    => Segment::class,
                         'options' => array(
-                            'route'    => '/[:controller[/:action][/:id][/:idVaga]]',
+                            'route'    => '/[:controller[/:action]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -38,44 +40,20 @@ return array(
                     ),
                 ),
             ),
-            'delete' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/vaga/flag/[:action]/[:iddelete][/]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Vaga\Controller',
-                          'controller'    => 'Index',
-                      ),
-                  ),
-              ),
-            'select' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/curso/[:action]/[:curso]/[:page]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Vaga\Controller',
-                          'controller'    => 'Index',
-                      ),
-                  ),
-              ),
-           
             
         ),
-        
     ),
     'service_manager' => array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
-            
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
-            
         ),
     ),
     'translator' => array(
-        'locale' => 'en_US',
+        'locale' => 'pt-br',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',
@@ -86,7 +64,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Vaga\Controller\Index' => Controller\IndexController::class
+            'Relatorio\Controller\Relatorio' => Controller\RelatorioController::class
         ),
     ),
     'view_manager' => array(
@@ -96,11 +74,7 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'vaga/index/index' => __DIR__ . '/../view/vaga/index/index.phtml',
-            'vaga/index/editar-contratos' => __DIR__ . '/../view/vaga/index/editarContratos.phtml',
-            'vaga/index/contrato-completo' => __DIR__ . '/../view/vaga/index/contratoCompleto.phtml',
-            
+            'relatorio/relatorio/relatorio' => __DIR__ . '/../view/relatorio/index/relatorio.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
@@ -116,19 +90,6 @@ return array(
             ),
         ),
     ),
-        'doctrine' => array(
-        'driver' => array(
-            __NAMESPACE__ . '_driver' => array(
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
-            ),
-            'orm_default' => array(
-                'drivers' => array(
-                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
-                )
-            )
-        )
-    ),
+  
 );
 

@@ -10,7 +10,7 @@ $idaluno = $this->idaluno;
     <script>
     function validarCarga(){
         var carga = form.carga.value;
-        if  (carga >= 30){
+        if  (carga > 30){
             alert('Carga horária máxima permitida: 30 Horas');
             form.senha.focus();
             return false;
@@ -35,7 +35,7 @@ $idaluno = $this->idaluno;
                            <option><?php print_r($f->getAgente()); ?></option>
                             <?php endforeach; ?>         
                 </select>
-                <span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'agente', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Agente de Integração</a></span><br/>
+                <span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'empresa', 'action' => 'cadastrarAgente', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Agente de Integração</a></span><br/>
 
                 <br/>
                 <br/>
@@ -46,7 +46,7 @@ $idaluno = $this->idaluno;
                                    <option><?php print_r($f->getEmpresa()); ?></option>
                                     <?php endforeach; ?>  
                         </select>
-                <span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'index', 'action' => 'empresa', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Empresa Concedente</a></span><br/>
+                <span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'empresa', 'action' => 'cadastrarEmpresa', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Empresa Concedente</a></span><br/>
                 <br/>
                 <?php echo $this->translate('Curso')?>
             <select name="curso" class="form-control">
@@ -76,15 +76,13 @@ $idaluno = $this->idaluno;
                         <br/>
                         <br/>          
                         <br/> 
-                        <br/>
-                        <br/>
+                       
                         <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar" onclick=" return validarCarga()"/>
                        </div>
-</form><br/><br/><br/><br/><br/><br/>
-    <nav>
-        <div style="">
+</form><br/><br/><br/>
+    <nav><br/><br/><br/>
+        <div>
             <ul class="pager">
-
                 <li ><a href="<?php echo $this->url('perfil/default',array('controller' => 'aluno', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
             </ul>
         </div> 

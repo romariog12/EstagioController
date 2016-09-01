@@ -19,7 +19,7 @@ class IndexController extends AbstractActionController
                 $login = $data['login'];
                 $senha = $data['senha'];
                 
-                $lista = $em->getRepository("Administrador\Entity\Administrador")->findByLoginAndPassword($login, $senha);        
+                $lista = $em->getRepository("Usuario\Entity\Administrador")->findByLoginAndPassword($login, $senha);        
                 $adapter->setLogin($login)->setSenha($senha);
                 
                 if ($auth->authenticate()->isValid()) {

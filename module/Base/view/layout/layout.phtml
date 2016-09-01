@@ -38,7 +38,7 @@
         ; ?>
 
     </head>
-    <body  style=" background-image: url('img/UCBLogo.jpg'); background-position: center;  background-repeat: no-repeat; background-attachment: fixed">
+    <body  style=" background-image: url('img/UCBLogo.jpg'); background-position: center;  background-repeat: no-repeat; background-attachment: fixed; background-color: #cfe6ff">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -47,14 +47,29 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>">&nbsp;<?php echo $this->translate('Início') ?></a>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"> <?php echo $this->translate('Início') ?></a>
+                    
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('perfil') ?>"><?php echo $this->translate('Perfil do Aluno') ?></a></li>
+                        <li class="dropdown navbar-inverse active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-book"></i> Aluno<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                   <li><a href="<?php echo $this->url('perfil') ?>"><i class="glyphicon glyphicon-user"></i> <?php echo $this->translate('Perfil do Aluno') ?></a></li>    
+                                   <li><a href="<?php echo $this->url('aluno/default',['controller'=>'aluno','action'=>'cadastrar','id'=>'0']) ?>"><i class="glyphicon glyphicon-plus"></i> <?php echo $this->translate('Cadastrar Aluno') ?></a></li>    
+                                </ul>
+                        </li> 
                         
-                       
-                        <li class="active"><a href="<?php echo $this->url('geral') ?>"><?php echo $this->translate('Relatórios') ?></a></li>
+                       <li class="dropdown navbar-inverse active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" glyphicon glyphicon-briefcase"></i> Empresa<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarEmpresa','id'=>'0']) ?>"><i class=" glyphicon glyphicon-plus"></i> <?php echo $this->translate('Cadastrar Empresa') ?></a></li>
+                                    <li><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>"><i class=" glyphicon glyphicon-plus"></i> <?php echo $this->translate('Cadastrar Agente') ?></a></li>
+                                
+                                </ul>
+                        </li> 
+                        <li class="active"><a href="<?php echo $this->url('relatorio') ?>"><i class="glyphicon glyphicon-stats"></i> <?php echo $this->translate('Relatórios') ?></a></li>
+                         
                     </ul>
                     
                     <ul class=" nav navbar-nav navbar-right">
@@ -63,7 +78,16 @@
                             )) ?>">Sair&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></a></li>
                     </ul>
                     <ul class=" nav navbar-nav navbar-right">
-                         <li><a href="<?php echo $this->url('administrador') ?>"><?php echo $this->translate('Cadastrar Usuário') ?></a></li>
+                       <li class="dropdown navbar-inverse">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Área Administrativa<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'aluno']) ?>"> <?php echo $this->translate('Alunos') ?></a></li> 
+                            <li><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>"> <?php echo $this->translate('Empresa Concedente') ?></a></li>
+                            <li><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'agente']) ?>"> <?php echo $this->translate('Agente de Integração') ?></a></li>
+                            <li><a href="<?php echo $this->url('usuarios') ?>"> <?php echo $this->translate('Acessos') ?></a></li>
+                        
+                        </ul>
+                    </li> 
                     </ul>
                 </div><!--/.nav-collapse -->
                 
@@ -74,7 +98,7 @@
             
         </nav>
   
-        <div class="container" style=" background-color: #f8f8f8;  ">
+        <div class="container" style=" background-color: #f7f8f9">
             <?php echo $this->content; ?>
             <footer style="background-color:  #ffffff; height: 150px"><hr>
                 <p style="text-align: center">&copy; <?php echo date('Y') ?> <a href="http://www.ucb.br/Cursos/58ProjetoDeEmpregabilidadeProjem/">PROJEM - UCB</a>. </p>

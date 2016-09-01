@@ -1,0 +1,36 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+    <div class="navbar-collapse">
+   <h2 style=" color: #989597; text-align: center"><i class=" glyphicon glyphicon-dashboard"></i> Painel Administrativo</h2>
+    </div>
+      
+ 
+
+    <div class="thumbnail">
+    
+      <div class="caption ">
+    
+      </div>
+        <div class=" pager">
+        <a href="<?php echo $this->url('relatorio')?>"><span  class="btn btn-default " style="width: 200px"><i class=" glyphicon glyphicon-stats"></i> Relatórios</span></a>
+        </div>
+        <div class=" pager">
+        <a href="<?php echo $this->url('empresa')?>"><span  class="btn btn-default " style="width: 200px"><i class=" glyphicon glyphicon-briefcase"></i> Empresas </span></a>
+        </div>
+        <div class=" pager">
+        <a href="<?php echo $this->url('relatorio')?>"><span  class="btn btn-default " style="width: 200px"><i ></i> Agentes</span></a>
+        </div>
+        <div class=" pager">
+        <a href="<?php echo $this->url('relatorio')?>"><span  class="btn btn-default " style="width: 200px"><i class=" glyphicon glyphicon-book"></i> Alunos</span></a>
+        </div>
+        <div class=" pager">
+            <a href="<?php echo $this->url('usuarios')?>"><span  class="btn btn-default " style="width: 200px"><i class=" glyphicon glyphicon-user"></i> Usuarios</span></a>
+        </div>
+        
+    </div>
+    
+    
+    
+<?php echo $this->resp; ?>
+</body></html>

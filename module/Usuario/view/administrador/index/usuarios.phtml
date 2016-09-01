@@ -1,0 +1,33 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+  <div class="navbar-collapse">
+        <h3><i class=" glyphicon glyphicon-user"></i> Usuarios</h3>
+    </div>
+    <div class="thumbnail">
+      <div class="caption">
+    <table class="table" >
+        <tr> 
+            <th>Nome</th>
+            <th>Login</th>
+            <th>Editar</th>
+            <th>Excluir</th>
+        </tr>
+            <?php foreach ($this->listaUsuarios as $l):?> 
+        <tr style=" background-color: #b6fffd">
+            
+            <td><?php echo $l->getNome();?> </td>
+            <td><?php echo $l->getLogin();?> </td>
+
+            <td><a  class="btn" href="<?php echo $this->url('usuarios/default', array('controller'=>'administrador','action' => 'editarUsuario', 'id' => $l->getIdadministrador())) ?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
+            <td><a style="color: #c81616" class="btn" href="<?php echo $this->url('excluirUsuario', array('action' => 'excluirUsuario', 'deleteUsuario' => $l->getIdadministrador())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
+        </tr> <?php endforeach;?>
+    </table>
+      </div></div>  
+    
+        <a href="<?php echo $this->url('cadastrarUsuario')?>"><span  class="btn btn-default"><i class=" glyphicon glyphicon-plus"></i> Cadastrar Usuario</span></a>
+       
+   
+<?php echo $this->resp; ?>
+</body>
+</html>

@@ -41,10 +41,10 @@ class IndexController extends AbstractActionController
                echo $this->flashMessenger()->render();
             }    
         }  
-          $lista = $em->getRepository("Empresa\Entity\Empresa")->findAll();
+          $lista = $em->getRepository("Usuario\Entity\Empresa")->findAll();
           $listavagas = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-          $listaAlunos = $em->getRepository("Aluno\Entity\Aluno")->findAll();
-          $listaAgente = $em->getRepository("Empresa\Entity\Agente")->findAll();
+          $listaAlunos = $em->getRepository("Usuario\Entity\Aluno")->findAll();
+          $listaAgente = $em->getRepository("Usuario\Entity\Agente")->findAll();
           return new ViewModel([
               'listaEmpresa'=>$lista,
               'vagas'=>$listavagas,
@@ -60,7 +60,7 @@ class IndexController extends AbstractActionController
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $idvagaEncaminhamento = $this->params()->fromRoute("idVaga", 0);
         $idaluno = $this->params()->fromRoute("id", 0);
-        $aluno = new \Aluno\Entity\Aluno();
+        $aluno = new \Usuario\Entity\Aluno();
         $aluno->setIdaluno($idaluno);
         $encaminhamento = new Encaminhamento();
         $encaminhamento ->setIdvagaEncaminhamento($idvagaEncaminhamento);
@@ -168,7 +168,7 @@ class IndexController extends AbstractActionController
         $page = $this->params()->fromRoute("page");
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
         $pagination = new Paginator( new ArrayAdapter($listaVaga));
-        $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(1);
+        $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
         $count = $pagination->count();
         $pageNumber = $pagination->getCurrentPageNumber();
         $getPages = $pagination->getPages();
