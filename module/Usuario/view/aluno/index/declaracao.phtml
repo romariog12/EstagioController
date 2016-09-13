@@ -22,19 +22,22 @@ function cont(){
             $empresa = $l->getEmpresa();
             $carga = $l->getCarga();
             $bolsa = $l->getBolsa();
+            $inicio = $l->getInicio();
+            $recisao = $l->getRecisao();
         }
         ?>
         
-        
+        <div class="thumbnail">
+        <div class="caption">
         <div id="print" class="conteudo"> 
         <br/><br/><br/><br/><br/><br/><br/>
         <h2 style="text-align: center; size: 12px"><label> Declaração </label></h2>
         <br/><br/>
         <div class="navbar-collapse" style="text-align:justify ;">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Declaramos para os devidos fins que consta no sistema do PROJEM 
-        que a estudante <label><?php echo $nome;?></label>, matricula nº <label><?php echo $matricula;?></label> realizou <label><?php echo $carga;?>h semanais</label> 
-        de estágio extracurricular, pelo agente de integração <label><?php echo $agente;?></label>
-        na empresa <label><?php echo $empresa;?></label> de 10/08/2015 à 09/02/2017. 
+        que a estudante <b><?php echo $nome;?></b>, matricula nº <b><?php echo $matricula;?></b> realizou <b><?php echo $carga;?>h semanais</b> 
+        de estágio extracurricular, pelo agente de integração <b><?php echo $agente;?></b>
+        na empresa <b><?php echo $empresa;?></b> de <b><?php echo date_format($inicio, 'd/m/Y'); ?></b> à <b><?php echo $recisao;?></b>. 
         </div>
         
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -43,7 +46,7 @@ function cont(){
     <p>Projeto Estágio e Empregabilidade – PROJEM</p></div>
         <br/><p style="text-align: end">Brasília, <?php echo date('d/m/Y')?>.</p>
 
-
+</div></div>
         </div>
         <div class="pager">
             <input class="btn btn-warning" type="button" onclick="cont();" value="Imprimir">

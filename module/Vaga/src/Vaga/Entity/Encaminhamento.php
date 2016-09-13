@@ -14,16 +14,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Encaminhamento
 {
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="Inicio", type="date", nullable=false)
+     * @ORM\Column(name="Inicio", type="string", nullable=false)
      */
     private $inicio;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="Fim", type="date", nullable=false)
+     * @ORM\Column(name="Fim", type="string", nullable=false)
      */
     private $fim;
 
@@ -103,12 +103,12 @@ class Encaminhamento
         return $this->idalunoEncaminhamento;
     }
 
-    function setInicio(\DateTime $inicio = null) {
+    function setInicio($inicio) {
         $this->inicio = $inicio;
         return $this;
     }
 
-    function setFim(\DateTime $fim =null) {
+    function setFim($fim) {
         $this->fim = $fim;
         return $this;
     }

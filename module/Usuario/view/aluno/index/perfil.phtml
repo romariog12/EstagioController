@@ -8,30 +8,37 @@
     <head>
         <title>Perfil</title>
         <meta charset="utf-8">
+        
     </head>
 <body>
+      <?php if($lista):
+            foreach ($lista as $f): 
+             $getidaluno = $f->getidAluno();
+             endforeach;
+         endif;
+          ?>
   
-     <div class="row" style=" color: black">
-        <div>
-          <div class="thumbnail">
-            <div class="caption">
-            <ul class="nav nav-pills nav-tabs">
-                <li role="presentation"><a href="#">Perfil</a></li>
-                <li role="presentation" ><a href="#">Estágios</a></li>      
-                <li role="presentation" ><a href="#">Oportunidades</a></li>
-            </ul> 
-
-            </div>
-          </div>
-        </div>
- </div>
+     
  <div >
      <div class="row">
     <div class="thumbnail">
       <div class="caption">
+          
+           <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs">
+                        <li class="  active" role="presentation"><a href="#">Perfil</a></li>
+                        <li role="presentation" ><a href="#">Orientações Pedagógicas</a></li>
+                    </ul> 
+                </div>
+              </div>
+            </div>
+        </div>   
          <?php if($lista):
             foreach ($lista as $f): 
-             $getidaluno = $f->getidAluno();
+             
           ?>
             
     <div class="navbar">
@@ -75,8 +82,9 @@
           <th>EMPRESA</th>
           <th>AGENTE</th>
           <th>CONTRATOS</th>
+          <th>Excluir</th>
           <th>Declaração</th>
-          <!--<th>EXCLUIR</th>-->
+          
         </tr>
             <?php foreach ($listaVaga as $f):?>
             <?php 
@@ -88,7 +96,7 @@
             <td><?php echo $f->getEmpresa(); ?></td>
             <td><?php echo $f->getAgente(); ?></td>
             <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
-            <!--<td><a  class="btn" href="<?php // echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td>--> 
+            <td><a onclick="return confirm('Tem certeza que deseja apagar essa vaga?')" class="btn" href="<?php  echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
             <td><a href="<?php echo $this->url('aluno/default',['controller'=>'aluno', 'action'=>'declaracao', 'id'=>$getidaluno,'idVaga'=>$idVaga])?>"><i class="glyphicon glyphicon-file"></i></a></td>
             
          </tr>   <?php } ?>
@@ -100,7 +108,7 @@
             <td><?php echo $f->getEmpresa(); ?></td>
             <td><?php echo $f->getAgente(); ?></td>
             <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
-            <!--<td><a  class="btn" href="<?php // echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td>--> 
+            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" class="btn" href="<?php  echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
             <td>Indisponível</td>
         </tr> <?php } ?>
             <?php endforeach;?>
@@ -117,8 +125,7 @@
       </div>
     </div>
   </div>
-  <div >
-
+    
 <?php echo $this->resp; ?>
 </body>
 </html>

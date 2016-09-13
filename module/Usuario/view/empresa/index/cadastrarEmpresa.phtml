@@ -3,13 +3,12 @@
 <body>
           
   <?php   $success = $this-> success ?>
-    <h3 class="navbar-brand"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Cadastro de Empresa</h3>
-<br/>
-<br/><br/>
-
-<br/>
-<br/>
-<div class="navbar-collapse" id="aluno">
+<div class="navbar-collapse">
+        <h3>Cadastrar Empresa</h3>
+    </div> 
+<div class="thumbnail">
+<div class="caption">
+<div class="navbar-collapse">
   
 <form class="navbar-default" method="post">
     <div class="col-lg-4">
@@ -21,8 +20,9 @@
 </form>
    
 </div>
+      </div></div>
 <nav>
-        <div style=" margin-top: 15%">
+        <div>
             <ul class="pager">
 
                 <li ><a href="<?php echo $this->url('vaga/default',array('controller' => 'index', 'action' => 'index','id'=>$this->idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 

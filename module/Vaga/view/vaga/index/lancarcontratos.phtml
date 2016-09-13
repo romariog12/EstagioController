@@ -13,14 +13,37 @@
    function noenter() {
       return !(window.event && window.event.keyCode === 13);
     };
+    function mascaraData( campo, e )
+    {
+    var kC = (document.all) ? event.keyCode : e.keyCode;
+    var data = campo.value;
+
+    if( kC!=8 && kC!=46 )
+    {
+        if( data.length==2 )
+        {
+                campo.value = data += '/';
+        }
+        else if( data.length==5 )
+        {
+                campo.value = data += '/';
+        }
+        else
+                campo.value = data;
+    }
+   
+    $('.datepicker').datepicker();
+}
 </script>
-<body> 
-          
-    <h3 class="navbar-brand"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;<?php echo $this->translate('Documentos')?></h3><br/><br/>
-<br/>
+<body>
+    
+    <div class="navbar-collapse">
+        <h3><i class="glyphicon glyphicon-file"></i> Documentos</h3>
+    </div> 
+    <br/>
 <br/>
  
-<form class="navbar-default" method="post" onKeyPress="return noenter()">
+<form class="navbar-default" method="post" onKeyPress="return noenter()" >
     <div class="thumbnail">
       <div class="caption">
 <?php if ($listaContratos):?>    <table class="table">   
@@ -37,15 +60,17 @@
                     $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ;
                     $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ;
                     $idencaminhamento = $f->getidEncaminhamento() ;
+                    $inicio = $f->getInicio();
+                    $fim = $f->getFim();
                 ?>
          
         <tr style="background: #cdffff">
-            <td> <?php echo date_format($f->getInicio(), 'd/m/Y'); ?>   </td>
-            <td> <?php echo date_format($f->getFim(),'d/m/Y') ; ?></td>
+            <td> <?php echo $inicio; ?>   </td>
+            <td> <?php echo $fim ; ?></td>
             <td>  <?php echo sprintf($f->getRelatorio()) ;?></td>
             <td>  <?php echo $f->getEntregue();?> </td>
-            <td><a data-toggle="modal" data-target="#becomeamember" ><i  class="glyphicon glyphicon-edit"></i></a></td>
-            <td><a style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array('action' => 'excluir', 'iddelete' => $f->getIdencaminhamento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
+            <td><a data-toggle="modal" data-target="#editarcontrato" ><i  class="glyphicon glyphicon-edit"></i></a></td>
+            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array('action' => 'excluir', 'iddelete' => $f->getIdencaminhamento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
         </tr><?php endforeach;?> 
     </table>
     
@@ -60,22 +85,41 @@
     
 
             <div style="background:  #bef1ba; border: #38820c" class=" navbar-brand">
-                <span class="col-lg-3">Inicio<input class=" form-control" type="date" name="inicioEnc" id="dataInicio"  required="" /></span>
-                <span class="col-lg-3">Fím<input class="form-control" type="date" name="fimEnc"  id="dataFim"  required="" /></span>
-                <span class="col-lg-3">Tipo Doc.
-                    <select class="form-control"  name="relatorio"  >
-                    <option>TCE/TA</option>
-                    <option>1º RT (Instituição)</option>
-                    <option>2° RT (Instituição)</option>
-                    <option>3° RT (Instituição)</option>
-                    <option>4º RT (Instituição)</option>
-                    <option>1° RT (Empresa)</option>
-                    <option>2° RT (Empresa)</option>
-                    <option>3° RT (Empresa)</option>
-                    <option>4º RT (Empresa)</option>
-                    </select></span>
-                Termo Entregue?
-                <span class="col-lg-3"><input type="radio" name="entregue" value="Sim" required=""/>Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 5%"/>Não</span>
+                <div class="  col-lg-3">
+                    <div  class="input-group date" data-provide="datepicker">
+                        <input  placeholder="Início" data-date-format="dd/mm/yyyy"  onkeypress="mascaraData( this, event )" class="form-control" type="text" name="inicioEnc"  id="dataFim"  required="" />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    </div>
+                        
+                
+                    
+                    </div>
+                 <div class="  col-lg-3">
+                <div class="input-group date " data-provide="datepicker">
+                    
+                        <input  data-provide="datepicker" placeholder="Fim" data-date-format="dd/mm/yyyy" onkeypress="mascaraData( this, event )" class=" form-control" type="text" name="fimEnc" id="dataInicio"  required="" /><div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    </div>
+                 </div>
+                <div class="  col-lg-3">
+                            <select class="form-control"  name="relatorio"  >
+                            <option>TCE/TA</option>
+                            <option>1º RT (Instituição)</option>
+                            <option>2° RT (Instituição)</option>
+                            <option>3° RT (Instituição)</option>
+                            <option>4º RT (Instituição)</option>
+                            <option>1° RT (Empresa)</option>
+                            <option>2° RT (Empresa)</option>
+                            <option>3° RT (Empresa)</option>
+                            <option>4º RT (Empresa)</option>
+                            </select>
+                        </div>
+               
+                    &nbsp;&nbsp;&nbsp;Via da Instituição
+                 <span class="col-lg-3"><input type="radio" name="entregue" value="Sim" required=""/>Ok<input type="radio" name="entregue" value="Nao" style="margin-left: 5%"/>Pendente</span>
 
             </div>
             <div class="navbar-brand">
@@ -146,7 +190,7 @@
 <div class="container">
 <div class="row">
     <form  method="post" id="EDITARCONTRATO" >
-        <div class="modal fade" id="EDITARCONTRATO1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editarcontrato" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -155,15 +199,54 @@
               </div>
               <div class="modal-body form-inline">
                  
-    <div style="background:  #bef1ba; border: #38820c" class=" navbar-brand">
-        <span class="col-lg-3"><input class=" form-control" type="text" name="inicioEnc" placeholder="Início" required="" /></span>
-        <span class="col-lg-3"><input class="form-control" type="text" name="fimEnc"  placeholder="Fim" required="" /></span>
-        <span class="col-lg-3"><input class="form-control" type="text" name="relatorio" placeholder="Relatório"  /></span>
-        <h5 style=" margin-top: 0%">&nbsp;&nbsp;Termo entregue?</h5>
-        <span class="col-lg-3"><input type="radio" name="entregue" value="Sim" required=""/>Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 5%"/>Não</span>       
-    </div>
-  
-                  <h2 style="text-align: center">Em Manutenção</h2>
+ 
+            <div style="background:  #bef1ba; border: #38820c" class=" navbar-brand">
+                <div class="  col-lg-6">
+                    <div  class="input-group date" data-provide="datepicker">
+                        <input disabled="" placeholder="Início" data-date-format="dd/mm/yyyy"  onkeypress="mascaraData( this, event )" class="form-control" type="text" name="inicioEnc"  id="dataFim"  required="" />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    </div>
+                        
+                
+                    
+                    </div>
+                 <div class="  col-lg-6">
+                    
+                <div class="input-group date " data-provide="datepicker">
+                        
+                    <input disabled="" placeholder="Fim"  data-date-format="dd/mm/yyyy" onkeypress="mascaraData( this, event )" class=" form-control" type="text" name="fimEnc" id="dataInicio"  required="" /><div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    </div>
+                 </div>
+                <div>
+                    <br/> <br/>
+                <div class=" col-lg-6">
+                    <select disabled="" class="form-control"  name="relatorio"  >
+                            <option>TCE/TA</option>
+                            <option>1º RT (Instituição)</option>
+                            <option>2° RT (Instituição)</option>
+                            <option>3° RT (Instituição)</option>
+                            <option>4º RT (Instituição)</option>
+                            <option>1° RT (Empresa)</option>
+                            <option>2° RT (Empresa)</option>
+                            <option>3° RT (Empresa)</option>
+                            <option>4º RT (Empresa)</option>
+                            </select>
+                    
+                        </div>
+                    
+                </div>
+                
+                
+            </div>
+                <span class="pager">
+                    <button  disabled="" class=" btn btn-default " name="editar" value="Editar" type="submit">Salvar</button>
+                </span>
+                  
+                  
               </div><!-- end modal-Body -->
               
             </div>

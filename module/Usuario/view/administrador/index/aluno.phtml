@@ -20,7 +20,7 @@
                 <td><a href="<?php echo $this->url('perfil/default',['controller'=>'aluno', 'action'=>'perfil', 'id'=>$l->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
                 <td><?php echo $l->getNome()?></td>
                 <td><a href="<?php echo $this->url('administrador/default', ['controller'=>'administrador', 'action'=>'editarAluno', 'id'=>$l->getIdaluno(),'page'=>$this->pageNumber])?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
-                <td><a  style="color: #c81616" href="<?php echo $this->url('excluirAluno',['action'=>'excluirAluno', 'deleteAluno'=>$l->getIdaluno(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
+                <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" href="<?php echo $this->url('excluirAluno',['action'=>'excluirAluno', 'deleteAluno'=>$l->getIdaluno(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
             </tr><?php    endforeach;?>
 
         </table>     

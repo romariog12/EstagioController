@@ -16,12 +16,14 @@ class RelatorioController extends AbstractActionController {
             $findEmpresa = $em->getRepository("Usuario\Entity\Empresa")->findAll();
             $recisaoRow = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
             $findAgente = $em->getRepository("Usuario\Entity\Agente")->findAll();
+            $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findAll();
             $row = count($findCurso);
             $rowRecisao= count($recisaoRow);
             $rowEmpresa = count($findEmpresa);
             $rowVaga = count($listaVaga);
             $rowAgente = count($findAgente);
             $rowContratosEncerrados = $rowVaga - $rowRecisao;
+            $rowContratos = count($listaContratos);
            
                 //....:::Quantidade de estágios por curso:::......
                 $administracao = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga('1');
@@ -95,35 +97,9 @@ class RelatorioController extends AbstractActionController {
                     
                     
             //..........:::Estágios por mes:::...... 
-                  // filtro-> $rowMensal1 -> $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('$rowMensal');
-                    $rowMensal01 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('01');
-                    $rowMensal02 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('02');
-                    $rowMensal03 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('03');
-                    $rowMensal04 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('04');
-                    $rowMensal05 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('05');
-                    $rowMensal06 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('06');
-                    $rowMensal07 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('07');
-                    $rowMensal08 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('08');
-                    $rowMensal09 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('09');
-                    $rowMensal010 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('10');
-                    $rowMensal011 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('11'); 
-                    $rowMensal012 = $em->getRepository("Vaga\Entity\Vaga")->findBymesVaga('12');
-                        $rowMensal1 = count($rowMensal01);
-                        $rowMensal2 = count($rowMensal02);
-                        $rowMensal3 = count($rowMensal03);
-                        $rowMensal4 = count($rowMensal04);
-                        $rowMensal5 = count($rowMensal05);
-                        $rowMensal6 = count($rowMensal06);
-                        $rowMensal7 = count($rowMensal07);
-                        $rowMensal8 = count($rowMensal08);
-                        $rowMensal9 = count($rowMensal09);
-                        $rowMensal10 = count($rowMensal010);
-                        $rowMensal11 = count($rowMensal011); 
-                        $rowMensal12 = count($rowMensal012);
-                        
-
                     
-            
+                        
+    
         return new ViewModel([
             'fetchRow'=>$findCurso,
             'row'=> $row,
@@ -132,6 +108,7 @@ class RelatorioController extends AbstractActionController {
             'rowVaga'=>$rowVaga,
             'rowAgente'=>$rowAgente,
             'rowContratosEncerrados'=>$rowContratosEncerrados,
+            'rowContratos'=>$rowContratos,
             
             //....:::Quantidade de Estágios:::......
                 'administracao' =>   $administracaoRow,
@@ -170,22 +147,239 @@ class RelatorioController extends AbstractActionController {
                 'segurancaPublicaOn'=>$segurancaPublicaOnRow ,
             //..............:::Estágios por mes:::................
             
-            'rowMensal01'=>$rowMensal1,
-            'rowMensal02'=>$rowMensal2,
-            'rowMensal03'=> $rowMensal3,
-            'rowMensal04'=> $rowMensal4,
-            'rowMensal05'=> $rowMensal5,
-            'rowMensal06'=>$rowMensal6,
-            'rowMensal07'=> $rowMensal7,
-            'rowMensal08'=>$rowMensal8,
-            'rowMensal09'=>$rowMensal9,
-            'rowMensal10'=>$rowMensal10,
-            'rowMensal11'=>$rowMensal11,
-            'rowMensal12'=>$rowMensal12
+           
                 
         ]);
  
    }
+   
+     public function relatorioGraficoAction()
+    {$this->sairAction();
+       
+              $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");      
+                    
+            //..........:::Estágios por mes:::...... 
+              
+                     $request = $this->getRequest();
+   
+                if($request->isPost()){
+                $ano = $request->getPost('ano');
+                        
+                        
+                  //....:::Quantidade de estágios por curso:::......
+                $listaTodosCursos = $em->getRepository("Vaga\Entity\Vaga")->findByanoVaga($ano);
+                 $janeiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano, '01') ;
+                        $fevereiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'02');
+                        $marco = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'03');
+                        $abril = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'04');
+                        $maio = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'05');
+                        $junho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'06');
+                        $julho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'07');
+                        $agosto = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'08');
+                        $setembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'09');
+                        $outubro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'10');
+                        $novembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'11');
+                        $dezembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'12');
+
+                            $janeiroRow = count( $janeiro);
+                            $fevereiroRow= count($fevereiro);
+                            $marcoRow = count( $marco);
+                            $abrilRow= count( $abril);
+                            $maioRow = count( $maio);
+                            $junhoRow= count( $junho);
+                            $julhoRow = count($julho);
+                            $agostoRow = count(  $agosto);
+                            $setembroRow = count($setembro);
+                            $outubroRow = count(  $outubro);
+                            $novembroRow= count( $novembro);
+                            $dezembroRow = count($dezembro);
+                            $rowTodosCursos = count($listaTodosCursos);
+                            
+                            
+                            
+                            
+                                $administracao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'1');
+                                $pedagogia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'2');
+                                $rh = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'3');
+                                $turismo = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'4');
+                                $gti = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'5');
+                                $ads = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'6');
+                                $contabeis = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'7');
+                                $economia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'8');
+                                $filosofia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'9');
+                                $gestaoPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'10');
+                                $gestaoComercio= $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'11');
+                                $gestaoFinanceira = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'12');
+                                $letras = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'13');
+                                $proform = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'14');
+                                $segurancaInformacao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'15');
+                                $segurancaPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'16');
+
+                                    $administracaoRow = count($administracao);
+                                    $pedagogiaRow= count($pedagogia);
+                                    $rhRow = count($rh);
+                                    $turismoRow= count($turismo);
+                                    $gtiRow = count($gti);
+                                    $adsRow= count($ads);
+                                    $contabeisRow = count( $contabeis);
+                                    $economiaRow = count( $economia);
+                                    $filosofiaRow = count($filosofia);
+                                    $gestaoPublicaRow = count( $gestaoPublica);
+                                    $gestaoComercioRow= count( $gestaoComercio);
+                                    $gestaoFinanceiraRow = count($gestaoFinanceira);
+                                    $letrasRow = count( $letras);
+                                    $proformRow = count($proform);
+                                    $segurancaInformacaoRow = count($segurancaInformacao);
+                                    $segurancaPublicaRow = count($segurancaPublica); 
+                        
+                
+                        return new ViewModel([
+                            
+                            'rowTodosCursos'=>$rowTodosCursos,
+                                
+                                
+                                'janeiro' =>   $janeiroRow,
+                                'fevereiro' =>  $fevereiroRow,
+                                'marco' => $marcoRow, 
+                                'abril' =>$abrilRow,
+                                'maio'=>$maioRow, 
+                                'junho' =>$junhoRow,
+                                'julho' => $julhoRow,
+                                'agosto' =>$agostoRow, 
+                                'setembro'=>$setembroRow,
+                                'outubro'=>$outubroRow, 
+                                'novembro'=>$novembroRow, 
+                                'dezembro'=>$dezembroRow,
+                            
+                            'ano'=>$ano,
+                                
+                                
+                                'administracao' =>   $administracaoRow,
+                                'pedagogia' =>  $pedagogiaRow,
+                                'rh' => $rhRow, 
+                                'turismo' =>$turismoRow,
+                                'gti'=>$gtiRow, 
+                                'ads' =>$adsRow,
+                                'contabeis' =>$contabeisRow, 
+                                'economia'=>$economiaRow,
+                                'filosofia'=>$filosofiaRow, 
+                                'gestaoPublica'=>$gestaoPublicaRow, 
+                                'gestaoComercio'=>$gestaoComercioRow,
+                                'gestaoFinanceira'=>$gestaoFinanceiraRow, 
+                                'letras'=>$letrasRow ,
+                                'proform'=>$proformRow ,
+                                'segurancaInformacao'=>$segurancaInformacaoRow, 
+                                'segurancaPublica'=>$segurancaPublicaRow ,
+                                
+                        ]);
+                        
+                }else{
+                        
+                $listaTodosCursos = $em->getRepository("Vaga\Entity\Vaga")->findByanoVaga(date('Y'));
+                $janeiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'), '01') ;
+                        $fevereiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'02');
+                        $marco = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'03');
+                        $abril = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'04');
+                        $maio = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'05');
+                        $junho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'06');
+                        $julho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'07');
+                        $agosto = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'08');
+                        $setembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'09');
+                        $outubro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'10');
+                        $novembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'11');
+                        $dezembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'12');
+
+                            $janeiroRow = count( $janeiro);
+                            $fevereiroRow= count($fevereiro);
+                            $marcoRow = count( $marco);
+                            $abrilRow= count( $abril);
+                            $maioRow = count( $maio);
+                            $junhoRow= count( $junho);
+                            $julhoRow = count($julho);
+                            $agostoRow = count(  $agosto);
+                            $setembroRow = count($setembro);
+                            $outubroRow = count(  $outubro);
+                            $novembroRow= count( $novembro);
+                            $dezembroRow = count($dezembro);
+                            $rowTodosCursos = count($listaTodosCursos);
+                    
+                    
+                                $administracao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'1');
+                                $pedagogia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'2');
+                                $rh = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'3');
+                                $turismo = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'4');
+                                $gti = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'5');
+                                $ads = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'6');
+                                $contabeis = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'7');
+                                $economia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'8');
+                                $filosofia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'9');
+                                $gestaoPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'10');
+                                $gestaoComercio= $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'11');
+                                $gestaoFinanceira = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'12');
+                                $letras = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'13');
+                                $proform = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'14');
+                                $segurancaInformacao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'15');
+                                $segurancaPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'16');
+
+                                    $administracaoRow = count($administracao);
+                                    $pedagogiaRow= count($pedagogia);
+                                    $rhRow = count($rh);
+                                    $turismoRow= count($turismo);
+                                    $gtiRow = count($gti);
+                                    $adsRow= count($ads);
+                                    $contabeisRow = count( $contabeis);
+                                    $economiaRow = count( $economia);
+                                    $filosofiaRow = count($filosofia);
+                                    $gestaoPublicaRow = count( $gestaoPublica);
+                                    $gestaoComercioRow= count( $gestaoComercio);
+                                    $gestaoFinanceiraRow = count($gestaoFinanceira);
+                                    $letrasRow = count( $letras);
+                                    $proformRow = count($proform);
+                                    $segurancaInformacaoRow = count($segurancaInformacao);
+                                    $segurancaPublicaRow = count($segurancaPublica);
+                    
+             return new ViewModel([
+                          
+                                
+                                'rowTodosCursos'=>$rowTodosCursos,
+                                'janeiro' =>   $janeiroRow,
+                                'fevereiro' =>  $fevereiroRow,
+                                'marco' => $marcoRow, 
+                                'abril' =>$abrilRow,
+                                'maio'=>$maioRow, 
+                                'junho' =>$junhoRow,
+                                'julho' => $julhoRow,
+                                'agosto' =>$agostoRow, 
+                                'setembro'=>$setembroRow,
+                                'outubro'=>$outubroRow, 
+                                'novembro'=>$novembroRow, 
+                                'dezembro'=>$dezembroRow,
+                                
+                                
+                                'administracao' =>   $administracaoRow,
+                                'pedagogia' =>  $pedagogiaRow,
+                                'rh' => $rhRow, 
+                                'turismo' =>$turismoRow,
+                                'gti'=>$gtiRow, 
+                                'ads' =>$adsRow,
+                                'contabeis' =>$contabeisRow, 
+                                'economia'=>$economiaRow,
+                                'filosofia'=>$filosofiaRow, 
+                                'gestaoPublica'=>$gestaoPublicaRow, 
+                                'gestaoComercio'=>$gestaoComercioRow,
+                                'gestaoFinanceira'=>$gestaoFinanceiraRow, 
+                                'letras'=>$letrasRow ,
+                                'proform'=>$proformRow ,
+                                'segurancaInformacao'=>$segurancaInformacaoRow, 
+                                'segurancaPublica'=>$segurancaPublicaRow ,
+                                
+                                
+                        ]);
+       
+                }
+    }
+   
+   
   
 }
     

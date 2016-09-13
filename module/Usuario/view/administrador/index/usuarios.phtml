@@ -20,7 +20,7 @@
             <td><?php echo $l->getLogin();?> </td>
 
             <td><a  class="btn" href="<?php echo $this->url('usuarios/default', array('controller'=>'administrador','action' => 'editarUsuario', 'id' => $l->getIdadministrador())) ?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
-            <td><a style="color: #c81616" class="btn" href="<?php echo $this->url('excluirUsuario', array('action' => 'excluirUsuario', 'deleteUsuario' => $l->getIdadministrador())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
+            <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" class="btn" href="<?php echo $this->url('excluirUsuario', array('action' => 'excluirUsuario', 'deleteUsuario' => $l->getIdadministrador())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
         </tr> <?php endforeach;?>
     </table>
       </div></div>  

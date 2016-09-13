@@ -89,6 +89,12 @@ class Vaga
      * @ORM\Column(name="anoVaga",  type="string", nullable=true)
      */
     private $anoVaga;
+      /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Inicio", type="date", nullable=false)
+     */
+    private $inicio;
     
     
     
@@ -133,8 +139,11 @@ class Vaga
     function getAnoVaga() {
         return $this->anoVaga;
     }
+    function getInicio() {
+        return $this->inicio;
+    }
 
-    
+        
         function setIdvaga($idvaga) {
         $this->idvaga = $idvaga;
         return $this;
@@ -187,6 +196,11 @@ class Vaga
 
     function setAnoVaga($anoVaga) {
         $this->anoVaga = $anoVaga;
+        return $this;
+    }
+
+    function setInicio(\DateTime $inicio) {
+        $this->inicio = $inicio;
         return $this;
     }
 

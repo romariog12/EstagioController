@@ -21,6 +21,7 @@ class IndexController extends AbstractActionController
                 $agente = $request->getPost('agente');
                 $carga = $request->getPost('carga');
                 $bolsa = $request->getPost('bolsa') ;
+                $inicio = $request->getPost('inicio');
                 $cursoVaga = $request->getPost('curso') ;
                     $vaga = new Vaga();
                     $vaga->setIdalunovaga($idalunovaga);
@@ -28,6 +29,7 @@ class IndexController extends AbstractActionController
                     $vaga->setAgente($agente);
                     $vaga->setCarga($carga);
                     $vaga->setBolsa($bolsa);
+                    $vaga->setInicio(new \DateTime($inicio));
                     $vaga->setRecisao('');
                     $vaga->setCursoVaga($cursoVaga);
                     $vaga->setMesVaga(date('m'));
@@ -78,8 +80,8 @@ class IndexController extends AbstractActionController
           
                     try { 
                         $encaminhamento ->setIdvagaEncaminhamento($idvagaEncaminhamento);
-                        $encaminhamento ->setInicio(new \DateTime($inicio));
-                        $encaminhamento->setFim(new \DateTime($fim));  
+                        $encaminhamento ->setInicio($inicio);
+                        $encaminhamento->setFim($fim);  
                         $encaminhamento->setRelatorio($relatorio);
                         $encaminhamento->setEntregue($entregue);
                         $encaminhamento->setIdalunoEncaminhamento($aluno->getIdaluno());
@@ -97,6 +99,25 @@ class IndexController extends AbstractActionController
                     $em->flush();
                     $this->redirect()->toRoute('perfil/default', 
                     array('controller' => 'index', 'action' => 'perfil', 'id'=>$aluno->getIdaluno()));         
+            }
+            if ($data['editar']=='Editar'){
+                    $idEncaminhamento = $request->getPost("idEncaminhamento");
+                    $inicio = $request->getPost("inicioEnc");
+                    $fim = $request->getPost("fimEnc");
+                    $relatorio = $request->getPost("relatorio");
+                    $entregue = $request->getPost("entregue");
+                    
+                    $select = $em->find("Vaga\Entity\Encaminhamento", $idEncaminhamento);
+                   
+                        $select ->setInicio($inicio);
+                        $select->setFim($fim);  
+                        $select->setRelatorio($relatorio);
+                        $select->setEntregue($entregue);
+                    
+                    
+                    $em->persist($select);
+                    $em->flush();
+                    $this->redirect()->toRoute('vaga/default',array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$encaminhamento->getIdvagaEncaminhamento()));         
             }
             }     
           return new ViewModel([

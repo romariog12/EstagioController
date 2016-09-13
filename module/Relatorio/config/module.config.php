@@ -75,6 +75,7 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'relatorio/relatorio/relatorio' => __DIR__ . '/../view/relatorio/index/relatorio.phtml',
+            'relatorio/relatorio/relatorio-grafico' => __DIR__ . '/../view/relatorio/index/relatorioGrafico.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

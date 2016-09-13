@@ -18,7 +18,7 @@
             <tr style=" background-color: #b6fffd">
                 <td><?php echo $l->getEmpresa()?></td>
                 <td><a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$l->getIdempresa(),'page'=>$this->pageNumber))?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
-                <td><a  style="color: #c81616" href="<?php echo $this->url('excluirEmpresa',['action'=>'excluirEmpresa', 'deleteEmpresa'=>$l->getIdempresa(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
+                <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" href="<?php echo $this->url('excluirEmpresa',['action'=>'excluirEmpresa', 'deleteEmpresa'=>$l->getIdempresa(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
             </tr><?php    endforeach;?>
 
         </table>     

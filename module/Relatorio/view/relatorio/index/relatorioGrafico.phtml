@@ -1,0 +1,188 @@
+<?php 
+       $fetchRow = $this->fetchRow;
+       $row = $this->row;
+       $listaAluno = $this->listaAluno;
+       $recisaoRow = $this->recisaoRow;
+       $rowEmpresa = $this->rowEmpresa;
+       $rowListaAluno = $this->rowListaAluno;
+       $rowAgente = $this->rowAgente;
+          
+       ?>
+<html lang="pt-br">
+<meta charset="utf-8">
+ <body>
+ <div class="navbar-collapse">
+        <h3><i class=" glyphicon glyphicon-stats"></i> Relatórios</h3>
+    </div>  
+     <div class="thumbnail">
+    <div class="caption">
+        <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs">
+                        <li role="presentation"><a href="<?php echo $this->url('relatorio')?>">Relatório Geral</a></li>
+                        <li  class="  active"  role="presentation" ><a href="#">Gráficos</a></li>
+                        
+                    </ul>
+                    <br/><br/>
+                
+      
+      <form method="post">
+             <?php if (isset($this->ano)){
+       echo '<br/><h4 style="text-align:  center">'.'Quantidade de estágios lançados em '. $this->ano.'</h4><br/>';
+   }  else {
+       echo '<br/><h4 style="text-align:  center">'.'Quantidade de estágios lançados em '. date('Y').'</h4><br/>';
+   }
+?>
+        <div class=" input-group col-lg-3">
+            <span class="input-group-addon" id="basic-addon1">Ano</span>
+            
+            <select  class="form-control " name="ano" >
+           <option></option>
+           <?php 
+            for ($date = date('Y');$date >= 2010 ; $date--){
+                echo '<option>'.$date.'</option>';
+            }
+                ?>
+            </select>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default" >Filtrar</button>
+            </span>
+        </div>  
+            <div>
+            <span></span>
+            </div>
+    </form>
+                   
+    
+   <!-- line chart canvas element -->
+
+   
+   
+   
+        <canvas id="buyers" width="1100" height="400"></canvas><br/><br/>
+        <div class="nav">
+     <div class="thumbnail">
+      <div class="caption">
+        <br/>  <h4 style=" text-align: center">Quatitativo por curso</h4><br/>
+     <table class="table" style="font-size: 12px; ">
+         <tr>
+             <td>Curso</td>
+             <td>Quantidade</td>
+         </tr>
+         <tr>
+             <th>EAD - ADMINISTRAÇÃO</th>    
+             <th><?php echo $this->administracao?></th>
+         </tr>
+         <tr>
+             <th>EAD - PEDAGOGIA</th>    
+             <th><?php echo $this->pedagogia?></th>
+         </tr>
+         <tr>
+             <th>EAD - GESTAO DE RECURSOS HUMANOS</th>    
+             <th><?php echo $this->rh?></th>
+         </tr>
+         <tr>
+             <th>EAD - TURISMO</th>    
+             <th><?php echo $this->turismo?></th>
+         </tr>
+         <tr>
+             <th>EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO</th>    
+             <th><?php echo $this->gti?></th>
+         </tr>
+         <tr>
+             <th>EAD - ANÁLISE E DESENV. DE SISTEMAS</th>    
+             <th><?php echo $this->ads?></th>
+         </tr>
+         <tr>
+             <th>EAD - CIÊNCIAS CONTÁBEIS</th>    
+             <th><?php echo $this->contabeis?></th>
+         </tr>
+         <tr>
+             <th>EAD - CIENCIAS ECONÔMICAS</th>    
+             <th><?php echo $this->economia?></th>
+         </tr>
+         <tr>
+             <th>EAD - FILOSOFIA</th>    
+             <th> <?php echo $this->filosofia?> </th>
+         </tr>
+         <tr>
+             <th>EAD - GESTÃO PÚBLICA</th>    
+             <th><?php echo $this->gestaoPublica?> </th>
+         </tr>
+         <tr>
+             <th>EAD - GESTÃO FINANCEIRA</th>    
+             <th> <?php echo $this->gestaoFinanceira?> </th>
+         </tr>
+         <tr>
+             <th>EAD - LETRAS PORTUGUÊS</th>    
+             <th><?php echo $this->letras?></th>
+         </tr>
+         <tr>
+             <th>EAD - PROFORM</th>    
+             <th><?php echo $this->proform?> </th>
+         </tr>
+         <tr>
+             <th>EAD - SEGURANÇA DA INFORMAÇÃO</th>    
+             <th><?php echo $this->segurancaInformacao?> </th>
+         </tr>
+         <tr>
+             <th>EAD - SEGURANÇA PÚBLICA</th>    
+             <th><?php echo $this->segurancaPublica?> </th>
+         </tr>
+        
+     </table>
+      </div></div></div>
+    
+        
+        <?php?>
+        <br/><h4 style="text-align:  center; ">Total: <?php echo $this->rowTodosCursos?></h4><br/>
+        
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+     // line chart data
+            var buyerData = {
+                labels : ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
+                datasets : [
+                {
+                    fillColor : "rgba(100,140,150,0.1)",
+                    strokeColor : "#48b7ff",
+                    pointColor : "#48b7ff",
+                    pointStrokeColor : "blue",
+                    data : [<?php echo $this->janeiro?>,<?php echo $this->fevereiro?>,<?php echo $this->marco?>,<?php echo $this->abril?>,<?php echo $this->maio?>,<?php echo $this->junho?>,<?php echo $this->julho?>,<?php echo $this->agosto?>,<?php echo $this->setembro?>,<?php echo $this->outubro?>,<?php echo $this->novembro?>,<?php echo $this->dezembro?>]
+                }
+            ]
+            }
+            // get line chart canvas
+            var buyers = document.getElementById('buyers').getContext('2d');
+            // draw line chart
+            new Chart(buyers).Line(buyerData);
+            
+            
+           
+    </script>
+    
+ 
+   
+  
+  
+                  
+                </div>
+                    
+              </div>
+            </div>
+        </div>   
+    
+    </div>
+        </div>
+   
+  </body>
+</html>
+     
+     
+     
+     <!--Fim -->
+  
+

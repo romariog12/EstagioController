@@ -22,12 +22,16 @@
                         ->prependStylesheet($this->basePath('css/style.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap-datepicker.css'))
+                 
                         ?>
                          
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-             
+         
+               
+             ->prependFile($this->basePath('js/bootstrap-datepicker.js'))
             ->prependFile($this->basePath('js/Chart.min.js'))
             ->prependFile($this->basePath('js/Mascaras.js'))
             ->prependFile($this->basePath('js/jquery.maskedinput.js'))
@@ -38,7 +42,7 @@
         ; ?>
 
     </head>
-    <body  style=" background-image: url('img/UCBLogo.jpg'); background-position: center;  background-repeat: no-repeat; background-attachment: fixed; background-color: #cfe6ff">
+    <body  style="  background-color: #cfe6ff">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -56,7 +60,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-book"></i> Aluno<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                    <li><a href="<?php echo $this->url('perfil') ?>"><i class="glyphicon glyphicon-user"></i> <?php echo $this->translate('Perfil do Aluno') ?></a></li>    
-                                   <li><a href="<?php echo $this->url('aluno/default',['controller'=>'aluno','action'=>'cadastrar','id'=>'0']) ?>"><i class="glyphicon glyphicon-plus"></i> <?php echo $this->translate('Cadastrar Aluno') ?></a></li>    
+                                   <li><a href="<?php echo $this->url('aluno/default',['controller'=>'aluno','action'=>'cadastrar','id'=>'0']) ?>"><i class="glyphicon glyphicon-plus"></i> <?php echo $this->translate('Cadastro') ?></a></li>    
                                 </ul>
                         </li> 
                         
