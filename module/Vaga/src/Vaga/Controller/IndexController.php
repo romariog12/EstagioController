@@ -62,6 +62,7 @@ class IndexController extends AbstractActionController
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $idvagaEncaminhamento = $this->params()->fromRoute("idVaga", 0);
         $idaluno = $this->params()->fromRoute("id", 0);
+        $curso = $this->params()->fromRoute("curso", 0);
         $aluno = new \Usuario\Entity\Aluno();
         $aluno->setIdaluno($idaluno);
         $encaminhamento = new Encaminhamento();
@@ -71,13 +72,11 @@ class IndexController extends AbstractActionController
         if ($request->isPost()){ 
             $data = $this->params()->fromPost();
             if ($data['lançar']=='Lançar'){
-             
-                
                     $inicio = $request->getPost("inicioEnc");
                     $fim = $request->getPost("fimEnc");
                     $relatorio = $request->getPost("relatorio");
                     $entregue = $request->getPost("entregue");
-          
+       
                     try { 
                         $encaminhamento ->setIdvagaEncaminhamento($idvagaEncaminhamento);
                         $encaminhamento ->setInicio($inicio);
@@ -85,11 +84,14 @@ class IndexController extends AbstractActionController
                         $encaminhamento->setRelatorio($relatorio);
                         $encaminhamento->setEntregue($entregue);
                         $encaminhamento->setIdalunoEncaminhamento($aluno->getIdaluno());
+                        $encaminhamento->setAnoDocumento(date('Y'));
+                        $encaminhamento->setMesDocumento(date('m'));
+                        $encaminhamento ->setCursoDocumento($curso);
                         $em->persist($encaminhamento);
                         $em->flush();
 
                     } catch (Exception $ex) {}
-                return $this->redirect()->toRoute('vaga/default',array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$encaminhamento->getIdvagaEncaminhamento()));  
+                return $this->redirect()->toRoute('vaga/default',array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$encaminhamento->getIdvagaEncaminhamento(), 'curso'=>$encaminhamento->getCursoDocumento() ));  
             }      
             if ($data['salvar']=='Salvar'){
                     $recisao = $request->getPost("recisao");
@@ -123,7 +125,8 @@ class IndexController extends AbstractActionController
           return new ViewModel([
             'listaContratos'=>$listaContratos,
             'aluno'=>$idaluno,
-            'listaVaga'=>$listaVaga
+            'listaVaga'=>$listaVaga,
+            
         ]);
     }
      
@@ -136,7 +139,7 @@ class IndexController extends AbstractActionController
             $em->flush();
           
         return $this->redirect()->toRoute('vaga/default', 
-                  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$encaminhamento->getidalunoEncaminhamento(), 'idVaga'=>$encaminhamento->getIdvagaEncaminhamento()));       
+                  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$encaminhamento->getidalunoEncaminhamento(), 'idVaga'=>$encaminhamento->getIdvagaEncaminhamento(),'curso'=>$encaminhamento->getcursoDocumento()));       
     }
       
       //Excluir Vaga
@@ -188,6 +191,11 @@ class IndexController extends AbstractActionController
         $curso = $this->params()->fromRoute("curso", 0);
         $page = $this->params()->fromRoute("page");
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository("Base\Entity\DadosPresencial")->findByIddados($curso);
+       
+        
+        
+        //pagination
         $pagination = new Paginator( new ArrayAdapter($listaVaga));
         $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
         $count = $pagination->count();
@@ -202,7 +210,8 @@ class IndexController extends AbstractActionController
                     'pagination'=>$pagination,
                     'listaVaga'=>$listaVaga,
                     'mensagem'=>$menstagem=  '<p class="navbar-brand" style="color: red">Nenhuma dado encontrado!</p>'
-                )
+                    ,'curso'=>$selectCurso
+                    )
                 );
     }
 

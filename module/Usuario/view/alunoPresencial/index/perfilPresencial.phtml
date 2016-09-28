@@ -74,10 +74,10 @@
       <div class="caption">
           <div>
             <h3 style="text-align: center; " ><?php echo $this->translate('Estágios')?><br/>
-            <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h3>
+            <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'vagapresencial', 'action' => 'cadastrarvagapresencial', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h3>
         </div>
     
-<?php if ($listaVaga){?>
+<?php if ($this->listaVagaPresencial){?>
 
       <form method="post" >
     <table class="table navbar-default" >
@@ -91,7 +91,7 @@
           <th>Declaração</th>
           
         </tr>
-            <?php foreach ($listaVaga as $f):?>
+            <?php foreach ($this->listaVagaPresencial as $f):?>
             <?php 
             $idVaga = $f->getIdvaga();
             
@@ -100,9 +100,9 @@
             
             <td><?php echo $f->getEmpresa(); ?></td>
             <td><?php echo $f->getAgente(); ?></td>
-            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(), 'curso'=>$curso)); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
-            <td><a onclick="return confirm('Tem certeza que deseja apagar essa vaga?')" class="btn" href="<?php  echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
-            <td><a href="<?php echo $this->url('aluno/default',['controller'=>'aluno', 'action'=>'declaracao', 'id'=>$getidaluno,'idVaga'=>$idVaga])?>"><i class="glyphicon glyphicon-file"></i></a></td>
+            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
+            <td><a onclick="return confirm('Tem certeza que deseja apagar essa vaga?')" class="btn" href="<?php  echo $this->url('deleteVagaPresencial', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
+            <td><a href="<?php echo $this->url('aluno/default',['controller'=>'alunoPresencial', 'action'=>'declaracao', 'id'=>$getidaluno,'idVaga'=>$idVaga,'curso'=>$curso])?>"><i class="glyphicon glyphicon-file"></i></a></td>
             
          </tr>   <?php } ?>
             
@@ -112,8 +112,8 @@
             
             <td><?php echo $f->getEmpresa(); ?></td>
             <td><?php echo $f->getAgente(); ?></td>
-            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(), 'curso'=>$curso)); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
-            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" class="btn" href="<?php  echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
+            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(),'curso'=>$curso)); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
+            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" class="btn" href="<?php  echo $this->url('deleteVagaPresencial', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
             <td>Indisponível</td>
         </tr> <?php } ?>
             <?php endforeach;?>

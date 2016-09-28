@@ -5,13 +5,13 @@ namespace Usuario\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Aluno
+ * AlunoPresencial
  *
- * @ORM\Table(name="aluno", indexes={@ORM\Index(name="Usuario_FKIndex1", columns={"Administrador_idAdministrador"})})
+ * @ORM\Table(name="alunoPresencial", indexes={@ORM\Index(name="Usuario_FKIndex1", columns={"Administrador_idAdministrador"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Usuario\Entity\AlunoRepository")
+ * @ORM\Entity(repositoryClass="Usuario\Entity\AlunoPresencialRepository")
  */
-class Aluno
+class AlunoPresencial
 {
     /**
      * @var integer

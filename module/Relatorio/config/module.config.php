@@ -14,13 +14,13 @@ use Zend\Mvc\Router\Http\Segment;
 return array(
     'router' => array(
         'routes' => array(
-            'relatorio' => array(
+            'relatorioEAD' => array(
                 'type'    => Literal::class,
                 'options' => array(
-                    'route'    => '/relatorio',
+                    'route'    => '/relatorioEAD',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Relatorio\Controller',
-                        'controller'    => 'Relatorio',
+                        'controller'    => 'RelatorioEAD',
                         'action'        => 'relatorio',
                     ),
                 ),
@@ -40,6 +40,78 @@ return array(
                     ),
                 ),
             ),
+              'relatorioPresencial' => array(
+                'type'    => Literal::class,
+                'options' => array(
+                    'route'    => '/relatorioPresencial',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Relatorio\Controller',
+                        'controller'    => 'RelatorioPresencial',
+                        'action'        => 'relatorio',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => Segment::class,
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'relatorioPresencialEstatisticas' => array(
+                'type'    => Literal::class,
+                'options' => array(
+                    'route'    => '/relatorioPresencialEstatisticas',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Relatorio\Controller',
+                        'controller'    => 'RelatorioPresencial',
+                        'action'        => 'relatorioGrafico',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => Segment::class,
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'info' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/curso/[:action]/[:curso]/[:page]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Relatorio\Controller',
+                          'controller'    => 'RelatorioPresencial',
+                      ),
+                  ),
+              ),
+            'infoEAD' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/curso/[:action]/[:curso]/[:page]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Relatorio\Controller',
+                          'controller'    => 'RelatorioEAD',
+                      ),
+                  ),
+              ),
             
         ),
     ),
@@ -64,7 +136,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Relatorio\Controller\Relatorio' => Controller\RelatorioController::class
+            'Relatorio\Controller\RelatorioEAD' => Controller\RelatorioEADController::class,
+            'Relatorio\Controller\RelatorioPresencial' => Controller\RelatorioPresencialController::class
         ),
     ),
     'view_manager' => array(
@@ -74,8 +147,13 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'relatorio/relatorio/relatorio' => __DIR__ . '/../view/relatorio/index/relatorio.phtml',
-            'relatorio/relatorio/relatorio-grafico' => __DIR__ . '/../view/relatorio/index/relatorioGrafico.phtml',
+            'relatorio/relatorio-ead/relatorio' => __DIR__ . '/../view/relatorio/index/relatorio.phtml',
+            'relatorio/relatorio-presencial/relatorio' => __DIR__ . '/../view/relatorioPresencial/index/relatorio.phtml',
+            'relatorio/relatorio-presencial/info-presencial'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencial.phtml',
+            'relatorio/relatorio-presencial/relatorio-grafico' => __DIR__ . '/../view/relatorioPresencial/index/relatorioGrafico.phtml',
+            'relatorio/relatorio-ead/relatorio-grafico' => __DIR__ . '/../view/relatorio/index/relatorioGrafico.phtml',
+            'relatorio/relatorio-ead/infoead' => __DIR__ . '/../view/relatorio/index/infoEAD.phtml',
+            
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
@@ -90,6 +168,20 @@ return array(
             'routes' => array(
             ),
         ),
+    ),
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
     ),
   
 );

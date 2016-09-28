@@ -45,8 +45,8 @@
             <tr style="background-color: #c4ffc2;"><?php } else{?>
                  <tr style="background-color:  #ae1111; color: white"><?php };?>
                     
-                    <td><a href="<?php echo $this->url('perfil/default', 
-                         array('controller' => 'aluno', 'action' => 'perfil', 'id'=>$f->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a></td>
+                    <td><a href="<?php echo $this->url('perfilPresencial/default', 
+                         array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$f->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a></td>
                     <td><?php echo  $f->getEmpresa();?></td>
                     <td><?php echo  $f->getAgente();?></td>  
                     <td><?php echo  $f->getRecisao();?></td> 
@@ -79,7 +79,7 @@
          <div ><br/>
             <ul class="pager">
                 
-                <li><a href="<?php echo $this->url('relatorio') ?>"><span class="btn btn-default" >Voltar</span></a></li> 
+                <li><a href="<?php echo $this->url('relatorioPresencial') ?>"><span class="btn btn-default" >Voltar</span></a></li> 
             </ul>
             </div> 
      

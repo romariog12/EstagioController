@@ -93,5 +93,37 @@ class EmpresaController extends AbstractActionController
               'idaluno'=>$idaluno
           ]);
         }
+        public function buscarEmpresaAction(){
+   $this->sairAction();
+    
+    $request = $this->getRequest();
+    if($request->isPost()){
+        $data = $this->params()->fromPost();
+        $empresa = new Empresa(); 
+        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         
+        switch ($data['buscar']){
+            case 'buscarPorCnpj':
+                    $cnpj = $request->getPost('porCnpj');
+                    $empresa->setCnpj($cnpj);
+                    $lista = $em->getRepository("Usuario\Entity\Empresa")->findByCnpj($empresa->getCnpj());
+                    break;
+            case 'buscarPorNome':
+                    $nome = $request->getPost('porNome');
+                    $empresa->setEmpresa($nome);
+                    $lista = $em->getRepository("Usuario\Entity\Empresa")->findByEmpresa($empresa->getEmpresa());
+                    break;
+        }
+        return new ViewModel([
+        'lista' => $lista,
+            ]);  
+        }
+        }
+        public function perfilEmpresaAction(){
+            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+            $aluno = new \Usuario\Entity\Aluno();
+            
+            
+            
+        }
 }

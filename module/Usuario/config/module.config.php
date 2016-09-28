@@ -167,6 +167,33 @@ return array(
                     ),
                 ),
             ),
+              'perfilPresencial' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/perfilPresencial',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller'    => 'AlunoPresencial',
+                        'action'        => 'buscarAluno',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action][/:id][/:idVaga]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'excluirAluno' => array(
                   'type'    => 'Segment',
                   'options' => array(
@@ -221,6 +248,32 @@ return array(
                         '__NAMESPACE__' => 'Usuario\Controller',
                         'controller'    => 'Empresa',
                         'action'        => 'cadastrarEmpresa',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action][/:id]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'buscarEmpresa' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/buscarEmpresa',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Usuario\Controller',
+                        'controller'    => 'Empresa',
+                        'action'        => 'buscarEmpresa',
                     ),
                 ),
                 'may_terminate' => true,
@@ -298,6 +351,7 @@ return array(
         'invokables' => array(
             'Usuario\Controller\Administrador' => Controller\AdministradorController::class, 
             'Usuario\Controller\Aluno' => Controller\AlunoController::class,
+            'Usuario\Controller\AlunoPresencial' => Controller\AlunoPresencialController::class,
             'Usuario\Controller\Index' => Controller\AlunoController::class,
             'Usuario\Controller\Empresa' => Controller\EmpresaController::class
         ),
@@ -318,6 +372,7 @@ return array(
             'usuario/administrador/editar-aluno' => __DIR__ . '/../view/administrador/index/editarAluno.phtml',
             'usuario/empresa/cadastrar-empresa' => __DIR__ . '/../view/empresa/index/cadastrarEmpresa.phtml',
             'usuario/empresa/cadastrar-agente' => __DIR__ . '/../view/empresa/index/cadastrarAgente.phtml',
+            'usuario/empresa/buscar-empresa' => __DIR__ . '/../view/empresa/index/buscarEmpresa.phtml',
             'usuario/administrador/editar-empresa' => __DIR__ . '/../view/administrador/index/editarEmpresa.phtml',
             'usuario/administrador/editar-agente' => __DIR__ . '/../view/administrador/index/editarAgente.phtml',
             'usuario/administrador/empresa' => __DIR__ . '/../view/administrador/index/empresa.phtml',
@@ -327,6 +382,11 @@ return array(
             'usuario/aluno/buscar-aluno' => __DIR__ . '/../view/aluno/index/buscarAluno.phtml',
             'usuario/aluno/cadastrar' => __DIR__ . '/../view/aluno/index/cadastroAluno.phtml',
             'usuario/aluno/declaracao' => __DIR__ . '/../view/aluno/index/declaracao.phtml',
+            'usuario/aluno-presencial/perfil' => __DIR__ . '/../view/alunoPresencial/index/perfilPresencial.phtml',
+            'usuario/aluno-presencial/estagios' => __DIR__ . '/../view/alunoPresencial/index/estagiosPresencial.phtml',  
+            'usuario/aluno-presencial/buscar-aluno' => __DIR__ . '/../view/alunoPresencial/index/buscarAlunoPresencial.phtml',
+            'usuario/aluno-presencial/cadastrar' => __DIR__ . '/../view/alunoPresencial/index/cadastroAlunoPresencial.phtml',
+            'usuario/aluno-presencial/declaracao' => __DIR__ . '/../view/alunoPresencial/index/declaracaoPresencial.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

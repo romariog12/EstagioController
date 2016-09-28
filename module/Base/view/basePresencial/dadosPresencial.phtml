@@ -1,0 +1,51 @@
+<html lang="pt-br">
+    
+    <!--
+    Autor: Romário Macedo Portela
+    Estudante de Análise e Desenv. de Sistemas
+    Framework utilizado: Zend 2
+    -->
+    <head>  
+    </head> 
+    <body>    
+    <div class="navbar-collapse">
+        <h3>Atualizar Dados</h3>
+    </div> 
+        <div class="thumbnail" style=" height: 1800px">
+      <div class="caption">
+        <div class="navbar-collapse">
+            <form class="navbar-default" method="post">
+                <div >
+                     <table class="table">
+                     
+                        <tr>  
+                            <th>Curso</th> 
+                            <th>Quantidade de Alunos</th>
+                            <th>Meta em porcentagem</th>
+                        </tr>  
+                       <?php foreach ( $this->listaPresencial as $l){
+                       ?>
+                        <tr>
+                            <td><input name="<?php echo$l->getIddados()?>" value="<?php echo $this->translate($l->getCurso())?>" type="text" class="form-control input-group"/></td>
+                            <td><input name="<?php echo "GP-".$l->getIdcurso()?>" value="<?php echo $this->translate($l->getQuantidadealunos())?>" type="text" class="form-control input-group"/>   
+                                </td>
+                            <td class="input-group">
+                                <input name="<?php echo $l->getIddados()+100?>" value="<?php echo $this->translate($l->getMeta())?>" type="text" class="form-control input-group"/>   
+                            </td>
+                            
+                              
+                           
+                        </tr><?php }
+                            ?>
+                    </table>
+                    <input type="submit" value="Salvar" class=" btn btn-default"/>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+<?php echo $this->resp; ?>
+    </body>
+    
+</html>

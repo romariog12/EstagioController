@@ -27,7 +27,33 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action][/:id][/:idVaga]]',
+                            'route'    => '/[:controller[/:action][/:id][/:idVaga][/:curso]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'vagaPresencial' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/vagaPresencial',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Vaga\Controller',
+                        'controller'    => 'VagaPresencial',
+                        'action'        => 'cadastrarVagaPresencial',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action][/:id][/:idVaga][/:curso]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -45,6 +71,26 @@ return array(
                       'defaults' => array(
                           '__NAMESPACE__' => 'Vaga\Controller',
                           'controller'    => 'Index',
+                      ),
+                  ),
+              ),
+            'deleteVagaPresencial' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/vagaPresencial/flag/[:action]/[:iddelete][/]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Vaga\Controller',
+                          'controller'    => 'VagaPresencial',
+                      ),
+                  ),
+              ),
+            'deleteDocumentoPresencial' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/vagaPresencial/flag/[:action]/[:iddelete][/]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Vaga\Controller',
+                          'controller'    => 'VagaPresencial',
                       ),
                   ),
               ),
@@ -86,7 +132,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Vaga\Controller\Index' => Controller\IndexController::class
+            'Vaga\Controller\Index' => Controller\IndexController::class,
+            'Vaga\Controller\VagaPresencial' => Controller\VagaPresencialController::class
         ),
     ),
     'view_manager' => array(
@@ -99,8 +146,8 @@ return array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'vaga/index/index' => __DIR__ . '/../view/vaga/index/index.phtml',
             'vaga/index/editar-contratos' => __DIR__ . '/../view/vaga/index/editarContratos.phtml',
-            'vaga/index/contrato-completo' => __DIR__ . '/../view/vaga/index/contratoCompleto.phtml',
-            
+            'vaga/vaga-presencial/cadastrarvagapresencial' => __DIR__ . '/../view/vagaPresencial/index/cadastrarVagaPresencial.phtml',       
+            'vaga/vaga-presencial/lancarcontratos' => __DIR__ . '/../view/vagaPresencial/index/lancarcontratos.phtml', 
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

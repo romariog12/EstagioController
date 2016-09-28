@@ -8,11 +8,65 @@
  */
 
 namespace Base;
+use Zend\Mvc\Router\Http\Literal;
+use Zend\Mvc\Router\Http\Segment;
 
 return array(
     
      'router' => array(
         'routes' => array( 
+             'dados' => array(
+                'type'    => Literal::class,
+                'options' => array(
+                    'route'    => '/dados',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Base\Controller',
+                        'controller'    => 'Base',
+                        'action'        => 'dados',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => Segment::class,
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'dadosPresencial' => array(
+                'type'    => Literal::class,
+                'options' => array(
+                    'route'    => '/dadosPresencial',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Base\Controller',
+                        'controller'    => 'BasePresencial',
+                        'action'        => 'dados',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => Segment::class,
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'sair' => array(
                   'type'    => 'Segment',
                   'options' => array(
@@ -49,7 +103,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Base\Controller\Base' => Controller\BaseController::class
+            'Base\Controller\Base' => Controller\BaseController::class,
+            'Base\Controller\BasePresencial' => Controller\BasePresencialController::class
         ),
     ),
     'view_manager' => array(
@@ -59,6 +114,8 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
+            'base/base/dados'           => __DIR__ . '/../view/base/dados.phtml',
+            'base/base-presencial/dados'           => __DIR__ . '/../view/basePresencial/dadosPresencial.phtml',
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
@@ -74,6 +131,20 @@ return array(
             'routes' => array(
             ),
         ),
+    ),
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
     ),
         
 );

@@ -57,9 +57,9 @@
                 <th>Excluir</th>
         </tr>
                 <?php foreach ($listaContratos as $f):
-                    $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ;
-                    $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ;
-                    $idencaminhamento = $f->getidEncaminhamento() ;
+                    $idalunoEncaminhamento = $f->getidalunoDocumento() ;
+                    $idVagaEncaminhamento = $f->getidvagaDocumento() ;
+                    $idencaminhamento = $f->getidDocumento() ;
                     $inicio = $f->getInicio();
                     $fim = $f->getFim();
                 ?>
@@ -70,7 +70,7 @@
             <td>  <?php echo sprintf($f->getRelatorio()) ;?></td>
             <td>  <?php echo $f->getEntregue();?> </td>
             <td><a data-toggle="modal" data-target="#editarcontrato" ><i  class="glyphicon glyphicon-edit"></i></a></td>
-            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array('action' => 'excluir', 'iddelete' => $f->getIdencaminhamento(),'curso'=>$f->getcursoDocumento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
+            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" style="color: #c81616" class="btn" href="<?php echo $this->url('deleteDocumentoPresencial', array('action' => 'excluir', 'iddelete' => $f->getIdDocumento(),'curso'=>$f->getcursoDocumento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
         </tr><?php endforeach;?> 
     </table>
     
@@ -181,7 +181,7 @@
             <div style=" margin-top: 30%"><br/>
             <ul class="pager">
                 
-                <li ><a href="<?php echo $this->url('perfil/default',array('controller' => 'aluno', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+                <li ><a href="<?php echo $this->url('perfilPresencial/default',array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
             </ul>
             </div> 
 

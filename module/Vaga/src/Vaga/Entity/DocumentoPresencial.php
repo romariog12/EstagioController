@@ -5,13 +5,13 @@ namespace Vaga\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Encaminhamento
+ * DocumentoPresencial
  *
- * @ORM\Table(name="encaminhamento")
+ * @ORM\Table(name="documentopresencial")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Vaga\Entity\VagaRepository")
+ * @ORM\Entity(repositoryClass="Vaga\Entity\VagaPresencialRepository")
  */
-class Encaminhamento
+class DocumentoPresencial
 {
     /**
      * @var string
@@ -63,25 +63,25 @@ class Encaminhamento
     /**
      * @var integer
      *
-     * @ORM\Column(name="idEncaminhamento", type="integer", nullable=false)
+     * @ORM\Column(name="idDocumento", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idencaminhamento;
+    private $iddocumento;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="idVaga_Encaminhamento", type="integer", nullable=false)
+     * @ORM\Column(name="idVagaDocumento", type="integer", nullable=false)
      */
-    private $idvagaEncaminhamento;
+    private $idvagaDocumento;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="idAluno_Encaminhamento", type="integer", nullable=false)
+     * @ORM\Column(name="idAlunoDocumento", type="integer", nullable=false)
      */
-    private $idalunoEncaminhamento;
+    private $idalunoDocumento;
     /**
      * @var integer
      *
@@ -90,6 +90,7 @@ class Encaminhamento
      */
     private $cursoDocumento;
 
+    
     function getInicio() {
         return $this->inicio;
     }
@@ -105,6 +106,11 @@ class Encaminhamento
     function getRelatorio() {
         return $this->relatorio;
     }
+
+    function getEntregue() {
+        return $this->entregue;
+    }
+
     function getAnoDocumento() {
         return $this->anoDocumento;
     }
@@ -113,26 +119,23 @@ class Encaminhamento
         return $this->mesDocumento;
     }
 
-        function getEntregue() {
-        return $this->entregue;
+    function getIddocumento() {
+        return $this->iddocumento;
     }
 
-    function getIdencaminhamento() {
-        return $this->idencaminhamento;
+    function getIdvagaDocumento() {
+        return $this->idvagaDocumento;
     }
 
-    function getIdvagaEncaminhamento() {
-        return $this->idvagaEncaminhamento;
+    function getIdalunoDocumento() {
+        return $this->idalunoDocumento;
     }
 
-    function getIdalunoEncaminhamento() {
-        return $this->idalunoEncaminhamento;
-    }
     function getCursoDocumento() {
         return $this->cursoDocumento;
     }
 
-        function setInicio($inicio) {
+    function setInicio($inicio) {
         $this->inicio = $inicio;
         return $this;
     }
@@ -151,6 +154,12 @@ class Encaminhamento
         $this->relatorio = $relatorio;
         return $this;
     }
+
+    function setEntregue($entregue) {
+        $this->entregue = $entregue;
+        return $this;
+    }
+
     function setAnoDocumento($anoDocumento) {
         $this->anoDocumento = $anoDocumento;
         return $this;
@@ -161,31 +170,26 @@ class Encaminhamento
         return $this;
     }
 
-        function setEntregue($entregue) {
-        $this->entregue = $entregue;
+    function setIddocumento($iddocumento) {
+        $this->iddocumento = $iddocumento;
         return $this;
     }
 
-    function setIdencaminhamento($idencaminhamento) {
-        $this->idencaminhamento = $idencaminhamento;
+    function setIdvagaDocumento($idvagaDocumento) {
+        $this->idvagaDocumento = $idvagaDocumento;
         return $this;
     }
 
-    function setIdvagaEncaminhamento($idvagaEncaminhamento) {
-        $this->idvagaEncaminhamento = $idvagaEncaminhamento;
+    function setIdalunoDocumento($idalunoDocumento) {
+        $this->idalunoDocumento = $idalunoDocumento;
         return $this;
     }
-
-    function setIdalunoEncaminhamento($idalunoEncaminhamento) {
-        $this->idalunoEncaminhamento = $idalunoEncaminhamento;
-        return $this;
-    }
-
 
     function setCursoDocumento($cursoDocumento) {
         $this->cursoDocumento = $cursoDocumento;
         return $this;
     }
+
 
 
 

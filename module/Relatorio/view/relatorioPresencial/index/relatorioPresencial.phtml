@@ -1,0 +1,156 @@
+<?php 
+       $fetchRow = $this->fetchRow;
+       $row = $this->row;
+       $listaAluno = $this->listaAluno;
+       $recisaoRow = $this->recisaoRow;
+       $rowEmpresa = $this->rowEmpresa;
+       $rowListaAluno = $this->rowListaAluno;
+       $rowAgente = $this->rowAgente;
+          
+       ?>
+<html lang="pt-br">
+<meta charset="utf-8">
+ <body>
+ <div class="navbar-collapse">
+        <h3><i class=" glyphicon glyphicon-stats"></i> Relatórios</h3>
+    </div>  
+     <div class="thumbnail">
+    <div class="caption">
+        <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs">
+                        
+                        <li  class="  active" role="presentation" ><a href="#">Aproveitamento</a></li>
+                        <li  role="presentation" ><a href="#">Atualizar dados</a></li>
+                        
+                    </ul>
+                   
+        <br/>  <br/>
+      <form method="post">
+             
+        <div class=" input-group col-lg-8">
+            <span class="input-group-addon" id="basic-addon1">Ano</span>
+            
+            <select required="" class="form-control " name="ano" >
+           <option></option>
+           <?php 
+            for ($date = date('Y'); $date >= 2010 ; $date--){
+                echo '<option>'.$date.'</option>';
+            }
+                ?>
+            </select>
+            <span class="input-group-addon" id="basic-addon1">Semestre</span>
+            
+            <select required="" class="form-control " name="ano" >
+           <option></option>
+           <option>1º Semestre</option>
+           <option>2º Semestre</option>
+            </select>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default" >Filtrar</button>
+            </span>
+        </div>
+            
+   <br/><br/>
+      </form> 
+        <?php
+            
+        ?>
+        <table class=" table">
+            <tr >  
+             <th>Curso</th> 
+             <th>Quantidade de Alunos</th>
+             <th>Estagiando</th>
+             <th>Aproveitamento</th>
+         </tr>  
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr><tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         <tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr><tr>
+             <td>Administração</td>
+             <td>1200</td>
+             <td>177</td>
+             <td>20%</td>
+         </tr>
+         
+         
+         
+        </table>
+                </div></div></div></div></div></div>
+  </body>
+</html>
+     
+     
+     
+     <!--Fim -->
+  
+

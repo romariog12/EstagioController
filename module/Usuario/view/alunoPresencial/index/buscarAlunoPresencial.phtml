@@ -10,21 +10,20 @@ $lista = $this->lista;
     </div> 
           
 <div class="thumbnail">
-    <div class="caption">
-        <div class="row" >
+    <div class="caption"> 
+    <div class="row" >
             <div>
                 <div class="" style=" ">
                 <div class="caption">
                     <ul class="nav  nav-tabs">
-                        <li role="presentation"><a href="<?php echo $this->url('perfilPresencial')?>">Modalidade Presencial</a></li>
-                        <li class=" active" role="presentation" ><a >Modalidade EAD</a></li>
+                        <li class="  active" role="presentation"><a>Modalidade Presencial</a></li>
+                        <li role="presentation" ><a href="<?php echo $this->url('perfil')?>">Modalidade EAD</a></li>
                       
                     </ul> 
                 </div>
               </div>
             </div>
         </div>
-    
          <br/><br/>
         <form class="navbar-collapse" method="post">
             <div class="navbar-collapse"  >
@@ -68,7 +67,7 @@ $lista = $this->lista;
                   <td><?php echo $f->getMatricula(); ?></td>
                   <td><?php echo $f->getCurso(); ?></td>
                   <td><a href="<?php echo $this->url('perfil/default', 
-                          array('controller' => 'aluno', 'action' => 'perfil', 'id'=>$f->getidaluno(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
+                          array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$f->getidaluno(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
                 </tr><?php endforeach; endif;?>
             </table></div>
         </form>
