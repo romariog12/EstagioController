@@ -1,0 +1,43 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+          
+  <?php   $success = $this-> success ?>
+  <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"> Cadastrar Empresa</h4>
+  
+ </div>
+<div class="nav">
+    <div class="caption">
+        <div class="navbar-collapse">
+            <br/><h5 style=" color: #1989f1" > Campos obrigatórios</h5><br/>
+                <form class="navbar-default" method="post">
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                                <span class="input-group-addon" ><?php echo $this->translate('Empresa')?></span>
+                                    <input name="empresa" type="text" class="form-control" required=""/><br/>
+                        </div><br/>
+                        <div class="input-group">
+                                <span class="input-group-addon" ><?php echo $this->translate('CNPJ')?></span>
+                                <input id="cnpj" name="cnpj" type="text" class="form-control" required=""/><br/>
+                        </div> <br/>
+                         <div class="input-group">
+                                <span class="input-group-addon" > <?php echo $this->translate('Telefone')?></span>  
+                                <input id="telefone" name="telefone" type="text" class="form-control" required=""/><br/>
+                         </div><br/>
+                         <div class="input-group">
+                                <span class="input-group-addon" ><?php echo $this->translate('Endereço')?></span>  
+                                <input id="telefone" name="endereco" type="text" class="form-control" required=""/><br/>
+                         </div><br/>
+
+                         <input type="submit" class="btn btn-primary  " name="cadastrar" value="Cadastrar" />
+                    </div>
+                </form>
+   
+</div>
+      </div></div>
+
+<?php echo $this->resp; ?>
+</body>
+</html>

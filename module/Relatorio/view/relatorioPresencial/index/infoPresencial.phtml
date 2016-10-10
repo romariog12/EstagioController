@@ -5,42 +5,47 @@
      <body>
 <?php foreach ($this->curso as $l){
     $curso =  $l->getCurso();
+    $idCurso = $l->getIddados();
 }
 ?>
-        <div class="navbar-collapse">
-        <h3><?php echo $curso?></h3>
-    </div>
-     <br/>
-     <div class="thumbnail">
+         <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"><?php echo $curso?></h4>
+  
+ </div>
+
+     <div class="nav">
       <div class="caption">
           <div class="row" >
             <div>
                 <div class="" style=" ">
                 <div class="caption">
                     <ul class="nav  nav-tabs">
-                        <li class="  active" role="presentation"><a href="#">Total</a></li>
-                        <li role="presentation" ><a href="#">Estagiando</a></li>
-                        <li role="presentation" ><a href="#">Encerrados</a></li>
+                        <li  class="  active" role="presentation"><a href="#"><label>Todas as vagas </label>  <span class="label label-primary"> <?php echo $this->countListaTotalVaga?></span> </a></li>
+                        <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialestagiando','curso'=>$idCurso])?>">Estagiando <span class="label label-success"> <?php echo $this->countListaEstagiando?></span></a></li>
+                        <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialencerrado','curso'=>$idCurso])?>">Encerrados <span class="label label-danger"> <?php echo $this->countListaEncerrado?></span></a></li>
                     </ul> 
                 </div>
               </div>
             </div>
-        </div>   
+        </div>
+          <br/><div class="pager"><i style="color:   #c4ffc2" class=" glyphicon glyphicon-stop"></i>Ativo
+              <i style="  color:    #ae1111" class=" glyphicon glyphicon-stop"></i>Encerrado</div>
+          <br/>
+          
+          <br/>
          <table class="table "> 
-    <?php
-    if($this->listaVaga == null ){
-    echo $this->mensagem;}
-    ?>  
+    
              <tr>
                  <th>Perfil</th>
                  <th>Empresa</th>
                  <th>Agente de Integração</th>
                  <th>Recisão</th>  
              </tr>
-
-    <?php     
+   <?php
+   
         foreach ($this->pagination as $f){
-              if($f->getRecisao()== ''){ ?>            
+            if($f->getRecisao()== ''){ ?> 
             
             <tr style="background-color: #c4ffc2;"><?php } else{?>
                  <tr style="background-color:  #ae1111; color: white"><?php };?>
@@ -56,6 +61,11 @@
     <?php  } ?>
           
          </table>
+                    <?php
+    if($this->listaVaga == null ){
+    echo $this->mensagem;
+    
+    }?>
       </div></div>
 <nav aria-label="Page navigation">
          <ul  class="pager">
@@ -75,13 +85,46 @@
   </ul>
           
 </nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
-
+<div id="curve_chart" style="width: 1135px; height: 500px"></div>
          <div ><br/>
             <ul class="pager">
                 
                 <li><a href="<?php echo $this->url('relatorioPresencial') ?>"><span class="btn btn-default" >Voltar</span></a></li> 
             </ul>
             </div> 
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mês',  'Novos estágios'],
+          ['Jan',       <?php echo count($this->listaMensal[1])?>],
+          ['Fev',     <?php echo count($this->listaMensal[2])?>],
+          ['Mar',       <?php echo count($this->listaMensal[3])?>],
+          ['Abr',     <?php echo count($this->listaMensal[4])?>],
+          ['Mai',     <?php echo count($this->listaMensal[5])?>],
+          ['Jun',     <?php echo count($this->listaMensal[6])?>],
+          ['Jul',      <?php echo count($this->listaMensal[7])?>],
+          ['Ago',      <?php echo count($this->listaMensal[8])?>],
+          ['Set',     <?php echo count($this->listaMensal[9])?>],
+          ['Out',      <?php echo count($this->listaMensal[10])?>],
+          ['Nov',      <?php echo count($this->listaMensal[11])?>],
+          ['Dez',      <?php echo count($this->listaMensal[12])?>]
+        ]);
+
+        var options = {
+          title: 'Quantidade de estágios lançados mensalmente no curso de  <?php echo $curso?>',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
      
     </body>
 </html>

@@ -1,0 +1,65 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+    <script>
+   function validar(){
+    var senha = form.senha.value;
+    var repetirSenha = form.confirmarSenha.value;
+    
+    if(senha != repetirSenha){
+        alert('Senhas diferentes!');
+        form.senha.focus();
+        return false;
+    };
+     if(senha.length <= 5){
+        alert('A senha deve conter no mínimo 6 caracteres');
+        form.senha.focus();
+        return false;
+    }
+    }   
+    </script>
+  <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center">Editar acesso</h4>
+  
+ </div>
+<div style="height: 500px" class="nav">
+      <div class="caption">
+<form name="form" class="navbar-collapse" method="post">
+    
+    <div class="col-lg-5">
+    <?php foreach ($this->listaUsuario as $l):?>   
+<br/>   <label><?php echo $this->translate('Nome')?></label><br/><input value="<?php echo $l->getNome()?>" name="nome" type="text" class="form-control " required="" /><br/>
+        <label><?php echo $this->translate('Login')?></label><br/><input value="<?php echo $l->getLogin()?>" name="login" type="text" class="form-control" required=""/> 
+        <br/><br/>
+        <label><?php echo $this->translate('Matricula')?></label><input  value="<?php echo $l->getMatricula()?>"name="matricula" type="text" class="form-control" required=""/>
+        <br/><label><?php echo $this->translate('Cargo')?></label><input  value="<?php echo $l->getCargo()?>" name="cargo" type="text" class="form-control" required=""/>
+                 <br/>
+        <label><?php echo $this->translate('Nível')?></label><br/>
+        <select name="nivel" class="form-control" required="">
+                     <option >  
+                     </option>
+                     <option value="1">
+                          Administrador
+                     </option>
+                     <option value="2">
+                          Usuário Comum
+                     </option>
+          </select><br/>
+            
+            <input type="submit" class="btn btn-primary" name="cadastrar" value="Salvar" onclick="return validar()" />
+       <?php endforeach;?>
+    </div>          
+</form>
+      
+      </div>
+        </div>
+        <div style="">
+            <ul class="pager">
+
+                <li ><a href="<?php echo $this->url('usuarios') ?>"><span class="btn btn-default" > Voltar</span></a></li> 
+            </ul>
+        </div> 
+    
+<?php echo $this->resp; ?>
+</body></html>

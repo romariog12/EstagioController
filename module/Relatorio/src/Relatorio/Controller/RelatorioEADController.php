@@ -10,13 +10,14 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 class RelatorioEADController extends AbstractActionController {
     
     public function relatorioAction()
-    {$this->sairAction();   
+    { 
+         $this->sairComumAction();
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-            $findCurso = $em->getRepository("Usuario\Entity\Aluno")->findAll();
-            $findEmpresa = $em->getRepository("Usuario\Entity\Empresa")->findAll();
+            $findCurso = $em->getRepository("Administrador\Entity\Aluno")->findAll();
+            $findEmpresa = $em->getRepository("Administrador\Entity\Empresa")->findAll();
             $recisaoRow = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
-            $findAgente = $em->getRepository("Usuario\Entity\Agente")->findAll();
+            $findAgente = $em->getRepository("Administrador\Entity\Agente")->findAll();
             $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findAll();
             $listaCursos = $em->getRepository("Base\Entity\Dados")->findAll();
             
@@ -89,8 +90,8 @@ class RelatorioEADController extends AbstractActionController {
  
    } 
      public function relatorioGraficoAction()
-    {$this->sairAction();
-       
+    {
+        $this->sairComumAction();
                 $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");              
                 $request = $this->getRequest();
                 if($request->isPost()){
@@ -579,10 +580,56 @@ class RelatorioEADController extends AbstractActionController {
                 }
     } 
    public function infoEADAction(){
+        $this->sairComumAction();
+       $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $curso = $this->params()->fromRoute("curso", 0);
+        $page = $this->params()->fromRoute("page");
+        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
+       
+        
+        
+        //pagination
+        $pagination = new Paginator( new ArrayAdapter($listaVaga));
+        $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
+        $count = $pagination->count();
+        $pageNumber = $pagination->getCurrentPageNumber();
+        $getPages = $pagination->getPages();
+        
+        $mes = [];
+         for($Count = 1 ;$Count<=12 ;$Count++){
+                         $mes[$Count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVagaAndCursoVaga(date('Y'), $Count,$curso) ;   
+                         }
+     
+        return new ViewModel(
+                array(
+                    'getPages'=>$getPages,
+                    'pageNumber'=>$pageNumber,
+                    'count'=>$count,
+                    'pagination'=>$pagination,
+                    'listaVaga'=>$listaVaga,
+                    'countListaTotalVaga'=> count($listaVaga),
+                    'countListaEstagiando'=>count($listaVagaEstagiando),
+                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                    'mensagem'=>$menstagem=   '<div class="alert-danger" style="margin: initial">
+                        <br/>
+                        <h4 style="text-align: center">Sem dados à apresentar!</h4><br/>      
+                        </div>
+                    <tr>',
+                    'curso'=>$selectCurso,
+                    'listaMensal'=>$mes
+                    
+                    )
+                );
+    }
+     public function infoEADEstagiandoAction(){
+          $this->sairComumAction();
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $curso = $this->params()->fromRoute("curso", 0);
         $page = $this->params()->fromRoute("page");
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
+        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
         $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
        
         
@@ -601,7 +648,51 @@ class RelatorioEADController extends AbstractActionController {
                     'count'=>$count,
                     'pagination'=>$pagination,
                     'listaVaga'=>$listaVaga,
-                    'mensagem'=>$menstagem=  '<p class="navbar-brand" style="color: red">Nenhuma dado encontrado!</p>'
+                    'countListaTotalVaga'=> count($listaVaga),
+                    'countListaEstagiando'=>count($listaVagaEstagiando),
+                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                    'mensagem'=>$menstagem=   '<div class="alert-danger" style="margin: initial">
+                        <br/>
+                        <h4 style="text-align: center">Sem dados à apresentar!</h4><br/>      
+                        </div>
+                    <tr>'
+                    ,'curso'=>$selectCurso
+                    )
+                );
+    }
+     public function infoEADEncerradoAction(){
+          $this->sairComumAction();
+        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $curso = $this->params()->fromRoute("curso", 0);
+        $page = $this->params()->fromRoute("page");
+        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
+       
+        
+        
+        //pagination
+        $pagination = new Paginator( new ArrayAdapter($listaVaga));
+        $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
+        $count = $pagination->count();
+        $pageNumber = $pagination->getCurrentPageNumber();
+        $getPages = $pagination->getPages();
+     
+        return new ViewModel(
+                array(
+                    'getPages'=>$getPages,
+                    'pageNumber'=>$pageNumber,
+                    'count'=>$count,
+                    'pagination'=>$pagination,
+                    'listaVaga'=>$listaVaga,
+                    'countListaTotalVaga'=> count($listaVaga),
+                    'countListaEstagiando'=>count($listaVagaEstagiando),
+                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                    'mensagem'=>$menstagem =  '<div class="alert-danger" style="margin: initial">
+                        <br/>
+                        <h4 style="text-align: center">Sem dados à apresentar!</h4><br/>      
+                        </div>
+                    <tr>'
                     ,'curso'=>$selectCurso
                     )
                 );

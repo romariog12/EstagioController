@@ -8,25 +8,24 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractActionController {
     
    public function homeAction(){
-       $this->sairAction();
-       $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-            $findCurso = $em->getRepository("Usuario\Entity\Aluno")->findAll();
-            $findEmpresa = $em->getRepository("Usuario\Entity\Empresa")->findAll();
-            $recisaoRow = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
-            $findAgente = $em->getRepository("Usuario\Entity\Agente")->findAll();
-            $row = count($findCurso);
-            $rowRecisao= count($recisaoRow);
-            $rowEmpresa = count($findEmpresa);
-            $rowVaga = count($listaVaga);
-            $rowAgente = count($findAgente);
-            $rowContratosEncerrados = $rowVaga - $rowRecisao;
-       return new ViewModel([     
-                'aluno'=>$row,
-                'empresa'=>$rowEmpresa,
-                'ativos'=>$rowVaga,
-                'agente'=>$rowAgente,
-                'encerrados'=>$rowContratosEncerrados
+        $this->sairComumAction();
+            foreach ($this->session()->comum as $l){
+                        $idUsuario = $l[0]->getIdusuario();
+                    }
+            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+            $listaVagaPresencialPorUsuario = $em->getRepository("Vaga\Entity\VagaPresencial")->findByUsuarioIdusuario($idUsuario);
+            $listaVagaEADPorUsuario = $em->getRepository("Vaga\Entity\Vaga")->findByUsuarioIdusuario($idUsuario);
+            
+            $listaVagaTotalEAD = $em->getRepository("Vaga\Entity\Vaga")->findAll();
+            $listaVagaTotalPresencial = $em->getRepository("Vaga\Entity\VagaPresencial")->findAll();
+            
+            
+       return new ViewModel([ 
+                'identityComum'=>$this->session()->comum,
+                'identityAdministrador'=>$this->session()->administrador,
+                'quantidadeVagaPorUsuario'=>  count($listaVagaPresencialPorUsuario) + count($listaVagaEADPorUsuario),
+                'quantidadeVagaTotal' => count($listaVagaTotalEAD) + count($listaVagaTotalPresencial)
+             
        ]);  
    }
    

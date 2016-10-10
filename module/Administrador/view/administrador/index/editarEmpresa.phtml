@@ -1,0 +1,48 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+          
+  <?php   $success = $this-> success ?>
+    
+  <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"><i class="glyphicon glyphicon-edit" style=" color: #fff194"></i> Editar Empresa</h4>
+  </div><br/><br/>
+<div class="nav">
+    <div class="caption">
+        <div class="navbar-collapse" id="aluno">
+            <form class="navbar-default" method="post">
+                <?php foreach ($this->listaEmpresa as $l):?>
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <span class="input-group-addon" > <?php echo $this->translate('Empresa')?></span>
+                        <input value="<?php echo $l->getEmpresa()?>" name="empresa" type="text" class="form-control" required=""/><br/>
+                    </div><br/>
+                    <div class="input-group">
+                        <span class="input-group-addon" ><?php echo $this->translate('CNPJ')?></span>
+                        <input value="<?php echo $l->getCnpj()?>"  name="cnpj" id="cnpj" type="text" class="form-control" required=""/><br/>
+                    </div><br/>
+                    <div class="input-group">
+                        <span class="input-group-addon" ><?php echo $this->translate('Telefone')?></span>
+                        <input value="<?php echo $l->getTelefone()?>"  id="telefone" name="telefone" type="text" class="form-control" required=""/><br/>
+                    </div><br/>
+                    <div class="input-group">
+                        <span class="input-group-addon" ><?php echo $this->translate('Endereço')?></span>
+                        <input value="<?php echo $l->getEndereco()?>"  name="endereco" type="text" class="form-control" required=""/><br/>
+                    </div><br/>
+                    
+                        <input type="submit" class="btn btn-primary" name="cadastrar" value="Salvar" />
+                </div>
+                <?php endforeach;?>
+            </form>
+        </div>
+    </div>
+</div>
+<ul class="pager">
+
+                <li ><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+            </ul>
+
+<?php echo $this->resp; ?>
+</body>
+</html>

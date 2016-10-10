@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Vaga
  *
- * @ORM\Table(name="vaga", indexes={@ORM\Index(name="Vaga_FKIndex1", columns={"Administrador_idAdministrador"})})
+ * @ORM\Table(name="vaga", indexes={@ORM\Index(name="Vaga_FKIndex1", columns={"Usuario_idUsuario"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Vaga\Entity\VagaRepository")
  */
@@ -23,11 +23,11 @@ class Vaga
     private $idvaga;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="Administrador_idAdministrador", type="integer", nullable=false)
+     * @ORM\Column(name="Usuario_idUsuario", type="string", length=50, nullable=false)
      */
-    private $administradorIdadministrador;
+    private $usuarioIdusuario;
 
     /**
      * @var integer
@@ -102,8 +102,8 @@ class Vaga
         return $this->idvaga;
     }
 
-    function getAdministradorIdadministrador() {
-        return $this->administradorIdadministrador;
+    function getUsuarioIdusuario() {
+        return $this->usuarioIdusuario;
     }
 
     function getIdalunovaga() {
@@ -149,8 +149,8 @@ class Vaga
         return $this;
     }
 
-    function setAdministradorIdadministrador($administradorIdadministrador) {
-        $this->administradorIdadministrador = $administradorIdadministrador;
+    function setUsuarioIdusuario($usuarioIdusuario) {
+        $this->usuarioIdusuario = $usuarioIdusuario;
         return $this;
     }
 

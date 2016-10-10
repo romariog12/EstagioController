@@ -67,6 +67,32 @@ return array(
                     ),
                 ),
             ),
+            'orientacaoPresencial' => array(
+                'type'    => Literal::class,
+                'options' => array(
+                    'route'    => '/orientacaoPresencial',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Base\Controller',
+                        'controller'    => 'BasePresencial',
+                        'action'        => 'orientacao',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => Segment::class,
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'sair' => array(
                   'type'    => 'Segment',
                   'options' => array(
@@ -116,6 +142,7 @@ return array(
         'template_map' => array(
             'base/base/dados'           => __DIR__ . '/../view/base/dados.phtml',
             'base/base-presencial/dados'           => __DIR__ . '/../view/basePresencial/dadosPresencial.phtml',
+            'base/base-presencial/orientacao'           => __DIR__ . '/../view/basePresencial/orientacaoPresencial.phtml',
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',

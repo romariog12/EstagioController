@@ -1,0 +1,37 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+    <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center">Controle de acessos</h4>
+  
+ </div>
+    <div class="nav">
+      <div class="caption">
+    <table class="table" >
+        <tr> 
+            <th>Nome</th>
+            <th>Login</th>
+            <th>Nível</th>
+            <th>Editar</th>
+            <th>Excluir</th>
+        </tr>
+            <?php foreach ($this->listaUsuarios as $l):?> 
+        <tr style=" background-color: #b6fffd">
+            
+            <td><?php echo $l->getNome();?> </td>
+            <td><?php echo $l->getLogin();?> </td>
+            <td><?php echo $l->getNivel();?> </td>
+
+            <td><a  class="btn" href="<?php echo $this->url('usuarios/default', array('controller'=>'administrador','action' => 'editarUsuario', 'id' => $l->getIdusuario())) ?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
+            <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" class="btn" href="<?php echo $this->url('excluirUsuario', array('action' => 'excluirUsuario', 'deleteUsuario' => $l->getIdusuario())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>
+        </tr> <?php endforeach;?>
+    </table>
+      </div></div>  
+    <nav class="pager">
+        <a href="<?php echo $this->url('cadastrarUsuario')?>"><span  class="btn btn-primary"><i class=" glyphicon glyphicon-plus"></i> Cadastrar Usuario</span></a>
+    </nav>
+   
+<?php echo $this->resp; ?>
+</body>
+</html>

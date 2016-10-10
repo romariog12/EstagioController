@@ -19,10 +19,12 @@ $idaluno = $this->idaluno;
     }
     
     </script>
-    <div class="navbar-collapse">
-        <h3><i class=" glyphicon glyphicon-plus"></i> Cadastro de vaga</h3>
-    </div> 
-    <div class="thumbnail" style="height:520px">
+    <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-plus"  style=" color: #fff194"></i> Cadastrar Vaga</h4>
+  
+ </div> 
+    <div class="nav" style="height:520px">
     <div class="caption">
     <form name="form" style="margin-left: 2%" method="post" class="navbar-collapse"><br/> 
         <div class="col-lg-5">
@@ -66,17 +68,17 @@ $idaluno = $this->idaluno;
                     </div>
    
                 </div>
-                    <span class="col-lg-6"><input required=""  name="fim" type="text" class="form-control" placeholder="Fim" disabled="" /></span>
+                   
                         <br/>
                         <br/>  
                         <br/>  
-                        <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar" onclick=" return validarCarga()"/>
+                        <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar" onclick=" return validarCarga()"/>
                        </div>
     </form></div></div>
     <nav>
         <div>
             <ul class="pager">
-                <li ><a href="<?php echo $this->url('perfil/default',array('controller' => 'aluno', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+                <li ><a href="<?php echo $this->url('perfilPresencial/default',array('controller' => 'alunopresencial', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" > Voltar</span></a></li> 
             </ul>
         </div> 
     </nav>

@@ -29,7 +29,7 @@ return array(
                     'default' => array(
                         'type'    => Segment::class,
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:controller[/:action]/[:curso]/[:page]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -40,6 +40,7 @@ return array(
                     ),
                 ),
             ),
+           
               'relatorioPresencial' => array(
                 'type'    => Literal::class,
                 'options' => array(
@@ -55,7 +56,7 @@ return array(
                     'default' => array(
                         'type'    => Segment::class,
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:controller[/:action]/[:curso]/[:page]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -92,23 +93,15 @@ return array(
                     ),
                 ),
             ),
-            'info' => array(
-                  'type'    => 'Segment',
+           
+            
+             'infoPresencial' => array(
+                  'type'    => Segment::class,
                   'options' => array(
                       'route'    => '/curso/[:action]/[:curso]/[:page]',
                       'defaults' => array(
                           '__NAMESPACE__' => 'Relatorio\Controller',
                           'controller'    => 'RelatorioPresencial',
-                      ),
-                  ),
-              ),
-            'infoEAD' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/curso/[:action]/[:curso]/[:page]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Relatorio\Controller',
-                          'controller'    => 'RelatorioEAD',
                       ),
                   ),
               ),
@@ -136,8 +129,9 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
+            
+            'Relatorio\Controller\RelatorioPresencial' => Controller\RelatorioPresencialController::class,
             'Relatorio\Controller\RelatorioEAD' => Controller\RelatorioEADController::class,
-            'Relatorio\Controller\RelatorioPresencial' => Controller\RelatorioPresencialController::class
         ),
     ),
     'view_manager' => array(
@@ -147,12 +141,17 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'relatorio/relatorio-ead/relatorio' => __DIR__ . '/../view/relatorio/index/relatorio.phtml',
+            //templetes
             'relatorio/relatorio-presencial/relatorio' => __DIR__ . '/../view/relatorioPresencial/index/relatorio.phtml',
-            'relatorio/relatorio-presencial/info-presencial'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencial.phtml',
+            'relatorio/relatorio-presencial/infopresencial'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencial.phtml',
+            'relatorio/relatorio-presencial/infopresencialestagiando'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencialEstagiando.phtml',
+            'relatorio/relatorio-presencial/infopresencialencerrado'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencialEncerrado.phtml',
             'relatorio/relatorio-presencial/relatorio-grafico' => __DIR__ . '/../view/relatorioPresencial/index/relatorioGrafico.phtml',
             'relatorio/relatorio-ead/relatorio-grafico' => __DIR__ . '/../view/relatorio/index/relatorioGrafico.phtml',
             'relatorio/relatorio-ead/infoead' => __DIR__ . '/../view/relatorio/index/infoEAD.phtml',
+            'relatorio/relatorio-ead/infoeadestagiando' => __DIR__ . '/../view/relatorio/index/infoEADEstagiando.phtml',
+            'relatorio/relatorio-ead/infoeadencerrado' => __DIR__ . '/../view/relatorio/index/infoEADEncerrado.phtml',
+            'relatorio/relatorio-ead/relatorio' => __DIR__ . '/../view/relatorio/index/relatorio.phtml',
             
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',

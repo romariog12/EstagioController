@@ -10,10 +10,12 @@
 <html lang="pt-br">
     <meta charset="utf-8">
 <body>
- <div class="navbar-collapse">
-        <h3><i class=" glyphicon glyphicon-stats"></i> Relatórios</h3>
-    </div>  
-    <div class="thumbnail">
+  <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-stats"  style=" color: #fff194"></i> Relatórios</h4>
+  
+ </div>
+    <div class="nav">
     <div class="caption">
         <div class="row" >
             <div>
@@ -24,9 +26,9 @@
                         <li  class="  active"  role="presentation" ><a >Estatísticas</a></li>
                         
                     </ul>
-        <br/>  <br/>
+        <br/> 
       <form method="post">  
-        <div class=" input-group col-lg-3">
+        <div class=" input-group col-lg-3" style=" margin-left: 3%">
             <span class="input-group-addon" id="basic-addon1">Ano</span>
             
             <select required="" class="form-control " name="ano" >
@@ -41,29 +43,22 @@
                 <button type="submit" class="btn btn-default" >Filtrar</button>
             </span>
         </div>
+          <br/>
     </form>
-         <?php if (isset($this->ano)){
-       echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de estágios lançados em '. $this->ano.' mensalmente</h4><br/>';
-   }  else {
-       echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de estágios lançados em '. date('Y').' mensalmente</h4><br/>';
-   }
-?>              
-        <canvas id="buyers" width="1100" height="400"></canvas><br/> 
         
-<br/>
-    <?php if (isset($this->ano)){
-       echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. $this->ano.' por curso</h4><br/>';
-   }  else {
-       echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. date('Y').' por curso</h4><br/>';
-   }
-?>            
    <div class="nav">
      <div class="thumbnail">
       <div class="caption">
         
      
         <table class="table" style=" font-size: 12px; background-color:  #ccffff">
-            <tr >  
+       <?php if (isset($this->ano)){
+       echo '<br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. $this->ano.' por curso</h4><br/>';
+   }  else {
+       echo '<br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. date('Y').' por curso</h4><br/>';
+   }
+?>      
+        <tr>  
              <th>Curso</th>
              <th>Estágios Lançados</th>
              <th>Contratos</th>
@@ -205,6 +200,16 @@
       </div>
      </div>
    </div>
+         <?php if (isset($this->ano)){
+       echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de estágios lançados em '. $this->ano.' mensalmente</h4><br/>';
+   }  else {
+       echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de estágios lançados em '. date('Y').' mensalmente</h4><br/>';
+   }
+?>              
+        <canvas id="buyers" width="1100" height="400"></canvas><br/> 
+        
+<br/>
+   
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
      // line chart data

@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 class BaseController extends AbstractActionController
 {
     public function dadosAction(){
+            $this->sairComumAction();
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $lista = $em->getRepository("Base\Entity\Dados")->findAll();
             $quantidadeCursos = count($lista);
@@ -44,7 +45,8 @@ class BaseController extends AbstractActionController
     }
       
     public function logoutAction(){
-       unset($this->session()->item);
+       unset($this->session()->administrador);
+       unset($this->session()->comum);
        return $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
     }
 }

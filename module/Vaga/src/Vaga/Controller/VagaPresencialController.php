@@ -10,12 +10,15 @@ use Vaga\Entity\DocumentoPresencial;
 class VagaPresencialController extends AbstractActionController
 {
     public function cadastrarVagaPresencialAction(){
-        $this->sairAction();
+        $this->sairComumAction();
        $request = $this->getRequest();
        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
        $listaDados = $em->getRepository("Base\Entity\DadosPresencial")->findAll();
        $idalunovaga = $this->params()->fromRoute("id", 0);
-        if($request->isPost()){    
+        if($request->isPost()){ 
+            foreach ($this->session()->comum as $l){
+                       $usuarioIdusuario = $l[0]->getIdusuario();
+                    }
             try {
                 $empresa = $request->getPost('emrpesa');
                 $agente = $request->getPost('agente');
@@ -34,6 +37,7 @@ class VagaPresencialController extends AbstractActionController
                     $vagaPresencial->setCursoVaga($cursoVaga);
                     $vagaPresencial->setMesVaga(date('m'));
                     $vagaPresencial->setAnoVaga(date('Y'));
+                    $vagaPresencial->setUsuarioIdusuario($usuarioIdusuario);
                 $em->persist($vagaPresencial);
                 $em->flush();                  
                 return $this->redirect()->toRoute('perfilPresencial/default', 
@@ -43,10 +47,10 @@ class VagaPresencialController extends AbstractActionController
                echo $this->flashMessenger()->render();
             }    
         }  
-          $lista = $em->getRepository("Usuario\Entity\Empresa")->findAll();
+          $lista = $em->getRepository("Administrador\Entity\Empresa")->findAll();
           $listavagas = $em->getRepository("Vaga\Entity\VagaPresencial")->findAll();
-          $listaAlunos = $em->getRepository("Usuario\Entity\Aluno")->findAll();
-          $listaAgente = $em->getRepository("Usuario\Entity\Agente")->findAll();
+          $listaAlunos = $em->getRepository("Administrador\Entity\Aluno")->findAll();
+          $listaAgente = $em->getRepository("Administrador\Entity\Agente")->findAll();
           return new ViewModel([
               'listaEmpresa'=>$lista,
               'vagas'=>$listavagas,
@@ -58,13 +62,13 @@ class VagaPresencialController extends AbstractActionController
       }
       //Lançar contratos
     public function lancarcontratosAction(){
-        $this->sairAction();
+        $this->sairComumAction();
         $request = $this->getRequest();
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $idvagaDocumento = $this->params()->fromRoute("idVaga", 0);
         $idaluno = $this->params()->fromRoute("id", 0);
         $curso = $this->params()->fromRoute("curso", 0);
-        $aluno = new \Usuario\Entity\AlunoPresencial();
+        $aluno = new \Administrador\Entity\AlunoPresencial();
         $aluno->setIdaluno($idaluno);
         $documento = new DocumentoPresencial();
         $documento ->setIdvagaDocumento($idvagaDocumento);
@@ -133,6 +137,7 @@ class VagaPresencialController extends AbstractActionController
      
     //excluir contratos
     public function excluirAction(){
+            $this->sairComumAction();
             $id = $this->params()->fromRoute("iddelete", 0);
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $documento = $em->find("Vaga\Entity\DocumentoPresencial", $id);
@@ -144,7 +149,8 @@ class VagaPresencialController extends AbstractActionController
     }
       
       //Excluir Vaga
-    public function excluirvagaAction(){ 
+    public function excluirvagaAction(){
+            $this->sairComumAction();
             $id = $this->params()->fromRoute("iddelete", 0);
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $vaga = $em->find("Vaga\Entity\VagaPresencial", $id);
@@ -154,7 +160,8 @@ class VagaPresencialController extends AbstractActionController
                   array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$vaga->getIdalunovaga()));
      }
      //Editar contratos
-     public function editarContratosAction(){ 
+     public function editarContratosAction(){
+         $this->sairComumAction();
          $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
          $idDocumento = $this->params()->fromRoute("id", 0);
          $idVaga =  $this->params()->fromRoute("idVaga", 0);

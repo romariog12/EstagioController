@@ -1,0 +1,61 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+<div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-edit"  style=" color: #fff194"></i> Editar aluno</h4>
+  
+ </div>
+<div style="height: 400px" class="nav">
+    <br/><br/>
+      <div class="caption">
+<form class="navbar-collapse" method="post">
+    <div class="col-lg-4">
+        
+        <div>
+            <?php foreach ($this->listaAluno as $l):?>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('Nome')?></span>
+                <input value="<?php echo $l->getNome()?>" name="nome" type="text" class="form-control " required="" />
+            </div><br/>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('Matricula UCB')?></span>
+                <input value="<?php echo $l->getMatricula()?>" name="matricula" type="text" class="form-control" required=""/><br/>
+            </div><br/>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('Cpf')?></span>
+                <input value="<?php echo $l->getCpf()?>" id="cpf" name="cpf" type="text" class="form-control" required=""/><br/>
+            </div><br/>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('Telefone')?></span>
+                <input id="telefone" value="<?php echo $l->getTelefone()?>" name="telefone" type="text" class="form-control" required=""/><br/>
+            </div><br/>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('Email')?></span>
+                <input value="<?php echo $l->getEmail()?>" name="email" type="text" class="form-control" required=""/><br/>
+            </div><br/>
+            <div class="input-group">
+                <span class="input-group-addon" > <?php echo $this->translate('Curso')?></span>
+                <select name="curso" class="form-control" required="">
+                    <option><?php echo $l->getCurso()?></option>
+                    <?php foreach ($this->listaCursoPresencial as $l):?>
+                    <option><?php echo $l->getCurso()?></option><?php endforeach;?>
+                        
+                </select><br/><?php endforeach;?> 
+               
+            </div>
+        </div> <br/>
+        
+         <input type="submit" class="btn btn-primary" name="cadastrar" value="Salvar" />
+    </div>         
+</form></div></div>
+<nav>
+        <div style="">
+            <ul class="pager">
+
+                <li ><a href="<?php echo $this->url('aluno/default', ['controller'=>'administrador', 'action' =>'todosalunospresencial', 'id'=>$this->page]) ?>"><span class="btn btn-default" >Voltar</span></a></li> 
+            </ul>
+        </div> 
+    </nav>
+<?php echo $this->resp; ?>
+</body></html>

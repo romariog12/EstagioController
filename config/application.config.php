@@ -3,7 +3,7 @@
 return array(
     'modules' => array(
         'Auth',
-        'Usuario',
+        'Administrador',
         'Home',
         'Vaga',
         'Relatorio',

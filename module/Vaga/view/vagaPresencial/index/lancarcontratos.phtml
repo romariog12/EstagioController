@@ -4,6 +4,15 @@
     $idaluno = $this->aluno;
     $listaVaga = $this->listaVaga;
 ?>
+<?php
+            foreach ($listaVaga as $l){
+                $reciao = $l->getRecisao();
+                $carga = $l->getCarga();
+                $bolsa = $l->getBolsa();
+                $empresa = $l->getEmpresa();
+                $agente = $l->getAgente();
+            }
+    ?>
 <html lang="pt-br" ng-app="">
     <meta charset="utf-8">
     <style>
@@ -37,12 +46,26 @@
 </script>
 <body>
     
-    <div class="navbar-collapse">
-        <h3><i class="glyphicon glyphicon-file"></i> Documentos</h3>
-    </div> 
+   <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-file"  style=" color: #fff194"></i> Documentos</h4>
+  
+ </div>
     <br/>
 <br/>
- 
+<div class="navbar">
+        <h3 class="pager"><?php echo $empresa; ?></h3>
+        <p class="pager" style=""><label>Carga-Horária: </label> <?php echo $carga; ?> horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$ <?php echo $bolsa ?>,00
+      <?php
+              if($reciao){
+                  echo "<h5 class='pager' style='color: #cf0000'>Recisão:  ".$reciao.'</h5>';
+              }
+              ?> </p>
+      
+      
+        <br/>
+        
+    </div> 
 <form class="navbar-default" method="post" onKeyPress="return noenter()" >
     <div class="thumbnail">
       <div class="caption">
@@ -130,38 +153,14 @@
   
 </form>
 
-<form method="post" class="navbar-brand" >
-    <?php
-            foreach ($listaVaga as $l){
-                $reciao = $l->getRecisao();
-                $carga = $l->getCarga();
-                $bolsa = $l->getBolsa();
-                $empresa = $l->getEmpresa();
-                $agente = $l->getAgente();
-            }
-    ?>
-    <hr>
-    <div class="navbar-brand" >
-    <div class="thumbnail">
-    <div class="caption">
-      
-          <div style="color: #999999">
-              <div style=" text-align: center;" >
-                  <i class=" glyphicon glyphicon-info-sign"></i>
-                <p><label>Empresa:</label> <?php echo $empresa?></p>
-                <p><label>Carga:</label> <?php echo $carga?> Horas semanais </p>
-                <p><label>Bolsa:</label> R$ <?php echo $bolsa?>,00</p>
-              <?php
-              if($reciao){
-                  echo "<h5 style='color: #cf0000'><i>Recisão:  ".$reciao.'</i></h5>';
-              }
-              ?> 
-     <div class="row" >
-      <div class="col-lg-2">
+<form method="post" class="nav" >
+     <div  style=" margin-top: 20%" >
+      <div class="col-lg-3">
           <div class=" input-group">
-              <input placeholder="Recisão" id="dataRecisao" value="<?php echo $reciao;?>" type="text" name="recisao" class=" form-control" maxlength="10"  />  
+              
+              <span class="input-group-addon" id="basic-addon1">Recisão</span><input placeholder="Recisão" id="dataRecisao" value="<?php echo $reciao;?>" type="text" name="recisao" class=" form-control" maxlength="10"  />  
               <span class=" input-group-btn">
-                  <button type="submit" value="Salvar" name="salvar" class="btn btn-default info"><i  class="glyphicon glyphicon-ok"></i></button><br/><br/>
+                  <button type="submit" value="Salvar" name="salvar" class="btn btn-default info"><i  class="glyphicon glyphicon-ok"></i></button>
               </span>
            <!-- <a href="<?php //echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'contratoCompleto','id'=>$idaluno, 'idVaga'=>$idVagaEncaminhamento)); ?>"><span class="btn btn-default" style=" margin-left:  15px;"><i class=" glyphicon glyphicon-file "></i>Visualizar Contrato</span></a>
        -->   </div>
@@ -169,19 +168,14 @@
       </div>
         
     </div>
-          </div>
-      </div>   
-    </div>
-    </div>
-    </div>
-    <hr>  
+  
 </form>
 
         
-            <div style=" margin-top: 30%"><br/>
+            <div style=" margin-top: 10%"><br/>
             <ul class="pager">
                 
-                <li ><a href="<?php echo $this->url('perfilPresencial/default',array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+                <li ><a href="<?php echo $this->url('perfilPresencial/default',array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" > Voltar</span></a></li> 
             </ul>
             </div> 
 

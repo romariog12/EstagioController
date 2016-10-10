@@ -1,0 +1,91 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+  <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center">Cadastrar aluno</h4>
+  </div>
+<div style="height: 600px" class="nav">
+    
+      <div class="caption">
+          
+          <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs">
+                        <li class="  active" role="presentation"><a><label>Modalidade Presencial</label></a></li>
+                        <li role="presentation" ><a href="<?php echo $this->url('aluno/default',['controller'=>'aluno', 'action'=>'cadastrar','id'=>'0'])?>">Modalidade EAD</a></li>
+                      
+                    </ul> 
+                </div>
+              </div>
+            </div>
+        </div>  
+          
+<form class="navbar-collapse" method="post">
+    <div class="col-lg-6">
+        <div>
+            <br/><h4 style=" color: #a4a4a4" > Campos obrigatórios</h4><br/>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('Nome')?></span>
+                <input name="nome" type="text" class="form-control " required="" /><br/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('Matricula UCB')?></span>
+                <input name="matricula" type="text" class="form-control" required=""/><br/>
+            </div>
+            <br/>
+            <div class="input-group">
+                <span class="input-group-addon" ><?php echo $this->translate('CPF')?></span>
+                <input name="cpf" id="cpf" type="text" class="form-control" required=""/><br/>
+            </div>
+            <br/>
+        <div class="input-group">
+            <span class="input-group-addon" ><?php echo $this->translate('E-mail')?></span>
+            <input name="email" type="email" class="form-control" required=""/><br/>
+        </div>
+        <br/>
+         <div class="input-group">
+            <span class="input-group-addon" ><?php echo $this->translate('Telefone')?></span>
+            <input name="telefone" id="telefone" type="text" class="form-control" required=""/><br/>
+         </div>
+        <br/>
+        <div class="input-group">
+            <span class="input-group-addon" ><?php echo $this->translate('Curso')?></span>
+            <select name="curso" class="form-control">
+            <option></option>
+            <?php
+            foreach ($this->listaDadosPresencial as $l):?>
+            <option><?php echo $l->getCurso()?></option>
+            <?php endforeach;?>
+            <?php
+            foreach ($this->listaDados as $l):?>
+            <option><?php echo $l->getCurso()?></option>
+            <?php endforeach;?>
+            
+                   
+            </select><br/>
+        </div>
+        <br/>
+        <div class="input-group">
+            <span class="input-group-addon" ><?php echo $this->translate('Modalidade')?></span>
+            <select  name="modalidade" class="form-control" required="">
+                <option></option>
+                <option>
+                    Presencial
+                </option>
+                 <option>
+                    EAD
+                </option>
+            </select>
+        </div>
+              <br/><br/>
+            <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar" />
+        </div>
+    </div>          
+</form></div></div>
+
+<?php echo $this->resp; ?>
+</body></html>
