@@ -35,7 +35,12 @@ class Vaga
      * @ORM\Column(name="idAluno_Vaga", type="integer", length=254, nullable=true)
      */
     private $idalunovaga;
-      
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Aluno", type="string", length=50, nullable=true)
+     */
+    private $aluno;  
     /**
      * @var string
      *
@@ -109,6 +114,9 @@ class Vaga
     function getIdalunovaga() {
         return $this->idalunovaga;
     }
+    function getAluno() {
+        return $this->aluno;
+    }
 
     function getEmpresa() {
         return $this->empresa;
@@ -156,6 +164,10 @@ class Vaga
 
     function setIdalunovaga($idalunovaga) {
         $this->idalunovaga = $idalunovaga;
+        return $this;
+    }
+    function setAluno($aluno) {
+        $this->aluno = $aluno;
         return $this;
     }
 

@@ -12,6 +12,10 @@ namespace Administrador\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Administrador\Entity\Empresa;
+use Vaga\Entity\VagaPresencial;
+use Vaga\Entity\Vaga;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\ArrayAdapter;
 
 class EmpresaController extends AbstractActionController
 {
@@ -23,16 +27,34 @@ class EmpresaController extends AbstractActionController
             $idaluno = $this->params()->fromRoute("id", 0);
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
           if ($request->isPost()){
-              try {
-              $nomeEmpresa = $request->getPost("empresa");
-              $cnpj = $request->getPost("cnpj");
-              $telefone = $request->getPost("telefone");
-              $endereco = $request->getPost("endereco");
-              $empresa = new Empresa();
-              $empresa ->setEmpresa($nomeEmpresa);
-              $empresa ->setCnpj($cnpj);
-              $empresa ->setTelefone($telefone);
-              $empresa ->setEndereco($endereco);
+                $nomeEmpresa = $request->getPost("empresa");
+                $cnpj = $request->getPost("cnpj");
+                $telefone = $request->getPost("telefone");
+                $endereco = $request->getPost("endereco");
+                $responsavel = $request->getPost("responsavel");
+                $email = $request->getPost("email");
+                $selectEmpresa = $em->getRepository("Administrador\Entity\Empresa")->findByEmpresa($nomeEmpresa);
+                $selectCnpj = $em->getRepository("Administrador\Entity\Empresa")->findByCnpj($cnpj);
+                if(count($selectEmpresa)>=1){
+                    return new ViewModel([
+                          'alerta'=> "Empresa já cadastrada" 
+                      ]);
+                    return false;
+                }
+                if(count($selectCnpj)>=1){
+                    return new ViewModel([
+                          'alerta'=> "CNPJ já cadastrado" 
+                      ]);
+                    return false;
+                }
+                $empresa = new Empresa();
+            try {
+                $empresa ->setEmpresa($nomeEmpresa);
+                $empresa ->setCnpj($cnpj);
+                $empresa ->setTelefone($telefone);
+                $empresa ->setEndereco($endereco);
+                $empresa ->setResponsavel($responsavel);
+                $empresa ->setEmail($email);
                   $em->persist($empresa);
                   $em->flush();
                   
@@ -40,8 +62,8 @@ class EmpresaController extends AbstractActionController
                   echo $this->flashMessenger()->render();     
               }
               if($idaluno == 0){
-                      return $this->redirect()->toRoute('cadastrarEmpresa/default', 
-                  array('controller' => 'empresa', 'action' => 'cadastrarEmpresa','id'=>'0'));
+                      return $this->redirect()->toRoute('perfilEmpresa/default', 
+                          array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$nomeEmpresa,));
                       
               }else
               {
@@ -68,12 +90,16 @@ class EmpresaController extends AbstractActionController
               $cnpj = $request->getPost("cnpj");
               $telefone = $request->getPost("telefone");
               $endereco = $request->getPost("endereco");
-              
+              $responsavel = $request->getPost("responsavel");
+              $email = $request->getPost("email");
               $agente = new \Administrador\Entity\Agente();
               $agente ->setAgente($nomeAgente);
               $agente ->setCnpj($cnpj);
               $agente ->setTelefone($telefone);
               $agente ->setEndereco($endereco);
+              $agente ->setResponsavel($responsavel);
+              $agente ->setEmail($email);
+              
               $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
                   $em->persist($agente);
                   $em->flush();
@@ -120,6 +146,143 @@ class EmpresaController extends AbstractActionController
                 'lista' => $lista,
                     ]);  
                 }
+                
                 }
+public function perfilEmpresaAction(){
+      $this->sairComumAction();
+      $vaga = new VagaPresencial();
+      $vagaEAD = new Vaga();
+      $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+      $empresa = $this->params()->fromRoute("id", 0);
+      $listaVaga = $em->getRepository("Vaga\Entity\VagaPresencial")->findByEmpresa($empresa);
+      $listaVagaEAD = $em->getRepository("Vaga\Entity\Vaga")->findByEmpresa($empresa);
+      $empresaSelect = $em->getRepository("Administrador\Entity\Empresa")->findByEmpresa($empresa);
+      $listaVagaEstagiando = $em->getRepository("Vaga\Entity\VagaPresencial")->findByRecisaoAndEmpresa('',$empresa);
+      
+        foreach ($listaVaga as $l){
+                             $idVaga = $l->getidvaga();
+                             $vaga->setIdvaga($idVaga);
+                    }
+        foreach ($listaVagaEAD as $l){
+                             $idVaga = $l->getidvaga();
+                             $vagaEAD->setIdvaga($idVaga);
+                    }            
+         $listaDocumentoEAD = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumento($vagaEAD->getIdvaga());
+        $listaDocumento = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumento($vaga->getIdvaga());
+       
+        $page = $this->params()->fromRoute("idVaga", 0);
+            $pagination = new Paginator( new ArrayAdapter($listaVaga));
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
+        
+ 
+                 return new ViewModel([
+                        'listaVaga'=>$listaVaga,
+                        'listaVagaEAD'=>$listaVagaEAD,
+                        'empresaSelect'=>$empresaSelect,
+                        'listaDocumento'=>$listaDocumento,
+                        'listaDocumentoEAD'=>$listaDocumentoEAD,
+                        'getPages'=>$getPages,
+                        'pageNumber'=>$pageNumber,
+                        'count'=>$count,
+                        'pagination'=>$pagination,
+                        'empresa'=>$empresa,
+                        'listaVagaEstagiando'=>$listaVagaEstagiando
+                ]);        
+        }
+        
+        public function perfilEmpresaEstagiandoAction(){
+      $this->sairComumAction();
+      $vaga = new VagaPresencial();
+      $vagaEAD = new Vaga();
+      $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+      $empresa = $this->params()->fromRoute("id", 0);
+      $listaVaga = $em->getRepository("Vaga\Entity\VagaPresencial")->findByEmpresa($empresa);
+      $listaVagaEAD = $em->getRepository("Vaga\Entity\Vaga")->findByEmpresa($empresa);
+      $empresaSelect = $em->getRepository("Administrador\Entity\Empresa")->findByEmpresa($empresa);
+      $listaVagaEstagiando = $em->getRepository("Vaga\Entity\VagaPresencial")->findByRecisaoAndEmpresa('',$empresa);
+      
+      
+        foreach ($listaVaga as $l){
+                             $idVaga = $l->getidvaga();
+                             $vaga->setIdvaga($idVaga);
+                    }
+        foreach ($listaVagaEAD as $l){
+                             $idVaga = $l->getidvaga();
+                             $vagaEAD->setIdvaga($idVaga);
+                    }            
+         $listaDocumentoEAD = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumento($vagaEAD->getIdvaga());
+        $listaDocumento = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumento($vaga->getIdvaga());
+       
+        $page = $this->params()->fromRoute("idVaga", 0);
+            $pagination = new Paginator( new ArrayAdapter($listaVaga));
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
+        
+ 
+                 return new ViewModel([
+                        'listaVaga'=>$listaVaga,
+                        'listaVagaEAD'=>$listaVagaEAD,
+                        'empresaSelect'=>$empresaSelect,
+                        'listaDocumento'=>$listaDocumento,
+                        'listaDocumentoEAD'=>$listaDocumentoEAD,
+                        'getPages'=>$getPages,
+                        'pageNumber'=>$pageNumber,
+                        'count'=>$count,
+                        'pagination'=>$pagination,
+                        'empresa'=>$empresa,
+                        'listaVagaEstagiando'=>$listaVagaEstagiando
+                ]);        
+        }
+        public function perfilEmpresaEncerradoAction(){
+      $this->sairComumAction();
+      $vaga = new VagaPresencial();
+      $vagaEAD = new Vaga();
+      $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+      $empresa = $this->params()->fromRoute("id", 0);
+      $listaVaga = $em->getRepository("Vaga\Entity\VagaPresencial")->findByEmpresa($empresa);
+      $listaVagaEAD = $em->getRepository("Vaga\Entity\Vaga")->findByEmpresa($empresa);
+      $empresaSelect = $em->getRepository("Administrador\Entity\Empresa")->findByEmpresa($empresa);
+      
+        foreach ($listaVaga as $l){
+                             $idVaga = $l->getidvaga();
+                             $vaga->setIdvaga($idVaga);
+                    }
+        foreach ($listaVagaEAD as $l){
+                             $idVaga = $l->getidvaga();
+                             $vagaEAD->setIdvaga($idVaga);
+                    }            
+         $listaDocumentoEAD = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumento($vagaEAD->getIdvaga());
+        $listaDocumento = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumento($vaga->getIdvaga());
+         $listaVagaEstagiando = $em->getRepository("Vaga\Entity\VagaPresencial")->findByRecisaoAndEmpresa('',$empresa);
+                 
+        $page = $this->params()->fromRoute("idVaga", 0);
+            $pagination = new Paginator( new ArrayAdapter($listaVaga));
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
+        
+ 
+                 return new ViewModel([
+                        'listaVaga'=>$listaVaga,
+                        'listaVagaEAD'=>$listaVagaEAD,
+                        'empresaSelect'=>$empresaSelect,
+                        'listaDocumento'=>$listaDocumento,
+                        'listaDocumentoEAD'=>$listaDocumentoEAD,
+                        'getPages'=>$getPages,
+                        'pageNumber'=>$pageNumber,
+                        'count'=>$count,
+                        'pagination'=>$pagination,
+                        'empresa'=>$empresa,
+                        'listaVagaEstagiando'=>$listaVagaEstagiando
+                ]);        
+        }
+             
+        
         
 }

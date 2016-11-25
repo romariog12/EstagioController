@@ -1,0 +1,61 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+    <script>
+   function validar(){
+    var senha = form.senha.value;
+    var repetirSenha = form.confirmarSenha.value;
+    
+    if(senha != repetirSenha){
+        alert('Senhas diferentes!');
+        form.senha.focus();
+        return false;
+    };
+     if(senha.length <= 5){
+        alert('A senha deve conter no mínimo 6 caracteres');
+        form.senha.focus();
+        return false;
+    }
+    }   
+    </script>
+          <br/> 
+   <div class="navbar-collapse">
+        <h3><i class=" glyphicon glyphicon-plus"></i> Cadastro de acesso</h3>
+    </div>
+<div style="height: 650px" class="thumbnail">
+      <div class="caption">
+<form name="form" class="navbar-collapse" method="post">
+    <div class="col-lg-5">
+        <div>
+            <br/> 
+            <label><?php echo $this->translate('Nome')?></label><br/><input name="nome" type="text" class="form-control " required="" /><br/>
+            <label><?php echo $this->translate('Login')?></label><br/><input name="login" type="text" class="form-control" required=""/>
+            <br/><label><?php echo $this->translate('Senha')?></label>
+            <br/><span class="col-lg-6"><input placeholder="No mínimo 6 carácteres" name="senha" type="password" class="form-control" required=""/></span>
+        <span class=" col-lg-6"><input placeholder="Confirmar Senha" name="confirmarSenha" type="password" class="form-control" required=""/></span><br/>
+        <br/><br/><label><?php echo $this->translate('Matricula')?></label><input  name="matricula" type="text" class="form-control" required=""/>
+        <br/><label><?php echo $this->translate('Cargo')?></label><input  name="cargo" type="text" class="form-control" required=""/>
+        <br/><label><?php echo $this->translate('Nível')?></label><br/><select name="nivel" class="form-control" required="">
+                     <option >  
+                     </option>
+                     <option value="1">
+                          Administrador
+                     </option>
+                     <option value="2">
+                          Usuário Comum
+                     </option>
+            </select><br/>
+            
+            <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar" onclick="return validar()" />
+        </div>
+    </div>          
+</form></div></div>
+        <div style="">
+            <ul class="pager">
+
+                <li ><a href="<?php echo $this->url('usuarios') ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+            </ul>
+        </div> 
+    
+<?php echo $this->resp; ?>
+</body></html>

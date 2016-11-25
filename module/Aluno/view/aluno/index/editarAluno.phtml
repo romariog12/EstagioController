@@ -1,0 +1,48 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+<div class="navbar-collapse">
+        <h3><i class=" glyphicon glyphicon-edit"></i> Editar aluno</h3>
+
+</div>
+<div style="height: 300px" class="thumbnail">
+      <div class="caption">
+<form class="navbar-collapse" method="post">
+    <div class="col-lg-4">
+        
+        <div><?php foreach ($this->listaAluno as $l):?>
+    <?php echo $this->translate('Nome')?><br/><input value="<?php echo $l->getNome()?>" name="nome" type="text" class="form-control " required="" /><br/>
+        <?php echo $this->translate('Matricula UCB')?><br/><input value="<?php echo $l->getMatricula()?>"name="matricula" type="text" class="form-control" required=""/><br/>
+            <?php echo $this->translate('Curso')?><br/><select name="curso" class="form-control" required="">
+            <option><?php echo $l->getCurso()?></option>
+            <option>EAD - ADMINISTRAÇÃO</option>
+            <option>EAD - PEDAGOGIA</option>
+            <option>EAD - GESTAO DE RECURSOS HUMANOS</option>
+            <option>EAD - TURISMO</option>
+            <option>EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO</option>
+            <option>EAD - ANÁLISE E DESENV. DE SISTEMAS</option>
+            <option>EAD - CIÊNCIAS CONTÁBEIS</option>
+            <option>EAD - CIENCIAS ECONÔMICAS</option>
+            <option>EAD - FILOSOFIA</option>
+            <option>EAD - GESTÃO PÚBLICA</option>
+            <option>EAD - GESTÃO DO COMÉRCIO EXTERIOR</option>
+            <option>EAD - GESTÃO FINANCEIRA</option>
+            <option>EAD - LETRAS PORTUGUÊS</option>
+            <option>EAD - PROFORM</option>
+            <option>EAD - SEGURANÇA DA INFORMAÇÃO</option>
+            <option>EAD - SEGURANÇA PÚBLICA</option>        
+        </select><br/><?php endforeach;?> 
+            <input type="submit" class="btn btn-default" name="cadastrar" value="Salvar" />
+        </div>
+    </div>         
+</form></div></div>
+<nav>
+        <div style="">
+            <ul class="pager">
+
+                <li ><a href="<?php echo $this->url('aluno/default', ['controller'=>'aluno', 'action' =>'aluno']) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+            </ul>
+        </div> 
+    </nav>
+<?php echo $this->resp; ?>
+</body></html>

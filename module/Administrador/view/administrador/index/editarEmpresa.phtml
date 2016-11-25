@@ -24,11 +24,19 @@
                     </div><br/>
                     <div class="input-group">
                         <span class="input-group-addon" ><?php echo $this->translate('Telefone')?></span>
-                        <input value="<?php echo $l->getTelefone()?>"  id="telefone" name="telefone" type="text" class="form-control" required=""/><br/>
+                        <input value="<?php echo $l->getTelefone()?>"   name="telefone" type="text" class="form-control" required=""/><br/>
                     </div><br/>
                     <div class="input-group">
                         <span class="input-group-addon" ><?php echo $this->translate('Endereço')?></span>
                         <input value="<?php echo $l->getEndereco()?>"  name="endereco" type="text" class="form-control" required=""/><br/>
+                    </div><br/>
+                    <div class="input-group">
+                        <span class="input-group-addon" ><?php echo $this->translate('Responsável')?></span>
+                        <input value="<?php echo $l->getResponsavel()?>"  name="responsavel" type="text" class="form-control" required=""/><br/>
+                    </div><br/>
+                    <div class="input-group">
+                        <span class="input-group-addon" ><?php echo $this->translate('Email')?></span>
+                        <input value="<?php echo $l->getEmail()?>"  name="email" type="email" class="form-control" required=""/><br/>
                     </div><br/>
                     
                         <input type="submit" class="btn btn-primary" name="cadastrar" value="Salvar" />

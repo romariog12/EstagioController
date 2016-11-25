@@ -7,18 +7,36 @@
      <h4 style="color: white; text-align: center">Controle de Empresas</h4>
   
  </div>
+     <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                        <li  class=" active" role="presentation"><a href=""><label>Empresas Concedente</label> <span class="label label-primary"> <?php echo count($this->listaEmpresa)?></span></a> </li>
+                        <li role="presentation" ><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'agente']) ?>">Agentes de Integração <span class="label label-default"> <?php echo count($this->listaAgente)?></span></a></li>
+                      
+                    </ul> 
+                </div>
+              </div>
+            </div>
+        </div>
     <div class="nav">
       <div class="caption">
         <table class="table">
             <tr>
-                <th>Emrpesa <span class="label label-primary"> <?php echo count($this->listaEmpresa)?></span></th>
+                <th>Emrpesa</th>
+                <th>Responsável</th>
+                <th>Telefone</th>
                 <th>Editar</th>
                 <th>Excluir</th>
                 
             </tr>
                 <?php foreach ($this->pagination as $l):?>
             <tr style=" background-color: #b6fffd">
-                <td><?php echo $l->getEmpresa()?></td>
+                <td><a href="<?php echo $this->url('perfilEmpresa/default', 
+                          array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$l->getEmpresa(),)); ?>"><i class="glyphicon glyphicon-user"></i></a><?php echo $l->getEmpresa()?></td>
+                <td><?php echo $l->getResponsavel()?></td>
+                <td><?php echo $l->getTelefone()?></td>
                 <td><a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$l->getIdempresa(),'page'=>$this->pageNumber))?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
                 <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" href="<?php echo $this->url('excluirEmpresa',['action'=>'excluirEmpresa', 'deleteEmpresa'=>$l->getIdempresa(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
             </tr><?php    endforeach;?>

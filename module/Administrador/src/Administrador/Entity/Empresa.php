@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Empresa
  *
  * @ORM\Table(name="empresa", indexes={@ORM\Index(name="Empresa_FKIndex1", columns={"Administrador_idAdministrador"}), @ORM\Index(name="Empresa_FKIndex2", columns={"Vaga_idVaga"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Administrador\Entity\EmpresaRepository")
  * 
  */
 class Empresa
@@ -46,16 +46,16 @@ class Empresa
     private $empresa;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="Cnpj", type="integer", nullable=true)
+     * @ORM\Column(name="Cnpj", type="string" ,  length=50, nullable=true)
      */
     private $cnpj;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="Telefone", type="integer", nullable=true)
+     * @ORM\Column(name="Telefone", type="string",  length=50, nullable=true)
      * 
      */
     private $telefone;
@@ -66,6 +66,19 @@ class Empresa
      * 
      */
     private $endereco;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Responsavel", type="string",length=50, nullable=true)
+     */
+    private $responsavel;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Email", type="string",length=50, nullable=true)
+     */
+    private $email;
     function getIdempresa() {
         return $this->idempresa;
     }
@@ -93,7 +106,14 @@ class Empresa
         return $this->endereco;
     }
 
-    
+    function getResponsavel() {
+        return $this->responsavel;
+    }
+
+    function getEmail() {
+        return $this->email;
+    }
+
     function setIdempresa($idempresa) {
         $this->idempresa = $idempresa;
         return $this;
@@ -126,6 +146,16 @@ class Empresa
 
     function setEndereco($endereco) {
         $this->endereco = $endereco;
+        return $this;
+    }
+
+    function setResponsavel($responsavel) {
+        $this->responsavel = $responsavel;
+        return $this;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
         return $this;
     }
 

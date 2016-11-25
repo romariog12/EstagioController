@@ -28,9 +28,23 @@
  <div >
      <div class=" nav row" style=" background-color: #1989f1">
    
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-user"  style=" color: #fff194"></i> Perfil do aluno</h4>
+     <h4 style="color: white; text-align: center"> Perfil do aluno</h4>
   
  </div>
+     <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                        <li class="  active" role="presentation"><a><label>Início</label> </a></li>
+                     
+                      
+                    </ul> 
+                </div>
+              </div>
+            </div>
+        </div>
+        <br/>
      <div class="row">
     <div class="nav">
       <div class="caption">
@@ -42,10 +56,11 @@
           ?>
             
     <div class="navbar">
-        <h3 class="pager" > <?php echo $f->getNome(); ?></h3>
-        <p class="pager" style=""><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;<?php echo $f->getCurso(); ?> &nbsp;&nbsp; <i class="glyphicon glyphicon-bookmark"></i>  <?php echo $f->getMatricula(); ?></p>
-       <p class="pager" > <?php echo $f->getEmail(); ?> 
-           <?php echo $f->getTelefone(); ?></p>
+        <h3 class="pager" > <?php echo $f->getNome(); ?> </h3>
+        <p class="pager" style=""><label> Curso: </label> <?php echo $f->getCurso(); ?> &nbsp;&nbsp; <label>Matricula: </label> <?php echo $f->getMatricula(); ?></p>
+        <p class="pager" ><label>Email: </label> <?php echo $f->getEmail(); ?> 
+            <label>Telefone: </label><?php echo $f->getTelefone(); ?></p>
+        <a href="<?php echo $this->url('administrador/default', ['controller'=>'administrador', 'action'=>'editarAlunoPresencial', 'id'=>$f->getIdaluno(),'page'=>0])?>"> <p class="pager"><i class=" fa fa-edit "> Editar Perfil</i></p></a>
  
     </div>     
         <?php endforeach; endif;?>
@@ -53,30 +68,35 @@
     </div>
   </div>
  </div>
-   
- 
-       
-      
-             
-            
-
- 
  <div >
   <div >
-    <div class="thumbnail">
+    <div class="">
       <div class="caption">
-          <div>
-            <h3 style="text-align: center; " ><?php echo $this->translate('Estágios')?><br/>
-            <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'vagapresencial', 'action' => 'cadastrarvagapresencial', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h3>
+          
+          <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                        <li class="  active" role="presentation"><a><label>Estágios</label> </a></li>
+                        <li  role="presentation"><a href="">Currículo</a></li>
+                      
+                    </ul> 
+                </div>
+              </div>
+            </div>
+        </div><br/>
+            <h4 style="text-align: center; " ><?php echo $this->translate('Nova Vaga')?><br/>
+            <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'vagapresencial', 'action' => 'cadastrarvagapresencial', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h4>
         </div>
-    
+  
 <?php if ($this->listaVagaPresencial){?>
 
       <form method="post" >
     <table class="table navbar-default" >
        
         <tr >
-         
+            <th></th>
           <th>EMPRESA</th>
           <th>AGENTE</th>
           <th>CONTRATOS</th>
@@ -89,8 +109,8 @@
             $idVaga = $f->getIdvaga();
             
             if($f->getRecisao() !=(null)){ ?>
-        <tr class="table" style="background: #ab1c1c; color: white">
-            
+        <tr class="table" style="background:     #fbc0c0;">
+            <td  style=" background-color:  #f32424; text-align: center; width: 5px; color: #ab1c1c "></td>
             <td><?php echo $f->getEmpresa(); ?></td>
             <td><?php echo $f->getAgente(); ?></td>
             <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
@@ -100,9 +120,9 @@
          </tr>   <?php } ?>
             
             <?php  if($f->getRecisao() ==('')){ ?>
-        <tr class="table" style="background: #8fee8f; ">
+        <tr class="table" style="background:  #defdd7; ">
             
-            
+            <td  style=" background-color: #13c942; text-align: center; width: 5px;"></td>
             <td><?php echo $f->getEmpresa(); ?></td>
             <td><?php echo $f->getAgente(); ?></td>
             <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(),'curso'=>$curso)); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
@@ -122,8 +142,7 @@
 </div>
       </div>
     </div>
-  </div>
-    
+  
 <?php echo $this->resp; ?>
 </body>
 </html>

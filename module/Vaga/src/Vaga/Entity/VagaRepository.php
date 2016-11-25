@@ -64,6 +64,6 @@ class VagaRepository extends \Doctrine\ORM\EntityRepository{
                 ->getQuery()->getResult();
         return $result;
     }
-     
+    
 } 
 

@@ -14,12 +14,15 @@ class IndexController extends AbstractActionController
          $this->sairComumAction();
        $request = $this->getRequest();
        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+       $listaDados = $em->getRepository("Base\Entity\Dados")->findAll();
        $idalunovaga = $this->params()->fromRoute("id", 0);
+       $aluno = $em->getRepository("Aluno\Entity\Aluno")->findByIdaluno($idalunovaga);
         if($request->isPost()){  
             foreach ($this->session()->comum as $l){
                        $usuarioIdusuario = $l[0]->getIdusuario();
                     }
             try {
+                $nomeAluno = $request->getPost('aluno');
                 $empresa = $request->getPost('emrpesa');
                 $agente = $request->getPost('agente');
                 $carga = $request->getPost('carga');
@@ -28,6 +31,7 @@ class IndexController extends AbstractActionController
                 $cursoVaga = $request->getPost('curso') ;
                     $vaga = new Vaga();
                     $vaga->setIdalunovaga($idalunovaga);
+                    $vaga->setAluno($nomeAluno);
                     $vaga->setEmpresa($empresa);
                     $vaga->setAgente($agente);
                     $vaga->setCarga($carga);
@@ -49,14 +53,16 @@ class IndexController extends AbstractActionController
         }  
           $lista = $em->getRepository("Administrador\Entity\Empresa")->findAll();
           $listavagas = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-          $listaAlunos = $em->getRepository("Administrador\Entity\Aluno")->findAll();
+          $listaAlunos = $em->getRepository("Aluno\Entity\Aluno")->findAll();
           $listaAgente = $em->getRepository("Administrador\Entity\Agente")->findAll();
           return new ViewModel([
               'listaEmpresa'=>$lista,
               'vagas'=>$listavagas,
               'listaAluno'=>$listaAlunos,
               'idaluno'=>$idalunovaga,
-              'listaAgente'=>$listaAgente
+              'listaAgente'=>$listaAgente,
+              'aluno' => $aluno,
+               'listaDados' => $listaDados,
               ]);
       }
       //Lançar contratos
@@ -67,12 +73,18 @@ class IndexController extends AbstractActionController
         $idvagaEncaminhamento = $this->params()->fromRoute("idVaga", 0);
         $idaluno = $this->params()->fromRoute("id", 0);
         $curso = $this->params()->fromRoute("curso", 0);
-        $aluno = new \Administrador\Entity\Aluno();
+        $aluno = new \Aluno\Entity\Aluno();
         $aluno->setIdaluno($idaluno);
         $encaminhamento = new Encaminhamento();
         $encaminhamento ->setIdvagaEncaminhamento($idvagaEncaminhamento);
         $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdvagaEncaminhamento($encaminhamento->getIdvagaEncaminhamento());   
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdvaga($idvagaEncaminhamento);
+          foreach ($listaVaga as $l){
+                        $idUsuario =  $l->getUsuarioIdusuario();
+                        $usuario = $em->getRepository("Administrador\Entity\Usuario")->findByIdusuario($idUsuario);
+                                
+                                
+        ;}
         if ($request->isPost()){ 
             $data = $this->params()->fromPost();
             if ($data['lançar']=='Lançar'){
@@ -130,6 +142,7 @@ class IndexController extends AbstractActionController
             'listaContratos'=>$listaContratos,
             'aluno'=>$idaluno,
             'listaVaga'=>$listaVaga,
+              'usuario'=> $usuario
             
         ]);
     }

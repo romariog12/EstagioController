@@ -5,7 +5,7 @@
    
 <div class=" nav row" style=" background-color: #1989f1">
    
-     <h4 style="color: white; text-align: center"></i> Cadastrar Agente de Integração</h4>
+     <h4 style="color: white; text-align: center"> Cadastrar Agente de Integração</h4>
   
  </div>
 <div class="nav">
@@ -31,6 +31,14 @@
                                 <span class="input-group-addon" ><?php echo $this->translate('Endereço')?></span>  
                                 <input  name="endereco" type="text" class="form-control" required=""/><br/>
                          </div><br/>
+                         <div class="input-group">
+                                <span class="input-group-addon" ><?php echo $this->translate('Responsável')?></span>
+                                    <input name="responsavel" type="text" class="form-control" required=""/>
+                        </div><br/>
+                        <div class="input-group">
+                                <span class="input-group-addon" ><?php echo $this->translate('Email')?></span>
+                                <input name="email" type="email" class="form-control" required=""/>
+                        </div><br/>
 
                             <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar" />
                     </div>

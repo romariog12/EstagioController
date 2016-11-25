@@ -4,14 +4,29 @@
 <body>
    <div class=" nav row" style=" background-color: #1989f1">
    
-     <h4 style="color: white; text-align: center">Controle de Agentes de Integração</h4>
+     <h4 style="color: white; text-align: center">Controle de Empresas</h4>
   
  </div>
+    <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                        <li   role="presentation"><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">Empresas Concedente <span class="label label-default"> <?php echo count($this->listaEmpresa)?></span></a> </li>
+                        <li class=" active" role="presentation" ><a href="#"><label>Agentes de Integração</label> <span class="label label-primary"> <?php echo count($this->listaAgente)?></span></a></li>
+                      
+                    </ul> 
+                </div>
+              </div>
+            </div>
+        </div>
     <div class="nav">
       <div class="caption">
         <table class="table">
             <tr>
-                <th>Agente de Integração <span class="label label-primary"> <?php echo count($this->listaEmpresa)?></span></th>
+                <th>Agente de Integração </th>
+                <th>Responsável</th>
+                <th>Telefone</th>
                 <th>Editar</th>
                 <th>Excluir</th>
                 
@@ -19,6 +34,8 @@
                 <?php foreach ($this->pagination as $l):?>
             <tr style=" background-color: #b6fffd">
                 <td><?php echo $l->getAgente()?></td>
+                <td><?php echo $l->getResponsavel()?></td>
+                 <td><?php echo $l->getTelefone()?></td>
                 <td><a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarAgente', 'id'=>$l->getIdagente()))?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
                 <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" href="<?php echo $this->url('excluirAgente',['action'=>'excluirAgente', 'deleteAgente'=>$l->getIdagente(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
             </tr><?php    endforeach;?>

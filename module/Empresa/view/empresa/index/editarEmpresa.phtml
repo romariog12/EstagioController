@@ -1,0 +1,29 @@
+<html lang="pt-br">
+<meta charset="utf-8">
+<body>
+          
+  <?php   $success = $this-> success ?>
+    <h3 class="navbar-brand"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Editar Empresa</h3>
+<br/>
+<br/><br/>
+
+<br/>
+<br/>
+<div class="navbar-collapse" id="aluno">
+  
+<form class="navbar-default" method="post">
+    <?php foreach ($this->listaEmpresa as $l):?>
+    <div class="col-lg-4">
+    <?php echo $this->translate('Empresa')?><br/><input value="<?php echo $l->getEmpresa()?>" name="empresa" type="text" class="form-control" required=""/><br/>
+        <?php echo $this->translate('CNPJ')?><br/><input value="<?php echo $l->getCnpj()?>"  name="cnpj" type="text" class="form-control" required=""/><br/>
+            <?php echo $this->translate('Telefone')?><br/><input value="<?php echo $l->getTelefone()?>"  name="telefone" type="text" class="form-control" required=""/><br/>
+            <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar" />
+    </div>
+    <?php endforeach;?>
+</form>
+   
+</div>
+
+<?php echo $this->resp; ?>
+</body>
+</html>

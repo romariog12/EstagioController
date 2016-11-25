@@ -5,13 +5,13 @@ namespace Vaga\Entity;
 class VagaPresencialRepository extends \Doctrine\ORM\EntityRepository{
     
     public function findByRecisaoAndCursoVaga($recisao, $curso) {
-        $userLogin = $this->createQueryBuilder('u')
+        $result = $this->createQueryBuilder('u')
                         ->select('u.recisao', 'l')
                         ->from('Vaga\Entity\VagaPresencial','l')
                         ->where('l.cursoVaga = :a1','l.recisao = :a2')
                         ->setParameter('a1', $curso)
                         ->setParameter('a2', $recisao)->getQuery()->getResult();
-        return $userLogin;
+        return $result;
     }
         public function findByAnoVagaAndMesVaga($anoVaga, $mesVaga ) {
         $userLogin = $this->createQueryBuilder('u')
@@ -32,27 +32,8 @@ class VagaPresencialRepository extends \Doctrine\ORM\EntityRepository{
                         ->setParameter('a3', $cursoVaga)->getQuery()->getResult();
         return $userLogin;
     }
-    public function findByAnoVagaAndTipo ($anoVaga, $tipo ) {
-        $userLogin = $this->createQueryBuilder('u')
-                        ->select('u.iddocumento', 'l')
-                        ->from('Vaga\Entity\DocumentoPresencial','l')
-                        ->where('l.anoDocumento = :a1','l.relatorio LIKE :a2')
-                        ->setParameter('a1', $anoVaga)
-                        ->setParameter('a2', '%'.$tipo.'%')
-                        ->getQuery()->getResult();
-        return $userLogin;
-    }
-    public function findByAnoDocumentoAndTipoAndCurso ($anoVaga, $tipo,$curso ) {
-        $userLogin = $this->createQueryBuilder('u')
-                        ->select('u.iddocumento', 'l')
-                        ->from('Vaga\Entity\DocumentoPresencial','l')
-                        ->where('l.anoDocumento = :a1','l.relatorio LIKE :a2','l.cursoDocumento = :a3 ')
-                        ->setParameter('a1', $anoVaga)
-                        ->setParameter('a2', '%'.$tipo.'%')
-                        ->setParameter('a3', $curso)
-                        ->getQuery()->getResult();
-        return $userLogin;
-    }
+ 
+    
     public function findByAnoVagaAndMesVagaAndCursoVaga($anoVaga, $mesVaga, $cursoVaga) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.idvaga', 'l')
@@ -64,6 +45,27 @@ class VagaPresencialRepository extends \Doctrine\ORM\EntityRepository{
                 ->getQuery()->getResult();
         return $result;
     }
-     
+     public function findByRecisaoAndEmpresa($recisao, $empresa) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.recisao', 'l')
+                        ->from('Vaga\Entity\VagaPresencial','l')
+                        ->where('l.empresa = :a1','l.recisao = :a2')
+                        ->setParameter('a1', $empresa)
+                        ->setParameter('a2', $recisao)->getQuery()->getResult();
+        return $result;
+    }
+    public function findByRecisaoAndIdAlunoVaga($recisao, $idAlunoVaga) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.recisao', 'l')
+                        ->from('Vaga\Entity\VagaPresencial','l')
+                        ->where('l.idalunovaga = :a1','l.recisao = :a2')
+                        ->setParameter('a2', $recisao)
+                        ->setParameter('a1', $idAlunoVaga)
+                        ->getQuery()->getResult();
+        return $result;
+    }
+    public function findAll() {
+         return $this->findBy(array(), array('empresa' => 'ASC'));
+    }
 } 
 

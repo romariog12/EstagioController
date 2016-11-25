@@ -29,7 +29,7 @@ return array(
                     'default' => array(
                         'type'    => Segment::class,
                         'options' => array(
-                            'route'    => '/[:controller[/:action]/[:curso]/[:page]]',
+                            'route'    => '/[:controller[/:action]/[:curso]/[:curso1]/[:page]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -56,7 +56,7 @@ return array(
                     'default' => array(
                         'type'    => Segment::class,
                         'options' => array(
-                            'route'    => '/[:controller[/:action]/[:curso]/[:page]]',
+                            'route'    => '/[:controller[/:action]/[:curso]/[:curso1]/[:page]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -74,6 +74,32 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Relatorio\Controller',
                         'controller'    => 'RelatorioPresencial',
+                        'action'        => 'relatorioGrafico',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => Segment::class,
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'relatorioEADEstatisticas' => array(
+                'type'    => Literal::class,
+                'options' => array(
+                    'route'    => '/relatorioEADEstatisticas',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Relatorio\Controller',
+                        'controller'    => 'RelatorioEAD',
                         'action'        => 'relatorioGrafico',
                     ),
                 ),
@@ -146,11 +172,15 @@ return array(
             'relatorio/relatorio-presencial/infopresencial'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencial.phtml',
             'relatorio/relatorio-presencial/infopresencialestagiando'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencialEstagiando.phtml',
             'relatorio/relatorio-presencial/infopresencialencerrado'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencialEncerrado.phtml',
+            'relatorio/relatorio-presencial/infopresencialalunoscadastrados'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencialAlunosCadastrados.phtml',
             'relatorio/relatorio-presencial/relatorio-grafico' => __DIR__ . '/../view/relatorioPresencial/index/relatorioGrafico.phtml',
+            'relatorio/relatorio-presencial/infoestatisticas'=> __DIR__ . '/../view/relatorioPresencial/index/infoEstatisticas.phtml',
             'relatorio/relatorio-ead/relatorio-grafico' => __DIR__ . '/../view/relatorio/index/relatorioGrafico.phtml',
             'relatorio/relatorio-ead/infoead' => __DIR__ . '/../view/relatorio/index/infoEAD.phtml',
             'relatorio/relatorio-ead/infoeadestagiando' => __DIR__ . '/../view/relatorio/index/infoEADEstagiando.phtml',
             'relatorio/relatorio-ead/infoeadencerrado' => __DIR__ . '/../view/relatorio/index/infoEADEncerrado.phtml',
+            'relatorio/relatorio-ead/infoeadestatisticas' => __DIR__ . '/../view/relatorio/index/infoEADEstatisticas.phtml',
+            'relatorio/relatorio-ead/infoeadalunoscadastrados' => __DIR__ . '/../view/relatorio/index/infoEADAlunosCadastrados.phtml',
             'relatorio/relatorio-ead/relatorio' => __DIR__ . '/../view/relatorio/index/relatorio.phtml',
             
             'error/404'               => __DIR__ . '/../view/error/404.phtml',

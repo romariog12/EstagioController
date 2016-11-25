@@ -1,16 +1,10 @@
 <?php 
-       $fetchRow = $this->fetchRow;
-       $row = $this->row;
-       $listaAluno = $this->listaAluno;
-       $recisaoRow = $this->recisaoRow;
-       $rowEmpresa = $this->rowEmpresa;
-       $rowListaAluno = $this->rowListaAluno;
-       $rowAgente = $this->rowAgente;  
+       echo $this->Doctype();
        ?>
 <html lang="pt-br">
     <meta charset="utf-8">
 <body>
-  <div class=" nav row" style=" background-color: #1989f1">
+ <div class=" nav row" style=" background-color: #1989f1">
    
      <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-stats"  style=" color: #fff194"></i> Relatórios</h4>
   
@@ -21,14 +15,14 @@
             <div>
                 <div class="" style=" ">
                 <div class="caption">
-                    <ul class="nav  nav-tabs">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li role="presentation"><a href="<?php echo $this->url('relatorioEAD')?>">Relatório Geral</a></li>
-                        <li  class="  active"  role="presentation" ><a >Estatísticas</a></li>
+                        <li  class="  active"  role="presentation" ><a ><label>Estatísticas</label></a></li>
                         
                     </ul>
         <br/> 
       <form method="post">  
-        <div class=" input-group col-lg-3" style=" margin-left: 3%">
+          <div class=" input-group col-lg-3" style=" margin-left: 3%">
             <span class="input-group-addon" id="basic-addon1">Ano</span>
             
             <select required="" class="form-control " name="ano" >
@@ -46,19 +40,21 @@
           <br/>
     </form>
         
+          
    <div class="nav">
      <div class="thumbnail">
       <div class="caption">
         
      
         <table class="table" style=" font-size: 12px; background-color:  #ccffff">
-       <?php if (isset($this->ano)){
+        
+ <?php if (isset($this->ano)){
        echo '<br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. $this->ano.' por curso</h4><br/>';
    }  else {
        echo '<br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. date('Y').' por curso</h4><br/>';
    }
 ?>      
-        <tr>  
+         <tr>  
              <th>Curso</th>
              <th>Estágios Lançados</th>
              <th>Contratos</th>
@@ -66,127 +62,19 @@
              <th>Relatório (Instituição)</th>
              <th>Relatórios (Empresa)</th>
      
-         </tr>  
-         <tr>
-             <td>EAD - ADMINISTRAÇÃO</td>   
-             <td><?php echo $this->administracao?></td>
-             <td><?php echo $this->administracaoTceRow?></td>
-             <td><?php echo $this->administracaoTaRow?></td>
-             <td><?php echo $this->administracaoInstituicaoRow?></td>
-             <td><?php echo $this->administracaoEmpresaRow?></td>
          </tr>
-         <tr>
-             <td>EAD - PEDAGOGIA</td>   
-             <td><?php echo $this->pedagogia?></td>
-             <td><?php echo $this->pedagogiaTceRow?></td>
-             <td><?php echo $this->pedagogiaTaRow?></td>
-             <td><?php echo $this->pedagogiaInstituicaoRow?></td>
-             <td><?php echo $this->pedagogiaEmpresaRow?></td>
-         </tr>
-         <tr>
-             <td>EAD - GESTAO DE RECURSOS HUMANOS</td>    
-             <td><?php echo $this->rh?></td>
-             <td><?php echo $this->rhTceRow?></td>
-             <td><?php echo $this->rhTaRow?></td>
-             <td><?php echo $this->rhInstituicaoRow?></td>
-             <td><?php echo $this->rhEmpresaRow?></td>
-         </tr>
-         <tr>
-             <td>EAD - TURISMO</td>  
-             <td><?php echo $this->turismo?></td>
-             <td><?php echo $this->turismoTceRow?></td>
-             <td><?php echo $this->turismoTaRow?></td>
-             <td><?php echo $this->turismoInstituicaoRow?></td>
-             <td><?php echo $this->turismoEmpresaRow?></td>
-         </tr>
-         <tr>
-             <td>EAD - GESTÃO DA TECNOLOGIA DA INFORMAÇÃO</td>   
-             <td><?php echo $this->gti?></td>
-             <td><?php echo $this->gtiTceRow?></td>
-             <td><?php echo $this->gtiTaRow ?></td>
-             <td><?php echo $this->gtiInstituicaoRow?></td>
-             <td><?php echo $this->gtiEmpresaRow?></td>
-         </tr>
-         <tr>
-             <td>EAD - ANÁLISE E DESENV. DE SISTEMAS</td>
-             <td><?php echo $this->ads?></td>
-             <td><?php echo $this->adsTceRow?></td>
-             <td><?php echo $this->adsTaRow?></td>
-             <td><?php echo $this->adsInstituicaoRow?></td>
-             <td><?php echo $this->adsEmpresaRow?></td>
-         </tr>
-         <tr>
-             <td>EAD - CIÊNCIAS CONTÁBEIS</td> 
-             <td><?php echo $this->contabeis?></td>
-             <td><?php echo $this->contabeisTceRow?></td>
-             <td><?php echo $this->contabeisTaRow?></td>
-             <td><?php echo $this->contabeisInstituicaoRow?></td>
-             <td><?php echo $this->contabeisEmpresaRow?></td>
-         </tr>
-         <tr>
-              <td>EAD - CIENCIAS ECONÔMICAS</td>  
-              <td><?php echo $this->economia?></td>
-              <td><?php echo $this->economiaTceRow?></td>
-             <td><?php echo $this->economiaTaRow?></td>
-             <td><?php echo $this->economiaInstituicaoRow?></td>
-             <td><?php echo $this->economiaEmpresaRow?></td>
-         </tr>
-         <tr>
-              <td>EAD - FILOSOFIA</td> 
-              <td> <?php echo $this->filosofia?> </td>
-              <td><?php echo $this->filosofiaTceRow?></td>
-             <td><?php echo $this->filosofiaTaRow?></td>
-             <td><?php echo $this->filosofiaInstituicaoRow?></td>
-             <td><?php echo $this->filosofiaEmpresaRow?></td>
-         </tr>
-         <tr>
-              <td>EAD - GESTÃO PÚBLICA</td>    
-              <td><?php echo $this->gestaoPublica?> </td>
-              <td><?php echo $this->gestaoPublicaTceRow?></td>
-             <td><?php echo $this->gestaoPublicaTaRow?></td>
-             <td><?php echo $this->gestaoPublicaInstituicaoRow?></td>
-             <td><?php echo $this->gestaoPublicaEmpresaRow?></td>
-         </tr>
-         <tr>
-              <td>EAD - GESTÃO FINANCEIRA</td>   
-              <td> <?php echo $this->gestaoFinanceira?></td>
-              <td><?php echo $this->gestaoFinanceiraTceRow?></td>
-             <td><?php echo $this->gestaoFinanceiraTaRow?></td>
-             <td><?php echo $this->gestaoFinanceiraInstituicaoRow?></td>
-             <td><?php echo $this->gestaoFinanceiraEmpresaRow?></td>
-         </tr>
-         <tr>
-             <td>EAD - LETRAS PORTUGUÊS</td>    
-             <td><?php echo $this->letras?></td>
-             <td><?php echo $this->letrasTceRow?></td>
-             <td><?php echo $this->letrasTaRow?></td>
-             <td><?php echo $this->letrasInstituicaoRow?></td>
-             <td><?php echo $this->letrasEmpresaRow?></td>
-         </tr>
-         <tr>
-              <td>EAD - PROFORM</td>   
-              <td><?php echo $this->proform?> </td>
-              <td><?php echo $this->proformTceRow?></td>
-             <td><?php echo $this->proformTaRow?></td>
-             <td><?php echo $this->proformInstituicaoRow?></td>
-             <td><?php echo $this->proformEmpresaRow?></td>
-         </tr>
-         <tr>
-              <td>EAD - SEGURANÇA DA INFORMAÇÃO</td>   
-              <td><?php echo $this->segurancaInformacao?> </td>
-              <td><?php echo $this->segurancaInformacaoTceRow?></td>
-             <td><?php echo $this->segurancaInformacaoTaRow?></td>
-             <td><?php echo $this->segurancaInformacaoInstituicaoRow?></td>
-             <td><?php echo $this->segurancaInformacaoEmpresaRow?></td>
-         </tr>
-         <tr>
-              <td>EAD - SEGURANÇA PÚBLICA</td>    
-              <td><?php echo $this->segurancaPublica?> </td>
-              <td><?php echo $this->segurancaPublicaTceRow?></td>
-             <td><?php echo $this->segurancaPublicaTaRow?></td>
-             <td><?php echo $this->segurancaPublicaInstituicaoRow?></td>
-             <td><?php echo $this->segurancaPublicaEmpresaRow?></td>
-         </tr>
+             <?php foreach ($this->listaDados as $l){
+             
+        ?>  
+         <tr> 
+             <td><?php echo $l->getCurso()?></td>   
+             <td><?php echo $this->cursoVagas[$l->getIddados()]?></td>
+             <td><?php echo $this->cursoTce[$l->getIddados()]?></td>
+             <td><?php echo $this->cursoTa[$l->getIddados()]?></td>
+             <td><?php echo $this->cursoInstituicao[$l->getIddados()]?></td>
+             <td><?php echo $this->cursoEmpresa[$l->getIddados()]?></td>
+         </tr><?php  }?> 
+         
          <tr style=" background-color:  #e9f1f1; ">
               <th>Total</th>    
               <th><?php echo $this->rowTodosCursos?> </th>
@@ -206,34 +94,40 @@
        echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de estágios lançados em '. date('Y').' mensalmente</h4><br/>';
    }
 ?>              
-        <canvas id="buyers" width="1100" height="400"></canvas><br/> 
+       <div id="curve_chart" style="width: 1135px; height: 500px"></div> 
         
-<br/>
-   
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
-     // line chart data
-            var buyerData = {
-                labels : ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
-                datasets : [
-                {
-                    fillColor : "rgba(100,140,150,0.1)",
-                    strokeColor : "#48b7ff",
-                    pointColor : "#48b7ff",
-                    pointStrokeColor : "blue",
-                    data : [<?php echo $this->janeiro?>,<?php echo $this->fevereiro?>,<?php echo $this->marco?>,<?php echo $this->abril?>,<?php echo $this->maio?>,<?php echo $this->junho?>,<?php echo $this->julho?>,<?php echo $this->agosto?>,<?php echo $this->setembro?>,<?php echo $this->outubro?>,<?php echo $this->novembro?>,<?php echo $this->dezembro?>]
-                }
-            ]
-            }
-            // get line chart canvas
-            var buyers = document.getElementById('buyers').getContext('2d');
-            // draw line chart
-            new Chart(buyers).Line(buyerData);
-            
-            
- 
-    
-    
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mês',  'Novos estágios'],
+          ['Jan',       <?php echo $this->mes[1]?>],
+          ['Fev',     <?php echo $this->mes[2]?>],
+          ['Mar',       <?php echo $this->mes[3]?>],
+          ['Abr',     <?php echo $this->mes[4]?>],
+          ['Mai',     <?php echo $this->mes[5]?>],
+          ['Jun',     <?php echo $this->mes[6]?>],
+          ['Jul',      <?php echo $this->mes[7]?>],
+          ['Ago',      <?php echo $this->mes[8]?>],
+          ['Set',     <?php echo $this->mes[9]?>],
+          ['Out',      <?php echo $this->mes[10]?>],
+          ['Nov',      <?php echo $this->mes[11]?>],
+          ['Dez',      <?php echo $this->mes[12]?>]
+        ]);
+
+        var options = {
+         
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
     </script>
                 </div>   
               </div>

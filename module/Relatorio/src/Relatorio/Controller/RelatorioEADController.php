@@ -6,30 +6,31 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
+use Aluno\Entity\Aluno;
 
 class RelatorioEADController extends AbstractActionController {
     
     public function relatorioAction()
-    { 
-         $this->sairComumAction();
+    {    $this->sairComumAction();
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-            $findCurso = $em->getRepository("Administrador\Entity\Aluno")->findAll();
+            $findCurso = $em->getRepository("Aluno\Entity\Aluno")->findAll();
             $findEmpresa = $em->getRepository("Administrador\Entity\Empresa")->findAll();
             $recisaoRow = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
             $findAgente = $em->getRepository("Administrador\Entity\Agente")->findAll();
             $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findAll();
             $listaCursos = $em->getRepository("Base\Entity\Dados")->findAll();
+            $quantidadeCursos = count($listaCursos);
             
                 //....:::Quantidade de estágios por curso:::......
                 $totalEstagioPorCurso = [];
-                for($count = 1 ;$count<=16 ;$count++){
+                for($count = 1 ;$count<=$quantidadeCursos ;$count++){
                     $totalEstagioPorCurso[$count] =  $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($count);
                 }
            
                 //........:::Estágios Em andamento por curso:::.............
                 $estagiando = [];
-                for($count = 1 ;$count<=16 ;$count++){
+                for($count = 1 ;$count<=$quantidadeCursos ;$count++){
                 $estagiando[$count] = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$count);
                 }
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,6 +63,7 @@ class RelatorioEADController extends AbstractActionController {
                 '14'=> count($totalEstagioPorCurso['14']),
                 '15'=> count($totalEstagioPorCurso['15']), 
                 '16'=> count($totalEstagioPorCurso['16']),
+                
                 ],
                 
              //........:::Estágios Em andamento:::.............    
@@ -82,7 +84,8 @@ class RelatorioEADController extends AbstractActionController {
                 '13'=>  count($estagiando['13']),
                 '14'=> count($estagiando['14']),
                 '15'=> count($estagiando['15']), 
-                '16'=> count($estagiando['16']),               
+                '16'=> count($estagiando['16']), 
+                
                 ],
             'listaCursos'=>$listaCursos
          
@@ -94,123 +97,37 @@ class RelatorioEADController extends AbstractActionController {
         $this->sairComumAction();
                 $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");              
                 $request = $this->getRequest();
+                $lista = $em->getRepository("Base\Entity\Dados")->findAll();
+                $quantidadeCursos = count($lista);
+               
                 if($request->isPost()){
-                $ano = $request->getPost('ano');
-                $listaTodosCursos = $em->getRepository("Vaga\Entity\Vaga")->findByanoVaga($ano);
-                 $janeiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano, '01') ;
-                        $fevereiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'02');
-                        $marco = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'03');
-                        $abril = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'04');
-                        $maio = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'05');
-                        $junho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'06');
-                        $julho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'07');
-                        $agosto = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'08');
-                        $setembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'09');
-                        $outubro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'10');
-                        $novembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'11');
-                        $dezembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano,'12');
-
-       
-                                $administracao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'1');
-                                $pedagogia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'2');
-                                $rh = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'3');
-                                $turismo = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'4');
-                                $gti = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'5');
-                                $ads = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'6');
-                                $contabeis = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'7');
-                                $economia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'8');
-                                $filosofia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'9');
-                                $gestaoPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'10');
-                                $gestaoComercio= $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'11');
-                                $gestaoFinanceira = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'12');
-                                $letras = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'13');
-                                $proform = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'14');
-                                $segurancaInformacao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'15');
-                                $segurancaPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano,'16');
-                 
-            
-                    $administracaoTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','1' );
-                    $administracaoTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','1' );
-                    $administracaoInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','1' );
-                    $administracaoEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','1' );
-                    
-                    $pedagogiaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','2' );
-                    $pedagogiaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','2' );
-                    $pedagogiaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','2' );
-                    $pedagogiaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','2' );
-                    
-                    $rhTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','3' );
-                    $rhTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','3' );
-                    $rhInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','3' );
-                    $rhEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','3' );
-                    
-                    $turismoTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','4' );
-                    $turismoTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','4' );
-                    $turismoInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','4' );
-                    $turismoEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','4' );
-                    
-                    $gtiTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','5' );
-                    $gtiTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','5' );
-                    $gtiInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','5' );
-                    $gtiEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','5' );
-                    
-                    $adsTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','6' );
-                    $adsTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','6' );
-                    $adsInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','6' );
-                    $adsEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','6' );
-                    
-                    $contabeisTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','7' );
-                    $contabeisTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','7' );
-                    $contabeisInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','7' );
-                    $contabeisEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','7' );
-                    
-                    $economiaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','8' );
-                    $economiaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','8' );
-                    $economiaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','8' );
-                    $economiaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','8' );
-                    
-                    $filosofiaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','9' );
-                    $filosofiaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','9' );
-                    $filosofiaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','9' );
-                    $filosofiaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','9' );
-                    
-                    $gestaoPublicaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','10' );
-                    $gestaoPublicaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','10' );
-                    $gestaoPublicaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','10' );
-                    $gestaoPublicaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','10' );
-                    
-                    $gestaoComercioTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','11' );
-                    $gestaoComercioTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','11' );
-                    $gestaoComercioInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','11' );
-                    $gestaoComercioEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','11' );
-                    
-                    $gestaoFinanceiraTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','12' );
-                    $gestaoFinanceiraTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','12' );
-                    $gestaoFinanceiraInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','12' );
-                    $gestaoFinanceiraEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','12' );
-                    
-                    $letrasTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','13' );
-                    $letrasTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','13' );
-                    $letrasInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','13' );
-                    $letrasEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','13' );
-                    
-                    $proformTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','14' );
-                    $proformTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','14' );
-                    $proformInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','14' );
-                    $proformEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','14' );
-                    
-                    $segurancaInformacaoTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','15' );
-                    $segurancaInformacaoTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','15' );
-                    $segurancaInformacaoInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','15' );
-                    $segurancaInformacaoEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','15' );
-                    
-                    $segurancaPublicaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE','16' );
-                    $segurancaPublicaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA','16' );
-                    $segurancaPublicaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição','16' );
-                    $segurancaPublicaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa','16' );
-                    
-                    //Documentos discriminados
-                    
+                        $ano = $request->getPost('ano');
+                        $listaTodosCursos = $em->getRepository("Vaga\Entity\Vaga")->findByanoVaga($ano);
+                        $mes = [];
+                        $cursoVagas = [];
+                        $cursoTce = [];
+                        $cursoTa = [];
+                        $cursoInstituicao = [];
+                        $cursoEmpresa = [];
+                        
+                         for($count = 1 ;$count<=12 ;$count++){
+                         $mes[$count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano, $count) ;   
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoTce[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE',$count );   
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoTa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA',$count );   
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoInstituicao[$count] =  $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição', $count );  
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoEmpresa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa', $count ); 
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoVagas[$count] = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano, $count);   
+                         }
                     $tce = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo ($ano, 'TCE' );
                     $ta = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo($ano,  'TA' );
                     $rt1Instituicao = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo ($ano, 'Instituição');
@@ -218,376 +135,297 @@ class RelatorioEADController extends AbstractActionController {
                 
                     
                         return new ViewModel([
-                             
-                                'rowTodosCursos'=> count($listaTodosCursos),
-                                'janeiro' =>  count( $janeiro),
-                                'fevereiro' => count($fevereiro),
-                                'marco' => count( $marco), 
-                                'abril' =>count( $abril),
-                                'maio'=> count( $maio), 
-                                'junho' => count( $junho),
-                                'julho' =>count($julho),
-                                'agosto' => count(  $agosto), 
-                                'setembro'=>count($setembro),
-                                'outubro'=> count(  $outubro), 
-                                'novembro'=>count( $novembro), 
-                                'dezembro'=>count($dezembro),                 
-                                'ano'=>$ano,   
-                                'administracao' => count($administracao),
-                                'pedagogia' => count($pedagogia),
-                                'rh' => count($rh), 
-                                'turismo' =>count($turismo),
-                                'gti'=>count($gti), 
-                                'ads' =>count($ads),
-                                'contabeis' =>count( $contabeis), 
-                                'economia'=>count( $economia),
-                                'filosofia'=>count($filosofia), 
-                                'gestaoPublica'=>count( $gestaoPublica), 
-                                'gestaoComercio'=>count( $gestaoComercio),
-                                'gestaoFinanceira'=>count($gestaoFinanceira), 
-                                'letras'=>count( $letras) ,
-                                'proform'=>count($proform) ,
-                                'segurancaInformacao'=>count($segurancaInformacao), 
-                                'segurancaPublica'=>count($segurancaPublica),
+                            'listaTodosCursos'=>$listaTodosCursos,
+                            'rowTodosCursos'=> count($listaTodosCursos),
+                            'listaDados' => $lista,
+                            
+                            'mes'=>[
+                                '1' =>  count($mes[1]),
+                                '2' =>  count($mes[2]),
+                                '3' =>  count($mes[3]),
+                                '4' =>  count($mes[4]),
+                                '5' =>  count($mes[5]),
+                                '6' =>  count($mes[6]),
+                                '7' =>  count($mes[7]),
+                                '8' =>  count($mes[8]),
+                                '9' =>  count($mes[9]),
+                                '10' =>  count($mes[10]),
+                                '11' =>  count($mes[11]),
+                                '12' =>  count($mes[12]),         
+                            ],
+         
+                            'cursoVagas'=>[
+                                '1' =>  count($cursoVagas[1]),
+                                '2' =>  count($cursoVagas[2]),
+                                '3' =>  count($cursoVagas[3]),
+                                '4' =>  count($cursoVagas[4]),
+                                '5' =>  count($cursoVagas[5]),
+                                '6' =>  count($cursoVagas[6]),
+                                '7' =>  count($cursoVagas[7]),
+                                '8' =>  count($cursoVagas[8]),
+                                '9' =>  count($cursoVagas[9]),
+                                '10' =>  count($cursoVagas[10]),
+                                '11' =>  count($cursoVagas[11]),
+                                '12' =>  count($cursoVagas[12]),
+                                '13' =>  count($cursoVagas[13]),
+                                '14' =>  count($cursoVagas[14]),
+                                '15' =>  count($cursoVagas[15]),
+                                '16' =>  count($cursoVagas[16]),
                                 
+                                
+                            ],
+                            'cursoTce' =>[
+                                '1' =>  count($cursoTce[1]),
+                                '2' =>  count($cursoTce[2]),
+                                '3' =>  count($cursoTce[3]),
+                                '4' =>  count($cursoTce[4]),
+                                '5' =>  count($cursoTce[5]),
+                                '6' =>  count($cursoTce[6]),
+                                '7' =>  count($cursoTce[7]),
+                                '8' =>  count($cursoTce[8]),
+                                '9' =>  count($cursoTce[9]),
+                                '10' =>  count($cursoTce[10]),
+                                '11' =>  count($cursoTce[11]),
+                                '12' =>  count($cursoTce[12]),
+                                '13' =>  count($cursoTce[13]),
+                                '14' =>  count($cursoTce[14]),
+                                '15' =>  count($cursoTce[15]),
+                                '16' =>  count($cursoTce[16]),
+                                
+                            ],
+                            'cursoTa'=>[
+                                '1' =>  count($cursoTa[1]),
+                                '2' =>  count($cursoTa[2]),
+                                '3' =>  count($cursoTa[3]),
+                                '4' =>  count($cursoTa[4]),
+                                '5' =>  count($cursoTa[5]),
+                                '6' =>  count($cursoTa[6]),
+                                '7' =>  count($cursoTa[7]),
+                                '8' =>  count($cursoTa[8]),
+                                '9' =>  count($cursoTa[9]),
+                                '10' =>  count($cursoTa[10]),
+                                '11' =>  count($cursoTa[11]),
+                                '12' =>  count($cursoTa[12]),
+                                '13' =>  count($cursoTa[13]),
+                                '14' =>  count($cursoTa[14]),
+                                '15' =>  count($cursoTa[15]),
+                                '16' =>  count($cursoTa[16]),
+                                
+                            ],
+                            'cursoInstituicao'=>[
+                                '1' =>  count($cursoInstituicao[1]),
+                                '2' =>  count($cursoInstituicao[2]),
+                                '3' =>  count($cursoInstituicao[3]),
+                                '4' =>  count($cursoInstituicao[4]),
+                                '5' =>  count($cursoInstituicao[5]),
+                                '6' =>  count($cursoInstituicao[6]),
+                                '7' =>  count($cursoInstituicao[7]),
+                                '8' =>  count($cursoInstituicao[8]),
+                                '9' =>  count($cursoInstituicao[9]),
+                                '10' =>  count($cursoInstituicao[10]),
+                                '11' =>  count($cursoInstituicao[11]),
+                                '12' =>  count($cursoInstituicao[12]),
+                                '13' =>  count($cursoInstituicao[13]),
+                                '14' =>  count($cursoInstituicao[14]),
+                                '15' =>  count($cursoInstituicao[15]),
+                                '16' =>  count($cursoInstituicao[16]),
+                                
+                            ],
+                            'cursoEmpresa'=>[
+                                '1' =>  count($cursoEmpresa[1]),
+                                '2' =>  count($cursoEmpresa[2]),
+                                '3' =>  count($cursoEmpresa[3]),
+                                '4' =>  count($cursoEmpresa[4]),
+                                '5' =>  count($cursoEmpresa[5]),
+                                '6' =>  count($cursoEmpresa[6]),
+                                '7' =>  count($cursoEmpresa[7]),
+                                '8' =>  count($cursoEmpresa[8]),
+                                '9' =>  count($cursoEmpresa[9]),
+                                '10' =>  count($cursoEmpresa[10]),
+                                '11' =>  count($cursoEmpresa[11]),
+                                '12' =>  count($cursoEmpresa[12]),
+                                '13' =>  count($cursoEmpresa[13]),
+                                '14' =>  count($cursoEmpresa[14]),
+                                '15' =>  count($cursoEmpresa[15]),
+                                '16' =>  count($cursoEmpresa[16]),
+                                
+                            ],
+                            'ano'=>$ano,          
                             'tceRow'=> count($tce),
-                                'taRow'=> count($ta),
-                                'rtInstituicaoRow'=> 
-                                    count($rt1Instituicao) ,
-                                'rtEmpresa'=>
-                                    count($rtEmpresa),
-                            'administracaoTceRow'=> count($administracaoTce),
-                            'administracaoTaRow'=> count($administracaoTa),
-                            'administracaoInstituicaoRow'=> count($administracaoInstituicao),
-                            'administracaoEmpresaRow'=> count($administracaoEmpresa),
-                            
-                            'pedagogiaTceRow'=> count($pedagogiaTce),
-                            'pedagogiaTaRow'=> count($pedagogiaTa),
-                            'pedagogiaInstituicaoRow'=> count($pedagogiaInstituicao),
-                            'pedagogiaEmpresaRow'=> count($pedagogiaEmpresa),
-                            
-                            'rhTceRow'=> count($rhTce),
-                            'rhTaRow'=> count($rhTa),
-                            'rhInstituicaoRow'=> count($rhInstituicao),
-                            'rhEmpresaRow'=> count($rhEmpresa),
-                            
-                            'turismoTceRow'=> count($turismoTce),
-                            'turismoTaRow'=> count($turismoTa),
-                            'turismoInstituicaoRow'=> count($turismoInstituicao),
-                            'turismoEmpresaRow'=> count($turismoEmpresa),
-                            
-                            'gtiTceRow'=> count($gtiTce),
-                            'gtiTaRow'=> count($gtiTa),
-                            'gtiInstituicaoRow'=> count($gtiInstituicao),
-                            'gtiEmpresaRow'=> count($gtiEmpresa),
-                            
-                            'adsTceRow'=> count($adsTce),
-                            'adsTaRow'=> count($adsTa),
-                            'adsInstituicaoRow'=> count($adsInstituicao),
-                            'adsEmpresaRow'=> count($adsEmpresa),
-                            
-                            'contabeisTceRow'=> count($contabeisTce),
-                            'contabeisTaRow'=> count($contabeisTa),
-                            'contabeisInstituicaoRow'=> count($contabeisInstituicao),
-                            'contabeisEmpresaRow'=> count($contabeisEmpresa),
-                            
-                            'economiaTceRow'=> count($economiaTce),
-                            'economiaTaRow'=> count($economiaTa),
-                            'economiaInstituicaoRow'=> count($economiaInstituicao),
-                            'economiaEmpresaRow'=> count($economiaEmpresa),
-                            
-                            'filosofiaTceRow'=> count($filosofiaTce),
-                            'filosofiaTaRow'=> count($filosofiaTa),
-                            'filosofiaInstituicaoRow'=> count($filosofiaInstituicao),
-                            'filosofiaEmpresaRow'=> count($filosofiaEmpresa),
-                            
-                            'gestaoPublicaTceRow'=> count($gestaoPublicaTce),
-                            'gestaoPublicaTaRow'=> count($gestaoPublicaTa),
-                            'gestaoPublicaInstituicaoRow'=> count($gestaoPublicaInstituicao),
-                            'gestaoPublicaEmpresaRow'=> count($gestaoPublicaEmpresa),
-                            
-                            'gestaoComercioTceRow'=> count($gestaoComercioTce),
-                            'gestaoComercioTaRow'=> count($gestaoComercioTa),
-                            'gestaoComercioInstituicaoRow'=> count($gestaoComercioInstituicao),
-                            'gestaoComercioEmpresaRow'=> count($gestaoComercioEmpresa),
-                            
-                            'gestaoFinanceiraTceRow'=> count($gestaoFinanceiraTce),
-                            'gestaoFinanceiraTaRow'=> count($gestaoFinanceiraTa),
-                            'gestaoFinanceiraInstituicaoRow'=> count($gestaoFinanceiraInstituicao),
-                            'gestaoFinanceiraEmpresaRow'=> count($gestaoFinanceiraEmpresa),
-                            
-                            'letrasTceRow'=> count($letrasTce),
-                            'letrasTaRow'=> count($letrasTa),
-                            'letrasInstituicaoRow'=> count($letrasInstituicao),
-                            'letrasEmpresaRow'=> count($letrasEmpresa),
-                            
-                            'proformTceRow'=> count($proformTce),
-                            'proformTaRow'=> count($proformTa),
-                            'proformInstituicaoRow'=> count($proformInstituicao),
-                            'proformEmpresaRow'=> count($proformEmpresa),
-                            
-                            'segurancaInformacaoTceRow'=> count($segurancaInformacaoTce),
-                            'segurancaInformacaoTaRow'=> count($segurancaInformacaoTa),
-                            'segurancaInformacaoInstituicaoRow'=> count($segurancaInformacaoInstituicao),
-                            'segurancaInformacaoEmpresaRow'=> count($segurancaInformacaoEmpresa),
-                            
-                            'segurancaPublicaTceRow'=> count($segurancaPublicaTce),
-                            'segurancaPublicaTaRow'=> count($segurancaPublicaTa),
-                            'segurancaPublicaInstituicaoRow'=> count($segurancaPublicaInstituicao),
-                            'segurancaPublicaEmpresaRow'=> count($segurancaPublicaEmpresa),
-                                                        
-
-                                                        
+                            'taRow'=> count($ta),
+                            'rtInstituicaoRow'=> count($rt1Instituicao) ,
+                            'rtEmpresa'=> count($rtEmpresa),                           
                         ]);
                         
                 }else{
                         
                         $listaTodosCursos = $em->getRepository("Vaga\Entity\Vaga")->findByanoVaga(date('Y'));
-                        $janeiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'), '01') ;
-                        $fevereiro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'02');
-                        $marco = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'03');
-                        $abril = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'04');
-                        $maio = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'05');
-                        $junho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'06');
-                        $julho = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'07');
-                        $agosto = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'08');
-                        $setembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'09');
-                        $outubro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'10');
-                        $novembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'11');
-                        $dezembro = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'),'12');
-  
-                               $administracao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'1');
-                                $pedagogia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'2');
-                                $rh = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'3');
-                                $turismo = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'4');
-                                $gti = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'5');
-                                $ads = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'6');
-                                $contabeis = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'7');
-                                $economia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'8');
-                                $filosofia = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'9');
-                                $gestaoPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'10');
-                                $gestaoComercio= $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'11');
-                                $gestaoFinanceira = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'12');
-                                $letras = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'13');
-                                $proform = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'14');
-                                $segurancaInformacao = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'15');
-                                $segurancaPublica = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'),'16');
-                                     $rtEmpresa = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo (date('Y'), 'Empresa');
+                        $mes = [];
+                        $cursoVagas = [];
+                        $cursoTce = [];
+                        $cursoTa = [];
+                        $cursoInstituicao = [];
+                        $cursoEmpresa = [];
+                        
+                         for($count = 1 ;$count<=12 ;$count++){
+                         $mes[$count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'), $count) ;   
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoTce[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE',$count );   
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoTa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA',$count );   
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoInstituicao[$count] =  $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição', $count );  
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoEmpresa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa', $count ); 
+                         }
+                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                         $cursoVagas[$count] = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'), $count);   
+                         }
+                    $tce = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo (date('Y'), 'TCE' );
+                    $ta = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo(date('Y'),  'TA' );
+                    $rt1Instituicao = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo (date('Y'), 'Instituição');
+                    $rtEmpresa = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo (date('Y'), 'Empresa');
                 
-                                $tce = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo(date('Y'), 'TCE' );
-                                    $ta = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo(date('Y'),  'TA' );
-                                    $rt1Instituicao = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo(date('Y'), '1º RT (Instituição)');
-                             
-                    $administracaoTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','1' );
-                    $administracaoTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','1' );
-                    $administracaoInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','1' );
-                    $administracaoEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','1' );
                     
-                    $pedagogiaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','2' );
-                    $pedagogiaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','2' );
-                    $pedagogiaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','2' );
-                    $pedagogiaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','2' );
-                    
-                    $rhTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','3' );
-                    $rhTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','3' );
-                    $rhInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','3' );
-                    $rhEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','3' );
-                    
-                    $turismoTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','4' );
-                    $turismoTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','4' );
-                    $turismoInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','4' );
-                    $turismoEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','4' );
-                    
-                    $gtiTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','5' );
-                    $gtiTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','5' );
-                    $gtiInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','5' );
-                    $gtiEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','5' );
-                    
-                    $adsTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','6' );
-                    $adsTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','6' );
-                    $adsInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','6' );
-                    $adsEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','6' );
-                    
-                    $contabeisTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','7' );
-                    $contabeisTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','7' );
-                    $contabeisInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','7' );
-                    $contabeisEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','7' );
-                    
-                    $economiaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','8' );
-                    $economiaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','8' );
-                    $economiaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','8' );
-                    $economiaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','8' );
-                    
-                    $filosofiaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','9' );
-                    $filosofiaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','9' );
-                    $filosofiaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','9' );
-                    $filosofiaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','9' );
-                    
-                    $gestaoPublicaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','10' );
-                    $gestaoPublicaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','10' );
-                    $gestaoPublicaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','10' );
-                    $gestaoPublicaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','10' );
-                    
-                    $gestaoComercioTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','11' );
-                    $gestaoComercioTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','11' );
-                    $gestaoComercioInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','11' );
-                    $gestaoComercioEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','11' );
-                    
-                    $gestaoFinanceiraTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','12' );
-                    $gestaoFinanceiraTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','12' );
-                    $gestaoFinanceiraInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','12' );
-                    $gestaoFinanceiraEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','12' );
-                    
-                    $letrasTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','13' );
-                    $letrasTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','13' );
-                    $letrasInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','13' );
-                    $letrasEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','13' );
-                    
-                    $proformTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','14' );
-                    $proformTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','14' );
-                    $proformInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','14' );
-                    $proformEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','14' );
-                    
-                    $segurancaInformacaoTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','15' );
-                    $segurancaInformacaoTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','15' );
-                    $segurancaInformacaoInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','15' );
-                    $segurancaInformacaoEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','15' );
-                    
-                    $segurancaPublicaTce  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE','16' );
-                    $segurancaPublicaTa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA','16' );
-                    $segurancaPublicaInstituicao  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição','16' );
-                    $segurancaPublicaEmpresa  = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa','16' );
-                    
-             return new ViewModel([
-                                'rowTodosCursos'=> count($listaTodosCursos),
-                                'janeiro' =>  count( $janeiro),
-                                'fevereiro' => count($fevereiro),
-                                'marco' => count( $marco), 
-                                'abril' =>count( $abril),
-                                'maio'=> count( $maio), 
-                                'junho' => count( $junho),
-                                'julho' =>count($julho),
-                                'agosto' => count(  $agosto), 
-                                'setembro'=>count($setembro),
-                                'outubro'=> count(  $outubro), 
-                                'novembro'=>count( $novembro), 
-                                'dezembro'=>count($dezembro),                 
-                                'ano'=> date('Y'),   
-                                'administracao' => count($administracao),
-                                'pedagogia' => count($pedagogia),
-                                'rh' => count($rh), 
-                                'turismo' =>count($turismo),
-                                'gti'=>count($gti), 
-                                'ads' =>count($ads),
-                                'contabeis' =>count( $contabeis), 
-                                'economia'=>count( $economia),
-                                'filosofia'=>count($filosofia), 
-                                'gestaoPublica'=>count( $gestaoPublica), 
-                                'gestaoComercio'=>count( $gestaoComercio),
-                                'gestaoFinanceira'=>count($gestaoFinanceira), 
-                                'letras'=>count( $letras) ,
-                                'proform'=>count($proform) ,
-                                'segurancaInformacao'=>count($segurancaInformacao), 
-                                'segurancaPublica'=>count($segurancaPublica),
-                 
-                                'tceRow'=> count($tce),
-                                'taRow'=> count($ta),
-                                'rtInstituicaoRow'=> 
-                                    count($rt1Instituicao) ,
-                                'rtEmpresa'=>
-                                    count($rtEmpresa),
-                            'administracaoTceRow'=> count($administracaoTce),
-                            'administracaoTaRow'=> count($administracaoTa),
-                            'administracaoInstituicaoRow'=> count($administracaoInstituicao),
-                            'administracaoEmpresaRow'=> count($administracaoEmpresa),
+                        return new ViewModel([
+                            'listaTodosCursos'=>$listaTodosCursos,
+                            'rowTodosCursos'=> count($listaTodosCursos),
+                            'listaDados' => $lista,
                             
-                            'pedagogiaTceRow'=> count($pedagogiaTce),
-                            'pedagogiaTaRow'=> count($pedagogiaTa),
-                            'pedagogiaInstituicaoRow'=> count($pedagogiaInstituicao),
-                            'pedagogiaEmpresaRow'=> count($pedagogiaEmpresa),
-                            
-                            'rhTceRow'=> count($rhTce),
-                            'rhTaRow'=> count($rhTa),
-                            'rhInstituicaoRow'=> count($rhInstituicao),
-                            'rhEmpresaRow'=> count($rhEmpresa),
-                            
-                            'turismoTceRow'=> count($turismoTce),
-                            'turismoTaRow'=> count($turismoTa),
-                            'turismoInstituicaoRow'=> count($turismoInstituicao),
-                            'turismoEmpresaRow'=> count($turismoEmpresa),
-                            
-                            'gtiTceRow'=> count($gtiTce),
-                            'gtiTaRow'=> count($gtiTa),
-                            'gtiInstituicaoRow'=> count($gtiInstituicao),
-                            'gtiEmpresaRow'=> count($gtiEmpresa),
-                            
-                            'adsTceRow'=> count($adsTce),
-                            'adsTaRow'=> count($adsTa),
-                            'adsInstituicaoRow'=> count($adsInstituicao),
-                            'adsEmpresaRow'=> count($adsEmpresa),
-                            
-                            'contabeisTceRow'=> count($contabeisTce),
-                            'contabeisTaRow'=> count($contabeisTa),
-                            'contabeisInstituicaoRow'=> count($contabeisInstituicao),
-                            'contabeisEmpresaRow'=> count($contabeisEmpresa),
-                            
-                            'economiaTceRow'=> count($economiaTce),
-                            'economiaTaRow'=> count($economiaTa),
-                            'economiaInstituicaoRow'=> count($economiaInstituicao),
-                            'economiaEmpresaRow'=> count($economiaEmpresa),
-                            
-                            'filosofiaTceRow'=> count($filosofiaTce),
-                            'filosofiaTaRow'=> count($filosofiaTa),
-                            'filosofiaInstituicaoRow'=> count($filosofiaInstituicao),
-                            'filosofiaEmpresaRow'=> count($filosofiaEmpresa),
-                            
-                            'gestaoPublicaTceRow'=> count($gestaoPublicaTce),
-                            'gestaoPublicaTaRow'=> count($gestaoPublicaTa),
-                            'gestaoPublicaInstituicaoRow'=> count($gestaoPublicaInstituicao),
-                            'gestaoPublicaEmpresaRow'=> count($gestaoPublicaEmpresa),
-                            
-                            'gestaoComercioTceRow'=> count($gestaoComercioTce),
-                            'gestaoComercioTaRow'=> count($gestaoComercioTa),
-                            'gestaoComercioInstituicaoRow'=> count($gestaoComercioInstituicao),
-                            'gestaoComercioEmpresaRow'=> count($gestaoComercioEmpresa),
-                            
-                            'gestaoFinanceiraTceRow'=> count($gestaoFinanceiraTce),
-                            'gestaoFinanceiraTaRow'=> count($gestaoFinanceiraTa),
-                            'gestaoFinanceiraInstituicaoRow'=> count($gestaoFinanceiraInstituicao),
-                            'gestaoFinanceiraEmpresaRow'=> count($gestaoFinanceiraEmpresa),
-                            
-                            'letrasTceRow'=> count($letrasTce),
-                            'letrasTaRow'=> count($letrasTa),
-                            'letrasInstituicaoRow'=> count($letrasInstituicao),
-                            'letrasEmpresaRow'=> count($letrasEmpresa),
-                            
-                            'proformTceRow'=> count($proformTce),
-                            'proformTaRow'=> count($proformTa),
-                            'proformInstituicaoRow'=> count($proformInstituicao),
-                            'proformEmpresaRow'=> count($proformEmpresa),
-                            
-                            'segurancaInformacaoTceRow'=> count($segurancaInformacaoTce),
-                            'segurancaInformacaoTaRow'=> count($segurancaInformacaoTa),
-                            'segurancaInformacaoInstituicaoRow'=> count($segurancaInformacaoInstituicao),
-                            'segurancaInformacaoEmpresaRow'=> count($segurancaInformacaoEmpresa),
-                            
-                            'segurancaPublicaTceRow'=> count($segurancaPublicaTce),
-                            'segurancaPublicaTaRow'=> count($segurancaPublicaTa),
-                            'segurancaPublicaInstituicaoRow'=> count($segurancaPublicaInstituicao),
-                            'segurancaPublicaEmpresaRow'=> count($segurancaPublicaEmpresa),
-                        ]);
-       
-                }
+                            'mes'=>[
+                                '1' =>  count($mes[1]),
+                                '2' =>  count($mes[2]),
+                                '3' =>  count($mes[3]),
+                                '4' =>  count($mes[4]),
+                                '5' =>  count($mes[5]),
+                                '6' =>  count($mes[6]),
+                                '7' =>  count($mes[7]),
+                                '8' =>  count($mes[8]),
+                                '9' =>  count($mes[9]),
+                                '10' =>  count($mes[10]),
+                                '11' =>  count($mes[11]),
+                                '12' =>  count($mes[12]),         
+                            ],
+                            'cursoTce' =>[
+                                '1' =>  count($cursoTce[1]),
+                                '2' =>  count($cursoTce[2]),
+                                '3' =>  count($cursoTce[3]),
+                                '4' =>  count($cursoTce[4]),
+                                '5' =>  count($cursoTce[5]),
+                                '6' =>  count($cursoTce[6]),
+                                '7' =>  count($cursoTce[7]),
+                                '8' =>  count($cursoTce[8]),
+                                '9' =>  count($cursoTce[9]),
+                                '10' =>  count($cursoTce[10]),
+                                '11' =>  count($cursoTce[11]),
+                                '12' =>  count($cursoTce[12]),
+                                '13' =>  count($cursoTce[13]),
+                                '14' =>  count($cursoTce[14]),
+                                '15' =>  count($cursoTce[15]),
+                                '16' =>  count($cursoTce[16]),
+                                
+                            ],
+         
+                            'cursoVagas'=>[
+                                '1' =>  count($cursoVagas[1]),
+                                '2' =>  count($cursoVagas[2]),
+                                '3' =>  count($cursoVagas[3]),
+                                '4' =>  count($cursoVagas[4]),
+                                '5' =>  count($cursoVagas[5]),
+                                '6' =>  count($cursoVagas[6]),
+                                '7' =>  count($cursoVagas[7]),
+                                '8' =>  count($cursoVagas[8]),
+                                '9' =>  count($cursoVagas[9]),
+                                '10' =>  count($cursoVagas[10]),
+                                '11' =>  count($cursoVagas[11]),
+                                '12' =>  count($cursoVagas[12]),
+                                '13' =>  count($cursoVagas[13]),
+                                '14' =>  count($cursoVagas[14]),
+                                '15' =>  count($cursoVagas[15]),
+                                '16' =>  count($cursoVagas[16]),
+                               
+                            ],
+                            'cursoTa'=>[
+                                '1' =>  count($cursoTa[1]),
+                                '2' =>  count($cursoTa[2]),
+                                '3' =>  count($cursoTa[3]),
+                                '4' =>  count($cursoTa[4]),
+                                '5' =>  count($cursoTa[5]),
+                                '6' =>  count($cursoTa[6]),
+                                '7' =>  count($cursoTa[7]),
+                                '8' =>  count($cursoTa[8]),
+                                '9' =>  count($cursoTa[9]),
+                                '10' =>  count($cursoTa[10]),
+                                '11' =>  count($cursoTa[11]),
+                                '12' =>  count($cursoTa[12]),
+                                '13' =>  count($cursoTa[13]),
+                                '14' =>  count($cursoTa[14]),
+                                '15' =>  count($cursoTa[15]),
+                                '16' =>  count($cursoTa[16]),
+                               
+                            ],
+                            'cursoInstituicao'=>[
+                                '1' =>  count($cursoInstituicao[1]),
+                                '2' =>  count($cursoInstituicao[2]),
+                                '3' =>  count($cursoInstituicao[3]),
+                                '4' =>  count($cursoInstituicao[4]),
+                                '5' =>  count($cursoInstituicao[5]),
+                                '6' =>  count($cursoInstituicao[6]),
+                                '7' =>  count($cursoInstituicao[7]),
+                                '8' =>  count($cursoInstituicao[8]),
+                                '9' =>  count($cursoInstituicao[9]),
+                                '10' =>  count($cursoInstituicao[10]),
+                                '11' =>  count($cursoInstituicao[11]),
+                                '12' =>  count($cursoInstituicao[12]),
+                                '13' =>  count($cursoInstituicao[13]),
+                                '14' =>  count($cursoInstituicao[14]),
+                                '15' =>  count($cursoInstituicao[15]),
+                                '16' =>  count($cursoInstituicao[16]),
+                               
+                            ],
+                            'cursoEmpresa'=>[
+                                '1' =>  count($cursoEmpresa[1]),
+                                '2' =>  count($cursoEmpresa[2]),
+                                '3' =>  count($cursoEmpresa[3]),
+                                '4' =>  count($cursoEmpresa[4]),
+                                '5' =>  count($cursoEmpresa[5]),
+                                '6' =>  count($cursoEmpresa[6]),
+                                '7' =>  count($cursoEmpresa[7]),
+                                '8' =>  count($cursoEmpresa[8]),
+                                '9' =>  count($cursoEmpresa[9]),
+                                '10' =>  count($cursoEmpresa[10]),
+                                '11' =>  count($cursoEmpresa[11]),
+                                '12' =>  count($cursoEmpresa[12]),
+                                '13' =>  count($cursoEmpresa[13]),
+                                '14' =>  count($cursoEmpresa[14]),
+                                '15' =>  count($cursoEmpresa[15]),
+                                '16' =>  count($cursoEmpresa[16]),
+                                
+                            ],
+                            'ano'=> date('Y'),          
+                            'tceRow'=> count($tce),
+                            'taRow'=> count($ta),
+                            'rtInstituicaoRow'=> count($rt1Instituicao) ,
+                            'rtEmpresa'=> count($rtEmpresa),                           
+                ]);
+                        
+                         }
     } 
-   public function infoEADAction(){
-        $this->sairComumAction();
-       $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+   
+    public function infoEADAction(){
+         $this->sairComumAction();
+        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $curso = $this->params()->fromRoute("curso", 0);
+        $curso1 = $this->params()->fromRoute("curso1", 0);
         $page = $this->params()->fromRoute("page");
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
         $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
         $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
-       
+        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);            
         
         
         //pagination
@@ -604,6 +442,8 @@ class RelatorioEADController extends AbstractActionController {
      
         return new ViewModel(
                 array(
+                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
                     'getPages'=>$getPages,
                     'pageNumber'=>$pageNumber,
                     'count'=>$count,
@@ -623,15 +463,16 @@ class RelatorioEADController extends AbstractActionController {
                     )
                 );
     }
-     public function infoEADEstagiandoAction(){
-          $this->sairComumAction();
+      public function infoEADEstagiandoAction(){
+           $this->sairComumAction();
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $curso = $this->params()->fromRoute("curso", 0);
         $page = $this->params()->fromRoute("page");
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
         $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
         $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
-       
+        $curso1 = $this->params()->fromRoute("curso1", 0);
+        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);            
         
         
         //pagination
@@ -643,6 +484,8 @@ class RelatorioEADController extends AbstractActionController {
      
         return new ViewModel(
                 array(
+                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
                     'getPages'=>$getPages,
                     'pageNumber'=>$pageNumber,
                     'count'=>$count,
@@ -664,11 +507,12 @@ class RelatorioEADController extends AbstractActionController {
           $this->sairComumAction();
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $curso = $this->params()->fromRoute("curso", 0);
+        $curso1 = $this->params()->fromRoute("curso1", 0);
         $page = $this->params()->fromRoute("page");
         $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
         $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
         $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
-       
+        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);            
         
         
         //pagination
@@ -680,6 +524,8 @@ class RelatorioEADController extends AbstractActionController {
      
         return new ViewModel(
                 array(
+                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
                     'getPages'=>$getPages,
                     'pageNumber'=>$pageNumber,
                     'count'=>$count,
@@ -694,6 +540,136 @@ class RelatorioEADController extends AbstractActionController {
                         </div>
                     <tr>'
                     ,'curso'=>$selectCurso
+                    )
+                );
+    }
+    public function infoEADAlunosCadastradosAction(){
+        $this->sairComumAction();
+        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        
+        $request = $this->getRequest(); 
+            
+        
+        
+        $curso = $this->params()->fromRoute("curso", 0);
+        $curso1 = $this->params()->fromRoute("curso1", 0);
+        $page = $this->params()->fromRoute("page");
+        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
+        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);
+       
+        
+        
+        //pagination
+        $pagination = new Paginator( new ArrayAdapter($listaAlunosCadastrados));
+        $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
+        $count = $pagination->count();
+        $pageNumber = $pagination->getCurrentPageNumber();
+        $getPages = $pagination->getPages();
+        if($request->isPost()){
+                $data = $this->params()->fromPost();
+                $aluno = new Aluno(); 
+
+                switch ($data['buscar']){
+                    case 'buscarPorMatricula':
+                            $matricula = $request->getPost('porMatricula');
+                            $aluno->setMatricula($matricula);
+                            $lista = $em->getRepository("Aluno\Entity\Aluno")->findByMatriculaAndCurso($aluno->getMatricula(), $curso1);
+                            break;
+                    case 'buscarPorNome':
+                            $nome = $request->getPost('porNome');
+                            $aluno->setNome($nome);
+                            $lista = $em->getRepository("Aluno\Entity\Aluno")->findByNomeAndCurso($aluno->getNome(), $curso1);
+                            break;
+                }
+                return new ViewModel([
+                    'getPages'=>$getPages,
+                    'pageNumber'=>$pageNumber,
+                    'count'=>$count,
+                    'pagination'=>$pagination,
+                    'listaVaga'=>$listaVaga,
+                    'countListaTotalVaga'=> count($listaVaga),
+                    'countListaEstagiando'=>count($listaVagaEstagiando),
+                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
+                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                    'mensagem'=>$menstagem =  '<div class="alert-danger" style="margin: initial">
+                        <br/>
+                        <h4 style="text-align: center">Sem dados à apresentar!</h4><br/>      
+                        </div>
+                    <tr>'
+                    ,'curso'=>$selectCurso,
+        'lista' => $lista,
+           
+            ]);
+        
+            }
+     
+        return new ViewModel(
+                array(
+                    'getPages'=>$getPages,
+                    'pageNumber'=>$pageNumber,
+                    'count'=>$count,
+                    'pagination'=>$pagination,
+                    'listaVaga'=>$listaVaga,
+                    'countListaTotalVaga'=> count($listaVaga),
+                    'countListaEstagiando'=>count($listaVagaEstagiando),
+                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
+                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                    'mensagem'=>$menstagem =  '<div class="alert-danger" style="margin: initial">
+                        <br/>
+                        <h4 style="text-align: center">Sem dados à apresentar!</h4><br/>      
+                        </div>
+                    <tr>'
+                    ,'curso'=>$selectCurso,
+                    
+                    )
+                );
+    }
+    public function infoEADEstatisticasAction(){
+        $this->sairComumAction();
+        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $curso = $this->params()->fromRoute("curso", 0);
+        $curso1 = $this->params()->fromRoute("curso1", 0);
+        $page = $this->params()->fromRoute("page");
+        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
+         $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);   
+        //pagination
+        $pagination = new Paginator( new ArrayAdapter($listaVaga));
+        $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(3);
+        $count = $pagination->count();
+        $pageNumber = $pagination->getCurrentPageNumber();
+        $getPages = $pagination->getPages();
+        $mes = [];
+         for($Count = 1 ;$Count<=12 ;$Count++){
+                         $mes[$Count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVagaAndCursoVaga(date('Y'), $Count,$curso) ;           
+         }
+        
+        return new ViewModel(
+                array(
+                    'getPages'=>$getPages,
+                    'pageNumber'=>$pageNumber,
+                    'count'=>$count,
+                    'pagination'=>$pagination,
+                    'listaVaga'=>$listaVaga,
+                    'countListaTotalVaga'=> count($listaVaga),
+                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+                    'countListaEstagiando'=>count($listaVagaEstagiando),
+                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
+                    
+                    'mensagem'=>$menstagem=   '<div class="alert-danger" style="margin: initial">
+                        <br/>
+                        <h4 style="text-align: center">Sem dados à apresentar!</h4><br/>      
+                        </div>
+                    <tr>',
+                    'curso'=>$selectCurso,
+                    'listaMensal'=>$mes
+                    
                     )
                 );
     }

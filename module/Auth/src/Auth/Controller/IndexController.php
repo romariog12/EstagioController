@@ -40,7 +40,7 @@ class IndexController extends AbstractActionController
                      
                 }
                
-              $mensagem = 'Credenciais incorretas' ;
+              $mensagem = 'Credenciais inválidas' ;
               return new ViewModel([
           'mensagem'=>$mensagem
       ]

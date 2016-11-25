@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="documentopresencial")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Vaga\Entity\VagaPresencialRepository")
+ * @ORM\Entity(repositoryClass="Vaga\Entity\DocumentoPresencialRepository")
  */
 class DocumentoPresencial
 {

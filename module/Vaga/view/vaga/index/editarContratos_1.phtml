@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<?php
+    echo $this->doctype();
+    $listaContratos = $this->listaContratos;
+?>
+<html>
+    <head>
+
+    <meta charset="UTF-8">
+        <title></title>
+    </head>
+    
+    <body>
+  <h3 class="navbar-brand"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;<?php echo $this->translate('Contratos')?></h3><br/><br/>
+<br/>
+<br/>
+<form class="navbar-default" method="post" onKeyPress="return noenter()">
+    <table class="table">   
+        <tr>  
+                <th>Inicio</th>
+                <th>Fim</th>
+                <th>Relatório</th>
+                <th>Termo Entregue?</th>
+                <th>Ação</th>
+                
+               
+        </tr>
+                <?php foreach ($listaContratos as $f):
+                    $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ;
+                    $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ;
+                ?>
+         
+        <tr style="background: #cdffff">
+            <td> <input type="text" name="inicioEnc" value="<?php echo date_format($f->getInicio(), 'd/m/Y'); ?>"/>   </td>
+            <td> <input type="text" name="fimEnc" value="<?php echo date_format($f->getFim(),'d/m/Y') ; ?>"/></td>
+            <td> <input name="relatorio" value="<?php echo sprintf($f->getRelatorio()) ;?>"/></td>
+            <td> <input type="radio" name="entregue" value="Sim" />Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 10%"/>Não</td>
+            <td><input type="submit" value="Salvar" class="btn btn-default"/></td>
+            </tr><?php endforeach;?>  
+    </table>
+    </form> 
+<?php  echo $this->resp; ?>
+    </body>
+</html>

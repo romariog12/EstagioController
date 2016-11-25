@@ -2,83 +2,64 @@
 ?>
 <html>
     <body >
+        <style>
+
+        </style>
         <div style=" background-image: url('img/UCBhome.jpg'); background-position: center; height: 500px; ">
             <br/>
-            <?php if ( isset($this->identityComum)&& !isset($this->identityAdministrador) ):?>
+           
             <div class="pager" style=" color: white;">
               <h4  >Bem Vindo(a) </h4>
                 <h3  style=" color: #fff194"><?php 
                     foreach ( $this->identityComum as $l){
                         echo $l[0]->getNome()      
                        ;
-                    ?>
+                    }?>
                 </h3>
               <br/>
-              <h4>
-                  Você já lançou <b style=" color: #fff194"><?php echo $this->quantidadeVagaPorUsuario?></b> vagas de estágios
-              </h4>
-              <?php if($this->quantidadeVagaPorUsuario == 0){?>
-              <h4>
-                 com <b style=" color: #fff194"><?php echo '0'?> %</b> de participação nos lançamentos das vagas.
-              </h4><?php
-              }else{
-              ?>
-              <h4>
-                 com <b style=" color: #fff194"><?php echo intval(($this->quantidadeVagaPorUsuario * 100  ) / $this->quantidadeVagaTotal )?>%</b> de participação nos lançamentos das vagas.
-              </h4><?php
-              }
-              ?>
-            </div>
-            <?php
-            
-            }
-            endif;
-            ?>
-        
-        <?php if ( isset($this->identityAdministrador) && isset($this->identityComum) ):?>
-            <div class="pager" style=" color: white;">
-              <h4  >Bem Vindo(a) </h4>
-                <h3  style=" color: #fff194"><?php 
-                    foreach ( $this->identityAdministrador as $l){
-                        echo $l[0]->getNome()      
-                       ;
-                    ?>
-                </h3>
-              <h4>
-                  Você já lançou <b style=" color: #fff194"><?php echo $this->quantidadeVagaPorUsuario?></b> vagas de estágios
-              </h4>
-              <?php if($this->quantidadeVagaPorUsuario == 0){?>
-              <h4>
-                 com <b style=" color: #fff194"><?php echo '0'?> %</b> de participação nos lançamentos das vagas.
-              </h4><?php
-              }else{
-              ?>
-              <h4>
-                 com <b style=" color: #fff194"><?php echo intval(($this->quantidadeVagaPorUsuario * 100  ) / $this->quantidadeVagaTotal )?>%</b> de participação nos lançamentos das vagas.
-              </h4><?php
-              }
-              ?>
-              <br/><br/>
-             
-                  
-              <div class=" pager" >
-                
-                  <a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosalunospresencial']) ?>"> <h4 class=" btn  btn-warning" ><?php echo $this->translate('Controle de alunos') ?></h4></a>
-                  <a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>"><h4 class=" btn  btn-warning" > <?php echo $this->translate('Controle de Empresa Concedente') ?></h4></a>
-                  <a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'agente']) ?>"><h4 class=" btn  btn-warning" > <?php echo $this->translate('Controle Agente de Integração') ?></h4></a>
-                  <a href="<?php echo $this->url('usuarios') ?>"><h4 class=" btn  btn-warning" > <?php echo $this->translate('Controle de Acesso') ?></h4></a>
-            
               
-              </div> 
-                  
+             
             </div>
+            <div style=" color: white; " class=" pager">
+                  <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                    <br/>
+                     <a style=" color:white; " href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosalunospresencial']) ?>">
+                   
+                        <span><p><i style=" font-size: 50px " class="fa fa-mortar-board" aria-hidden="true"></i></p></span></a>
+                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de alunos</h5>
+                        
+            
+                 </div>
                  
-        <?php
-        }
-            endif;
-        ?>
+                <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                    <br/>
+                      <a style=" color:white" href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">
+                    <span><p><i style=" font-size: 50px " class="fa fa-briefcase" aria-hidden="true"></i></p></span></a>
+                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de empresas</h5>
+            
+                 </div>
+                <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                    <br/> <a style=" color:white" href="<?php echo $this->url('documentos') ?>">
+                         <span><p><i style=" font-size: 50px " class="fa fa-archive" aria-hidden="true"></i></p></span></a>
+                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de documentos</h5>
+          
+                </div>
+                <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                    <br/> <a style=" color:white" href="<?php echo $this->url('usuarios') ?>">
+                         <span><p><i style=" font-size: 50px " class="fa fa-users" aria-hidden="true"></i></p></span></a>
+                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de acessos</h5>
+          
+                </div>
+                
+                  <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                    <br/> <a style=" color:white" href="<?php echo $this->url('dadosPresencial') ?>">
+                         <span><p><i style=" font-size: 50px " class="fa fa-refresh" aria-hidden="true"></i></p></span></a>
+                        <h5 style=" color: #fff194"> Atualizar dados</h5>
+          
+                </div>
+      
        
-        </div>   
+            </div>   </div>
     
     </body>
 </html>

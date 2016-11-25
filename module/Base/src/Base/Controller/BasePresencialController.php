@@ -12,28 +12,49 @@ namespace Base\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Base\Entity\Pedagogico;
-use Zend\Session\Container;
+use Base\Entity\DadosPresencial;
+
 class BasePresencialController extends AbstractActionController
 {
     public function dadosAction(){
-             $this->sairComumAction();
+             $this->sairAdministradorAction();
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $lista = $em->getRepository("Base\Entity\DadosPresencial")->findAll();
             $quantidadeCursos = count($lista);
             $request = $this->getRequest();
-            if($request ->isPost()){
+           
+           if($request ->isPost()){
+                
+            /*     if($data['lancar'] == 'Lancar'){
+                    $dadosPresencial = new DadosPresencial();
+                    $curso = $request->getPost("curso");
+                    $quantidadealunos = $request->getPost("quantidadeAlunos");
+                    $meta = $request->getPost("meta");/*     if($data['lancar'] == 'Lancar'){
+                        
+                    $dadosPresencial->setCurso($curso);
+                    $dadosPresencial->setMeta($meta);
+                    $dadosPresencial ->setQuantidadealunos($quantidadealunos);
+                    $dadosPresencial ->setIdcurso("GP-".($quantidadeCursos+1));
+                    $dadosPresencial ->setOrientador($orientador);
+                    $em->persist($dadosPresencial);
+                    $em->flush();
+                   
+                }*/
                         $curso = [];
                         $quantidadePresencial = [];
                         $meta = [];
                         $selectCurso = [];
+                        $orientador = [];
                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
                             $curso[$count]= $request->getPost($count);
                             $quantidadePresencial[$count] = $request->getPost("GP-".$count);
                             $meta[$count] = $request->getPost(100 + $count);
+                            $orientador [$count] =  $request->getPost("orientador".$count);
                             $selectCurso[$count] = $em ->find("Base\Entity\DadosPresencial", $count);     
                             $selectCurso[$count]->setCurso($curso[$count]);
                             $selectCurso[$count]->setQuantidadealunos($quantidadePresencial[$count]);
                             $selectCurso[$count]->setMeta($meta[$count]);
+                            $selectCurso[$count]->setOrientador($orientador[$count]);
                             $em->persist($selectCurso[$count]);
                             $em->flush();     
                         }
@@ -45,7 +66,7 @@ class BasePresencialController extends AbstractActionController
     }
     
     public function orientacaoAction(){
-        $this->sairComumAction();
+         $this->sairAdministradorAction();
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $lista = $em->getRepository("Base\Entity\DadosPresencial")->findAll();
          $request = $this->getRequest();

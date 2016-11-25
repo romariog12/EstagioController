@@ -14,7 +14,7 @@ use Zend\View\Model\ViewModel;
 class BaseController extends AbstractActionController
 {
     public function dadosAction(){
-            $this->sairComumAction();
+             $this->sairAdministradorAction();
             $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
             $lista = $em->getRepository("Base\Entity\Dados")->findAll();
             $quantidadeCursos = count($lista);
@@ -25,14 +25,17 @@ class BaseController extends AbstractActionController
                         $quantidade = [];
                         $meta = [];
                         $selectCurso = [];
+                         $orientador = [];
                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
                             $curso[$count]= $request->getPost($count);
                             $quantidade[$count] = $request->getPost("GV-".$count);
                             $meta[$count] = $request->getPost(100 + $count);
+                            $orientador [$count] =  $request->getPost("orientador".$count);
                             $selectCurso[$count] = $em ->find("Base\Entity\Dados", $count);     
                             $selectCurso[$count]->setCurso($curso[$count]);
                             $selectCurso[$count]->setQuantidadealunos($quantidade[$count]);
                             $selectCurso[$count]->setMeta($meta[$count]);
+                             $selectCurso[$count]->setOrientador($orientador[$count]);
                             $em->persist($selectCurso[$count]);
                             $em->flush();
                             

@@ -12,7 +12,7 @@ namespace Administrador\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Vaga\Entity\Vaga;
-use Administrador\Entity\Aluno;
+use Aluno\Entity\Aluno;
 
 class AlunoController extends AbstractActionController
 
@@ -34,12 +34,12 @@ class AlunoController extends AbstractActionController
             case 'buscarPorMatricula':
                     $matricula = $request->getPost('porMatricula');
                     $aluno->setMatricula($matricula);
-                    $lista = $em->getRepository("Administrador\Entity\Aluno")->findByMatricula($aluno->getMatricula());
+                    $lista = $em->getRepository("Aluno\Entity\Aluno")->findByMatricula($aluno->getMatricula());
                     break;
             case 'buscarPorNome':
                     $nome = $request->getPost('porNome');
                     $aluno->setNome($nome);
-                    $lista = $em->getRepository("Administrador\Entity\Aluno")->findByNome($aluno->getNome());
+                    $lista = $em->getRepository("Aluno\Entity\Aluno")->findByNome($aluno->getNome());
                     break;
         }
         
@@ -59,7 +59,7 @@ class AlunoController extends AbstractActionController
       $id = $this->params()->fromRoute("id", 0);
       $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdalunovaga($id);
       $listaVagaPresencial = $em->getRepository("Vaga\Entity\VagaPresencial")->findByIdalunovaga($id);
-      $lista = $em->getRepository("Administrador\Entity\Aluno")->findByidaluno($id);
+      $lista = $em->getRepository("Aluno\Entity\Aluno")->findByidaluno($id);
       
         foreach ($listaVaga as $l){
                              $idVaga = $l->getidvaga();
@@ -79,7 +79,7 @@ class AlunoController extends AbstractActionController
       $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
       $id = $this->params()->fromRoute("id", 0);
       $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdalunovaga($id);
-      $listaAluno = $em->getRepository("Administrador\Entity\Aluno")->findByidaluno($id);
+      $listaAluno = $em->getRepository("Aluno\Entity\Aluno")->findByidaluno($id);
       
         foreach ($listaVaga as $l){
                              $idVaga = $l->getidvaga();
@@ -109,7 +109,7 @@ class AlunoController extends AbstractActionController
                 $telefone = $request->getPost("telefone");
                 $cpf = $request->getPost("cpf");
 
-                $aluno = new \Administrador\Entity\Aluno();
+                $aluno = new \Aluno\Entity\Aluno();
                 $aluno->setAdministradorIdadministrador("0");
                 $aluno->setNome($nome);
                 $aluno->setCurso($curso);
@@ -140,7 +140,7 @@ class AlunoController extends AbstractActionController
         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
         $idAluno = $this->params()->fromRoute("id", 0);
         $idVaga = $this->params()->fromRoute("idVaga", 0);
-        $aluno = $em->getRepository("Administrador\Entity\Aluno")->findByIdaluno($idAluno);
+        $aluno = $em->getRepository("Aluno\Entity\Aluno")->findByIdaluno($idAluno);
         $vaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdvaga($idVaga);
         $colaborador = $this->session()->comum;
       

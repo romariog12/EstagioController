@@ -6,7 +6,7 @@
 <body>
  <div class=" nav row" style=" background-color: #1989f1">
    
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-stats"  style=" color: #fff194"></i> Relatórios</h4>
+     <h4 style="color: white; text-align: center"><i class=" fa fa-bar-chart-o"  style=" color: #fff194"></i> Relatórios</h4>
   
  </div>
     <div class="nav">
@@ -15,9 +15,9 @@
             <div>
                 <div class="" style=" ">
                 <div class="caption">
-                    <ul class="nav  nav-tabs">
-                        <li role="presentation"><a href="<?php echo $this->url('relatorioPresencial')?>">Relatório Geral</a></li>
-                        <li  class="  active"  role="presentation" ><a >Estatísticas</a></li>
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                        <li role="presentation"><a href="<?php echo $this->url('relatorioPresencial')?>">Aproveitamento em estágio</a></li>
+                        <li  class="  active"  role="presentation" ><a ><label>Relatório geral</label></a></li>
                         
                     </ul>
         <br/> 
@@ -43,10 +43,10 @@
           
    <div class="nav">
      <div class="thumbnail">
-      <div class="caption">
+         <form class=" navbar-default">
         
      
-        <table class="table" style=" font-size: 12px; background-color:  #ccffff">
+        <table class="table " >
         
  <?php if (isset($this->ano)){
        echo '<br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. $this->ano.' por curso</h4><br/>';
@@ -55,6 +55,7 @@
    }
 ?>      
          <tr>  
+            
              <th>Curso</th>
              <th>Estágios Lançados</th>
              <th>Contratos</th>
@@ -66,7 +67,8 @@
              <?php foreach ($this->listaDados as $l){
              
         ?>  
-         <tr> 
+         <tr style=" background-color:  #ccffff"> 
+             
              <td><?php echo $l->getCurso()?></td>   
              <td><?php echo $this->cursoVagas[$l->getIddados()]?></td>
              <td><?php echo $this->cursoTce[$l->getIddados()]?></td>
@@ -85,7 +87,7 @@
               
          </tr>
         </table>
-      </div>
+         </form>
      </div>
    </div>
          <?php if (isset($this->ano)){
@@ -94,38 +96,40 @@
        echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de estágios lançados em '. date('Y').' mensalmente</h4><br/>';
    }
 ?>              
-        <canvas id="buyers" width="1100" height="400"></canvas><br/> 
+       <div id="curve_chart" style="width: 1135px; height: 500px"></div> 
         
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
-     // line chart data
-            var buyerData = {
-                labels : ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
-                datasets : [
-                {
-                    fillColor : "rgba(100,140,150,0.1)",
-                    strokeColor : "#48b7ff",
-                    pointColor : "#48b7ff",
-                    pointStrokeColor : "blue",
-                    data : [<?php 
-                    for( $count = 1;$count<=12 ; $count++){
-                        echo $this->mes[$count].',';
-                    }
-                    
-                    ?>]
-                }
-            ]
-            }
-            // get line chart canvas
-            var buyers = document.getElementById('buyers').getContext('2d');
-            // draw line chart
-            new Chart(buyers).Line(buyerData);
-            
-            
- 
-    
-    
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mês',  'Novos estágios'],
+          ['Jan',       <?php echo $this->mes[1]?>],
+          ['Fev',     <?php echo $this->mes[2]?>],
+          ['Mar',       <?php echo $this->mes[3]?>],
+          ['Abr',     <?php echo $this->mes[4]?>],
+          ['Mai',     <?php echo $this->mes[5]?>],
+          ['Jun',     <?php echo $this->mes[6]?>],
+          ['Jul',      <?php echo $this->mes[7]?>],
+          ['Ago',      <?php echo $this->mes[8]?>],
+          ['Set',     <?php echo $this->mes[9]?>],
+          ['Out',      <?php echo $this->mes[10]?>],
+          ['Nov',      <?php echo $this->mes[11]?>],
+          ['Dez',      <?php echo $this->mes[12]?>]
+        ]);
+
+        var options = {
+         
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
     </script>
                 </div>   
               </div>

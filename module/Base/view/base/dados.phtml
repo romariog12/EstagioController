@@ -13,18 +13,34 @@
      <h4 style="color: white; text-align: center">Atualizar dados</h4>
   
  </div>
-        <div class="thumbnail" style=" height: 1000px">
+         <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                        <li   role="presentation"><a href="<?php echo $this->url('dadosPresencial')?>">Modalidade Presencial</a></li>
+                        <li class=" active" role="presentation" ><a href="#"><label>Modalidade EAD</label></a></li>
+                      
+                    </ul> 
+                </div>
+              </div>
+            </div>
+        </div>
+        <br/>
+        <div style=" height: 1000px">
       <div class="caption">
         <div class="navbar-collapse">
             <form class="navbar-default" method="post">
                 <div >
                      <table class="table">
                      
-                        <tr>  
-                            <th>Curso</th> 
-                            <th>Quantidade de Alunos</th>
-                            <th>Meta em porcentagem</th>
-                        </tr>  
+                       <tr >  
+                            <th style=" text-align: center">Curso</th> 
+                            <th style=" width: 200px; text-align: center">Quantidade de Alunos</th>
+                            <th  style=" width: 200px; text-align: center">Meta em porcentagem</th>
+                            <th style=" text-align: center">Professor Orientador</th>
+                            
+                        </tr>
                        <?php foreach ( $this->lista as $l){
                        ?>
                         <tr style=" background-color: #e0f0f4">
@@ -37,7 +53,10 @@
                                 </td>
                             <td >
                                 <input name="<?php echo $this->translate($l->getIddados()+100)?>" value="<?php echo $this->translate($l->getMeta())?>" type="number" class="form-control input-group" required=""/>   
-                            </td>          
+                            </td>
+                            <td >
+                                <input name="<?php echo "orientador".$l->getIddados()?>" value="<?php echo $this->translate($l->getOrientador())?>" type="text" class="form-control input-group" />   
+                            </td>
                         </tr><?php }
                             ?>
                     </table>

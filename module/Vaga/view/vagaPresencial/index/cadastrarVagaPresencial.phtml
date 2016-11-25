@@ -3,6 +3,7 @@ $listaEmpresa = $this->listaEmpresa;
 $listaVaga = $this->vagas;
 $listaAluno = $this->listaAluno;
 $idaluno = $this->idaluno;
+
 ?>
 <html lang="pt-br">
     <meta charset="utf-8" ng-app="">
@@ -21,65 +22,103 @@ $idaluno = $this->idaluno;
     </script>
     <div class=" nav row" style=" background-color: #1989f1">
    
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-plus"  style=" color: #fff194"></i> Cadastrar Vaga</h4>
+     <h4 style="color: white; text-align: center"> Cadastrar Vaga</h4>
   
  </div> 
-    <div class="nav" style="height:520px">
+  
+    <div class="nav" style="height: 600px">
+        <div class="navbar-collapse">
+    <div>
     <div class="caption">
-    <form name="form" style="margin-left: 2%" method="post" class="navbar-collapse"><br/> 
-        <div class="col-lg-5">
-             <?php echo $this->translate('Agente de Integração')?>
-                <br/>
-                <select name="agente" class="form-control" >
+        <br/><h5 style=" color: #1a3ef9" > Todos campos obrigatórios</h5>
+    <form name="form"  method="post" class="navbar-collapse"><br/> 
+        <div class="col-lg-6">
+            
+            <div class="input-group">
+                    <span class="input-group-addon" ><?php echo $this->translate('Aluno')?></span>
+                    <select name="aluno" class="form-control" >
+                            <?php foreach ($this->aluno as $f): ?>
+                           <option>  <?php echo  $f->getNome()?></option>
+                            <?php endforeach; ?>         
+                    </select>
+            </div><br/><br/>
+            <div class="input-group">
+                    <span class="input-group-addon" ><?php echo $this->translate('Curso')?></span>
+                    <select name="curso" class="form-control">
+                        <option></option>
+                        <?php  foreach ( $this->listaDados as $l): ?>
+                        <option value="<?php echo $l->getIddados()?>"><?php echo $l->getCurso()?></option>
+                        <?php endforeach; ?> 
+                    </select>
+            </div>
+            
+            
+             <br/><br/>               
+            
+              
+              
+              <div class="input-group">
+                    <span class="input-group-addon" ><?php echo $this->translate('Agente')?></span>
+                    <select name="agente" class="form-control" >
                            <option></option>
                             <?php foreach ($this->listaAgente as $f): ?>
                            <option><?php print_r($f->getAgente()); ?></option>
                             <?php endforeach; ?>         
-                </select>
-                <span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'empresa', 'action' => 'cadastrarAgente', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Agente de Integração</a></span><br/>
-                <br/>
-                <br/>
-            <?php echo $this->translate('Empresa')?>
-            <select required="" name="emrpesa" class="form-control" >
+                    </select>
+                    <span class=" input-group-btn">
+                       <a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'empresa', 'action' => 'cadastrarAgente', 'id'=>$idaluno)); ?>"><span  class="btn btn-primary info"><i class="glyphicon glyphicon-plus"></i></span></a>
+                    </span>
+            </div>
+              
+              
+              
+               <br/><br/>
+               
+               <div class="input-group">
+                    <span class="input-group-addon" ><?php echo $this->translate('Empresa')?></span>
+                    <select required="" name="emrpesa" class="form-control" >
                        <option></option>
                         <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
                        <option><?php print_r($f->getEmpresa()); ?></option>
                         <?php endforeach; ?>  
             </select>
-                <span><a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'empresa', 'action' => 'cadastrarEmpresa', 'id'=>$idaluno)); ?>"><i class="glyphicon glyphicon-plus"></i>Cadastrar Empresa Concedente</a></span><br/>
-                <br/>
-                <?php echo $this->translate('Curso')?>
-            <select name="curso" class="form-control">
-                 <?php  foreach ( $this->listaDados as $l): ?>
-                 <option value="<?php echo $l->getIddados()?>"><?php echo $l->getCurso()?></option>
-                 <?php endforeach; ?> 
-           </select>
-                <br/>  <br/>
-                    <span class="col-lg-6"><input required="" id="carga" name="carga" type="text" class="form-control" placeholder="Carga Horária"/></span>
-                    <span class="col-lg-6"><input required="" id="bolsa" name="bolsa" type="number" class="form-control" placeholder="Bolsa-Auxílio"/></span>
-                    <br/><br/>
-                        <?php echo $this->translate('Início')?>    
-                             
-                    <br/> 
-                <div class="  col-lg-6">
-                    <div  class="input-group date" >
-                        <input onkeypress="mascaraData( this, event )" class="form-control" type="date" name="inicio"  id="dataFim"  required="" />
+              <span class=" input-group-btn">
+                  <a class="default" href="<?php echo $this->url('empresa/default', array('controller' => 'empresa', 'action' => 'cadastrarEmpresa', 'id'=>$idaluno)); ?>"><span  class="btn btn-primary info"><i class="glyphicon glyphicon-plus"></i></span></a>
+              </span>
                     
+            </div>
+            <span></span>
+              <br/><br/>
+            <div class="  col-lg-6 nav">
+             <div class="input-group">
+                    <span class="input-group-addon" ><?php echo $this->translate('Carga')?></span>
+                    <input required="" id="carga" name="carga" type="text" class="form-control" />
+             </div></div>
+            <div class="  col-lg-6 nav">
+            <div class="input-group">
+                    <span class="input-group-addon" ><?php echo $this->translate('Bolsa')?></span>
+                    <input required="" id="bolsa" name="bolsa" type="number" class="form-control" />
+            </div> 
+            </div><br/><br/><br/><br/>
+                <div class="  col-lg-6 nav">
+                    <div  class="input-group date" >
+                        <span class="input-group-addon" ><?php echo $this->translate('Início')?></span>
+                        <input onkeypress="mascaraData( this, event )" class="form-control" type="date" name="inicio"  id="dataFim"  required="" />
                     </div>
-   
-                </div>
-                   
-                        <br/>
-                        <br/>  
-                        <br/>  
-                        <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar" onclick=" return validarCarga()"/>
-                       </div>
-    </form></div></div>
+                </div><br/><br/><br/>
+             <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar" onclick=" return validarCarga()"/>
+             
+               </div>
+    </form>
+    </div>
+    </div>
+        </div>
+    </div>
     <nav>
-        <div>
-            <ul class="pager">
-                <li ><a href="<?php echo $this->url('perfilPresencial/default',array('controller' => 'alunopresencial', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" > Voltar</span></a></li> 
-            </ul>
+        <div class="pager">
+            
+                <a href="<?php echo $this->url('perfilPresencial/default',array('controller' => 'alunopresencial', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" > Voltar</span></a>
+            
         </div> 
     </nav>
 

@@ -26,26 +26,13 @@ class Dados
      */
     private $quantidadealunos;
 
+    
     /**
      * @var string
      *
-     * @ORM\Column(name="Estagiando", type="string", length=50, nullable=false)
+     * @ORM\Column(name="Orientador", type="string", length=50, nullable=false)
      */
-    private $estagiando;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Ano", type="string", length=50, nullable=false)
-     */
-    private $ano;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Semestre", type="string", length=50, nullable=false)
-     */
-    private $semestre;
+    private $orientador;
 
     /**
      * @var integer
@@ -77,18 +64,12 @@ class Dados
         return $this->quantidadealunos;
     }
 
-    function getEstagiando() {
-        return $this->estagiando;
+
+    function getOrientador() {
+        return $this->orientador;
     }
 
-    function getAno() {
-        return $this->ano;
-    }
-
-    function getSemestre() {
-        return $this->semestre;
-    }
-
+    
     function getIddados() {
         return $this->iddados;
     }
@@ -110,21 +91,12 @@ class Dados
         return $this;
     }
 
-    function setEstagiando($estagiando) {
-        $this->estagiando = $estagiando;
+    function setOrientador($orientador) {
+        $this->orientador = $orientador;
         return $this;
     }
 
-    function setAno($ano) {
-        $this->ano = $ano;
-        return $this;
-    }
-
-    function setSemestre($semestre) {
-        $this->semestre = $semestre;
-        return $this;
-    }
-
+    
     function setIddados($iddados) {
         $this->iddados = $iddados;
         return $this;
@@ -139,6 +111,7 @@ class Dados
         $this->meta = $meta;
         return $this;
     }
+
 
 
 }

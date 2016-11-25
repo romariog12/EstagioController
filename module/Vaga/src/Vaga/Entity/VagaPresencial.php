@@ -36,6 +36,13 @@ class VagaPresencial
      */
     private $idalunovaga;
       
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Aluno", type="string", length=50, nullable=true)
+     */
+    private $aluno;
+    
     /**
      * @var string
      *
@@ -109,6 +116,9 @@ class VagaPresencial
     function getIdalunovaga() {
         return $this->idalunovaga;
     }
+    function getAluno() {
+        return $this->aluno;
+    }
 
     function getEmpresa() {
         return $this->empresa;
@@ -144,7 +154,7 @@ class VagaPresencial
     }
 
         
-        function setIdvaga($idvaga) {
+    function setIdvaga($idvaga) {
         $this->idvaga = $idvaga;
         return $this;
     }
@@ -156,6 +166,10 @@ class VagaPresencial
 
     function setIdalunovaga($idalunovaga) {
         $this->idalunovaga = $idalunovaga;
+        return $this;
+    }
+    function setAluno($aluno) {
+        $this->aluno = $aluno;
         return $this;
     }
 

@@ -1,0 +1,197 @@
+<?php
+    echo $this->doctype();
+    $listaContratos = $this->listaContratos;
+    $idaluno = $this->aluno;
+    $listaVaga = $this->listaVaga;
+?>
+<html lang="pt-br" ng-app="">
+    <meta charset="utf-8">
+    <style>
+        
+    </style>
+<script>
+   function noenter() {
+      return !(window.event && window.event.keyCode === 13);
+    };
+</script>
+<body> 
+          
+    <h3 class="navbar-brand"><i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;<?php echo $this->translate('Documentos')?></h3><br/><br/>
+<br/>
+<br/>
+ 
+<form class="navbar-default" method="post" onKeyPress="return noenter()">
+    <div class="thumbnail">
+      <div class="caption">
+<?php if ($listaContratos):?>    <table class="table">   
+        <tr>  
+                <th>Inicio</th>
+                <th>Fim</th>
+                <th>Tipo Doc.</th>
+                <th>Termo Entregue?</th>
+               
+                <th>Editar</th>
+                <th>Excluir</th>
+        </tr>
+                <?php foreach ($listaContratos as $f):
+                    $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ;
+                    $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ;
+                    $idencaminhamento = $f->getidEncaminhamento() ;
+                ?>
+         
+        <tr style="background: #cdffff">
+            <td> <?php echo date_format($f->getInicio(), 'd/m/Y'); ?>   </td>
+            <td> <?php echo date_format($f->getFim(),'d/m/Y') ; ?></td>
+            <td>  <?php echo sprintf($f->getRelatorio()) ;?></td>
+            <td>  <?php echo $f->getEntregue();?> </td>
+            <td><a data-toggle="modal" data-target="#becomeamember" ><i  class="glyphicon glyphicon-edit"></i></a></td>
+            <td><a style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array('action' => 'excluir', 'iddelete' => $f->getIdencaminhamento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
+        </tr><?php endforeach;?> 
+    </table>
+    
+   <?php else:?>
+    <div class="alert-danger" style="margin: initial">
+           <br/>
+           <h4 style="text-align: center">Nenhum documento lançado </h4><br/>      
+    </div>
+      <?php endif;?>
+      </div>
+        </div>
+    
+
+            <div style="background:  #bef1ba; border: #38820c" class=" navbar-brand">
+                <span class="col-lg-3">Inicio<input class=" form-control" type="date" name="inicioEnc" id="dataInicio"  required="" /></span>
+                <span class="col-lg-3">Fím<input class="form-control" type="date" name="fimEnc"  id="dataFim"  required="" /></span>
+                <span class="col-lg-3">Tipo Doc.
+                    <select class="form-control"  name="relatorio"  >
+                    <option>TCE/TA</option>
+                    <option>1º RT (Instituição)</option>
+                    <option>2° RT (Instituição)</option>
+                    <option>3° RT (Instituição)</option>
+                    <option>4º RT (Instituição)</option>
+                    <option>1° RT (Empresa)</option>
+                    <option>2° RT (Empresa)</option>
+                    <option>3° RT (Empresa)</option>
+                    <option>4º RT (Empresa)</option>
+                    </select></span>
+                Termo Entregue?
+                <span class="col-lg-3"><input type="radio" name="entregue" value="Sim" required=""/>Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 5%"/>Não</span>
+
+            </div>
+            <div class="navbar-brand">
+                <button  type="submit" name="lançar" class="btn  btn-default " value="Lançar">Lançar Documento</button>
+
+            </div>
+  
+</form>
+
+<form method="post" class="navbar-brand" >
+    <?php
+            foreach ($listaVaga as $l){
+                $reciao = $l->getRecisao();
+                $carga = $l->getCarga();
+                $bolsa = $l->getBolsa();
+                $empresa = $l->getEmpresa();
+                $agente = $l->getAgente();
+            }
+    ?>
+    <hr>
+    <div class="navbar-brand" >
+    <div class="thumbnail">
+    <div class="caption">
+      
+          <div style="color: #999999">
+              <div style=" text-align: center;" >
+                  <i class=" glyphicon glyphicon-info-sign"></i>
+                <p><label>Empresa:</label> <?php echo $empresa?></p>
+                <p><label>Carga:</label> <?php echo $carga?> Horas semanais </p>
+                <p><label>Bolsa:</label> R$ <?php echo $bolsa?>,00</p>
+              <?php
+              if($reciao){
+                  echo "<h5 style='color: #cf0000'><i>Recisão:  ".$reciao.'</i></h5>';
+              }
+              ?> 
+     <div class="row" >
+      <div class="col-lg-2">
+          <div class=" input-group">
+              <input placeholder="Recisão" id="dataRecisao" value="<?php echo $reciao;?>" type="text" name="recisao" class=" form-control" maxlength="10"  />  
+              <span class=" input-group-btn">
+                  <button type="submit" value="Salvar" name="salvar" class="btn btn-default info"><i  class="glyphicon glyphicon-ok"></i></button><br/><br/>
+              </span>
+           <!-- <a href="<?php //echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'contratoCompleto','id'=>$idaluno, 'idVaga'=>$idVagaEncaminhamento)); ?>"><span class="btn btn-default" style=" margin-left:  15px;"><i class=" glyphicon glyphicon-file "></i>Visualizar Contrato</span></a>
+       -->   </div>
+          
+      </div>
+        
+    </div>
+          </div>
+      </div>   
+    </div>
+    </div>
+    </div>
+    <hr>  
+</form>
+
+        
+            <div style=" margin-top: 30%"><br/>
+            <ul class="pager">
+                
+                <li ><a href="<?php echo $this->url('perfil/default',array('controller' => 'aluno', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
+            </ul>
+            </div> 
+
+<!--  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+<!--  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+<div class="container">
+<div class="row">
+    <form  method="post" id="EDITARCONTRATO" >
+        <div class="modal fade" id="EDITARCONTRATO1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="EDITARLABEL">Editar</h4>
+              </div>
+              <div class="modal-body form-inline">
+                 
+    <div style="background:  #bef1ba; border: #38820c" class=" navbar-brand">
+        <span class="col-lg-3"><input class=" form-control" type="text" name="inicioEnc" placeholder="Início" required="" /></span>
+        <span class="col-lg-3"><input class="form-control" type="text" name="fimEnc"  placeholder="Fim" required="" /></span>
+        <span class="col-lg-3"><input class="form-control" type="text" name="relatorio" placeholder="Relatório"  /></span>
+        <h5 style=" margin-top: 0%">&nbsp;&nbsp;Termo entregue?</h5>
+        <span class="col-lg-3"><input type="radio" name="entregue" value="Sim" required=""/>Sim<input type="radio" name="entregue" value="Nao" style="margin-left: 5%"/>Não</span>       
+    </div>
+  
+                  <h2 style="text-align: center">Em Manutenção</h2>
+              </div><!-- end modal-Body -->
+              
+            </div>
+          </div>
+        </div><!-- end become a member modal -->
+        </form> <!-- end Form -->
+</div>
+</div>
+<div class="container">
+<div class="row">
+    <form  method="post" id="newmember" >
+        <div class="modal fade" id="becomeamember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class=" glyphicon glyphicon-file"></i></h4>
+              </div>
+              <div class="modal-body form-inline">
+                  <h2 style="text-align: center">Em Manutenção</h2>
+              </div><!-- end modal-Body -->
+              
+            </div>
+          </div>
+        </div><!-- end become a member modal -->
+        </form> <!-- end Form -->
+</div>
+</div>
+<?php  echo $this->resp; ?>
+</body>
+</html>

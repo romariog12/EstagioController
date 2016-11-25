@@ -13,7 +13,7 @@
             <div>
                 <div class="" style=" ">
                 <div class="caption">
-                    <ul class="nav  nav-tabs">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li role="presentation"><a href="<?php echo $this->url('administrador/default',['controller'=>'administrador','action'=>'todosalunospresencial','id'=>1])?>">Modalidade Presencial  <span class="label label-default"> <?php echo count($this->listaAlunoPresencial);?></span></a></li>
                         <li class=" active"   role="presentation" ><a><label>Modalidade EAD</label>  <span class="label label-primary"> <?php echo count($this->listaAlunoEAD)?></span></a></li>
                       
@@ -26,6 +26,7 @@
             <tr>
                 <th>Perfil</th>
                 <th>Aluno</th>
+                <th>Matricula</th>
                 <th>Editar</th>
                 <th>Excluir</th>
                 
@@ -34,6 +35,7 @@
             <tr style=" background-color: #b6fffd">
                 <td><a href="<?php echo $this->url('perfil/default',['controller'=>'aluno', 'action'=>'perfil', 'id'=>$l->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
                 <td><?php echo $l->getNome()?></td>
+                <td><?php echo $l->getMatricula()?></td>
                 <td><a href="<?php echo $this->url('administrador/default', ['controller'=>'administrador', 'action'=>'editarAluno', 'id'=>$l->getIdaluno(),'page'=>$this->pageNumber])?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
                 <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" href="<?php echo $this->url('excluirAluno',['action'=>'excluirAluno', 'deleteAluno'=>$l->getIdaluno(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
             </tr><?php    endforeach;?>

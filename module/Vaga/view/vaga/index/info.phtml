@@ -3,29 +3,12 @@
     <title>Info</title>
     <meta charset="utf-8">
      <body>
-<?php foreach ($this->curso as $l){
-    $curso =  $l->getCurso();
-}
-?>
-        <div class="navbar-collapse">
-        <h3><?php echo $curso?></h3>
-    </div>
+
+         <br/>
+     <div><h4>Vagas Cadastradas</h4></div>
      <br/>
      <div class="thumbnail">
       <div class="caption">
-          <div class="row" >
-            <div>
-                <div class="" style=" ">
-                <div class="caption">
-                    <ul class="nav  nav-tabs">
-                        <li class="  active" role="presentation"><a href="#">Total</a></li>
-                        <li role="presentation" ><a href="#">Estagiando</a></li>
-                        <li role="presentation" ><a href="#">Encerrados</a></li>
-                    </ul> 
-                </div>
-              </div>
-            </div>
-        </div>   
          <table class="table "> 
     <?php
     if($this->listaVaga == null ){

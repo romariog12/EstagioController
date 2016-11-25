@@ -1,11 +1,7 @@
-<?php echo $this->doctype(); 
-?>
-
+<?php echo $this->doctype(); ?>
 <html lang="pt-br">
     <!--
-    Autor: Romário Macedo Portela
-    Estudante de Análise e Desenv. de Sistemas
-    Framework utilizado: Zend 2
+    @Autor: Romário Macedo Portela
     -->
     <head>
         <meta charset="utf-8">
@@ -15,7 +11,6 @@
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
-
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''))
                         ->prependStylesheet($this->basePath('css/font-awesome.min.css'))        
@@ -23,90 +18,88 @@
                         ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap-datepicker.css'))
-                 
+                        ->prependStylesheet($this->basePath('css/multi-select.dev.css'))
+                        ->prependStylesheet($this->basePath('css/multi-select.css'))
+                        ->prependStylesheet($this->basePath('css/multi-select.dist.css'))
+                        ->prependStylesheet($this->basePath('css/multipicker.css'))        
                         ?>
-                         
-
         <!-- Scripts -->
         <?php echo $this->headScript()
-         
-                ->prependFile($this->basePath('js/jquery.tablesorter.min.js'))  
-             ->prependFile($this->basePath('js/loader.js'))  
-             ->prependFile($this->basePath('js/bootstrap-datepicker.js'))
-            ->prependFile($this->basePath('js/Chart.min.js'))
-            ->prependFile($this->basePath('js/Mascaras.js'))
-            ->prependFile($this->basePath('js/jquery.maskedinput.js'))
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery.min.js'))
-            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+                        ->prependFile($this->basePath('js/jquery.tablesorter.min.js'))  
+                        ->prependFile($this->basePath('js/loader.js'))  
+                        ->prependFile($this->basePath('js/bootstrap-datepicker.js'))
+                        ->prependFile($this->basePath('js/Chart.min.js'))
+                        ->prependFile($this->basePath('js/Mascaras.js'))
+                        ->prependFile($this->basePath('js/jquery.maskedinput.js'))
+                        ->prependFile($this->basePath('js/bootstrap.min.js'))
+                        ->prependFile($this->basePath('js/jquery.multi-select.js'))
+                        ->prependFile($this->basePath('js/jquery.min.js'))
+                        ->prependFile($this->basePath('js/multipicker.js'))
+                        ->prependFile($this->basePath('js/tinymce.min.js'))
+                        ->prependFile($this->basePath('ckeditor/ckeditor.js'))
+                        ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+                        ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
     </head>
     <body  style="  background-color: #cfe6ff">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container  " >
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <div>  
+        </div>
+        <nav  class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+            <div class="container navbar-inverse navbar-default " style=" background-color: #0089cd" >
+                <div class="navbar-header ">
+                    <button type="button" class="navbar-toggle " data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"> <?php echo $this->translate('Início') ?></a>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><i style=" font-size: 23px" class=" fa fa-home"></i></a>
                     
                 </div>
-                <div  class="collapse navbar-collapse">
-                    <ul  class="nav navbar-nav">
-                        <li class="dropdown navbar-inverse active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Aluno<span class="caret"></span></a>
-                                <ul  class="dropdown-menu nav">
-                                   <li><a href="<?php echo $this->url('perfilPresencial') ?>"><?php echo $this->translate('Perfil do Aluno') ?></a></li>    
-                                   <li><a href="<?php echo $this->url('aluno/default',['controller'=>'alunoPresencial','action'=>'cadastrar','id'=>'0']) ?>"> <?php echo $this->translate('Cadastro') ?></a></li>    
+                <div  class="collapse navbar-collapse ">
+                    <ul  class="nav navbar-nav  active">
+                        <li class="dropdown active ">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-mortar-board"></i> Aluno<span class="caret"></span></a>
+                                <ul  class="dropdown-menu nav" >
+                                    <li  ><a href="<?php echo $this->url('perfilPresencial') ?>">  <?php echo $this->translate('Perfil do Aluno') ?></a></li>  
+                                    <li> </li>
+                                   <li  ><a href="<?php echo $this->url('aluno/default',['controller'=>'alunoPresencial','action'=>'cadastrar','id'=>'0']) ?>"> <?php echo $this->translate('Cadastro') ?></a></li>    
                                 </ul>
                         </li> 
                         
-                       <li class="dropdown navbar-inverse active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Empresa<span class="caret"></span></a>
-                                <ul class="dropdown-menu nav">
+                       <li class="dropdown active">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-briefcase"></i> Empresa<span class="caret"></span></a>
+                                <ul  class="dropdown-menu nav  " >
                                     <!--<li><a href="<?php // echo $this->url('buscarEmpresa') ?>"><i class="glyphicon glyphicon-user"></i> <?php // echo $this->translate('Perfil da Empresa') ?></a></li>-->
-                                    <li><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarEmpresa','id'=>'0']) ?>"><?php echo $this->translate('Cadastrar Empresa') ?></a></li>
-                                    <li><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>"> <?php echo $this->translate('Cadastrar Agente') ?></a></li>
-                                
+                                    <li ><a href="<?php echo $this->url('buscarEmpresa') ?>"> <?php echo $this->translate('Perfil da Empresa') ?></a></li>
+                                    <li  ><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarEmpresa','id'=>'0']) ?>"><?php echo $this->translate('Cadastrar Empresa') ?></a></li>
+                                    <li ><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>"> <?php echo $this->translate('Cadastrar Agente') ?></a></li>
                                 </ul>
-                        </li> 
-                       <li class="dropdown navbar-inverse active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Relatórios<span class="caret"></span></a>
-                                <ul class="dropdown-menu nav">
-                                    <li ><a href="<?php echo $this->url('relatorioPresencial') ?>"><?php echo $this->translate('Modalidade Presencial') ?></a></li>
-                                    <li><a href="<?php echo $this->url('relatorioEAD') ?>"><?php echo $this->translate('Modalidade EAD') ?></a></li>  
-                                </ul>
-                        </li> 
+                        </li>
                         
-                        
-                         <li class="dropdown navbar-inverse active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Curso<span class="caret"></span></a>
-                                <ul class="dropdown-menu nav">
-                                    <li><a href="<?php echo $this->url('dadosPresencial') ?>"> <?php echo $this->translate('Atualizar dados (Presencial)') ?></a></li>
-                                    <li><a href="<?php echo $this->url('dados') ?>"> <?php echo $this->translate('Atualizar dados (EAD)') ?></a></li>
+                       <li class="dropdown active">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-bar-chart-o"></i> Relatórios<span class="caret"></span></a>
+                                <ul  class="dropdown-menu nav">
+                                    <li  ><a href="<?php echo $this->url('relatorioPresencial') ?>"><?php echo $this->translate('Modalidade Presencial') ?></a></li>
+                                    <li ><a href="<?php echo $this->url('relatorioEAD') ?>"><?php echo $this->translate('Modalidade EAD') ?></a></li>  
                                 </ul>
-                        </li> 
-                      
-                     
+                        </li>
+                        <li class="dropdown active">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i></i> Vagas<span class="caret"></span></a>
+                              <ul  class="dropdown-menu nav  " >
+                                    <li  ><a href="<?php echo $this->url('oportunidades') ?>"><?php echo $this->translate('Nova Vaga') ?></a></li>
+                                    <li  ><a href="<?php echo $this->url('perfilOportunidade/default',(['controller'=>'oportunidade', 'action'=>'oportunidade', 'page'=>'1'])) ?>"><?php echo $this->translate('Oportunidades') ?></a></li>
+                                </ul>
+                        </li>      
                     </ul>
-                  
-                    
-                    
                     <ul class=" nav navbar-nav navbar-right">
                         <li> <a aria-haspopup="true" style="color:  #e2a8b3; " href="<?php echo $this->url('sair', array(
               'action' => 'logout'
                             )) ?>">Sair&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></a></li>
                     </ul>
-                    <ul>
-                       
+                    <ul>   
                     </ul>
-                    
-                </div><!--/.nav-collapse -->
-                
+                </div><!--/.nav-collapse --> 
             </div>
             
                     

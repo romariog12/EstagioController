@@ -1,59 +1,39 @@
 <?php
     echo $this->doctype();
-    $lista = $this->lista;
-    $listaVaga = $this->listaVaga;
-    $listaEncaminhamento = $this->listaEncaminhamento;
 ?>
 <html lang="pt-br">
     <head>
         <title>Perfil</title>
-        <meta charset="utf-8">
-        
+        <meta charset="utf-8"> 
     </head>
 <body>
-      <?php if($lista):
-            foreach ($lista as $f): 
-             $getidaluno = $f->getidAluno();
-             endforeach;
-             
-         endif;
-         if ($listaVaga):
-             foreach ($listaVaga as $f): 
-             $curso = $f->getcursoVaga();
-             endforeach;
-                 
-        endif;
-          ?>
-  
-     
- <div >
-     <div class="row">
-    <div class="thumbnail">
-      <div class="caption">
-          
-           <div class="row" >
+ <div class=" nav row" style=" background-color: #1989f1">
+     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-user"  style=" color: #fff194"></i> Perfil da empresa</h4>
+ </div>
+      <div class="row" >
             <div>
                 <div class="" style=" ">
-                <div class="caption">
-                    <ul class="nav  nav-tabs">
-                        <li class="  active" role="presentation"><a href="#">Perfil</a></li>
-                        <li role="presentation" ><a href="#">Orientações Pedagógicas</a></li>
-                    </ul> 
+                    <div class="caption" >
+                        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                            <li class="  active" role="presentation"><a>Modalidade Presencial</a></li>
+                            <li role="presentation" ><a href="<?php echo $this->url('perfil')?>">Modalidade EAD</a></li>
+                        </ul> 
+                    </div>
                 </div>
-              </div>
             </div>
-        </div>   
-         <?php if($lista):
-            foreach ($lista as $f): 
+        </div>
+ <div >
+     <div class="row">
+    <div class="">
+      <div class="caption">
+         <?php if($this->empresaSelect):
+            foreach ($this->empresaSelect as $f): 
              
-          ?>
-            
+          ?>     
     <div class="navbar">
-        <h3 class="pager"> <i class=" glyphicon glyphicon-user" style="color: #3333ff"></i> <?php echo $f->getNome(); ?></h3>
-        <p class="pager" style=""><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;<?php echo $f->getCurso(); ?> &nbsp;&nbsp; <i class="glyphicon glyphicon-bookmark"></i>  <?php echo $f->getMatricula(); ?></p>
-       
-        <br/>
-        
+        <h3 class="pager"> <?php echo $f[0]->getEmpresa(); ?></h3>
+        <p class="pager" style=""><label>CNPJ: </label> <?php echo $f[0]->getCnpj(); ?> <br/><label>Responável: </label>  <?php echo $f[0]->getResponsavel(); ?> <label>Telefone: </label>  <?php echo $f[0]->getTelefone(); ?><br/>
+        </p>
     </div>     
         <?php endforeach; endif;?>
       </div>
@@ -62,60 +42,80 @@
  </div>
  <div >
   <div >
-    <div class="thumbnail">
+    <div class="">
       <div class="caption">
-          <div>
-            <h3 style="text-align: center; " ><?php echo $this->translate('Estagiários')?><br/>
-            <a style="color:   #2f950c; " class="btn" href="<?php echo $this->url('vaga/default', array('controller' => 'index', 'action' => 'index', 'idVaga'=>$getidaluno)); ?>"><i class="glyphicon glyphicon-plus"></i> </a></h3>
+        
+    <div class="row" >
+            <div>
+                <div class="" style=" ">
+                <div class="caption">
+                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                        <li  class="  active" role="presentation"><a href="#"><label>Todas as vagas </label>  <span class="label label-primary"> <?php echo count($this->listaVaga) ?></span> </a></li>
+                        <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaestagiando','id'=>$this->empresa])?>">Estagiando <span class="label label-success"> <?php echo count($this->listaVagaEstagiando)?></span></a></li>
+                         <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaencerrado','id'=>$this->empresa])?>">Encerrado <span class="label label-danger"> <?php echo count($this->listaVaga) - count($this->listaVagaEstagiando)  ?></span></a></li>
+                    </ul> 
+                </div>
+              </div>
+            </div>
         </div>
+<?php if ($this->listaVaga){?>
     
-<?php if ($listaVaga){?>
-    
-      <form method="post" >
+<form method="post" >
     <table class="table navbar-default" >
-       
-        <tr >
-         
-          <th>Estagiário</th>
-          <th>Curso</th>
-          <th>CONTRATOS</th>
-          <th>Excluir</th>
-          <th>Declaração</th>
-          
-        </tr>
-            <?php foreach ($listaVaga as $f):?>
-            <?php 
-            $idVaga = $f->getIdvaga();
-         if($f->getRecisao() !=(null)){ ?>
-        <tr class="table" style="background: #ab1c1c; color: white">
-            
-            <td><?php echo $f->getEmpresa(); ?></td>
-            <td><?php echo $f->getAgente(); ?></td>
-            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(),'curso'=> $curso)); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
-            <td><a onclick="return confirm('Tem certeza que deseja apagar essa vaga?')" class="btn" href="<?php  echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
-            <td><a href="<?php echo $this->url('aluno/default',['controller'=>'aluno', 'action'=>'declaracao', 'id'=>$getidaluno,'idVaga'=>$idVaga])?>"><i class="glyphicon glyphicon-file"></i></a></td>
-            
-         </tr>   <?php } ?>
-            
-            <?php  if($f->getRecisao() ==('')){ ?>
-        <tr class="table" style="background: #8fee8f; ">
-            <td><?php echo $f->getEmpresa(); ?></td>
-            <td><?php echo $f->getAgente(); ?></td>
-            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(),'curso'=> $curso)); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
-            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" class="btn" href="<?php  echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
-            <td>Indisponível</td>
-        </tr> <?php } ?>
-            <?php endforeach;?>
-    </table>      
+            <tr >
+                <th>Aluno</th>
+              <th>Empresa</th>
+              <th>Agente de Integração</th>
+
+            </tr>
+                <?php foreach ($this->pagination   as $f):?>
+                <?php 
+
+             if($f->getRecisao() !=(null)){ ?>
+            <tr class="table" style="background: #ab1c1c; color: white">
+                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $f->getAluno()?></td>
+                <td><?php echo $f->getEmpresa(); ?></td>
+                <td><?php echo $f->getAgente(); ?></td>
+
+             </tr>   <?php } ?>
+
+                <?php  if($f->getRecisao() ==('')){ ?>
+            <tr class="table" style="background: #8fee8f; ">
+                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $f->getAluno()?></td>
+                <td><?php echo $f->getEmpresa(); ?></td>
+                <td><?php echo $f->getAgente(); ?></td>          
+            </tr> <?php } ?>
+                <?php endforeach;?>
+        </table>    
+              <br/>
+              <nav aria-label="Page navigation">
+             <ul  class="pager">
+                 <li  <?php if ($this->pageNumber == 1|| $this->pageNumber == 0 ){
+         echo "class='disabled'". "style='pointer-events: none'";
+        }
+        ?>>
+          <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
+              <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
+          </a>
+        </li>
+        <li  <?php if ($this->pageNumber >= $this->count){ echo "class='disabled'". "style='pointer-events: none'";}?>>
+          <a href="<?php echo $this->pageNumber + 1?>" aria-label="Next">
+              <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
+          </a>
+        </li> 
+      </ul>       
+    </nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div>      
 </form>
             <?php }
-            else{?>        
-<div class="alert-danger" style="margin: initial">
-           <br/>
-           <h4 style="text-align: center">Nenhum estágio lançado</h4><br/>      
-</div>
-        <?php };?> 
-</div>
+            else{?> 
+     <div class=" thumbnail row">
+        <div class="alert-danger " style="margin: initial">
+                   <br/>
+                   <h4 style="text-align: center">Nenhum estágio lançado</h4><br/>      
+        </div>
+      </div> <?php };?>   
+      </div>
+       
       </div>
     </div>
   </div>

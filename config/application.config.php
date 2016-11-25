@@ -5,11 +5,16 @@ return array(
         'Auth',
         'Administrador',
         'Home',
+        'Aluno',
+        'Oportunidade',
         'Vaga',
         'Relatorio',
         'Base',
+        
+        
         'DoctrineModule',
-        'DoctrineORMModule'
+        'DoctrineORMModule',
+    
     ),
     'module_listener_options' => array(
         'module_paths' => array(
