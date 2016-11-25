@@ -12,15 +12,19 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 class OportunidadeController extends AbstractActionController
 {
     public function __construct(){
-        $this->em = 'Doctrine\ORM\EntityManager';
+        $this->em           = 'Doctrine\ORM\EntityManager';
+        $this->oportunidade = 'Oportunidade\Entity\Oportunidade';
+        $this->empresa      = 'Administrador\Entity\Empresa';
+        $this->dadosPresencial = 'Base\Entity\DadosPresencial';
+        $this->dados    = 'Base\Entity\Dados';
     }
 
     public function cadastrarOportunidadeAction(){
         
          $em = $this->getServiceLocator()->get($this->em );
-         $listaEmpresa = $em->getRepository("Administrador\Entity\Empresa")->findAll();
-         $listaCurso = $em->getRepository("Base\Entity\DadosPresencial")->findAll();
-         $listaCursoEAD = $em->getRepository("Base\Entity\Dados")->findAll();
+         $listaEmpresa = $em->getRepository($this->empresa )->findAll();
+         $listaCurso = $em->getRepository($this->dadosPresencial)->findAll();
+         $listaCursoEAD = $em->getRepository($this->dados)->findAll();
          $request = $this->getRequest();
         if($request->isPost()){
                  
@@ -62,7 +66,7 @@ class OportunidadeController extends AbstractActionController
      public function oportunidadeAction(){
         $this->sairComumAction();
         $em = $this->getServiceLocator()->get($this->em);
-        $listaOportunidade = $em->getRepository("Oportunidade\Entity\Oportunidade")->findAll(array('idoporunidade' => 'DESC'));
+        $listaOportunidade = $em->getRepository($this->oportunidade)->findAll(array('idoporunidade' => 'DESC'));
         
                 $page = $this->params()->fromRoute("page", 0);
                 $pagination = new Paginator( new ArrayAdapter($listaOportunidade));
@@ -81,11 +85,64 @@ class OportunidadeController extends AbstractActionController
     public function oportunidadeInfoAction(){
         $em = $this->getServiceLocator()->get($this->em);
         $idOportunidade = $this->params()->fromRoute("page", 0);
-        $oportunidade =  $em->getRepository("Oportunidade\Entity\Oportunidade")->findByIdoportunidade($idOportunidade);
+        $oportunidade =  $em->getRepository($this->oportunidade)->findByIdoportunidade($idOportunidade);
         
         return new ViewModel([
             'oportunidade'=>$oportunidade
         ]);
+    }
+    public function oportunidadeEditarAction(){
+        $em = $this->getServiceLocator()->get($this->em);
+        $listaEmpresa = $em->getRepository($this->empresa )->findAll();
+        $listaCurso = $em->getRepository($this->dadosPresencial)->findAll();
+        $listaCursoEAD = $em->getRepository($this->dados)->findAll();
+        $idOportunidade = $this->params()->fromRoute("page", 0);
+        $listaOportunidade = $em->getRepository($this->oportunidade)->findByIdoportunidade($idOportunidade);
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $oportunidade = $em->find($this->oportunidade, $idOportunidade);     
+            $data = $request->getPost()->toArray();
+            $empresa = $request->getPost("empresa");
+            $curso = implode('<br/>', $data["my-select"]);
+            $cargo = $request->getPost("cargo");
+            $numerovaga = $request->getPost("numeroVaga");
+            $descricao = $request->getPost("descricao");
+
+                $oportunidade->setEmpresa($empresa);
+                $oportunidade->setCurso($curso);
+                $oportunidade->setCargo($cargo);
+                $oportunidade->setNumerovaga($numerovaga);
+                $oportunidade->setDescricao($descricao);
+              
+                
+                    try {
+
+                    $em->persist($oportunidade);
+                    $em->flush();
+
+                    } catch (Exception $ex) {
+
+                    } 
+                    return $this->redirect()->toRoute('perfilOportunidade/default',(['controller'=>'oportunidade', 'action'=>'oportunidade', 'page'=>'1']));
+        }
+        return new ViewModel([
+            'listaOportunidade'=> $listaOportunidade,
+            'listaEmpresa' =>$listaEmpresa,
+            'listaCurso' =>$listaCurso,
+            'listaCursoEAD' =>$listaCursoEAD
+            
+        ]);
+    }
+    
+    public function excluirOportunidadeAction(){
+            $id = $this->params()->fromRoute("id", 0);
+            $em = $this->getServiceLocator()->get($this->em);
+            $oportunidade = $em->find($this->oportunidade, $id);
+            $em->remove($oportunidade);
+            $em->flush();
+          
+       return $this->redirect()->toRoute('perfilOportunidade/default',(['controller'=>'oportunidade', 'action'=>'oportunidade', 'page'=>'1']));
+              
     }
 
 }

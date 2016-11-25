@@ -107,6 +107,7 @@ return array(
             'oportunidade/oportunidade/cadastrar-oportunidade' => __DIR__ . '/../view/oportunidade/index/cadastrarOportunidade.phtml',
             'oportunidade/oportunidade/oportunidade' => __DIR__ . '/../view/oportunidade/index/oportunidade.phtml',
             'oportunidade/oportunidade/oportunidadeinfo' => __DIR__ . '/../view/oportunidade/index/oportunidadeInfo.phtml',
+            'oportunidade/oportunidade/oportunidadeeditar' => __DIR__ . '/../view/oportunidade/index/oportunidadeEditar.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
