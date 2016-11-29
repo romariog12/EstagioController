@@ -7,34 +7,43 @@ use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Aluno\Entity\Aluno;
+use Base\Model\Entity;
 
 class RelatorioEADController extends AbstractActionController {
     
     public function relatorioAction()
     {    $this->sairComumAction();
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-            $findCurso = $em->getRepository("Aluno\Entity\Aluno")->findAll();
-            $findEmpresa = $em->getRepository("Administrador\Entity\Empresa")->findAll();
-            $recisaoRow = $em->getRepository("Vaga\Entity\Vaga")->findByRecisao('');
-            $findAgente = $em->getRepository("Administrador\Entity\Agente")->findAll();
-            $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findAll();
-            $listaCursos = $em->getRepository("Base\Entity\Dados")->findAll();
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $listaVaga = $em->getRepository(Entity::vagaEad)
+                    ->findAll();
+            $findCurso = $em->getRepository(Entity::alunoEad)
+                    ->findAll();
+            $findEmpresa = $em->getRepository(Entity::empresa)
+                    ->findAll();
+            $recisaoRow = $em->getRepository(Entity::vagaEad)
+                    ->findByRecisao('');
+            $findAgente = $em->getRepository(Entity::agente)
+                    ->findAll();
+            $listaContratos = $em->getRepository(Entity::documentoEad)
+                    ->findAll();
+            $listaCursos = $em->getRepository(Entity::dadosEad)
+                    ->findAll();
             $quantidadeCursos = count($listaCursos);
             
                 //....:::Quantidade de estágios por curso:::......
                 $totalEstagioPorCurso = [];
                 for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                    $totalEstagioPorCurso[$count] =  $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($count);
+                    $totalEstagioPorCurso[$count] =  $em->getRepository(Entity::vagaEad)
+                        ->findBycursoVaga($count);
                 }
            
                 //........:::Estágios Em andamento por curso:::.............
                 $estagiando = [];
                 for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                $estagiando[$count] = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$count);
+                $estagiando[$count] = $em->getRepository(Entity::vagaEad)
+                        ->findByRecisaoAndCursoVaga('',$count);
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-      
+            
         return new ViewModel([  
             'fetchRow'=>$findCurso,
             'row'=> count($findCurso),
@@ -95,14 +104,15 @@ class RelatorioEADController extends AbstractActionController {
      public function relatorioGraficoAction()
     {
         $this->sairComumAction();
-                $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");              
+                $em = $this->getServiceLocator()->get(Entity::em);              
                 $request = $this->getRequest();
-                $lista = $em->getRepository("Base\Entity\Dados")->findAll();
+                $lista = $em->getRepository(Entity::dadosEad)->findAll();
                 $quantidadeCursos = count($lista);
                
                 if($request->isPost()){
                         $ano = $request->getPost('ano');
-                        $listaTodosCursos = $em->getRepository("Vaga\Entity\Vaga")->findByanoVaga($ano);
+                        $listaTodosCursos = $em->getRepository(Entity::vagaEad)
+                                ->findByanoVaga($ano);
                         $mes = [];
                         $cursoVagas = [];
                         $cursoTce = [];
@@ -111,27 +121,34 @@ class RelatorioEADController extends AbstractActionController {
                         $cursoEmpresa = [];
                         
                          for($count = 1 ;$count<=12 ;$count++){
-                         $mes[$count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga($ano, $count) ;   
+                         $mes[$count]=$em->getRepository(Entity::vagaEad)->findByAnoVagaAndMesVaga($ano, $count) ;   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTce[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE',$count );   
+                         $cursoTce[$count] = $em->getRepository(Entity::documentoEad)->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE',$count );   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA',$count );   
+                         $cursoTa[$count] = $em->getRepository(Entity::documentoEad)->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA',$count );   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoInstituicao[$count] =  $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição', $count );  
+                         $cursoInstituicao[$count] =  $em->getRepository(Entity::documentoEad)
+                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição', $count );  
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoEmpresa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa', $count ); 
+                         $cursoEmpresa[$count] = $em->getRepository(Entity::documentoEad)
+                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa', $count ); 
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoVagas[$count] = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga($ano, $count);   
+                         $cursoVagas[$count] = $em->getRepository(Entity::vagaEad)
+                                 ->findByAnoVagaAndCursoVaga($ano, $count);   
                          }
-                    $tce = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo ($ano, 'TCE' );
-                    $ta = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo($ano,  'TA' );
-                    $rt1Instituicao = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo ($ano, 'Instituição');
-                    $rtEmpresa = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo ($ano, 'Empresa');
+                        $tce = $em->getRepository(Entity::documentoEad)
+                                ->findByAnoVagaAndTipo ($ano, 'TCE' );
+                        $ta = $em->getRepository(Entity::documentoEad)
+                                ->findByAnoVagaAndTipo($ano,  'TA' );
+                        $rt1Instituicao = $em->getRepository(Entity::documentoEad)
+                                ->findByAnoVagaAndTipo ($ano, 'Instituição');
+                        $rtEmpresa = $em->getRepository(Entity::documentoEad)
+                                ->findByAnoVagaAndTipo ($ano, 'Empresa');
                 
                     
                         return new ViewModel([
@@ -259,7 +276,8 @@ class RelatorioEADController extends AbstractActionController {
                         
                 }else{
                         
-                        $listaTodosCursos = $em->getRepository("Vaga\Entity\Vaga")->findByanoVaga(date('Y'));
+                        $listaTodosCursos = $em->getRepository(Entity::vagaEad)
+                                ->findByanoVaga(date('Y'));
                         $mes = [];
                         $cursoVagas = [];
                         $cursoTce = [];
@@ -268,27 +286,33 @@ class RelatorioEADController extends AbstractActionController {
                         $cursoEmpresa = [];
                         
                          for($count = 1 ;$count<=12 ;$count++){
-                         $mes[$count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVaga(date('Y'), $count) ;   
+                         $mes[$count]=$em->getRepository(Entity::vagaEad)
+                                 ->findByAnoVagaAndMesVaga(date('Y'), $count) ;   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTce[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE',$count );   
+                         $cursoTce[$count] = $em->getRepository(Entity::documentoEad)
+                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE',$count );   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA',$count );   
+                         $cursoTa[$count] = $em->getRepository(Entity::documentoEad)
+                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA',$count );   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoInstituicao[$count] =  $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição', $count );  
+                         $cursoInstituicao[$count] =  $em->getRepository(Entity::documentoEad)
+                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição', $count );  
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoEmpresa[$count] = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa', $count ); 
+                         $cursoEmpresa[$count] = $em->getRepository(Entity::documentoEad)
+                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa', $count ); 
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoVagas[$count] = $em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndCursoVaga(date('Y'), $count);   
+                         $cursoVagas[$count] = $em->getRepository(Entity::vagaEad)
+                                 ->findByAnoVagaAndCursoVaga(date('Y'), $count);   
                          }
-                    $tce = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo (date('Y'), 'TCE' );
-                    $ta = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo(date('Y'),  'TA' );
-                    $rt1Instituicao = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo (date('Y'), 'Instituição');
-                    $rtEmpresa = $em->getRepository("Vaga\Entity\Encaminhamento")->findByAnoVagaAndTipo (date('Y'), 'Empresa');
+                    $tce = $em->getRepository(Entity::documentoEad)->findByAnoVagaAndTipo (date('Y'), 'TCE' );
+                    $ta = $em->getRepository(Entity::documentoEad)->findByAnoVagaAndTipo(date('Y'),  'TA' );
+                    $rt1Instituicao = $em->getRepository(Entity::documentoEad)->findByAnoVagaAndTipo (date('Y'), 'Instituição');
+                    $rtEmpresa = $em->getRepository(Entity::documentoEad)->findByAnoVagaAndTipo (date('Y'), 'Empresa');
                 
                     
                         return new ViewModel([
@@ -418,14 +442,14 @@ class RelatorioEADController extends AbstractActionController {
    
     public function infoEADAction(){
          $this->sairComumAction();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
         $page = $this->params()->fromRoute("page");
-        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
-        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
-        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
-        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);            
+        $listaVaga = $em->getRepository(Entity::vagaEad)->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository(Entity::dadosEad)->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository(Entity::vagaEad)->findByRecisaoAndCursoVaga('',$curso);
+        $listaAlunosCadastrados = $em->getRepository(Entity::alunoEad)->findByCurso($curso1);            
         
         
         //pagination
@@ -437,7 +461,7 @@ class RelatorioEADController extends AbstractActionController {
         
         $mes = [];
          for($Count = 1 ;$Count<=12 ;$Count++){
-                         $mes[$Count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVagaAndCursoVaga(date('Y'), $Count,$curso) ;   
+                         $mes[$Count]=$em->getRepository(Entity::vagaEad)->findByAnoVagaAndMesVagaAndCursoVaga(date('Y'), $Count,$curso) ;   
                          }
      
         return new ViewModel(
@@ -465,14 +489,14 @@ class RelatorioEADController extends AbstractActionController {
     }
       public function infoEADEstagiandoAction(){
            $this->sairComumAction();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $page = $this->params()->fromRoute("page");
-        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
-        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
-        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
+        $listaVaga = $em->getRepository(Entity::vagaEad)->findBycursoVaga($curso);
+        $listaVagaEstagiando = $em->getRepository(Entity::vagaEad)->findByRecisaoAndCursoVaga('',$curso);
+        $selectCurso = $em->getRepository(Entity::dadosEad)->findByIddados($curso);
         $curso1 = $this->params()->fromRoute("curso1", 0);
-        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);            
+        $listaAlunosCadastrados = $em->getRepository(Entity::alunoEad)->findByCurso($curso1);            
         
         
         //pagination
@@ -505,14 +529,14 @@ class RelatorioEADController extends AbstractActionController {
     }
      public function infoEADEncerradoAction(){
           $this->sairComumAction();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
         $page = $this->params()->fromRoute("page");
-        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
-        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
-        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
-        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);            
+        $listaVaga = $em->getRepository(Entity::vagaEad)->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository(Entity::dadosEad)->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository(Entity::vagaEad)->findByRecisaoAndCursoVaga('',$curso);
+        $listaAlunosCadastrados = $em->getRepository(Entity::alunoEad)->findByCurso($curso1);            
         
         
         //pagination
@@ -545,7 +569,7 @@ class RelatorioEADController extends AbstractActionController {
     }
     public function infoEADAlunosCadastradosAction(){
         $this->sairComumAction();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         
         $request = $this->getRequest(); 
             
@@ -554,10 +578,10 @@ class RelatorioEADController extends AbstractActionController {
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
         $page = $this->params()->fromRoute("page");
-        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
-        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
-        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
-        $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);
+        $listaVaga = $em->getRepository(Entity::vagaEad)->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository(Entity::dadosEad)->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository(Entity::vagaEad)->findByRecisaoAndCursoVaga('',$curso);
+        $listaAlunosCadastrados = $em->getRepository(Entity::alunoEad)->findByCurso($curso1);
        
         
         
@@ -575,12 +599,12 @@ class RelatorioEADController extends AbstractActionController {
                     case 'buscarPorMatricula':
                             $matricula = $request->getPost('porMatricula');
                             $aluno->setMatricula($matricula);
-                            $lista = $em->getRepository("Aluno\Entity\Aluno")->findByMatriculaAndCurso($aluno->getMatricula(), $curso1);
+                            $lista = $em->getRepository(Entity::alunoEad)->findByMatriculaAndCurso($aluno->getMatricula(), $curso1);
                             break;
                     case 'buscarPorNome':
                             $nome = $request->getPost('porNome');
                             $aluno->setNome($nome);
-                            $lista = $em->getRepository("Aluno\Entity\Aluno")->findByNomeAndCurso($aluno->getNome(), $curso1);
+                            $lista = $em->getRepository(Entity::alunoEad)->findByNomeAndCurso($aluno->getNome(), $curso1);
                             break;
                 }
                 return new ViewModel([
@@ -630,14 +654,14 @@ class RelatorioEADController extends AbstractActionController {
     }
     public function infoEADEstatisticasAction(){
         $this->sairComumAction();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
         $page = $this->params()->fromRoute("page");
-        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findBycursoVaga($curso);
-        $selectCurso = $em->getRepository("Base\Entity\Dados")->findByIddados($curso);
-        $listaVagaEstagiando = $em->getRepository("Vaga\Entity\Vaga")->findByRecisaoAndCursoVaga('',$curso);
-         $listaAlunosCadastrados = $em->getRepository("Aluno\Entity\Aluno")->findByCurso($curso1);   
+        $listaVaga = $em->getRepository(Entity::vagaEad)->findBycursoVaga($curso);
+        $selectCurso = $em->getRepository(Entity::dadosEad)->findByIddados($curso);
+        $listaVagaEstagiando = $em->getRepository(Entity::vagaEad)->findByRecisaoAndCursoVaga('',$curso);
+         $listaAlunosCadastrados = $em->getRepository(Entity::alunoEad)->findByCurso($curso1);   
         //pagination
         $pagination = new Paginator( new ArrayAdapter($listaVaga));
         $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(3);
@@ -646,7 +670,7 @@ class RelatorioEADController extends AbstractActionController {
         $getPages = $pagination->getPages();
         $mes = [];
          for($Count = 1 ;$Count<=12 ;$Count++){
-                         $mes[$Count]=$em->getRepository("Vaga\Entity\Vaga")->findByAnoVagaAndMesVagaAndCursoVaga(date('Y'), $Count,$curso) ;           
+                         $mes[$Count]=$em->getRepository(Entity::vagaEad)->findByAnoVagaAndMesVagaAndCursoVaga(date('Y'), $Count,$curso) ;           
          }
         
         return new ViewModel(

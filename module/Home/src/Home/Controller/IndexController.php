@@ -4,6 +4,7 @@ namespace Home\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Base\Model\Entity;
 
 class IndexController extends AbstractActionController {
     
@@ -12,12 +13,12 @@ class IndexController extends AbstractActionController {
             foreach ($this->session()->comum as $l){
                         $idUsuario = $l[0]->getIdusuario();
                     }
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $listaVagaPresencialPorUsuario = $em->getRepository("Vaga\Entity\VagaPresencial")->findByUsuarioIdusuario($idUsuario);
-            $listaVagaEADPorUsuario = $em->getRepository("Vaga\Entity\Vaga")->findByUsuarioIdusuario($idUsuario);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $listaVagaPresencialPorUsuario = $em->getRepository(Entity::vagaPresencial)->findByUsuarioIdusuario($idUsuario);
+            $listaVagaEADPorUsuario = $em->getRepository(Entity::vagaEad)->findByUsuarioIdusuario($idUsuario);
             
-            $listaVagaTotalEAD = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-            $listaVagaTotalPresencial = $em->getRepository("Vaga\Entity\VagaPresencial")->findAll();
+            $listaVagaTotalEAD = $em->getRepository(Entity::vagaEad)->findAll();
+            $listaVagaTotalPresencial = $em->getRepository(Entity::vagaPresencial)->findAll();
             
             
        return new ViewModel([ 

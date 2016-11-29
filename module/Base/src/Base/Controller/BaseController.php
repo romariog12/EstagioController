@@ -11,12 +11,13 @@ namespace Base\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Base\Model\Entity;
 class BaseController extends AbstractActionController
 {
     public function dadosAction(){
              $this->sairAdministradorAction();
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $lista = $em->getRepository("Base\Entity\Dados")->findAll();
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $lista = $em->getRepository(Entity::dadosEad)->findAll();
             $quantidadeCursos = count($lista);
             $request = $this->getRequest();
            
@@ -31,7 +32,7 @@ class BaseController extends AbstractActionController
                             $quantidade[$count] = $request->getPost("GV-".$count);
                             $meta[$count] = $request->getPost(100 + $count);
                             $orientador [$count] =  $request->getPost("orientador".$count);
-                            $selectCurso[$count] = $em ->find("Base\Entity\Dados", $count);     
+                            $selectCurso[$count] = $em ->find(Entity::dadosEad, $count);     
                             $selectCurso[$count]->setCurso($curso[$count]);
                             $selectCurso[$count]->setQuantidadealunos($quantidade[$count]);
                             $selectCurso[$count]->setMeta($meta[$count]);

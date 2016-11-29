@@ -11,24 +11,17 @@ namespace Administrador\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Base\Model\Entity;
 use Vaga\Entity\Vaga;
 use Aluno\Entity\AlunoPresencial;
 
 
 class AlunoPresencialController extends AbstractActionController {
     
-    public function __construct() {
-        $this->em = 'Doctrine\ORM\EntityManager';
-        $this->dadosPresencial      = 'Base\Entity\DadosPresencial';
-        $this->alunoPresencial      = 'Aluno\Entity\AlunoPresencial';
-        $this->vagaPresencial       = 'Vaga\Entity\VagaPresencial';
-        $this->DocumentoPresencial  = 'Vaga\Entity\DocumentoPresencial';
-    }
-
     public function buscarAlunoAction()   {
     $this->sairComumAction();
     $request = $this->getRequest();
-    $em = $this->getServiceLocator()->get($this->em);
+    $em = $this->getServiceLocator()->get(Entity::em);
 
     if($request->isPost()){
         $data = $this->params()->fromPost();
@@ -38,12 +31,12 @@ class AlunoPresencialController extends AbstractActionController {
             case 'buscarPorMatricula':
                     $matricula = $request->getPost('porMatricula');
                     $aluno->setMatricula($matricula);
-                    $lista = $em->getRepository("Aluno\Entity\AlunoPresencial")->findByMatricula($aluno->getMatricula());
+                    $lista = $em->getRepository(Entity::alunoPresencial)->findByMatricula($aluno->getMatricula());
                     break;
             case 'buscarPorNome':
                     $nome = $request->getPost('porNome');
                     $aluno->setNome($nome);
-                    $lista = $em->getRepository("Aluno\Entity\AlunoPresencial")->findByNome($aluno->getNome());
+                    $lista = $em->getRepository(Entity::alunoPresencial)->findByNome($aluno->getNome());
                     break;
         }
         
@@ -57,18 +50,18 @@ class AlunoPresencialController extends AbstractActionController {
     public function perfilAction(){
       $this->sairComumAction();
       $vaga = new Vaga();
-      $em = $this->getServiceLocator()->get($this->em);
+      $em = $this->getServiceLocator()->get(Entity::em);
       $id = $this->params()->fromRoute("id", 0);
-      $listaVaga = $em->getRepository("Vaga\Entity\VagaPresencial")->findByIdalunovaga($id);
-      $listaVagaPresencial = $em->getRepository("Vaga\Entity\VagaPresencial")->findByIdalunovaga($id);
-      $listaVagaPresencialEstagiando = $em->getRepository("Vaga\Entity\VagaPresencial")->findByRecisaoAndIdAlunoVaga('', $id);
-      $lista = $em->getRepository("Aluno\Entity\AlunoPresencial")->findByidaluno($id);
+      $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($id);
+      $listaVagaPresencial = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($id);
+      $listaVagaPresencialEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndIdAlunoVaga('', $id);
+      $lista = $em->getRepository(Entity::alunoPresencial)->findByidaluno($id);
       
         foreach ($listaVaga as $l){
                              $idVaga = $l->getidvaga();
                              $vaga->setIdvaga($idVaga);
                     }
-        $listaDocumento = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumentoAndSituacao($vaga->getIdvaga(),"Nao");
+        $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumentoAndSituacao($vaga->getIdvaga(),"Nao");
         return new ViewModel([
                 'listaVaga'=>$listaVaga,
                 'listaVagaPresencial'=>$listaVagaPresencial,
@@ -80,15 +73,15 @@ class AlunoPresencialController extends AbstractActionController {
      public function estagiosAction(){
         $this->sairComumAction();
         $vaga = new \Vaga\Entity\VagaPresencial();
-        $em = $this->getServiceLocator()->get($this->em);
+        $em = $this->getServiceLocator()->get(Entity::em);
         $id = $this->params()->fromRoute("id", 0);
-        $listaVaga = $em->getRepository("Vaga\Entity\VagaPresencial")->findByIdalunovaga($id);
-        $listaAluno = $em->getRepository("Aluno\Entity\AlunoPresencial")->findByidaluno($id);
+        $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($id);
+        $listaAluno = $em->getRepository(Entity::alunoPresencial)->findByidaluno($id);
       
         foreach ($listaVaga as $l){
                              $vaga->setIdvaga($l->getidvaga());
                     }
-                    $listaDocumento = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumentoAndSituacao($vaga->getIdvaga(),"Nao");
+                    $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumentoAndSituacao($vaga->getIdvaga(),"Nao");
                     return new ViewModel([
                         'listaVaga'=>$listaVaga,
                         'lista'=>$listaAluno,
@@ -97,10 +90,10 @@ class AlunoPresencialController extends AbstractActionController {
     }
      public function cadastrarAction() {
             $this->sairComumAction();
-            $em = $this->getServiceLocator()->get(em);
+            $em = $this->getServiceLocator()->get(Entity::em);
             $request = $this->getRequest(); 
-            $listaDadosPresencial = $em->getRepository("Base\Entity\DadosPresencial")->findAll();
-            $listaDados = $em->getRepository("Base\Entity\DadosPresencial")->findAll();
+            $listaDadosPresencial = $em->getRepository(Entity::dadosPresencial)->findAll();
+            $listaDados = $em->getRepository(Entity::dadosPresencial)->findAll();
             if($request->isPost())
             {         
                try{  
@@ -122,7 +115,7 @@ class AlunoPresencialController extends AbstractActionController {
                 $aluno->setEmail($email);
                 $aluno->setTelefone($telefone);
                
-                    $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+                    $em = $this->getServiceLocator()->get(Entity::em);
                     $em->persist($aluno);
                     $em->flush(); 
                                    
@@ -141,11 +134,11 @@ class AlunoPresencialController extends AbstractActionController {
     }
     public function declaracaoPresencialAction(){
         $this->sairComumAction();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         $idAluno = $this->params()->fromRoute("id", 0);
         $idVaga = $this->params()->fromRoute("idVaga", 0);
-        $aluno = $em->getRepository("Aluno\Entity\AlunoPresencial")->findByIdaluno($idAluno);
-        $vaga = $em->getRepository("Vaga\Entity\VagaPresencial")->findByIdvaga($idVaga);
+        $aluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idAluno);
+        $vaga = $em->getRepository(Entity::vagaPresencial)->findByIdvaga($idVaga);
         $colaborador = $this->session()->comum;
       
         return new ViewModel([

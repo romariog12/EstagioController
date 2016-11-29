@@ -3,6 +3,7 @@ namespace Auth\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Base\Model\Entity;
 
 class IndexController extends AbstractActionController
 {
@@ -10,7 +11,7 @@ class IndexController extends AbstractActionController
     public function loginAction() {
         
     $request = $this->getRequest();
-    $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+    $em = $this->getServiceLocator()->get(Entity::em);
     if($request->isPost())
         { 
                 $data = $this->params()->fromPost();

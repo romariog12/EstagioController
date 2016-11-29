@@ -6,17 +6,16 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Vaga\Entity\Vaga;
 use Vaga\Entity\Encaminhamento;
-use Zend\Paginator\Paginator;
-use Zend\Paginator\Adapter\ArrayAdapter;
+use Base\Model\Entity;
 class IndexController extends AbstractActionController
 {
     public function indexAction(){
          $this->sairComumAction();
        $request = $this->getRequest();
-       $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-       $listaDados = $em->getRepository("Base\Entity\Dados")->findAll();
+       $em = $this->getServiceLocator()->get(Entity::em);
+       $listaDados = $em->getRepository(Entity::dadosEad)->findAll();
        $idalunovaga = $this->params()->fromRoute("id", 0);
-       $aluno = $em->getRepository("Aluno\Entity\Aluno")->findByIdaluno($idalunovaga);
+       $aluno = $em->getRepository(Entity::alunoEad)->findByIdaluno($idalunovaga);
         if($request->isPost()){  
             foreach ($this->session()->comum as $l){
                        $usuarioIdusuario = $l[0]->getIdusuario();
@@ -51,10 +50,10 @@ class IndexController extends AbstractActionController
                echo $this->flashMessenger()->render();
             }    
         }  
-          $lista = $em->getRepository("Administrador\Entity\Empresa")->findAll();
-          $listavagas = $em->getRepository("Vaga\Entity\Vaga")->findAll();
-          $listaAlunos = $em->getRepository("Aluno\Entity\Aluno")->findAll();
-          $listaAgente = $em->getRepository("Administrador\Entity\Agente")->findAll();
+          $lista = $em->getRepository(Entity::empresa)->findAll();
+          $listavagas = $em->getRepository(Entity::vagaEad)->findAll();
+          $listaAlunos = $em->getRepository(Entity::alunoEad)->findAll();
+          $listaAgente = $em->getRepository(Entity::agente)->findAll();
           return new ViewModel([
               'listaEmpresa'=>$lista,
               'vagas'=>$listavagas,
@@ -69,7 +68,7 @@ class IndexController extends AbstractActionController
     public function lancarcontratosAction(){
          $this->sairComumAction();
         $request = $this->getRequest();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         $idvagaEncaminhamento = $this->params()->fromRoute("idVaga", 0);
         $idaluno = $this->params()->fromRoute("id", 0);
         $curso = $this->params()->fromRoute("curso", 0);
@@ -77,11 +76,11 @@ class IndexController extends AbstractActionController
         $aluno->setIdaluno($idaluno);
         $encaminhamento = new Encaminhamento();
         $encaminhamento ->setIdvagaEncaminhamento($idvagaEncaminhamento);
-        $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdvagaEncaminhamento($encaminhamento->getIdvagaEncaminhamento());   
-        $listaVaga = $em->getRepository("Vaga\Entity\Vaga")->findByIdvaga($idvagaEncaminhamento);
+        $listaContratos = $em->getRepository(Entity::documentoEad)->findByIdvagaEncaminhamento($encaminhamento->getIdvagaEncaminhamento());   
+        $listaVaga = $em->getRepository(Entity::vagaEad)->findByIdvaga($idvagaEncaminhamento);
           foreach ($listaVaga as $l){
                         $idUsuario =  $l->getUsuarioIdusuario();
-                        $usuario = $em->getRepository("Administrador\Entity\Usuario")->findByIdusuario($idUsuario);
+                        $usuario = $em->getRepository(Entity::usuario)->findByIdusuario($idUsuario);
                                 
                                 
         ;}
@@ -111,7 +110,7 @@ class IndexController extends AbstractActionController
             }      
             if ($data['salvar']=='Salvar'){
                     $recisao = $request->getPost("recisao");
-                    $select = $em->find("Vaga\Entity\Vaga", $idvagaEncaminhamento);
+                    $select = $em->find(Entity::vagaEad, $idvagaEncaminhamento);
                     $select->setRecisao($recisao);
                     $em->persist($select);
                     $em->flush();
@@ -125,7 +124,7 @@ class IndexController extends AbstractActionController
                     $relatorio = $request->getPost("relatorio");
                     $entregue = $request->getPost("entregue");
                     
-                    $select = $em->find("Vaga\Entity\Encaminhamento", $idEncaminhamento);
+                    $select = $em->find(Entity::documentoEad, $idEncaminhamento);
                    
                         $select ->setInicio($inicio);
                         $select->setFim($fim);  
@@ -151,21 +150,21 @@ class IndexController extends AbstractActionController
     public function excluirAction(){
             $this->sairComumAction();
             $id = $this->params()->fromRoute("iddelete", 0);
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $encaminhamento = $em->find("Vaga\Entity\Encaminhamento", $id);
-            $em->remove($encaminhamento);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $documentoEad = $em->find(Entity::documentoEad, $id);
+            $em->remove($documentoEad);
             $em->flush();
           
         return $this->redirect()->toRoute('vaga/default', 
-                  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$encaminhamento->getidalunoEncaminhamento(), 'idVaga'=>$encaminhamento->getIdvagaEncaminhamento(),'curso'=>$encaminhamento->getcursoDocumento()));       
+                  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$documentoEad->getidalunoEncaminhamento(), 'idVaga'=>$documentoEad->getIdvagaEncaminhamento(),'curso'=>$documentoEad->getcursoDocumento()));       
     }
       
       //Excluir Vaga
     public function excluirvagaAction(){ 
             $this->sairComumAction();
             $id = $this->params()->fromRoute("iddelete", 0);
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $vaga = $em->find("Vaga\Entity\Vaga", $id);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $vaga = $em->find(Entity::vagaEad, $id);
             $em->remove($vaga);
             $em->flush();        
         return $this->redirect()->toRoute('perfil/default', 
@@ -174,14 +173,14 @@ class IndexController extends AbstractActionController
      //Editar contratos
      public function editarContratosAction(){ 
             $this->sairComumAction();
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $idEncaminhamento = $this->params()->fromRoute("id", 0);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $idDocumentoEad = $this->params()->fromRoute("id", 0);
             $idVaga =  $this->params()->fromRoute("idVaga", 0);
-            $listaContratos = $em->getRepository("Vaga\Entity\Encaminhamento")->findByIdencaminhamento($idEncaminhamento);
+            $listaContratos = $em->getRepository(Entity::documentoEad)->findByIdencaminhamento($idDocumentoEad);
             $request = $this->getRequest();
           
           if ($request->isPost()){
-              $select = $em->find("Vaga\Entity\Encaminhamento", $idEncaminhamento);
+              $select = $em->find(Entity::documentoEad, $idDocumentoEad);
                     $inicio = $request->getPost("inicioEnc");
                     $fim = $request->getPost("fimEnc");
                     $relatorio = $request->getPost("relatorio");

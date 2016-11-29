@@ -34,7 +34,7 @@
                 <?php foreach ($this->pagination as $l):?>
             <tr style=" background-color: #b6fffd">
                 <td><a href="<?php echo $this->url('perfilEmpresa/default', 
-                          array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$l->getEmpresa(),)); ?>"><i class="glyphicon glyphicon-user"></i></a><?php echo $l->getEmpresa()?></td>
+                          array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$l->getEmpresa(),)); ?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $l->getEmpresa()?></td>
                 <td><?php echo $l->getResponsavel()?></td>
                 <td><?php echo $l->getTelefone()?></td>
                 <td><a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$l->getIdempresa(),'page'=>$this->pageNumber))?>"><i class=" glyphicon glyphicon-edit"></i></a></td>

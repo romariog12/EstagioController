@@ -6,16 +6,17 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Vaga\Entity\VagaPresencial;
 use Vaga\Entity\DocumentoPresencial;
+use Base\Model\Entity;
 
 class VagaPresencialController extends AbstractActionController
 {
     public function cadastrarVagaPresencialAction(){
         $this->sairComumAction();
         $request = $this->getRequest();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-        $listaDados = $em->getRepository("Base\Entity\DadosPresencial")->findAll();
+        $em = $this->getServiceLocator()->get(Entity::em);
+        $listaDados = $em->getRepository(Entity::dadosPresencial)->findAll();
         $idalunovaga = $this->params()->fromRoute("id", 0);
-        $aluno = $em->getRepository("Aluno\Entity\AlunoPresencial")->findByIdaluno($idalunovaga);
+        $aluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idalunovaga);
         if($request->isPost()){ 
             foreach ($this->session()->comum as $l){
                        $usuarioIdusuario = $l[0]->getIdusuario();
@@ -50,10 +51,10 @@ class VagaPresencialController extends AbstractActionController
                echo $this->flashMessenger()->render();
             }    
         }  
-          $lista = $em->getRepository("Administrador\Entity\Empresa")->findAll();
-          $listavagas = $em->getRepository("Vaga\Entity\VagaPresencial")->findAll();
-          $listaAlunos = $em->getRepository("Aluno\Entity\Aluno")->findAll();
-          $listaAgente = $em->getRepository("Administrador\Entity\Agente")->findAll();
+          $lista = $em->getRepository(Entity::empresa)->findAll();
+          $listavagas = $em->getRepository(Entity::vagaPresencial)->findAll();
+          $listaAlunos = $em->getRepository(Entity::alunoPresencial)->findAll();
+          $listaAgente = $em->getRepository(Entity::agente)->findAll();
           return new ViewModel([
               'listaEmpresa'=>$lista,
               'vagas'=>$listavagas,
@@ -68,7 +69,7 @@ class VagaPresencialController extends AbstractActionController
     public function lancarcontratosAction(){
         $this->sairComumAction();
         $request = $this->getRequest();
-        $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+        $em = $this->getServiceLocator()->get(Entity::em);
         $idvagaDocumento = $this->params()->fromRoute("idVaga", 0);
         $idaluno = $this->params()->fromRoute("id", 0);
         $curso = $this->params()->fromRoute("curso", 0);
@@ -76,15 +77,16 @@ class VagaPresencialController extends AbstractActionController
         $aluno->setIdaluno($idaluno);
         $documento = new DocumentoPresencial();
         $documento ->setIdvagaDocumento($idvagaDocumento);
-        $listaContratos = $em->getRepository("Vaga\Entity\DocumentoPresencial")->findByIdvagaDocumento($documento->getIdvagaDocumento());   
-        $listaVaga = $em->getRepository("Vaga\Entity\VagaPresencial")->findByIdvaga($idvagaDocumento);
+        $listaContratos = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumento($documento->getIdvagaDocumento());   
+        $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdvaga($idvagaDocumento);
+        $selectAluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idaluno);
+        foreach ($selectAluno as $l){
+                $alunoDocumento = $l->getNome();    
+            }
         foreach ($listaVaga as $l){
                         $idUsuario =  $l->getUsuarioIdusuario();
-                        $usuario = $em->getRepository("Administrador\Entity\Usuario")->findByIdusuario($idUsuario);
-                                
-                                
-        ;}
-                    
+                        $usuario = $em->getRepository(Entity::usuario)->findByIdusuario($idUsuario);                    
+        ;}           
         if ($request->isPost()){ 
             $data = $this->params()->fromPost();
             if ($data['lançar']=='Lançar'){
@@ -111,7 +113,7 @@ class VagaPresencialController extends AbstractActionController
             }      
             if ($data['salvar']=='Salvar'){
                     $recisao = $request->getPost("recisao");
-                    $select = $em->find("Vaga\Entity\VagaPresencial", $idvagaDocumento);
+                    $select = $em->find(Entity::vagaPresencial, $idvagaDocumento);
                     $select->setRecisao($recisao);
                     $em->persist($select);
                     $em->flush();
@@ -123,9 +125,8 @@ class VagaPresencialController extends AbstractActionController
                     $inicio = $request->getPost("inicioEnc");
                     $fim = $request->getPost("fimEnc");
                     $relatorio = $request->getPost("relatorio");
-                    $entregue = $request->getPost("entregue");
-                    
-                    $select = $em->find("Vaga\Entity\DocumentoPresencial", $idDocumento);
+                    $entregue = $request->getPost("entregue"); 
+                    $select = $em->find(Entity::documentoPresencial, $idDocumento);
                    
                         $select ->setInicio($inicio);
                         $select->setFim($fim);  
@@ -138,7 +139,7 @@ class VagaPresencialController extends AbstractActionController
                     $this->redirect()->toRoute('vaga/default',array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento()));         
             }
             }
-            $selectAluno = $em->getRepository("Aluno\Entity\AlunoPresencial")->findByIdaluno($idaluno);
+           
           return new ViewModel([
             'listaContratos'=>$listaContratos,
             'aluno'=>$idaluno,
@@ -152,8 +153,8 @@ class VagaPresencialController extends AbstractActionController
     public function excluirAction(){
             $this->sairComumAction();
             $id = $this->params()->fromRoute("iddelete", 0);
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $documento = $em->find("Vaga\Entity\DocumentoPresencial", $id);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $documento = $em->find(Entity::documentoPresencial, $id);
             $em->remove($documento);
             $em->flush();
           
@@ -165,8 +166,8 @@ class VagaPresencialController extends AbstractActionController
     public function excluirvagaAction(){
             $this->sairComumAction();
             $id = $this->params()->fromRoute("iddelete", 0);
-            $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-            $vaga = $em->find("Vaga\Entity\VagaPresencial", $id);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $vaga = $em->find(Entity::vagaPresencial, $id);
             $em->remove($vaga);
             $em->flush();        
         return $this->redirect()->toRoute('perfilPresencial/default', 
@@ -175,14 +176,14 @@ class VagaPresencialController extends AbstractActionController
      //Editar contratos
      public function editarContratosAction(){
          $this->sairComumAction();
-         $em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
+         $em = $this->getServiceLocator()->get(Entity::em);
          $idDocumento = $this->params()->fromRoute("id", 0);
          $idVaga =  $this->params()->fromRoute("idVaga", 0);
-          $listaContratos = $em->getRepository("Vaga\Entity\Documento")->findByIddocumento($idDocumento);
+          $listaContratos = $em->getRepository(Entity::documentoPresencial)->findByIddocumento($idDocumento);
           $request = $this->getRequest();
           
           if ($request->isPost()){
-              $select = $em->find("Vaga\Entity\Docuemtno", $idDocumento);
+              $select = $em->find(Entity::documentoPresencial, $idDocumento);
                     $inicio = $request->getPost("inicioEnc");
                     $fim = $request->getPost("fimEnc");
                     $relatorio = $request->getPost("relatorio");
