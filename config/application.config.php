@@ -6,6 +6,7 @@ return array(
         'Administrador',
         'Home',
         'Aluno',
+        'Empresa',
         'Oportunidade',
         'Vaga',
         'Relatorio',

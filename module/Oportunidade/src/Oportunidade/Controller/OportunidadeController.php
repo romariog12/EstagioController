@@ -89,7 +89,7 @@ class OportunidadeController extends AbstractActionController
         $em = $this->getServiceLocator()->get(Entity::em);
         $listaEmpresa = $em->getRepository(Entity::empresa)->findAll();
         $listaCurso = $em->getRepository(Entity::dadosPresencial)->findAll();
-        $listaCursoEAD = $em->getRepository($this->dados)->findAll();
+        $listaCursoEAD = $em->getRepository(Entity::dadosPresencial)->findAll();
         $idOportunidade = $this->params()->fromRoute("page", 0);
         $listaOportunidade = $em->getRepository(Entity::oportunidade)->findByIdoportunidade($idOportunidade);
         $request = $this->getRequest();

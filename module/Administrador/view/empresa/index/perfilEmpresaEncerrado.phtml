@@ -19,9 +19,8 @@
                 <div class="" style=" ">
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li class="  active" role="presentation"><a>Modalidade Presencial</a></li>
-                        <li role="presentation" ><a href="<?php echo $this->url('perfil')?>">Modalidade EAD</a></li>
-                      
+                        <li class="  active" role="presentation"><a><label>Modalidade Presencial</label></a></li>
+                       
                     </ul> 
                 </div>
               </div>
@@ -96,16 +95,8 @@
           
           
 </form>
-            <?php }
-            if( count($this->listaVaga) - count($this->listaVagaEstagiando)==0){?>        
-    <div class=" thumbnail row">  
-        <div class="alert-danger" style="margin: initial">
-                <br/>
-                <h4 style="text-align: center">Nenhum estágio lançado</h4><br/>      
-        </div>
-    </div>
-        <?php };?>     
-    <nav aria-label="Page navigation">
+          
+          <nav aria-label="Page navigation">
          <ul  class="pager">
              <li  <?php if ($this->pageNumber == 1|| $this->pageNumber == 0 ){
      echo "class='disabled'". "style='pointer-events: none'";
@@ -123,6 +114,16 @@
   </ul>
           
 </nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
+            <?php }
+            if( count($this->listaVaga) - count($this->listaVagaEstagiando)==0){?>        
+    <div class=" thumbnail row">  
+        <div class="alert-danger" style="margin: initial">
+                <br/>
+                <h4 style="text-align: center">Nenhum estágio lançado</h4><br/>      
+        </div>
+    </div>
+        <?php };?>     
+    
 </div>
        
       </div>
