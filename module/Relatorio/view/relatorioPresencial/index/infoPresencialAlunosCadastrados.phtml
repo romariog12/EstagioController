@@ -1,31 +1,18 @@
-<!DOCTYPE html>
-<html lang="pt-br">  
-    <title>Info</title>
-    <meta charset="utf-8">
-     <body>
 <?php foreach ($this->curso as $l){
     $curso =  $l->getCurso();
     $idCurso = $l->getIddados();
-    $orientador = $l->getOrientador();
-    
+    $orientador = $l->getOrientador();  
 }
 ?>
-         <div class=" nav row" style=" background-color: #1989f1">
-   
-             <h5>
-               
-                <span style=" color:white"> &nbsp;&nbsp;<?php echo $curso?></span>
-                
-                <span style=" color: #fff194" class=" navbar-right"><?php echo $orientador; ?>&nbsp;&nbsp;</span>
-                <span style="color: white" class=" navbar-right">ORIENTADOR:&nbsp;&nbsp; </span>
-             </h5>
-  
- </div>
-       
-
+    <div class=" panel panel-primary">
+        <div class="panel-heading">
+                <span style=" color:white"><?= $curso?></span>
+                <span style=" color: #fff194" class=" pull-right"><?= $orientador; ?>&nbsp;&nbsp;</span>
+                <span style="color: white" class=" pull-right">ORIENTADOR:&nbsp;&nbsp; </span>
+        </div>
      <div class="nav">
       <div >
-          <div class="row" >
+          <div>
             <div>
                 <div class="" style=" ">
                 <div class="caption">
@@ -34,33 +21,27 @@
                         <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialestagiando','curso'=>$idCurso,'curso1'=>$curso])?>">Estagiando <span class="label label-success"> <?php echo $this->countListaEstagiando?></span></a></li>
                         <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialencerrado','curso'=>$idCurso,'curso1'=>$curso])?>">Encerrados <span class="label label-danger"> <?php echo $this->countListaEncerrado?></span></a></li>
                         <li  class="  active" role="presentation" ><a href="#"><label>Alunos cadastrados</label> <span class="label label-warning"> <?php echo $this->countListaAlunosCadastrados?></span></a></li>
-                        <li role="presentation"><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infoestatisticas','curso'=>$idCurso,'curso1'=>$curso])?>">Estatísticas <i class="fa fa-line-chart"></i></a></li>
-                        
+                        <li role="presentation"><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infoestatisticas','curso'=>$idCurso,'curso1'=>$curso])?>">Estatísticas <i class="fa fa-line-chart"></i></a></li>       
                     </ul> 
                 </div>
               </div>
             </div>
           </div>
           <br/>
-          
-          
-                    
-      
+          <div class="panel panel-default col-sm-12">
           <table class="table "> 
              <tr>
                  <th>Perfil</th>
                  <th>Matricula</th>
                  <th>Telefone</th>
-               
              </tr> <?php  foreach ($this->pagination as $f){?>
                  <tr  style=" background-color: #c8fdff">  
                     <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f[0]->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo  $f[0]->getNome();?></td>
-                   
-                    <td><?php echo  $f[0]->getMatricula();?></td>  
-                    <td><?php echo  $f[0]->getTelefone();?></td> 
+                    <td><?= $f[0]->getMatricula();?></td>  
+                    <td><?=  $f[0]->getTelefone();?></td> 
                  </tr><?php  } ?>
          </table>
-          
+          </div>
                     <?php
     if($this->countListaAlunosCadastrados == 0){
     echo $this->mensagem;
@@ -142,7 +123,4 @@
             
             </div> 
 
-   
-     
-    </body>
-</html>
+    </div>

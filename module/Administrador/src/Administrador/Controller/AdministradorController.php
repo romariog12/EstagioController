@@ -50,6 +50,7 @@ class AdministradorController extends AbstractActionController
           ]);
       } 
     public function usuariosAction(){
+        
         $this->sairAdministradorAction();
         $em = $this->getServiceLocator()->get(Entity::em);
         $listaUsuarios = $em->getRepository(Entity::usuario)->findAll();     
@@ -80,13 +81,15 @@ class AdministradorController extends AbstractActionController
                     $login = $request->getPost("login");
                     $matricula = $request->getPost("matricula");
                     $cargo = $request->getPost("cargo");
-                    $nivel = $request->getPost("nivel");     
+                    $nivel = $request->getPost("nivel"); 
+                    $senha = $request->getPost("senha");  
                     try { 
                         $select ->setNome($nome);
                         $select->setLogin($login); 
                         $select->setMatricula($matricula);
                         $select->setCargo($cargo);
                         $select->setNivel($nivel);
+                        $select->setSenha($senha);
                         $em->persist($select);
                         $em->flush();
 
@@ -191,11 +194,8 @@ class AdministradorController extends AbstractActionController
                     $em->flush();     
                 } catch (Exception $ex) {
 
-                }
-                
-               
+                }       
             }
-            
             return new ViewModel([              
                     'listaAluno' => $listaAluno,
                      'listaCurso'=>$listaCurso,
@@ -382,13 +382,12 @@ class AdministradorController extends AbstractActionController
     }
      public function documentosPresencialAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
-        $documentoPendenteTCE = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("TCE", date('Y-m-d'));
-       
-        $documentoPendenteTA = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("TA", date('Y-m-d'));
+        $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findAll();
+        $documentoPendenteTCE = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("TCE", date('d/m/Y'));
         $documentoPendente = $em->getRepository(Entity::documentoPresencial)->findByEntregue("Nao");
         
             $page = $this->params()->fromRoute("id", 0);
-            $pagination = new Paginator( new ArrayAdapter($documentoPendente));
+            $pagination = new Paginator( new ArrayAdapter($listaDocumento));
             $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->countPerPage);
                 $count = $pagination->count();
                 $pageNumber = $pagination->getCurrentPageNumber();
@@ -398,8 +397,6 @@ class AdministradorController extends AbstractActionController
                 [
                     'documentoPendente' => $documentoPendente,
                     'documentoPendenteTCE' => $documentoPendenteTCE,
-                    'documentoPendenteTA' => $documentoPendenteTA,
-                    
                     'getPages'=>$getPages,
                     'pageNumber'=>$pageNumber,
                     'count'=>$count,
@@ -407,13 +404,28 @@ class AdministradorController extends AbstractActionController
                 ]
                 );
     }
-    public function documentosPresencialVencendo(){
-        $em = $this->getServiceLocator()->get(Entity::em);
-        $documentosVencendoHojeTCE = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("Nao","TCE", date('Y-m-d'));
-        $documentosVencendoHojeTA = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("Nao","TA", date('Y-m-d'));
-        $documentosVencendoHoje = $em->getRepository(Entity::documentoPresencial)->findByEntregue("Nao", date('Y-m-d'));
+    public function documentosPresencialPendenteAction(){
+          $em = $this->getServiceLocator()->get(Entity::em);
+        $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findAll();
+        $documentoPendenteTCE = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("TCE", date('d/m/Y'));
+        $documentoPendente = $em->getRepository(Entity::documentoPresencial)->findByEntregue("Nao");
+       $page = $this->params()->fromRoute("id", 0);
+            $pagination = new Paginator( new ArrayAdapter($listaDocumento));
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->countPerPage);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
         
-        
+        return new ViewModel(
+                [
+                    'documentoPendente' => $documentoPendente,
+                    'documentoPendenteTCE' => $documentoPendenteTCE,
+                    'getPages'=>$getPages,
+                    'pageNumber'=>$pageNumber,
+                    'count'=>$count,
+                    'pagination'=>$pagination,
+                ]
+                );
         
         
     }

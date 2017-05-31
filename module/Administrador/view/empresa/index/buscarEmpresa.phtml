@@ -1,23 +1,18 @@
 <?php
-echo $this->doctype();
 $lista = $this->lista;
 ?>
-<html lang="pt-br">
-<meta charset="utf-8">
+
 <script>
    function noenter() {
       return !(window.event && window.event.keyCode === 13);
     };
 </script>
-<body>
-    <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-search"  style=" color: #fff194"></i> Buscar empresa</h4>
-  
- </div>
-<div class="">
-    <div class=""> 
-    
+ <div class=" panel panel-primary">
+        <div class="panel-heading">
+              <?= 'Cadastro de empresa'?>
+        </div>
+<div>
+    <div> 
          <br/><br/>
         <form class="navbar-collapse" method="post" onKeyPress="return noenter()">
             <div class="navbar-collapse"  >
@@ -30,36 +25,29 @@ $lista = $this->lista;
                          <span class="input-group-btn">
                             <button class="btn btn-primary" name="buscar" value="buscarPorCnpj" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
                         </span>
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
+                      </div>
+                    </div>
                     <div class="col-lg-6">
                       <div class="input-group">
                          <input name="porNome" type="text" class="form-control" placeholder="Procurar por nome">
                         <span class="input-group-btn">
                           <button class="btn btn-primary" name="buscar" value="buscarPorNome" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
                         </span>
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-                  </div><!-- /.row -->
-                
-                
-                    
-                 <!-- /.row -->
-
+                      </div>
+                    </div>
+                  </div>
             <?php if($lista):?>
                  <br/><br/><br/><br/>
         <table class="table">
                  <tr>
                   <th><i class="glyphicon glyphicon-user"></i>EMPRESA</th>
                   <th>CNPJ</th>
-                  
                   <th></th>
                 </tr>
                    <?php foreach ($lista as $f): ?>   
                 <tr  style="background: #cdffff">
                   <td><?php echo $f[0]->getEmpresa(); ?></td>
                   <td><?php echo $f[0]->getCnpj(); ?></td>
-                  
                   <td><a href="<?php echo $this->url('perfilEmpresa/default', 
                           array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$f[0]->getEmpresa(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
                 </tr><?php endforeach; endif;?>
@@ -67,8 +55,5 @@ $lista = $this->lista;
         </form>
          <br/><br/><br/><br/>
     </div>
-</div>
-     
+</div></div>
         <?php echo $this->resp; ?>
-</body>
-</html>

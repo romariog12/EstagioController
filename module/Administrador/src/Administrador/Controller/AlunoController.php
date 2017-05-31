@@ -17,8 +17,7 @@ use Base\Model\Entity;
 
 class AlunoController extends AbstractActionController
 
-{
-    
+{  
     public function buscarAlunoAction()   {
    $this->sairComumAction();
     

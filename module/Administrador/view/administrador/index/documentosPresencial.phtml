@@ -1,21 +1,18 @@
-<?php echo $this->doctype(); ?>
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-      <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center">Controle de alunos</h4>
+<div class=" panel panel-primary">
+        <div class="panel-heading">
+            <h4 style="color: white; text-align: center"><i class=" fa fa-file" ></i> Documentos</h4>
   
- </div>
-    <div class="nav">
-      <div class="caption">
-          <div class="row" >
+        </div>
+    <div >
+      <div>
+          <div>
             <div>
-                <div class="" style=" ">
+                <div>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li class=" active" role="presentation"><a><label>Documentos Vencendo Hoje</label>   <span class="label label-warning"> <?php echo count($this->documentoPendenteTCE )+  count( $this->documentoPendenteTA)?></span></a></li>
-                        
+                        <li role="presentation" class="active"><a><label>Documentos vencendo</label></a></li>
+                        <li role="presentation"><a href="<?= $this->url('documentosPendentes')?>">Vias Pendentes</a></li>
+                  
                     </ul> 
                 </div>
               </div>
@@ -24,36 +21,33 @@
         <table class="table">
             <tr>
                 <th></th>
-                <th>Aluno</th>    
-                <th>Tipo do documento</th>
+                <th>Processo</th>
                 <th>Início</th>
                 <th>Fim</th>
                 
             </tr>
-                <?php foreach ($this->documentoPendenteTCE as $l):?>
-            <tr  style="background: #fff194">
-                 <td  style=" background-color:  #cec215; text-align: center; width: 5px; color: #726b0b "><i class=" fa fa-exclamation "></i></td>
-                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdalunodocumento()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
+                <?php 
                 
-                <td><?php echo $l[0]->getRelatorio()?></td>
-                <td><?php echo date_format($l[0]->getInicio(),'d/m/Y')?></td>
-                <td><?php echo date_format($l[0]->getFim(),'d/m/Y')?></td>
-                
-               </tr><?php    endforeach;?>
-                   <?php foreach ($this->documentoPendenteTA as $l):?>
-            <tr  style="background: #fff194">
-                 <td  style=" background-color:  #cec215; text-align: center; width: 5px; color: #726b0b "><i class=" fa fa-exclamation "></i></td>
-                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdalunodocumento()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
-                
-                <td><?php echo $l[0]->getRelatorio()?></td>
-                <td><?php echo date_format($l[0]->getInicio(),'d/m/Y')?></td>
-                <td><?php echo date_format($l[0]->getFim(),'d/m/Y')?></td>
-                
-               </tr><?php    endforeach;?>
-        </table>     
-      </div>
-    </div>
-    
+                foreach ($this->pagination as $l):
+                    if(strtotime(date_format($l->getFim(),'Y-m-d').'-5 days') == strtotime(date('Y-m-d')) ||
+                            strtotime(date_format($l->getFim(),'Y-m-d').'-4 days') == strtotime(date('Y-m-d'))||
+                            strtotime(date_format($l->getFim(),'Y-m-d').'-3 days') == strtotime(date('Y-m-d'))||
+                            strtotime(date_format($l->getFim(),'Y-m-d').'-2 days') == strtotime(date('Y-m-d'))||
+                            strtotime(date_format($l->getFim(),'Y-m-d').'-1 days') == strtotime(date('Y-m-d'))||
+                            strtotime(date_format($l->getFim(),'Y-m-d')) == strtotime(date('Y-m-d'))):
+                        
+                    ?>
+            <tr style=" background-color: #ffffcc">
+                                <td  style=" background-color: #ffcc00; text-align: center; width: 5px; "></td>
+                                <td><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$l->getIdalunoDocumento(), 'idVaga'=>$l->getIdvagaDocumento(),'curso'=>$l->getCursoDocumento())); ?>"><i class="fa fa-file"></i></a></td>
+                                <td><?= date_format($l->getInicio(), 'd/m/Y')?></td>
+                                <td><?= date_format($l->getFim(), 'd/m/Y')?></td>
+                            </tr>
+                   <?php
+                   endif; endforeach;?>
+        </table>
+         </div>
+          </div> 
     <nav aria-label="Page navigation">
          <ul  class="pager">
              <li  <?php if ($this->pageNumber == 1|| $this->pageNumber == 0 ){
@@ -71,7 +65,5 @@
     </li> 
   </ul>
           
-</nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
+</nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> </div>
 <?php echo $this->resp; ?>
-</body>
-</html>

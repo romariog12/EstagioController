@@ -1,20 +1,14 @@
-<?php echo $this->doctype(); ?>
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-   <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center">Controle de Empresas</h4>
-  
- </div>
-    <div class="row" >
+<div class=" panel panel-primary">
+        <div class="panel-heading">
+            <h4 style="color: white; text-align: center"><i class=" fa fa-suitcase" ></i> Agentes de Integração</h4>
+        </div>
+    <div >
             <div>
-                <div class="" style=" ">
+                <div >
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li   role="presentation"><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">Empresas Concedente <span class="label label-default"> <?php echo count($this->listaEmpresa)?></span></a> </li>
-                        <li class=" active" role="presentation" ><a href="#"><label>Agentes de Integração</label> <span class="label label-primary"> <?php echo count($this->listaAgente)?></span></a></li>
-                      
+                        <li class=" active" role="presentation" ><a href="#"><label>Agentes de Integração</label> <span class="label label-primary"> <?php echo count($this->listaAgente)?></span></a></li>     
                     </ul> 
                 </div>
               </div>
@@ -25,16 +19,14 @@
         <table class="table">
             <tr>
                 <th>Agente de Integração </th>
-                <th>Responsável</th>
                 <th>Telefone</th>
                 <th>Editar</th>
                 <th>Excluir</th>
                 
             </tr>
                 <?php foreach ($this->pagination as $l):?>
-            <tr style=" background-color: #b6fffd">
+            <tr>
                 <td><?php echo $l->getAgente()?></td>
-                <td><?php echo $l->getResponsavel()?></td>
                  <td><?php echo $l->getTelefone()?></td>
                 <td><a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarAgente', 'id'=>$l->getIdagente()))?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
                 <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" href="<?php echo $this->url('excluirAgente',['action'=>'excluirAgente', 'deleteAgente'=>$l->getIdagente(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
@@ -62,6 +54,17 @@
   </ul>
           
 </nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
+  <div class="well-lg ">
+        <a href="<?= $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>">
+            <span class="btn btn-success  ">
+                <i class=" fa fa-plus fa-2x pull-left"></i>Cadastrar <br>Agente
+            </span>
+        </a>
+        <a href="<?= $this->url('buscarEmpresa') ?>">
+            <span class="btn btn-primary  ">
+                <i class=" fa fa-search fa-2x pull-left"></i>Procurar <br>Empresa
+            </span>
+        </a>
+    </div>
 <?php echo $this->resp; ?>
-</body>
-</html>
+</div>

@@ -12,10 +12,7 @@ namespace Administrador\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Base\Model\Entity;
-use Vaga\Entity\Vaga;
 use Aluno\Entity\AlunoPresencial;
-
-
 class AlunoPresencialController extends AbstractActionController {
     
     public function buscarAlunoAction()   {
@@ -26,7 +23,6 @@ class AlunoPresencialController extends AbstractActionController {
     if($request->isPost()){
         $data = $this->params()->fromPost();
         $aluno = new AlunoPresencial(); 
-
         switch ($data['buscar']){
             case 'buscarPorMatricula':
                     $matricula = $request->getPost('porMatricula');
@@ -39,7 +35,6 @@ class AlunoPresencialController extends AbstractActionController {
                     $lista = $em->getRepository(Entity::alunoPresencial)->findByNome($aluno->getNome());
                     break;
         }
-        
         return new ViewModel([
         'lista' => $lista,
            
@@ -49,7 +44,6 @@ class AlunoPresencialController extends AbstractActionController {
     //Vagas cadastradas no Perfil                  
     public function perfilAction(){
       $this->sairComumAction();
-      $vaga = new Vaga();
       $em = $this->getServiceLocator()->get(Entity::em);
       $id = $this->params()->fromRoute("id", 0);
       $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($id);
@@ -57,17 +51,11 @@ class AlunoPresencialController extends AbstractActionController {
       $listaVagaPresencialEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndIdAlunoVaga('', $id);
       $lista = $em->getRepository(Entity::alunoPresencial)->findByidaluno($id);
       
-        foreach ($listaVaga as $l){
-                             $idVaga = $l->getidvaga();
-                             $vaga->setIdvaga($idVaga);
-                    }
-        $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumentoAndSituacao($vaga->getIdvaga(),"Nao");
         return new ViewModel([
                 'listaVaga'=>$listaVaga,
                 'listaVagaPresencial'=>$listaVagaPresencial,
                 'listaVagaPresencialEstagiando'=>$listaVagaPresencialEstagiando,
                 'lista'=>$lista,
-                'listaDocumento'=>count($listaDocumento)
             ]);        
     }
      public function estagiosAction(){
@@ -100,7 +88,7 @@ class AlunoPresencialController extends AbstractActionController {
                 $nome = $request->getPost("nome");
                 $curso = $request->getPost("curso");
                 $matricula = $request->getPost("matricula");
-                $modalidade = $request->getPost("modalidade");
+                $modalidade = 'NULL';
                 $email = $request->getPost("email");
                 $telefone = $request->getPost("telefone");
                 $cpf = $request->getPost("cpf");
@@ -114,22 +102,24 @@ class AlunoPresencialController extends AbstractActionController {
                  $aluno->setCpf($cpf);
                 $aluno->setEmail($email);
                 $aluno->setTelefone($telefone);
-               
                     $em = $this->getServiceLocator()->get(Entity::em);
                     $em->persist($aluno);
-                    $em->flush(); 
-                                   
-                  
-          }catch (Exception $e){
-             
+                    $em->flush();     
+          }catch (Exception $e){   
           }
-          echo "<div><p  style='text-align: center ; color: red'>Aluno cadastrado com sucesso!</p>".
-                  '<button type="button" class="close pager" data-dismiss="alert">x</button></div>';
-         } 
+          $mensagem = '<div class="alert alert-success alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Aluno cadastrado com sucesso!</strong> .
+          </div> ';
+         return new ViewModel(
+                [
+                    'mensagem'=>$mensagem
+                ]);
+          } 
         return new ViewModel(
                 [
                     'listaDados'=>$listaDados,
-                    'listaDadosPresencial'=> $listaDadosPresencial
+                    'listaDadosPresencial'=> $listaDadosPresencial,
                 ]);
     }
     public function declaracaoPresencialAction(){
@@ -140,14 +130,10 @@ class AlunoPresencialController extends AbstractActionController {
         $aluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idAluno);
         $vaga = $em->getRepository(Entity::vagaPresencial)->findByIdvaga($idVaga);
         $colaborador = $this->session()->comum;
-      
         return new ViewModel([
             'aluno'=>$aluno,
             'vaga'=>$vaga,
             'colaborador'=>$colaborador
         ]);
-    }
-       
-   
-    
+    }   
 }

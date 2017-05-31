@@ -97,9 +97,9 @@ class VagaPresencial
      */
     private $anoVaga;
       /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="Inicio", type="date", nullable=false)
+     * @ORM\Column(name="Inicio", type="string", nullable=false)
      */
     private $inicio;
     
@@ -213,7 +213,7 @@ class VagaPresencial
         return $this;
     }
 
-    function setInicio(\DateTime $inicio) {
+    function setInicio($inicio) {
         $this->inicio = $inicio;
         return $this;
     }

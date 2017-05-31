@@ -1,65 +1,113 @@
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-    <script>
-   function validar(){
-    var senha = form.senha.value;
-    var repetirSenha = form.confirmarSenha.value;
-    
-    if(senha != repetirSenha){
-        alert('Senhas diferentes!');
-        form.senha.focus();
-        return false;
-    };
-     if(senha.length <= 5){
-        alert('A senha deve conter no mínimo 6 caracteres');
-        form.senha.focus();
-        return false;
-    }
-    }   
-    </script>
-  <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center">Editar acesso</h4>
-  
- </div>
-<div style="height: 500px" class="nav">
-      <div class="caption">
-<form name="form" class="navbar-collapse" method="post">
-    
-    <div class="col-lg-5">
-    <?php foreach ($this->listaUsuario as $l):?>   
-<br/>   <label><?php echo $this->translate('Nome')?></label><br/><input value="<?php echo $l->getNome()?>" name="nome" type="text" class="form-control " required="" /><br/>
-        <label><?php echo $this->translate('Login')?></label><br/><input value="<?php echo $l->getLogin()?>" name="login" type="text" class="form-control" required=""/> 
-        <br/><br/>
-        <label><?php echo $this->translate('Matricula')?></label><input  value="<?php echo $l->getMatricula()?>"name="matricula" type="text" class="form-control" required=""/>
-        <br/><label><?php echo $this->translate('Cargo')?></label><input  value="<?php echo $l->getCargo()?>" name="cargo" type="text" class="form-control" required=""/>
-                 <br/>
-        <label><?php echo $this->translate('Nível')?></label><br/>
-        <select name="nivel" class="form-control" required="">
-                     <option >  
-                     </option>
-                     <option value="1">
-                          Administrador
-                     </option>
-                     <option value="2">
-                          Usuário Comum
-                     </option>
-          </select><br/>
-            
-            <input type="submit" class="btn btn-primary" name="cadastrar" value="Salvar" onclick="return validar()" />
-       <?php endforeach;?>
-    </div>          
-</form>
-      
-      </div>
+<script>
+$(document).ready(function(){
+ $("#cadastrarUsuarioForm").validate({
+        highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success"); 
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        },
+        errorElement: "em",
+        messages: {
+        nome: 'Campo Obrigatório',
+        login: 'campo Obrigatório',
+        matricula: 'campo obrigatório',
+        cargo: 'Campo Obrigatório',
+        nivel:'Campo obrigatório',
+        senha:'Campo Obrigatório',
+        confirmarSenha: 'As senhas devem ser iguais (min. 6 carácteres)'
+        },
+        rules:{
+        nome: {
+           required: true
+        },
+        login: {
+           required: true
+          
+        },
+        matricula:{
+            required: true
+           
+        },
+        cargo:{
+            required: true
+        },
+        nivel:{
+            required: true,
+        },
+        senha:{
+            required: true,
+             minlength : 6
+        },
+        confirmarSenha:{
+            required: true,
+            minlength : 6,
+            equalTo : "#senha"
+        }
+        }
+    });
+});
+</script>
+<div class=" panel panel-primary">
+        <div class="panel-heading">
+            <h4 style="color: white; text-align: center"><i class=" fa fa-user-plus" ></i> Cadastrar usuário</h4>
         </div>
-        <div style="">
-            <ul class="pager">
-
-                <li ><a href="<?php echo $this->url('usuarios') ?>"><span class="btn btn-default" > Voltar</span></a></li> 
-            </ul>
-        </div> 
+<div class="well well-sm"> Todos os campos são obrigatórios
+</div>
     
+    <form method="post" id="cadastrarUsuarioForm">
+    <div class="col-lg-12">
+        <?php foreach ($this->listaUsuario as $l):?>
+        <div>
+            <div class="col-sm-6 col-sm-offset-1 nome">
+                <label for="nome"><?= $this->translate('Nome')?></label><i style=" display: none;"  class=" nome-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getNome()?>" id="nome" name="nome" type="text" class="form-control "  /><br/>
+           </div>
+            <div class="col-sm-4 login">
+                <label for="login"><?= $this->translate('Login')?></label><i style=" display: none;"  class=" login-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getLogin()?>"id="login" name="login" type="text" class="form-control" /><br/>
+            </div>
+            <div class="col-sm-offset-1 col-sm-3 matricula">
+                <label for="matricula"><?= $this->translate('Matricula')?></label><i style=" display: none;"  class=" matricula-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getMatricula()?>"name="matricula" id="telefone" type="text" class="form-control" /><br/>
+            </div>
+            <div class="col-sm-4  cargo">
+                <label for="cargo"><?= $this->translate('Cargo')?></label><i style=" display: none;"  class=" cargo-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getCargo()?>"id="cargo" name="cargo" type="text" class="form-control" /><br/>
+            </div>
+        
+            <div class="col-sm-3  nivel ">
+                <label for="nivel"><?= $this->translate('Nivel')?></label><i style=" display: none;"  class=" nivel-valid glyphicon glyphicon-ok-circle"></i>
+                <select id="nivel" name="nivel" class="form-control">
+                    <option></option>
+                    <option value="1">Administrador</option>
+                    <option value="2">Usuário comum</option>
+                </select>
+            </div>
+            <div class="col-sm-4 col-sm-offset-1 senha">
+                <label for="senha"><?= $this->translate('Senha')?></label><i style=" display: none;"  class=" senha-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getSenha()?>"id="senha" name="senha" type="password" class="form-control "  /><br/>
+           </div>
+            <div class="col-sm-4 confirmarSenha">
+                <label for="confirmarSenha"><?= $this->translate('Confirmar Senha')?></label><i style=" display: none;"  class=" confirmarSenha-valid glyphicon glyphicon-ok-circle"></i>
+                <input id="confirmarSenha" name="confirmarSenha" type="password" class="form-control" /><br/>
+            </div>
+        </div>  
+    </div>
+    <div class="well-lg col-sm-offset-1">
+    <button type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar" ><i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro</button>
+     <a href="<?php echo $this->url('usuarios') ?>"><span class="btn btn-primary" ><i class="fa fa-arrow-left fa-2x pull-left"></i>Controle de <br> usuários</span></a>
+    </div>
+    </form></div>
+   <?php endforeach;?>
 <?php echo $this->resp; ?>
-</body></html>

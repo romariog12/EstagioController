@@ -1,22 +1,14 @@
-<?php
-    echo $this->doctype();
-?>
-<html lang="pt-br">
-    <head>
-        <title>Perfil</title>
-        <meta charset="utf-8"> 
-    </head>
-<body>
- <div class=" nav row" style=" background-color: #1989f1">
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-user"  style=" color: #fff194"></i> Perfil da empresa</h4>
- </div>
-      <div class="row" >
+<div class=" panel panel-primary">
+        <div class="panel-heading">
+           <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-user"  style=" color: #fff194"></i> Perfil da empresa</h4>
+        </div>
+
+      <div>
             <div>
-                <div class="" style=" ">
+                <div>
                     <div class="caption" >
                         <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                            <li class="  active" role="presentation"><a><label>Modalidade Presencial</label></a></li>
-                          
+                            <li class="  active" role="presentation"><a><label>Painel</label></a></li>
                         </ul> 
                     </div>
                 </div>
@@ -28,11 +20,12 @@
       <div class="caption">
          <?php if($this->empresaSelect):
             foreach ($this->empresaSelect as $f): 
+            $idEmpresa = $f[0]->getIdempresa();
              
           ?>     
     <div class="navbar">
-        <h3 class="pager"> <?php echo $f[0]->getEmpresa(); ?></h3>
-        <p class="pager" style=""><label>CNPJ: </label> <?php echo $f[0]->getCnpj(); ?> <br/><label>Responável: </label>  <?php echo $f[0]->getResponsavel(); ?> <label>Telefone: </label>  <?php echo $f[0]->getTelefone(); ?><br/>
+        <h3 class="pager"> <?= $f[0]->getEmpresa(); ?></h3>
+        <p class="pager" style=""><label>CNPJ: </label> <?= $f[0]->getCnpj(); ?> <br/><label>Responável: </label>  <?= $f[0]->getResponsavel(); ?> <label>Telefone: </label>  <?= $f[0]->getTelefone(); ?><br/>
         </p>
     </div>     
         <?php endforeach; endif;?>
@@ -42,12 +35,11 @@
  </div>
  <div >
   <div >
-    <div class="">
+    <div>
       <div class="caption">
-        
-    <div class="row" >
+        <div>
             <div>
-                <div class="" style=" ">
+                <div>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li  class="  active" role="presentation"><a href="#"><label>Todas as vagas </label>  <span class="label label-primary"> <?php echo count($this->listaVaga) ?></span> </a></li>
@@ -59,7 +51,6 @@
             </div>
         </div>
 <?php if ($this->listaVaga){?>
-    
 <form method="post" >
     <table class="table navbar-default" >
             <tr >
@@ -85,7 +76,8 @@
                 <td><?php echo $f->getEmpresa(); ?></td>
                 <td><?php echo $f->getAgente(); ?></td>          
             </tr> <?php } ?>
-                <?php endforeach;?>
+                <?php
+                endforeach;?>
         </table>    
               <br/>
               <nav aria-label="Page navigation">
@@ -108,7 +100,7 @@
 </form>
             <?php }
             else{?> 
-     <div class=" thumbnail row">
+     <div class=" thumbnail">
         <div class="alert-danger " style="margin: initial">
                    <br/>
                    <h4 style="text-align: center">Nenhum estágio lançado</h4><br/>      
@@ -119,7 +111,12 @@
       </div>
     </div>
   </div>
-    
+      <div class="well-lg ">
+        <a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$idEmpresa))?>">
+            <span class="btn btn-primary  ">
+                <i class=" fa fa-plus fa-2x pull-left"></i>Editar <br>Perfil
+            </span>
+        </a>
+    </div>
+</div>
 <?php echo $this->resp; ?>
-</body>
-</html>

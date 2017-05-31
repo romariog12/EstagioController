@@ -1,85 +1,60 @@
-<html lang="pt-br">
-    
-    <!--
-    Autor: Romário Macedo Portela
-    Estudante de Análise e Desenv. de Sistemas
-    Framework utilizado: Zend 2
-    -->
-    <head>  
-    </head> 
-    <body>    
-    <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center">Atualizar dados</h4>
+<script>
+function excluirDado(idDados){
+ var apagar = confirm('Deseja realmente excluir este registro?');
+ if(apagar){
+$.post(
+    '<?= $this->url('deleteDados', ['action' => 'excluirDados', 'idDeleteDados' => ''])?>'+idDados,
+    'json'
+).always(
+  $("#linha-"+idDados).hide("1000")
+ );  
+ }else{
+     event.preventDefault();
+ }
+}
+
+</script>
+
+
+<div class=" panel panel-primary">
+        <div class="panel-heading">
+            <h4 style="color: white; text-align: center"><i class=" fa fa-database" ></i> Dados</h4>
   
- </div>
-        <div class="row" >
-            <div>
+        </div>
                 <div class="" style=" ">
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li  class=" active" role="presentation"><a href=""><label>Modalidade Presencial</label></a></li>
-                        <li role="presentation" ><a href="<?php echo $this->url('dados')?>">Modalidade EAD</a></li>
-                      
+                        <li  class=" active" role="presentation"><a href=""><label>Modalidade Presencial</label></a></li> 
                     </ul> 
                 </div>
               </div>
-            </div>
-        </div>
         <br/>
-        <div  style=" height: 1800px">
+        <div >
       <div class="caption">
-        <div class="navbar-collapse">
-            <form class="navbar-default" method="post">
+        <div>
+            <form  method="post">
                 <div >
                      <table class="table">
-                     
-                         <tr  >  
-                            <th style=" text-align: center">Curso</th> 
-                            <th style=" width: 200px; text-align: center">Quantidade de Alunos</th>
-                            <th  style=" width: 200px; text-align: center">Meta em porcentagem</th>
-                            <th style=" text-align: center">Professor Orientador</th>
-                          
-                        </tr>
-                  <!--      <tr style=" background-color: #99ff99">
-                            <td>
-                             
-                                <div class="input-group">
-                                    <span class="input-group-addon" >ID</span>
-                                    <input name="curso"  type="text" class="form-control input-group"/>
-                                </div>
-                            </td>
-                                <td>
-                                    <input name="quantidadeAlunos"  type="number" class="form-control input-group" />   
-                                </td>
-                            <td >
-                                <input name="meta"  type="number" class="form-control input-group" />   
-                            </td>
-                            <td ><span class=" input-group">
-                                <input name="orientador" type="text" class="form-control input-group"/>  
-                                <span class=" input-group-btn">
-                                    <button type="submit" value="Lancar" name="lancar" class="btn btn-primary "><i  class="glyphicon glyphicon-ok"></i></button>
-                                </span></span>
-                            </td>
-                            
-                        </tr>-->
                        <?php foreach ( $this->listaPresencial as $l){
                          
                        ?>
-                        <tr  style=" background-color: #e0f0f4">
+                        <tr id="<?= 'linha-'.$l->getIddados()?>" style=" background-color: #e0f0f4">
                             <td>
-                                <div class="input-group">
-                                    <span class="input-group-addon" > <?php  echo $l->getIddados()?></span>
-                                    <input name="<?php echo $l->getIddados()?>" value="<?php echo $this->translate($l->getCurso())?>" type="text" class="form-control input-group"/>
+                                <div>
+                                    <input name="<?= $l->getIddados()?>" value="<?= $this->translate($l->getCurso())?>" type="text" class="form-control input-group"/>
                                 </div>
                             </td>
-                                <td><input name="<?php echo "GP-".$l->getIddados()?>" value="<?php echo $this->translate($l->getQuantidadealunos())?>" type="number" class="form-control input-group" required=""/>   
+                                <td>
+                                    <input name="<?= "GP-".$l->getIddados()?>" value="<?= $this->translate($l->getQuantidadealunos())?>" type="number" class="form-control input-group" required=""/>   
                                 </td>
                             <td >
-                                <input name="<?php echo $l->getIddados()+100?>" value="<?php echo $this->translate($l->getMeta())?>" type="number" class="form-control input-group" required=""/>   
+                                <input name="<?= $l->getIddados()+100?>" value="<?= $this->translate($l->getMeta())?>" type="number" class="form-control input-group" required=""/>   
                             </td>
                             <td >
-                                <input name="<?php echo "orientador".$l->getIddados()?>" value="<?php echo $this->translate($l->getOrientador())?>" type="text" class="form-control input-group" />   
+                                
+                                <input name="<?= "orientador".$l->getIddados()?>" value="<?= $this->translate($l->getOrientador())?>" type="text" class="form-control input-group" />   
+                                
+                              
                             </td>
                            
                         </tr><?php }
@@ -94,8 +69,6 @@
         </div>
       </div>
     </div>
+</div>
+<?= $this->resp; ?>
 
-<?php echo $this->resp; ?>
-    </body>
-    
-</html>

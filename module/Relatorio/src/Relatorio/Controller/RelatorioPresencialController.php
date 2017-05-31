@@ -36,19 +36,15 @@ class RelatorioPresencialController extends AbstractActionController {
             
                 //....:::Quantidade de estágios por curso:::......
                 $totalEstagioPorCurso = [];
-                for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                    $totalEstagioPorCurso[$count] =  $em->getRepository(Entity::vagaPresencial)
-                            ->findBycursoVaga($count);
-                }
-           
-                //........:::Estágios Em andamento por curso:::.............
                 $estagiando = [];
                 for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                $estagiando[$count] = $em->getRepository(Entity::vagaPresencial)
-                        ->findByRecisaoAndCursoVaga('',$count);
+                    $totalEstagioPorCurso[$count] =  count($em->getRepository(Entity::vagaPresencial)
+                            ->findBycursoVaga($count));
+                    $estagiando[$count] = count($em->getRepository(Entity::vagaPresencial)
+                        ->findByRecisaoAndCursoVaga('',$count));
                 }
-                ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-      
+           
+               
         return new ViewModel([  
             'fetchRow'=>$findCurso,
             'row'=> count($findCurso),
@@ -61,77 +57,16 @@ class RelatorioPresencialController extends AbstractActionController {
             
             //....:::Quantidade de Estágios:::......
             'totalEstagioPorCurso'=>[
-                '1' =>count($totalEstagioPorCurso['1']),
-                '2' => count($totalEstagioPorCurso['2']),
-                '3' => count($totalEstagioPorCurso['3']), 
-                '4' => count($totalEstagioPorCurso['4']),
-                '5'=> count($totalEstagioPorCurso['5']), 
-                '6' => count($totalEstagioPorCurso['6']),
-                '7' => count($totalEstagioPorCurso['7']), 
-                '8'=> count($totalEstagioPorCurso['8']),
-                '9'=> count($totalEstagioPorCurso['9']), 
-                '10'=>count($totalEstagioPorCurso['10']), 
-                '11'=> count($totalEstagioPorCurso['11']),
-                '12'=>count($totalEstagioPorCurso['12']), 
-                '13'=>  count($totalEstagioPorCurso['13']),
-                '14'=> count($totalEstagioPorCurso['14']),
-                '15'=> count($totalEstagioPorCurso['15']), 
-                '16'=> count($totalEstagioPorCurso['16']),
-                '17'=> count($totalEstagioPorCurso['17']),
-                '18'=> count($totalEstagioPorCurso['18']),
-                '19'=> count($totalEstagioPorCurso['19']),
-                '20'=> count($totalEstagioPorCurso['20']),
-                '21'=> count($totalEstagioPorCurso['21']),
-                '22'=> count($totalEstagioPorCurso['22']),
-                '23'=> count($totalEstagioPorCurso['23']),
-                '24'=> count($totalEstagioPorCurso['24']),
-                '25'=> count($totalEstagioPorCurso['25']),
-                '26'=> count($totalEstagioPorCurso['26']),
-                '27'=> count($totalEstagioPorCurso['27']),
-                '28'=> count($totalEstagioPorCurso['28']),
-                '29'=> count($totalEstagioPorCurso['29']),
-                '30'=> count($totalEstagioPorCurso['30']),
-                '31'=> count($totalEstagioPorCurso['31']),
-                '32'=> count($totalEstagioPorCurso['32']),
+              $totalEstagioPorCurso
                 ],
                 
              //........:::Estágios Em andamento:::.............    
                 'listaestagiando'=>
                 [
-                '1' =>  count($estagiando['1']),
-                '2' => count($estagiando['2']),
-                '3' => count($estagiando['3']), 
-                '4' => count($estagiando['4']),
-                '5'=> count($estagiando['5']), 
-                '6' => count($estagiando['6']),
-                '7' => count($estagiando['7']), 
-                '8'=> count($estagiando['8']),
-                '9'=> count($estagiando['9']), 
-                '10'=>count($estagiando['10']), 
-                '11'=> count($estagiando['11']),
-                '12'=>count($estagiando['12']), 
-                '13'=>  count($estagiando['13']),
-                '14'=> count($estagiando['14']),
-                '15'=> count($estagiando['15']), 
-                '16'=> count($estagiando['16']), 
-                 '17'=> count($estagiando['17']),
-                '18'=> count($estagiando['18']),
-                '19'=> count($estagiando['19']),
-                '20'=> count($estagiando['20']),
-                '21'=> count($estagiando['21']),
-                '22'=> count($estagiando['22']),
-                '23'=> count($estagiando['23']),
-                '24'=> count($estagiando['24']),
-                '25'=> count($estagiando['25']),
-                '26'=> count($estagiando['26']),
-                '27'=> count($estagiando['27']),
-                '28'=> count($estagiando['28']),
-                '29'=> count($estagiando['29']),
-                '30'=> count($estagiando['30']),
-                '31'=> count($estagiando['31']),
-                '32'=> count($estagiando['32']),
+                $estagiando
                 ],
-            'listaCursos'=>$listaCursos
+            'listaCursos'=>$listaCursos,
+            'quantidadeCursos'=> $quantidadeCursos
          
         ]);
  
@@ -152,239 +87,49 @@ class RelatorioPresencialController extends AbstractActionController {
                         $cursoVagas = [];
                         $cursoTce = [];
                         $cursoTa = [];
-                        $cursoInstituicao = [];
-                        $cursoEmpresa = [];
                         
                          for($count = 1 ;$count<=12 ;$count++){
-                         $mes[$count]=$em->getRepository(Entity::vagaPresencial)
-                                 ->findByAnoVagaAndMesVaga($ano, $count) ;   
+                         $mes[$count]= count($em->getRepository(Entity::vagaPresencial)
+                                 ->findByAnoVagaAndMesVaga($ano, $count)) ;   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTce[$count] = $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE',$count );   
+                         $cursoTce[$count] = count($em->getRepository(Entity::documentoPresencial)
+                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE',$count ));   
+                         $cursoTa[$count] = count($em->getRepository(Entity::documentoPresencial)
+                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA',$count ));
+                         $cursoVagas[$count] = count($em->getRepository(Entity::vagaPresencial)
+                                 ->findByAnoVagaAndCursoVaga($ano, $count));   
                          }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTa[$count] = $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA',$count );   
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoInstituicao[$count] =  $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'Instituição', $count );  
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoEmpresa[$count] = $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso ($ano, 'Empresa', $count ); 
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoVagas[$count] = $em->getRepository(Entity::vagaPresencial)
-                                 ->findByAnoVagaAndCursoVaga($ano, $count);   
-                         }
+                         
+                         
                     $tce = $em->getRepository(Entity::documentoPresencial)
                             ->findByAnoVagaAndTipo ($ano, 'TCE' );
                     $ta = $em->getRepository(Entity::documentoPresencial)
                             ->findByAnoVagaAndTipo($ano,  'TA' );
-                    $rt1Instituicao = $em->getRepository(Entity::documentoPresencial)
-                            ->findByAnoVagaAndTipo ($ano, 'Instituição');
-                    $rtEmpresa = $em->getRepository(Entity::documentoPresencial)
-                            ->findByAnoVagaAndTipo ($ano, 'Empresa');
-                
-                    
                         return new ViewModel([
                             'listaTodosCursos'=>$listaTodosCursos,
                             'rowTodosCursos'=> count($listaTodosCursos),
                             'listaDados' => $lista,
                             
                             'mes'=>[
-                                '1' =>  count($mes[1]),
-                                '2' =>  count($mes[2]),
-                                '3' =>  count($mes[3]),
-                                '4' =>  count($mes[4]),
-                                '5' =>  count($mes[5]),
-                                '6' =>  count($mes[6]),
-                                '7' =>  count($mes[7]),
-                                '8' =>  count($mes[8]),
-                                '9' =>  count($mes[9]),
-                                '10' =>  count($mes[10]),
-                                '11' =>  count($mes[11]),
-                                '12' =>  count($mes[12]),         
+                                $mes    
                             ],
          
                             'cursoVagas'=>[
-                                '1' =>  count($cursoVagas[1]),
-                                '2' =>  count($cursoVagas[2]),
-                                '3' =>  count($cursoVagas[3]),
-                                '4' =>  count($cursoVagas[4]),
-                                '5' =>  count($cursoVagas[5]),
-                                '6' =>  count($cursoVagas[6]),
-                                '7' =>  count($cursoVagas[7]),
-                                '8' =>  count($cursoVagas[8]),
-                                '9' =>  count($cursoVagas[9]),
-                                '10' =>  count($cursoVagas[10]),
-                                '11' =>  count($cursoVagas[11]),
-                                '12' =>  count($cursoVagas[12]),
-                                '13' =>  count($cursoVagas[13]),
-                                '14' =>  count($cursoVagas[14]),
-                                '15' =>  count($cursoVagas[15]),
-                                '16' =>  count($cursoVagas[16]),
-                                '17' =>  count($cursoVagas[17]),
-                                '18' =>  count($cursoVagas[18]),
-                                '19' =>  count($cursoVagas[19]),
-                                '20' =>  count($cursoVagas[20]),
-                                '21' =>  count($cursoVagas[21]),
-                                '22' =>  count($cursoVagas[22]),
-                                '23' =>  count($cursoVagas[23]),
-                                '24' =>  count($cursoVagas[24]),
-                                '25' =>  count($cursoVagas[25]),
-                                '26' =>  count($cursoVagas[26]),
-                                '27' =>  count($cursoVagas[27]),
-                                '28' =>  count($cursoVagas[28]),
-                                '29' =>  count($cursoVagas[29]),
-                                '30' =>  count($cursoVagas[30]),
-                                '31' =>  count($cursoVagas[31]),
-                                '32' =>  count($cursoVagas[32]),
+                                $cursoVagas
                                 
                             ],
                             'cursoTce' =>[
-                                '1' =>  count($cursoTce[1]),
-                                '2' =>  count($cursoTce[2]),
-                                '3' =>  count($cursoTce[3]),
-                                '4' =>  count($cursoTce[4]),
-                                '5' =>  count($cursoTce[5]),
-                                '6' =>  count($cursoTce[6]),
-                                '7' =>  count($cursoTce[7]),
-                                '8' =>  count($cursoTce[8]),
-                                '9' =>  count($cursoTce[9]),
-                                '10' =>  count($cursoTce[10]),
-                                '11' =>  count($cursoTce[11]),
-                                '12' =>  count($cursoTce[12]),
-                                '13' =>  count($cursoTce[13]),
-                                '14' =>  count($cursoTce[14]),
-                                '15' =>  count($cursoTce[15]),
-                                '16' =>  count($cursoTce[16]),
-                                '17' =>  count($cursoTce[17]),
-                                '18' =>  count($cursoTce[18]),
-                                '19' =>  count($cursoTce[19]),
-                                '20' =>  count($cursoTce[20]),
-                                '21' =>  count($cursoTce[21]),
-                                '22' =>  count($cursoTce[22]),
-                                '23' =>  count($cursoTce[23]),
-                                '24' =>  count($cursoTce[24]),
-                                '25' =>  count($cursoTce[25]),
-                                '26' =>  count($cursoTce[26]),
-                                '27' =>  count($cursoTce[27]),
-                                '28' =>  count($cursoTce[28]),
-                                '29' =>  count($cursoTce[29]),
-                                '30' =>  count($cursoTce[30]),
-                                '31' =>  count($cursoTce[31]),
-                                '32' =>  count($cursoTce[32]),
+                                $cursoTce
                             ],
                             'cursoTa'=>[
-                                '1' =>  count($cursoTa[1]),
-                                '2' =>  count($cursoTa[2]),
-                                '3' =>  count($cursoTa[3]),
-                                '4' =>  count($cursoTa[4]),
-                                '5' =>  count($cursoTa[5]),
-                                '6' =>  count($cursoTa[6]),
-                                '7' =>  count($cursoTa[7]),
-                                '8' =>  count($cursoTa[8]),
-                                '9' =>  count($cursoTa[9]),
-                                '10' =>  count($cursoTa[10]),
-                                '11' =>  count($cursoTa[11]),
-                                '12' =>  count($cursoTa[12]),
-                                '13' =>  count($cursoTa[13]),
-                                '14' =>  count($cursoTa[14]),
-                                '15' =>  count($cursoTa[15]),
-                                '16' =>  count($cursoTa[16]),
-                                '17' =>  count($cursoTa[17]),
-                                '18' =>  count($cursoTa[18]),
-                                '19' =>  count($cursoTa[19]),
-                                '20' =>  count($cursoTa[20]),
-                                '21' =>  count($cursoTa[21]),
-                                '22' =>  count($cursoTa[22]),
-                                '23' =>  count($cursoTa[23]),
-                                '24' =>  count($cursoTa[24]),
-                                '25' =>  count($cursoTa[25]),
-                                '26' =>  count($cursoTa[26]),
-                                '27' =>  count($cursoTa[27]),
-                                '28' =>  count($cursoTa[28]),
-                                '29' =>  count($cursoTa[29]),
-                                '30' =>  count($cursoTa[30]),
-                                '31' =>  count($cursoTa[31]),
-                                '32' =>  count($cursoTa[32]),
+                                $cursoTa
                             ],
-                            'cursoInstituicao'=>[
-                                '1' =>  count($cursoInstituicao[1]),
-                                '2' =>  count($cursoInstituicao[2]),
-                                '3' =>  count($cursoInstituicao[3]),
-                                '4' =>  count($cursoInstituicao[4]),
-                                '5' =>  count($cursoInstituicao[5]),
-                                '6' =>  count($cursoInstituicao[6]),
-                                '7' =>  count($cursoInstituicao[7]),
-                                '8' =>  count($cursoInstituicao[8]),
-                                '9' =>  count($cursoInstituicao[9]),
-                                '10' =>  count($cursoInstituicao[10]),
-                                '11' =>  count($cursoInstituicao[11]),
-                                '12' =>  count($cursoInstituicao[12]),
-                                '13' =>  count($cursoInstituicao[13]),
-                                '14' =>  count($cursoInstituicao[14]),
-                                '15' =>  count($cursoInstituicao[15]),
-                                '16' =>  count($cursoInstituicao[16]),
-                                '17' =>  count($cursoInstituicao[17]),
-                                '18' =>  count($cursoInstituicao[18]),
-                                '19' =>  count($cursoInstituicao[19]),
-                                '20' =>  count($cursoInstituicao[20]),
-                                '21' =>  count($cursoInstituicao[21]),
-                                '22' =>  count($cursoInstituicao[22]),
-                                '23' =>  count($cursoInstituicao[23]),
-                                '24' =>  count($cursoInstituicao[24]),
-                                '25' =>  count($cursoInstituicao[25]),
-                                '26' =>  count($cursoInstituicao[26]),
-                                '27' =>  count($cursoInstituicao[27]),
-                                '28' =>  count($cursoInstituicao[28]),
-                                '29' =>  count($cursoInstituicao[29]),
-                                '30' =>  count($cursoInstituicao[30]),
-                                '31' =>  count($cursoInstituicao[31]),
-                                '32' =>  count($cursoInstituicao[32]),
-                            ],
-                            'cursoEmpresa'=>[
-                                '1' =>  count($cursoEmpresa[1]),
-                                '2' =>  count($cursoEmpresa[2]),
-                                '3' =>  count($cursoEmpresa[3]),
-                                '4' =>  count($cursoEmpresa[4]),
-                                '5' =>  count($cursoEmpresa[5]),
-                                '6' =>  count($cursoEmpresa[6]),
-                                '7' =>  count($cursoEmpresa[7]),
-                                '8' =>  count($cursoEmpresa[8]),
-                                '9' =>  count($cursoEmpresa[9]),
-                                '10' =>  count($cursoEmpresa[10]),
-                                '11' =>  count($cursoEmpresa[11]),
-                                '12' =>  count($cursoEmpresa[12]),
-                                '13' =>  count($cursoEmpresa[13]),
-                                '14' =>  count($cursoEmpresa[14]),
-                                '15' =>  count($cursoEmpresa[15]),
-                                '16' =>  count($cursoEmpresa[16]),
-                                '17' =>  count($cursoEmpresa[17]),
-                                '18' =>  count($cursoEmpresa[18]),
-                                '19' =>  count($cursoEmpresa[19]),
-                                '20' =>  count($cursoEmpresa[20]),
-                                '21' =>  count($cursoEmpresa[21]),
-                                '22' =>  count($cursoEmpresa[22]),
-                                '23' =>  count($cursoEmpresa[23]),
-                                '24' =>  count($cursoEmpresa[24]),
-                                '25' =>  count($cursoEmpresa[25]),
-                                '26' =>  count($cursoEmpresa[26]),
-                                '27' =>  count($cursoEmpresa[27]),
-                                '28' =>  count($cursoEmpresa[28]),
-                                '29' =>  count($cursoEmpresa[29]),
-                                '30' =>  count($cursoEmpresa[30]),
-                                '31' =>  count($cursoEmpresa[31]),
-                                '32' =>  count($cursoEmpresa[32]),
-                            ],
+                            
+                           
                             'ano'=>$ano,          
                             'tceRow'=> count($tce),
-                            'taRow'=> count($ta),
-                            'rtInstituicaoRow'=> count($rt1Instituicao) ,
-                            'rtEmpresa'=> count($rtEmpresa),                           
+                            'taRow'=> count($ta),                      
                         ]);
                         
                 }else{
@@ -395,41 +140,23 @@ class RelatorioPresencialController extends AbstractActionController {
                         $cursoVagas = [];
                         $cursoTce = [];
                         $cursoTa = [];
-                        $cursoInstituicao = [];
-                        $cursoEmpresa = [];
                          for($count = 1 ;$count<=12 ;$count++){
-                         $mes[$count]=$em->getRepository(Entity::vagaPresencial)
-                                 ->findByAnoVagaAndMesVaga(date('Y'), $count) ;   
+                         $mes[$count]=count($em->getRepository(Entity::vagaPresencial)
+                                 ->findByAnoVagaAndMesVaga(date('Y'), $count)) ;   
                          }
                          for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTce[$count] = $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE',$count );   
+                         $cursoTce[$count] = count($em->getRepository(Entity::documentoPresencial)
+                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE',$count ));
+                         $cursoTa[$count] = count($em->getRepository(Entity::documentoPresencial)
+                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA',$count ));
+                         $cursoVagas[$count] = count($em->getRepository(Entity::vagaPresencial)
+                                 ->findByAnoVagaAndCursoVaga(date('Y'), $count));  
                          }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTa[$count] = $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA',$count );   
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoInstituicao[$count] =  $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Instituição', $count );  
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoEmpresa[$count] = $em->getRepository(Entity::documentoPresencial)
-                                 ->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'Empresa', $count ); 
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoVagas[$count] = $em->getRepository(Entity::vagaPresencial)
-                                 ->findByAnoVagaAndCursoVaga(date('Y'), $count);   
-                         }
+                        
                     $tce = $em->getRepository(Entity::documentoPresencial)
                             ->findByAnoVagaAndTipo (date('Y'), 'TCE' );
                     $ta = $em->getRepository(Entity::documentoPresencial)
                             ->findByAnoVagaAndTipo(date('Y'),  'TA' );
-                    $rt1Instituicao = $em->getRepository(Entity::documentoPresencial)
-                            ->findByAnoVagaAndTipo (date('Y'), 'Instituição');
-                    $rtEmpresa = $em->getRepository(Entity::documentoPresencial)
-                            ->findByAnoVagaAndTipo (date('Y'), 'Empresa');
-                
                     
                         return new ViewModel([
                             'listaTodosCursos'=>$listaTodosCursos,
@@ -437,196 +164,22 @@ class RelatorioPresencialController extends AbstractActionController {
                             'listaDados' => $lista,
                             
                             'mes'=>[
-                                '1' =>  count($mes[1]),
-                                '2' =>  count($mes[2]),
-                                '3' =>  count($mes[3]),
-                                '4' =>  count($mes[4]),
-                                '5' =>  count($mes[5]),
-                                '6' =>  count($mes[6]),
-                                '7' =>  count($mes[7]),
-                                '8' =>  count($mes[8]),
-                                '9' =>  count($mes[9]),
-                                '10' =>  count($mes[10]),
-                                '11' =>  count($mes[11]),
-                                '12' =>  count($mes[12]),         
+                               $mes         
                             ],
          
                             'cursoVagas'=>[
-                                '1' =>  count($cursoVagas[1]),
-                                '2' =>  count($cursoVagas[2]),
-                                '3' =>  count($cursoVagas[3]),
-                                '4' =>  count($cursoVagas[4]),
-                                '5' =>  count($cursoVagas[5]),
-                                '6' =>  count($cursoVagas[6]),
-                                '7' =>  count($cursoVagas[7]),
-                                '8' =>  count($cursoVagas[8]),
-                                '9' =>  count($cursoVagas[9]),
-                                '10' =>  count($cursoVagas[10]),
-                                '11' =>  count($cursoVagas[11]),
-                                '12' =>  count($cursoVagas[12]),
-                                '13' =>  count($cursoVagas[13]),
-                                '14' =>  count($cursoVagas[14]),
-                                '15' =>  count($cursoVagas[15]),
-                                '16' =>  count($cursoVagas[16]),
-                                '17' =>  count($cursoVagas[17]),
-                                '18' =>  count($cursoVagas[18]),
-                                '19' =>  count($cursoVagas[19]),
-                                '20' =>  count($cursoVagas[20]),
-                                '21' =>  count($cursoVagas[21]),
-                                '22' =>  count($cursoVagas[22]),
-                                '23' =>  count($cursoVagas[23]),
-                                '24' =>  count($cursoVagas[24]),
-                                '25' =>  count($cursoVagas[25]),
-                                '26' =>  count($cursoVagas[26]),
-                                '27' =>  count($cursoVagas[27]),
-                                '28' =>  count($cursoVagas[28]),
-                                '29' =>  count($cursoVagas[29]),
-                                '30' =>  count($cursoVagas[30]),
-                                '31' =>  count($cursoVagas[31]),
-                                '32' =>  count($cursoVagas[32]),
+                                $cursoVagas
                                 
                             ],
                             'cursoTce' =>[
-                                '1' =>  count($cursoTce[1]),
-                                '2' =>  count($cursoTce[2]),
-                                '3' =>  count($cursoTce[3]),
-                                '4' =>  count($cursoTce[4]),
-                                '5' =>  count($cursoTce[5]),
-                                '6' =>  count($cursoTce[6]),
-                                '7' =>  count($cursoTce[7]),
-                                '8' =>  count($cursoTce[8]),
-                                '9' =>  count($cursoTce[9]),
-                                '10' =>  count($cursoTce[10]),
-                                '11' =>  count($cursoTce[11]),
-                                '12' =>  count($cursoTce[12]),
-                                '13' =>  count($cursoTce[13]),
-                                '14' =>  count($cursoTce[14]),
-                                '15' =>  count($cursoTce[15]),
-                                '16' =>  count($cursoTce[16]),
-                                '17' =>  count($cursoTce[17]),
-                                '18' =>  count($cursoTce[18]),
-                                '19' =>  count($cursoTce[19]),
-                                '20' =>  count($cursoTce[20]),
-                                '21' =>  count($cursoTce[21]),
-                                '22' =>  count($cursoTce[22]),
-                                '23' =>  count($cursoTce[23]),
-                                '24' =>  count($cursoTce[24]),
-                                '25' =>  count($cursoTce[25]),
-                                '26' =>  count($cursoTce[26]),
-                                '27' =>  count($cursoTce[27]),
-                                '28' =>  count($cursoTce[28]),
-                                '29' =>  count($cursoTce[29]),
-                                '30' =>  count($cursoTce[30]),
-                                '31' =>  count($cursoTce[31]),
-                                '32' =>  count($cursoTce[32]),
+                                $cursoTce
                             ],
                             'cursoTa'=>[
-                                '1' =>  count($cursoTa[1]),
-                                '2' =>  count($cursoTa[2]),
-                                '3' =>  count($cursoTa[3]),
-                                '4' =>  count($cursoTa[4]),
-                                '5' =>  count($cursoTa[5]),
-                                '6' =>  count($cursoTa[6]),
-                                '7' =>  count($cursoTa[7]),
-                                '8' =>  count($cursoTa[8]),
-                                '9' =>  count($cursoTa[9]),
-                                '10' =>  count($cursoTa[10]),
-                                '11' =>  count($cursoTa[11]),
-                                '12' =>  count($cursoTa[12]),
-                                '13' =>  count($cursoTa[13]),
-                                '14' =>  count($cursoTa[14]),
-                                '15' =>  count($cursoTa[15]),
-                                '16' =>  count($cursoTa[16]),
-                                '17' =>  count($cursoTa[17]),
-                                '18' =>  count($cursoTa[18]),
-                                '19' =>  count($cursoTa[19]),
-                                '20' =>  count($cursoTa[20]),
-                                '21' =>  count($cursoTa[21]),
-                                '22' =>  count($cursoTa[22]),
-                                '23' =>  count($cursoTa[23]),
-                                '24' =>  count($cursoTa[24]),
-                                '25' =>  count($cursoTa[25]),
-                                '26' =>  count($cursoTa[26]),
-                                '27' =>  count($cursoTa[27]),
-                                '28' =>  count($cursoTa[28]),
-                                '29' =>  count($cursoTa[29]),
-                                '30' =>  count($cursoTa[30]),
-                                '31' =>  count($cursoTa[31]),
-                                '32' =>  count($cursoTa[32]),
-                            ],
-                            'cursoInstituicao'=>[
-                                '1' =>  count($cursoInstituicao[1]),
-                                '2' =>  count($cursoInstituicao[2]),
-                                '3' =>  count($cursoInstituicao[3]),
-                                '4' =>  count($cursoInstituicao[4]),
-                                '5' =>  count($cursoInstituicao[5]),
-                                '6' =>  count($cursoInstituicao[6]),
-                                '7' =>  count($cursoInstituicao[7]),
-                                '8' =>  count($cursoInstituicao[8]),
-                                '9' =>  count($cursoInstituicao[9]),
-                                '10' =>  count($cursoInstituicao[10]),
-                                '11' =>  count($cursoInstituicao[11]),
-                                '12' =>  count($cursoInstituicao[12]),
-                                '13' =>  count($cursoInstituicao[13]),
-                                '14' =>  count($cursoInstituicao[14]),
-                                '15' =>  count($cursoInstituicao[15]),
-                                '16' =>  count($cursoInstituicao[16]),
-                                '17' =>  count($cursoInstituicao[17]),
-                                '18' =>  count($cursoInstituicao[18]),
-                                '19' =>  count($cursoInstituicao[19]),
-                                '20' =>  count($cursoInstituicao[20]),
-                                '21' =>  count($cursoInstituicao[21]),
-                                '22' =>  count($cursoInstituicao[22]),
-                                '23' =>  count($cursoInstituicao[23]),
-                                '24' =>  count($cursoInstituicao[24]),
-                                '25' =>  count($cursoInstituicao[25]),
-                                '26' =>  count($cursoInstituicao[26]),
-                                '27' =>  count($cursoInstituicao[27]),
-                                '28' =>  count($cursoInstituicao[28]),
-                                '29' =>  count($cursoInstituicao[29]),
-                                '30' =>  count($cursoInstituicao[30]),
-                                '31' =>  count($cursoInstituicao[31]),
-                                '32' =>  count($cursoInstituicao[32]),
-                            ],
-                            'cursoEmpresa'=>[
-                                '1' =>  count($cursoEmpresa[1]),
-                                '2' =>  count($cursoEmpresa[2]),
-                                '3' =>  count($cursoEmpresa[3]),
-                                '4' =>  count($cursoEmpresa[4]),
-                                '5' =>  count($cursoEmpresa[5]),
-                                '6' =>  count($cursoEmpresa[6]),
-                                '7' =>  count($cursoEmpresa[7]),
-                                '8' =>  count($cursoEmpresa[8]),
-                                '9' =>  count($cursoEmpresa[9]),
-                                '10' =>  count($cursoEmpresa[10]),
-                                '11' =>  count($cursoEmpresa[11]),
-                                '12' =>  count($cursoEmpresa[12]),
-                                '13' =>  count($cursoEmpresa[13]),
-                                '14' =>  count($cursoEmpresa[14]),
-                                '15' =>  count($cursoEmpresa[15]),
-                                '16' =>  count($cursoEmpresa[16]),
-                                '17' =>  count($cursoEmpresa[17]),
-                                '18' =>  count($cursoEmpresa[18]),
-                                '19' =>  count($cursoEmpresa[19]),
-                                '20' =>  count($cursoEmpresa[20]),
-                                '21' =>  count($cursoEmpresa[21]),
-                                '22' =>  count($cursoEmpresa[22]),
-                                '23' =>  count($cursoEmpresa[23]),
-                                '24' =>  count($cursoEmpresa[24]),
-                                '25' =>  count($cursoEmpresa[25]),
-                                '26' =>  count($cursoEmpresa[26]),
-                                '27' =>  count($cursoEmpresa[27]),
-                                '28' =>  count($cursoEmpresa[28]),
-                                '29' =>  count($cursoEmpresa[29]),
-                                '30' =>  count($cursoEmpresa[30]),
-                                '31' =>  count($cursoEmpresa[31]),
-                                '32' =>  count($cursoEmpresa[32]),
-                            ],
+                                $cursoTa
+                            ],  
                             'ano'=> date('Y'),          
                             'tceRow'=> count($tce),
-                            'taRow'=> count($ta),
-                            'rtInstituicaoRow'=> count($rt1Instituicao) ,
-                            'rtEmpresa'=> count($rtEmpresa),                           
+                            'taRow'=> count($ta)                          
                 ]);
                         
                          }

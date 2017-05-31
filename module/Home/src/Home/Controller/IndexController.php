@@ -19,17 +19,14 @@ class IndexController extends AbstractActionController {
                     }
             $em = $this->getServiceLocator()->get(Entity::em);
             $listaVagaPresencialPorUsuario = $em->getRepository(Entity::vagaPresencial)->findByUsuarioIdusuario($idUsuario);
-            $listaVagaEADPorUsuario = $em->getRepository(Entity::vagaEad)->findByUsuarioIdusuario($idUsuario);
-            
-            $listaVagaTotalEAD = $em->getRepository(Entity::vagaEad)->findAll();
             $listaVagaTotalPresencial = $em->getRepository(Entity::vagaPresencial)->findAll();
             
             
        return new ViewModel([ 
                 'identityComum'=>$identity,
                 'identityAdministrador'=>$identity,
-                'quantidadeVagaPorUsuario'=>  count($listaVagaPresencialPorUsuario) + count($listaVagaEADPorUsuario),
-                'quantidadeVagaTotal' => count($listaVagaTotalEAD) + count($listaVagaTotalPresencial)
+                'quantidadeVagaPorUsuario'=>  count($listaVagaPresencialPorUsuario),
+                'quantidadeVagaTotal' => count($listaVagaTotalPresencial)
              
        ]);  
    }

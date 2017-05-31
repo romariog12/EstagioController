@@ -26,10 +26,10 @@ class Entity {
     const agente = 'Empresa\Entity\Agente';
     const dadosPresencial = 'Base\Entity\DadosPresencial';
     const dadosEad    = 'Base\Entity\Dados';
-    const vagaEad = 'Vaga\Entity\Vaga';
     const vagaPresencial = 'Vaga\Entity\VagaPresencial';
     const documentoPresencial = 'Vaga\Entity\DocumentoPresencial';
     const documentoEad = 'Vaga\Entity\Encaminhamento';
+    const acompanhamento = 'Vaga\Entity\Acompanhamento';
     
   
 }

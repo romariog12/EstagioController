@@ -67,6 +67,16 @@ return array(
                     ),
                 ),
             ),
+             'deleteDados' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/basePresencial/flag/[:action]/[:idDeleteDados]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Base\Controller',
+                          'controller'    => 'BasePresencial',
+                      ),
+                  ),
+              ),
             'orientacaoPresencial' => array(
                 'type'    => Literal::class,
                 'options' => array(
@@ -149,6 +159,9 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+         'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
     

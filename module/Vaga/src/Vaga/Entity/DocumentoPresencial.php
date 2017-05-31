@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DocumentoPresencial
 {
-    /**
+        /**
      * @var \DateTime
      *
      * @ORM\Column(name="Inicio", type="date", nullable=false)
@@ -31,25 +31,25 @@ class DocumentoPresencial
      *
      * @ORM\Column(name="Operacao1", type="string", nullable=false)
      */
-    private $operacao1;
+    private $operacao1 = '0';
      /**
      * @var string
      *
      * @ORM\Column(name="Operacao2", type="string", nullable=false)
      */
-    private $operacao2;
+    private $operacao2 = '0';
      /**
      * @var string
      *
      * @ORM\Column(name="Operacao3", type="string", nullable=false)
      */
-    private $operacao3;
+    private $operacao3 = '0';
      /**
      * @var string
      *
      * @ORM\Column(name="Operacao4", type="string", nullable=false)
      */
-    private $operacao4;
+    private $operacao4 = '0';
 
     /**
      * @var \DateTime
@@ -113,6 +113,36 @@ class DocumentoPresencial
     
      */
     private $cursoDocumento;
+       /**
+     * @var string
+     *
+     * @ORM\Column(name="relatorio1", type="string", nullable=false)
+     */
+    private $relatorio1 = '0';
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="relatorio2", type="string", nullable=false)
+     */
+    private $relatorio2 = '0';
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="relatorio3", type="string", nullable=false)
+     */
+    private $relatorio3 = '0';
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="relatorio4", type="string", nullable=false)
+     */
+    private $relatorio4 = '0';
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="dataLancamento", type="string", nullable=false)
+     */
+    private $dataLancamento;
 
     
     function getInicio() {
@@ -122,7 +152,8 @@ class DocumentoPresencial
     function getFim() {
         return $this->fim;
     }
-    function getOperacao1() {
+
+        function getOperacao1() {
         return $this->operacao1;
     }
 
@@ -174,6 +205,24 @@ class DocumentoPresencial
     function getCursoDocumento() {
         return $this->cursoDocumento;
     }
+    function getRelatorio1() {
+        return $this->relatorio1;
+    }
+
+    function getRelatorio2() {
+        return $this->relatorio2;
+    }
+
+    function getRelatorio3() {
+        return $this->relatorio3;
+    }
+
+    function getRelatorio4() {
+        return $this->relatorio4;
+    }
+    function getDataLancamento() {
+        return $this->dataLancamento;
+    }
 
     function setInicio(\DateTime $inicio) {
         $this->inicio = $inicio;
@@ -184,7 +233,8 @@ class DocumentoPresencial
         $this->fim = $fim;
         return $this;
     }
-    function setOperacao1($operacao1) {
+
+        function setOperacao1($operacao1) {
         $this->operacao1 = $operacao1;
         return $this;
     }
@@ -249,6 +299,31 @@ class DocumentoPresencial
         $this->cursoDocumento = $cursoDocumento;
         return $this;
     }
+    function setRelatorio1($relatorio1) {
+        $this->relatorio1 = $relatorio1;
+        return $this;
+    }
+
+    function setRelatorio2($relatorio2) {
+        $this->relatorio2 = $relatorio2;
+        return $this;
+    }
+
+    function setRelatorio3($relatorio3) {
+        $this->relatorio3 = $relatorio3;
+        return $this;
+    }
+
+    function setRelatorio4($relatorio4) {
+        $this->relatorio4 = $relatorio4;
+        return $this;
+    }
+
+    function setDataLancamento($dataLancamento) {
+        $this->dataLancamento = $dataLancamento;
+        return $this;
+    }
+
 
 
 

@@ -1,59 +1,30 @@
-<?php
-echo $this->doctype();
-$lista = $this->lista;
-?>
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-     <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-search"  style=" color: #fff194"></i> Buscar aluno</h4>
-  
- </div>
-<div class="nav">
-    <div class="caption"> 
-    <div class="row" >
-            <div>
-                <div class="" style=" ">
-                <div class="caption">
-                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li class="  active" role="presentation"><a><label>Modalidade Presencial</label></a></li>
-                        <li role="presentation" ><a href="<?php echo $this->url('perfil')?>">Modalidade EAD</a></li>
-                      
-                    </ul> 
-                </div>
-              </div>
-            </div>
+ <div class=" panel panel-primary">
+        <div class="panel-heading">
+              <?= 'Buscar aluno'?>
         </div>
-         <br/><br/><br/><br/>
+     <div class="well-lg">
+    <div class="caption"> 
         <form class="navbar-collapse nav" method="post">
-            <div class="navbar-collapse"  >
-                        
+            <div class="navbar-collapse"  >  
                 <div class="row">
                     <div class="col-lg-6">
                       <div class="input-group">
-                       
                         <input name="porMatricula" type="text" class="form-control" placeholder="Procurar por matrícula">
                          <span class="input-group-btn">
                             <button class="btn btn-primary" name="buscar" value="buscarPorMatricula" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
                         </span>
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
+                      </div>
+                    </div>
                     <div class="col-lg-6">
                       <div class="input-group">
                          <input name="porNome" type="text" class="form-control" placeholder="Procurar por nome">
                         <span class="input-group-btn">
                           <button class="btn btn-primary" name="buscar" value="buscarPorNome" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
                         </span>
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-                  </div><!-- /.row -->
-                
-                
-                    
-                 <!-- /.row -->
-
-            <?php if($lista):?>
+                      </div>
+                    </div>
+                  </div>
+            <?php if(!empty($this->lista)):?>
                  <br/><br/><br/><br/>
         <table class="table">
                  <tr>
@@ -72,10 +43,7 @@ $lista = $this->lista;
                 </tr><?php endforeach; endif;?>
             </table></div>
         </form>
-         <br/><br/><br/><br/>
     </div>
 </div>
-     
-        <?php echo $this->resp; ?>
-</body>
-</html>
+ </div>
+<?php echo $this->resp; ?>

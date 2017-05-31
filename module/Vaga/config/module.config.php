@@ -12,33 +12,7 @@ namespace Vaga;
 return array(
     'router' => array(
         'routes' => array(
-            'vaga' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route'    => '/vaga',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Vaga\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action][/:id][/:idVaga][/:curso]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            'vagaPresencial' => array(
+               'vagaPresencial' => array(
                 'type'    => 'Segment',
                 'options' => array(
                     'route'    => '/vagaPresencial',
@@ -64,16 +38,7 @@ return array(
                     ),
                 ),
             ),
-            'delete' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/vaga/flag/[:action]/[:iddelete][/]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Vaga\Controller',
-                          'controller'    => 'Index',
-                      ),
-                  ),
-              ),
+    
             'deleteVagaPresencial' => array(
                   'type'    => 'Segment',
                   'options' => array(
@@ -87,25 +52,24 @@ return array(
             'deleteDocumentoPresencial' => array(
                   'type'    => 'Segment',
                   'options' => array(
-                      'route'    => '/vagaPresencial/flag/[:action]/[:iddelete][/]',
+                      'route'    => '/vagaPresencial/flag/[:action]/[:iddelete]',
                       'defaults' => array(
                           '__NAMESPACE__' => 'Vaga\Controller',
                           'controller'    => 'VagaPresencial',
                       ),
                   ),
               ),
-            'select' => array(
+            'salvarDocumento' => array(
                   'type'    => 'Segment',
                   'options' => array(
-                      'route'    => '/curso/[:action]/[:curso]/[:page]',
+                      'route'    => '/vagaPresencial/flag/[:action]/[:idDocumento]',
                       'defaults' => array(
                           '__NAMESPACE__' => 'Vaga\Controller',
-                          'controller'    => 'Index',
+                          'controller'    => 'VagaPresencial',
                       ),
                   ),
               ),
-           
-            
+      
         ),
         
     ),
@@ -132,14 +96,11 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Vaga\Controller\Index' => Controller\IndexController::class,
             'Vaga\Controller\VagaPresencial' => Controller\VagaPresencialController::class
         ),
     ),
     'view_manager' => array(
-        'strategies' => array(
-    		'ViewJsonStrategy'
-    	),
+        
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
@@ -147,15 +108,18 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'vaga/index/index' => __DIR__ . '/../view/vaga/index/index.phtml',
-            'vaga/index/editar-contratos' => __DIR__ . '/../view/vaga/index/editarContratos.phtml',
-            'vaga/vaga-presencial/cadastrarvagapresencial' => __DIR__ . '/../view/vagaPresencial/index/cadastrarVagaPresencial.phtml',       
+            'vaga/vaga-presencial/cadastrarvagapresencial' => __DIR__ . '/../view/vagaPresencial/index/cadastrarVagaPresencial.phtml',
+            'vaga/vaga-presencial/perfilvagafinalizada' => __DIR__ . '/../view/vagaPresencial/index/perfilVagaFinalizada.phtml',
+            'vaga/vaga-presencial/lancar-contratos-vaga' => __DIR__ . '/../view/vagaPresencial/index/lancarContratosVaga.phtml',
             'vaga/vaga-presencial/lancarcontratos' => __DIR__ . '/../view/vagaPresencial/index/lancarcontratos.phtml', 
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+         'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
     

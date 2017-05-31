@@ -223,6 +223,33 @@ return array(
                     ),
                 ),
             ),
+            'documentosPendentes' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/documentosPendentes',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Administrador\Controller',
+                        'controller'    => 'Administrador',
+                        'action'        => 'documentosPresencialPendente',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action][/:id/][/:idVaga]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                
+                            ),
+                        ),
+                    ),
+                ),
+            ),
              
             'excluirAluno' => array(
                   'type'    => 'Segment',
@@ -413,6 +440,7 @@ return array(
             'administrador/administrador/empresa' => __DIR__ . '/../view/administrador/index/empresa.phtml',
             'administrador/administrador/agente' => __DIR__ . '/../view/administrador/index/agente.phtml',
              'administrador/administrador/documentos-presencial' => __DIR__ . '/../view/administrador/index/documentosPresencial.phtml',
+             'administrador/administrador/documentos-presencial-pendente' => __DIR__ . '/../view/administrador/index/documentosPresencialPendente.phtml',
             'administrador/aluno/perfil' => __DIR__ . '/../view/aluno/index/perfil.phtml',
             'administrador/aluno/estagios' => __DIR__ . '/../view/aluno/index/estagios.phtml',  
             'administrador/aluno/buscar-aluno' => __DIR__ . '/../view/aluno/index/buscarAluno.phtml',

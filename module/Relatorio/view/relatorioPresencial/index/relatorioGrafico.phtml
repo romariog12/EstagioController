@@ -1,24 +1,19 @@
-<?php 
-       echo $this->Doctype();
-       ?>
-<html lang="pt-br">
-    <meta charset="utf-8">
-<body>
- <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center"><i class=" fa fa-bar-chart-o"  style=" color: #fff194"></i> Relatórios</h4>
+<?= $this->headScript()->prependFile($this->basePath('js/loader.js'))    ;?>
+
+  <div class=" panel panel-primary">
+        <div class="panel-heading">
+                <h4 style="color: white; text-align: center"><i class=" fa fa-bar-chart-o"  style=" color: #fff194"></i> Relatórios</h4>
   
- </div>
+        </div>
     <div class="nav">
     <div class="caption">
-        <div class="row" >
+        <div >
             <div>
-                <div class="" style=" ">
+                <div>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li role="presentation"><a href="<?php echo $this->url('relatorioPresencial')?>">Aproveitamento em estágio</a></li>
                         <li  class="  active"  role="presentation" ><a ><label>Documentos</label></a></li>
-                    <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencialEstatisticas')?>"><i class=" fa fa-bar-chart-o"></i> Gráficos</a></li>
                     </ul>
         <br/>
       <form method="post">  
@@ -42,49 +37,42 @@
    <div >
      <div >
          <form class=" navbar-default">
-        <table class="table " >
+        
         
  <?php if (isset($this->ano)){
        echo '<br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. $this->ano.' por curso</h4><br/>';
    }  else {
        echo '<br/><h4 style="text-align:  center">'.'Quantitativo de documentos lançados em '. date('Y').' por curso</h4><br/>';
    }
-?>      
+?>      <div class="panel panel-primary col-sm-12">
+        <table class="table " >
          <tr>  
              <th></th>
              <th>Curso</th>
              <th>Estágios Lançados</th>
              <th>Contratos</th>
              <th>Termos Aditivos</th>
-             <th>Relatório (Instituição)</th>
-             <th>Relatórios (Empresa)</th>
      
          </tr>
-             <?php foreach ($this->listaDados as $l){
+             <?php foreach ($this->listaDados as $chave => $l){
              
         ?>  
          <tr style=" background-color: #f9fcfe"> 
              <td  style=" background-color:  #1989f1; text-align: center; width: 3px; "></td>
              <td><?php echo $l->getCurso()?></td>   
-             <td><?php echo $this->cursoVagas[$l->getIddados()]?></td>
-             <td><?php echo $this->cursoTce[$l->getIddados()]?></td>
-             <td><?php echo $this->cursoTa[$l->getIddados()]?></td>
-             <td><?php echo $this->cursoInstituicao[$l->getIddados()]?></td>
-             <td><?php echo $this->cursoEmpresa[$l->getIddados()]?></td>
+             <td><?php echo $this->cursoVagas[0][$l->getIddados()]?></td>
+             <td><?php echo $this->cursoTce[0][$l->getIddados()]?></td>
+             <td><?php echo $this->cursoTa[0][$l->getIddados()]?></td>
          </tr><?php  }?> 
-         
          <tr style=" background-color:  #e9f1f1; ">
               <th  style=" background-color:  #1989f1; text-align: center; width: 3px; "></th>
-             
               <th>Total</th>    
               <th><?php echo $this->rowTodosCursos?> </th>
               <th><?php echo $this->tceRow?></th>
               <th><?php echo $this->taRow?></th>
-              <th><?php echo $this->rtInstituicaoRow?></th>
-              <th><?php echo $this->rtEmpresa ?></th>
-              
          </tr>
         </table>
+        </div>
          </form>
      </div>
    </div>
@@ -94,9 +82,8 @@
        echo '<br/><br/><h4 style="text-align:  center">'.'Quantitativo de estágios lançados em '. date('Y').' mensalmente</h4><br/>';
    }
 ?>              
-       <div id="curve_chart" style="width: 1135px; height: 500px"></div> 
-        
-
+        <div id="curve_chart" style="width: 1135px; height: 500px">
+        </div>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -104,18 +91,18 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Mês',  'Novos estágios'],
-          ['Jan',       <?php echo $this->mes[1]?>],
-          ['Fev',     <?php echo $this->mes[2]?>],
-          ['Mar',       <?php echo $this->mes[3]?>],
-          ['Abr',     <?php echo $this->mes[4]?>],
-          ['Mai',     <?php echo $this->mes[5]?>],
-          ['Jun',     <?php echo $this->mes[6]?>],
-          ['Jul',      <?php echo $this->mes[7]?>],
-          ['Ago',      <?php echo $this->mes[8]?>],
-          ['Set',     <?php echo $this->mes[9]?>],
-          ['Out',      <?php echo $this->mes[10]?>],
-          ['Nov',      <?php echo $this->mes[11]?>],
-          ['Dez',      <?php echo $this->mes[12]?>]
+          ['Jan',       <?= $this->mes[0][1]?>],
+          ['Fev',     <?= $this->mes[0][2]?>],
+          ['Mar',       <?= $this->mes[0][3]?>],
+          ['Abr',     <?= $this->mes[0][4]?>],
+          ['Mai',     <?= $this->mes[0][5]?>],
+          ['Jun',     <?= $this->mes[0][6]?>],
+          ['Jul',      <?= $this->mes[0][7]?>],
+          ['Ago',      <?= $this->mes[0][8]?>],
+          ['Set',     <?= $this->mes[0][9]?>],
+          ['Out',      <?= $this->mes[0][10]?>],
+          ['Nov',      <?= $this->mes[0][11]?>],
+          ['Dez',      <?= $this->mes[0][12]?>]
         ]);
 
         var options = {
@@ -134,13 +121,8 @@
             </div>
         </div>   
     </div>
-</div>
-   
-  </body>
-</html>
-     
-     
-     
-     <!--Fim -->
+    </div>
+  </div>
+
   
 

@@ -1,54 +1,118 @@
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-<div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-edit"  style=" color: #fff194"></i> Editar aluno</h4>
-  
- </div>
-<div style="height: 400px" class="nav">
-    <br/><br/>
-      <div class="caption">
-<form class="navbar-collapse" method="post">
-    <div class="col-lg-4">
-        
-        <div>
-            <?php foreach ($this->listaAluno as $l):?>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Nome')?></span>
-                <input value="<?php echo $l->getNome()?>" name="nome" type="text" class="form-control " required="" />
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Matricula UCB')?></span>
-                <input value="<?php echo $l->getMatricula()?>" name="matricula" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Cpf')?></span>
-                <input value="<?php echo $l->getCpf()?>" id="cpf" name="cpf" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Telefone')?></span>
-                <input id="telefone" value="<?php echo $l->getTelefone()?>" name="telefone" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Email')?></span>
-                <input value="<?php echo $l->getEmail()?>" name="email" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" > <?php echo $this->translate('Curso')?></span>
-                <select name="curso" class="form-control" required="">
-                    <option><?php echo $l->getCurso()?></option>
-                    <?php foreach ($this->listaCursoPresencial as $l):?>
-                    <option><?php echo $l->getCurso()?></option><?php endforeach;?>
-                        
-                </select><br/><?php endforeach;?> 
-               
-            </div>
-        </div> <br/>
-        
-         <input type="submit" class="btn btn-primary" name="cadastrar" value="Salvar" />
-    </div>         
-</form></div></div>
+<script>
 
-<?php echo $this->resp; ?>
-</body></html>
+$(document).ready(function(){
+ $("#editarAlunoForm").validate({
+        highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success"); 
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        },
+        errorElement: "em",
+        messages: {
+        nome: 'Campo Obrigatório',
+        matricula: 'Campo Obrigatório',
+        cpf: 'CPF inválido',
+        email: 'E-mail inválido',
+        telefone:'Telefone inválido',
+        curso:'Campo Obrigatório'
+        },
+        rules:{
+        nome: {
+           required: true
+        },
+        matricula: {
+           required: true
+        },
+        telefone:{
+            required: true,
+            max: 99999999999999,
+            min: 111111111
+        },
+        cpf:{
+            required: true,
+            rangelength: [11, 11],
+            max: 99999999999
+        },
+        email:{
+            required: true,
+            email: true
+        },
+        curso:{
+            required: true
+        }
+        }
+    });
+});
+
+
+</script>
+<div class=" panel panel-primary">
+    <div class="panel-heading">
+        <?= 'Editar Aluno'?>
+    </div>
+    <?php if($this->alerta): ?>
+<div class="alert-danger" style=" text-align: center"><?php  echo $this->alerta; ?></div> 
+<?php
+endif;
+    ?>
+<div class="well well-sm"> Todos os campos são obrigatórios
+</div>
+     <?php foreach ($this->listaAluno as $l):?>
+    <form method="post" id="editarAlunoForm">
+    <div class="col-lg-12">
+        <div>
+           
+            <div class="col-sm-5 col-sm-offset-1 nome">
+                <label for="nome"><?= $this->translate('Nome')?></label><i style=" display: none;"  class=" nome-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getNome()?>" id="nome" name="nome" type="text" class="form-control "  /><br/>
+           </div>
+            <div class="col-sm-3 matricula">
+                <label for="matricula"><?= $this->translate('Matricula')?></label><i style=" display: none;"  class=" matricula-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getMatricula()?>"  id="matricula" name="matricula" type="text" class="form-control" /><br/>
+            </div>
+            <div class=" col-sm-3 cpf">
+                <label for="cpf"><?= $this->translate('Cpf')?></label><i style=" display: none;"  class=" cpf-valid glyphicon glyphicon-ok-circle"></i>
+                <input maxlength="11" value="<?= $l->getCpf()?>" name="cpf" id="cpf" type="text" class="form-control" /><br/>
+            </div>
+             <div class="col-sm-3 email col-sm-offset-1">
+                <label for="email"><?= $this->translate('Email')?></label><i style=" display: none;"  class=" email-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getEmail()?>" id="email" name="email"  class="form-control" /><br/>
+            </div>
+        <div class="col-sm-4  telefone">
+            <label for="telefone"><?= $this->translate('Telefone')?></label><i style=" display: none;"  class=" telefone-valid glyphicon glyphicon-ok-circle"></i>
+            <input value="<?= $l->getTelefone()?>" id="telefone" name="telefone" type="tel" class="form-control" /><br/>
+        </div>
+        
+            <div class="col-sm-4  curso ">
+                <label for="curso"><?= $this->translate('Curso')?></label><i style=" display: none;"  class=" curso-valid glyphicon glyphicon-ok-circle"></i>
+                <select id="curso" name="curso" class="form-control">
+                <?= '<option>'. $l->getCurso().'</option>';
+                    foreach ($this->listaCursoPresencial as $f):?>
+                    <?='<option>'. $f->getCurso().'</option>';
+                    endforeach;?>
+                    
+                </select>
+            </div>
+            
+        </div>  
+    </div>
+    <div class="well-lg col-sm-offset-1">
+    <button type="submit" class="btn btn-success" name="salvar" value="Salvar" ><i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro</button>
+     <?= '<a  href="'. $this->url('perfil/default', array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$l->getIdaluno())).'"><span class="btn btn-primary" ><i class="fa fa-user fa-2x pull-left"></i>Perfil do <br>Aluno</span></a>';?>
+                          
+    </div>  
+</form>
+    <?php endforeach?>
+</div>
+<?= $this->resp; ?>

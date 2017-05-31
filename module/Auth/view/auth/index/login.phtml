@@ -1,25 +1,6 @@
-<html>
-    <head>
-<script>
-  function waitPreloadPage() { //DOM
-if (document.getElementById){
-document.getElementById('prepage').style.visibility='hidden';
-}else{
-if (document.layers){ //NS4
-document.prepage.visibility = 'hidden';
-}
-else { //IE4
-document.all.prepage.style.visibility = 'hidden';
-}
-}
-}
-</script>
-    </head>
-    
-<body onLoad="waitPreloadPage();">
-    <DIV id="prepage" style="position:absolute; font-family:arial; font-size:16; left:0px; top:0px; background-color:white; layer-background-color:white; height:100%; width:100%;"> 
-<TABLE width=100%><TR><TD><B>Loading ... ... Please wait!</B></TD></TR></TABLE>
-</DIV>
+
+<body>
+ 
 
     <div class=" nav row" style=" background-color: #07485b">
         <h4 style=" color: white;text-align: center"><i class=" glyphicon glyphicon-log-in"></i> Acesso</h4>
@@ -37,10 +18,8 @@ document.all.prepage.style.visibility = 'hidden';
                 <input id="login" name="login" type="text" class=" form-control" placeholder="Login" required=""/><br/>   
                 <input id="senha" name="senha" type="password" class="  form-control" placeholder="Senha" required=""/><br/>   
                 <input style=" background-color:  #07485b; color: white"  type="submit" class="btn  btn-block default  " name="Entrar" value="Entrar"/>   
-                
             </div>
         </form>
-        
     </div>
 <?php echo $this->resp; ?>
 </body></html>

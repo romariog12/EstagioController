@@ -1,13 +1,16 @@
-<?php echo $this->doctype(); 
+<?=
+    
+        $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''))->prependStylesheet($this->basePath('css/home.css'));
+        $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''))->prependStylesheet($this->basePath('css/bootstrap-toggle.min.css'));
+        $this->headScript()->prependFile($this->basePath('js/home.js'));
 ?>
-<html>
-    <body >
-        <style>
-
-        </style>
-        <div style=" background-image: url('img/UCBhome.jpg'); background-position: center; height: 500px; ">
+<style>
+    .principal{
+    font-size: 50px
+}
+</style>
+        <div id="informacao">
             <br/>
-           
             <div class="pager" style=" color: white;">
               <h4  >Bem Vindo(a) </h4>
                 <h3  style=" color: #fff194"><?php 
@@ -16,50 +19,40 @@
                        ;
                     }?>
                 </h3>
-              <br/>
-              
-             
+              <br/>  
             </div>
             <div style=" color: white; " class=" pager">
-                  <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                <div id="div1" onmousemove="return mouseMove('1')">
                     <br/>
                      <a style=" color:white; " href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosalunospresencial']) ?>">
-                   
-                        <span><p><i style=" font-size: 50px " class="fa fa-mortar-board" aria-hidden="true"></i></p></span></a>
+                        <span><p><i  class="fa fa-mortar-board principal" aria-hidden="true"></i></p></span></a>
                         <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de alunos</h5>
-                        
-            
                  </div>
-                 
-                <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                <div id="div2"  onmousemove="return mouseMove('2')">
                     <br/>
                       <a style=" color:white" href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">
-                    <span><p><i style=" font-size: 50px " class="fa fa-briefcase" aria-hidden="true"></i></p></span></a>
+                    <span><p><i class="fa fa-briefcase principal" aria-hidden="true"></i></p></span></a>
                         <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de empresas</h5>
             
                  </div>
-                <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                <div id="div3" onmousemove="return mouseMove('3')">
                     <br/> <a style=" color:white" href="<?php echo $this->url('documentos') ?>">
-                         <span><p><i style=" font-size: 50px " class="fa fa-archive" aria-hidden="true"></i></p></span></a>
+                         <span><p><i  class="fa fa-archive principal" aria-hidden="true"></i></p></span></a>
                         <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de documentos</h5>
           
                 </div>
-                <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                <div  id="div4" onmousemove="return mouseMove('4')">
                     <br/> <a style=" color:white" href="<?php echo $this->url('usuarios') ?>">
-                         <span><p><i style=" font-size: 50px " class="fa fa-users" aria-hidden="true"></i></p></span></a>
+                         <span><p><i  class="fa fa-users principal" aria-hidden="true"></i></p></span></a>
                         <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de acessos</h5>
-          
                 </div>
-                
-                  <div style=" background: #0089cd; width: 200px"  class=" img-thumbnail img-rounded  ">
+                  <div id="div5" onmousemove="return mouseMove('5')">
                     <br/> <a style=" color:white" href="<?php echo $this->url('dadosPresencial') ?>">
-                         <span><p><i style=" font-size: 50px " class="fa fa-refresh" aria-hidden="true"></i></p></span></a>
+                         <span><p><i  class="fa fa-refresh principal" aria-hidden="true"></i></p></span></a>
                         <h5 style=" color: #fff194"> Atualizar dados</h5>
-          
                 </div>
-      
-       
-            </div>   </div>
-    
-    </body>
-</html>
+            </div>
+        </div>
+        
+
+

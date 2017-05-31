@@ -14,6 +14,15 @@ class VagaPresencialRepository extends \Doctrine\ORM\EntityRepository{
                         ->setParameter('a2', $recisao)->getQuery()->getResult();
         return $result;
     }
+      public function findByRecisaoAndIdVaga($recisao,$idVaga) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.recisao', 'l')
+                        ->from(Entity::vagaPresencial,'l')
+                        ->where('l.idvaga = :a1','l.recisao = :a2')
+                        ->setParameter('a1', $idVaga)
+                        ->setParameter('a2', $recisao)->getQuery()->getResult();
+        return $result;
+    }
         public function findByAnoVagaAndMesVaga($anoVaga, $mesVaga ) {
         $userLogin = $this->createQueryBuilder('u')
                         ->select('u.idvaga', 'l')

@@ -47,4 +47,34 @@ class BasePresencialController extends AbstractActionController
                 'quantidadeCursos'=> $quantidadeCursos
             ]);
     }
+    public function adcionarDadosAction(){
+        $em = $this->getServiceLocator()->get(Entity::em);
+        $lista = $em->getRepository(Entity::dadosPresencial)->findAll();
+        $idCurso = 'GP-'.(count($lista)+1);
+        $idDados = $this->params()->fromRoute('idDados',0);
+        $request = $this->getRequest();
+          $curso = $request->getPost("curso");  
+          $quantidade = $request->getPost("quantidade");
+          $meta = $request->getPost("meta");
+          $orientador = $request->getPost("orientador");
+        $selecionar = $em->find(Entity::dadosPresencial, $idDados);
+        $selecionar
+                ->setCurso($curso)
+                ->setQuantidadealunos($quantidade)
+                ->setMeta($meta)
+                ->setOrientador($orientador)
+                ->setIdcurso($idCurso);
+                
+                    $em->persist($selecionar);
+                    $em->flush();
+        
+    }
+    public function excluirDadosAction(){
+         $id = $this->params()->fromRoute("idDeleteDados", 0);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $documento = $em->find(Entity::dadosPresencial, $id);
+            $em->remove($documento);
+            $em->flush();
+        
+    }
 }
