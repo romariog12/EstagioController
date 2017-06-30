@@ -22,5 +22,5 @@ class UsuarioRepository extends EntityRepository{
                 return $userLogin;      
         }
         return false;
-    }  
+    }
 }

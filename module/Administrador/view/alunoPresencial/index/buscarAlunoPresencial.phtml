@@ -41,8 +41,13 @@
                   <td><a href="<?php echo $this->url('perfil/default', 
                           array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$f->getidaluno(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
                 </tr><?php endforeach; endif;?>
-            </table></div>
+            </table>
+            </div>
         </form>
+         <div class="well-lg">
+             <a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosalunospresencial']) ?>"> <span class="btn btn-primary"><i class="fa fa-users fa-2x pull-left"></i>Todos <br>Aluno</span></a>
+           
+         </div>
     </div>
 </div>
  </div>

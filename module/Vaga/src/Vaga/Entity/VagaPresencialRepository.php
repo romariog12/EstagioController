@@ -64,6 +64,33 @@ class VagaPresencialRepository extends \Doctrine\ORM\EntityRepository{
                         ->setParameter('a2', $recisao)->getQuery()->getResult();
         return $result;
     }
+     public function findByRecisaoAndIdEmpresaVaga($recisao, $idEmpresa) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.recisao', 'l')
+                        ->from(Entity::vagaPresencial,'l')
+                        ->where('l.idEmpresaVaga = :a1','l.recisao = :a2')
+                        ->setParameter('a1', $idEmpresa)
+                        ->setParameter('a2', $recisao)->getQuery()->getResult();
+        return $result;
+    }
+     public function findBySituacaoAndIdEmpresaVaga($situacao, $idEmpresa) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.situacao', 'l')
+                        ->from(Entity::vagaPresencial,'l')
+                        ->where('l.idEmpresaVaga = :a1','l.situacao = :a2')
+                        ->setParameter('a1', $idEmpresa)
+                        ->setParameter('a2', $situacao)->getQuery()->getResult();
+        return $result;
+    }
+    public function findBySituacaoAndCursoVaga($situacao, $curso) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.situacao', 'l')
+                        ->from(Entity::vagaPresencial,'l')
+                        ->where('l.cursoVaga = :a1','l.situacao = :a2')
+                        ->setParameter('a1', $curso)
+                        ->setParameter('a2', $situacao)->getQuery()->getResult();
+        return $result;
+    }
     public function findByRecisaoAndIdAlunoVaga($recisao, $idAlunoVaga) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.recisao', 'l')

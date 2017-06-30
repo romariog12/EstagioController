@@ -1,7 +1,6 @@
 <div class=" panel panel-primary">
         <div class="panel-heading">
-            <h4 style="color: white; text-align: center"><i class=" fa fa-file" ></i> Documentos</h4>
-  
+            <?= '<h4><i class=" fa fa-file" ></i>' . $this->translate(' Documentos').'</h4>'?>  
         </div>
     <div class="nav">
       <div class="caption">
@@ -10,8 +9,8 @@
                 <div>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li role="presentation" ><a href="<?= $this->url('documentos')?>">Documentos vencendo</a></li>
-                        <li role="presentation" class="active"><a><label>Vias Pendentes</label></a></li>
+                        <li role="presentation" ><a href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial','id'=>'1'])?>">Documentos vencendo <span class="label label-default"><?= count($this->listaContratosVencendo)?></span></a></li>
+                        <li role="presentation" class="active"><a><label>Vias Pendentes </label> <span class="label label-warning"><?= count($this->listaDocumentoPendente)?></span></a></li>
                   
                     </ul> 
                 </div>
@@ -28,41 +27,38 @@
             </tr>
                 <?php 
                 
-                foreach ($this->pagination as $l):
-                    if(($l->getOperacao1() 
-                            && $l->getOperacao2() 
-                            && $l->getOperacao3() == '1')
-                            && $l->getOperacao4() == '0' ):
-                        
-                    ?>
+                foreach ($this->pagination as $l):?>
                             <tr style=" background-color: #ffffcc">
                                 <td  style=" background-color: #ffcc33; text-align: center; width: 5px "></td>
-                                <td><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$l->getIdalunoDocumento(), 'idVaga'=>$l->getIdvagaDocumento(),'curso'=>$l->getCursoDocumento())); ?>"><i class="fa fa-file"></i></a></td>
-                                <td><?= date_format($l->getInicio(), 'd/m/Y')?></td>
-                                <td><?= date_format($l->getFim(), 'd/m/Y')?></td>
+                                <td><a href="<?= $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$l[0]->getIdalunoDocumento(), 'idVaga'=>$l[0]->getIdvagaDocumento(),'curso'=>$l[0]->getIdempresaDocumento())); ?>"><i class="fa fa-file"></i></a></td>
+                                <td><?= date_format($l[0]->getInicio(), 'd/m/Y')?></td>
+                                <td><?= date_format($l[0]->getFim(), 'd/m/Y')?></td>
                             </tr>
                    <?php
-                   endif; endforeach;?>
+                 endforeach;?>
         </table>
       </div>
     </div>
-    
-    <nav aria-label="Page navigation">
-         <ul  class="pager">
-             <li  <?php if ($this->pageNumber == 1|| $this->pageNumber == 0 ){
-     echo "class='disabled'". "style='pointer-events: none'";
-    }
-    ?>>
-      <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
-          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
-      </a>
-    </li>
-    <li  <?php if ($this->pageNumber >= $this->count){ echo "class='disabled'". "style='pointer-events: none'";}?>>
-      <a href="<?php echo $this->pageNumber + 1?>" aria-label="Next">
-          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
-      </a>
-    </li> 
-  </ul>
-          
-</nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> </div>
-<?php echo $this->resp; ?>
+     <nav aria-label="Page navigation">
+        <ul  class="pager">
+            <li 
+                <?php  if ($this->pageNumber == 1|| $this->pageNumber == 0 ){ ?>
+                <?= "class='disabled'". "style='pointer-events: none'";}?>
+            >
+            <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
+                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
+            </a>
+              </li>
+            <li <?php if ($this->pageNumber >= $this->count){ ?>
+                <?= "class='disabled'". "style='pointer-events: none'";}?>>     
+            <a href="<?= $this->pageNumber + 1?>" aria-label="Next">
+                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
+            </a>
+            </li> 
+       </ul>
+    </nav>
+            <div class="pager">
+               <?= $this->pageNumber.' de '.$this->count;?>
+            </div>  
+</div>
+<?= $this->resp; ?>

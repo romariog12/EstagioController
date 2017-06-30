@@ -103,16 +103,6 @@ return array(
                     ),
                 ),
             ),
-            'sair' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/home/flag/[:action][/]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Base\Controller',
-                          'controller'    => 'Base',
-                      ),
-                  ),
-              ),
         ),
     ),
     

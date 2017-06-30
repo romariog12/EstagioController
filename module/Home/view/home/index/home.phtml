@@ -11,6 +11,11 @@
 </style>
         <div id="informacao">
             <br/>
+            <div class="pager">
+                 <img src="<?=$this->basePath('img/ucb_logo.png')?>" class="img-circle " alt="Cinque Terre" width="70" height="70">
+        
+            </div>
+           
             <div class="pager" style=" color: white;">
               <h4  >Bem Vindo(a) </h4>
                 <h3  style=" color: #fff194"><?php 
@@ -36,7 +41,7 @@
             
                  </div>
                 <div id="div3" onmousemove="return mouseMove('3')">
-                    <br/> <a style=" color:white" href="<?php echo $this->url('documentos') ?>">
+                    <br/> <a style=" color:white" href="<?php echo $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial', 'id'=>'1']) ?>">
                          <span><p><i  class="fa fa-archive principal" aria-hidden="true"></i></p></span></a>
                         <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de documentos</h5>
           

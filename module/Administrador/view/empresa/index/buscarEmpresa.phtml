@@ -14,7 +14,7 @@ $lista = $this->lista;
 <div>
     <div> 
          <br/><br/>
-        <form class="navbar-collapse" method="post" onKeyPress="return noenter()">
+        <form  method="post" onKeyPress="return noenter()">
             <div class="navbar-collapse"  >
                         
                 <div class="row">
@@ -53,7 +53,10 @@ $lista = $this->lista;
                 </tr><?php endforeach; endif;?>
             </table></div>
         </form>
-         <br/><br/><br/><br/>
+          <div class="well-lg">
+             <a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>" class="btn btn-primary"><i class="fa fa-briefcase fa-2x pull-left"></i>Lista de <br/>  Empresas</a>
+           
+         </div>
     </div>
 </div></div>
         <?php echo $this->resp; ?>

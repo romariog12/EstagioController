@@ -9,14 +9,15 @@
 
 namespace Administrador\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Auth\Controller\AdministradorAbstractActionController;
 use Zend\View\Model\ViewModel;
 use Base\Model\Entity;
 use Aluno\Entity\AlunoPresencial;
-class AlunoPresencialController extends AbstractActionController {
-    
+class AlunoPresencialController extends AdministradorAbstractActionController {
+  
     public function buscarAlunoAction()   {
-    $this->sairComumAction();
+    $this->logout();
+    $this->acessoNegado();
     $request = $this->getRequest();
     $em = $this->getServiceLocator()->get(Entity::em);
 
@@ -43,7 +44,8 @@ class AlunoPresencialController extends AbstractActionController {
     }
     //Vagas cadastradas no Perfil                  
     public function perfilAction(){
-      $this->sairComumAction();
+      $this->logout();
+      $this->acessoNegado();
       $em = $this->getServiceLocator()->get(Entity::em);
       $id = $this->params()->fromRoute("id", 0);
       $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($id);
@@ -59,7 +61,8 @@ class AlunoPresencialController extends AbstractActionController {
             ]);        
     }
      public function estagiosAction(){
-        $this->sairComumAction();
+        $this->logout();
+        $this->acessoNegado();
         $vaga = new \Vaga\Entity\VagaPresencial();
         $em = $this->getServiceLocator()->get(Entity::em);
         $id = $this->params()->fromRoute("id", 0);
@@ -77,7 +80,8 @@ class AlunoPresencialController extends AbstractActionController {
                     ]);        
     }
      public function cadastrarAction() {
-            $this->sairComumAction();
+            $this->logout();
+            $this->acessoNegado();
             $em = $this->getServiceLocator()->get(Entity::em);
             $request = $this->getRequest(); 
             $listaDadosPresencial = $em->getRepository(Entity::dadosPresencial)->findAll();
@@ -88,18 +92,18 @@ class AlunoPresencialController extends AbstractActionController {
                 $nome = $request->getPost("nome");
                 $curso = $request->getPost("curso");
                 $matricula = $request->getPost("matricula");
-                $modalidade = 'NULL';
                 $email = $request->getPost("email");
                 $telefone = $request->getPost("telefone");
                 $cpf = $request->getPost("cpf");
+                $senha = $request->getPost("cpf");
 
                 $aluno = new \Aluno\Entity\AlunoPresencial();
                 $aluno->setAdministradorIdadministrador("0");
                 $aluno->setNome($nome);
                 $aluno->setCurso($curso);
                 $aluno->setMatricula($matricula);
-                $aluno->setModalidade($modalidade);
-                 $aluno->setCpf($cpf);
+                $aluno->setSenha($senha);
+                $aluno->setCpf($cpf);
                 $aluno->setEmail($email);
                 $aluno->setTelefone($telefone);
                     $em = $this->getServiceLocator()->get(Entity::em);
@@ -123,7 +127,8 @@ class AlunoPresencialController extends AbstractActionController {
                 ]);
     }
     public function declaracaoPresencialAction(){
-        $this->sairComumAction();
+        $this->logout();
+        $this->acessoNegado();
         $em = $this->getServiceLocator()->get(Entity::em);
         $idAluno = $this->params()->fromRoute("id", 0);
         $idVaga = $this->params()->fromRoute("idVaga", 0);

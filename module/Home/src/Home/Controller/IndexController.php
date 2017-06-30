@@ -2,35 +2,22 @@
 
 namespace Home\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Auth\Controller\AdministradorAbstractActionController;
 use Zend\View\Model\ViewModel;
-use Base\Model\Entity;
 use Zend\Authentication\AuthenticationService;
 
-class IndexController extends AbstractActionController {
-   
+class IndexController extends AdministradorAbstractActionController {
 
     public function homeAction(){
-            $this->sairComumAction();
-            $auth = new AuthenticationService();
-            $identity = $auth->getIdentity();
-            foreach ($identity as $l){
-                        $idUsuario = $l[0]->getIdusuario();
-                    }
-            $em = $this->getServiceLocator()->get(Entity::em);
-            $listaVagaPresencialPorUsuario = $em->getRepository(Entity::vagaPresencial)->findByUsuarioIdusuario($idUsuario);
-            $listaVagaTotalPresencial = $em->getRepository(Entity::vagaPresencial)->findAll();
-            
-            
+   
+           $auth = new AuthenticationService();
+           $identity = $auth->getIdentity();
        return new ViewModel([ 
                 'identityComum'=>$identity,
-                'identityAdministrador'=>$identity,
-                'quantidadeVagaPorUsuario'=>  count($listaVagaPresencialPorUsuario),
-                'quantidadeVagaTotal' => count($listaVagaTotalPresencial)
+                'identityAdministrador'=>$identity
              
-       ]);  
+           ]);  
+       
    }
-   
-   
 }
     

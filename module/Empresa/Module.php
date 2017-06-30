@@ -1,11 +1,28 @@
 <?php
 namespace Empresa;
+use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\ModuleManager;
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
+use Zend\Session\Config\SessionConfig;
 
 class Module
 {
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+     public function onBootstrap(MvcEvent $e)
+    {
+        $eventManager        = $e->getApplication()->getEventManager();
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
+         $this->initSession(array(
+            'remember_me_seconds' => 2,
+            'use_cookies' => true,
+            'cookie_httponly' => true,
+        ));
     }
 
     public function getAutoloaderConfig()
@@ -18,4 +35,34 @@ class Module
             ),
         );
     }
+       public function initSession($config)
+        {
+            $sessionConfig = new SessionConfig();
+            $sessionConfig->setOptions($config);
+            $sessionManager = new SessionManager($sessionConfig);
+            $sessionManager->start();
+            Container::setDefaultManager($sessionManager);
+        }
+    public function init(ModuleManager $manager){
+    $events = $manager->getEventManager();
+    $sharedEvents = $events->getSharedManager();
+    $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($ev) {
+        $controller = $ev->getTarget();
+        $controller->layout('Empresa/layout/layout');
+        $auth = $ev->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
+                    if(empty($auth->hasIdentity())){ 
+                     $controller->plugin('redirect')->toRoute('authEmpresa');
+                    }
+                    foreach ($auth->getIdentity()as $l){
+                        $nivel = $l[0]->getNivel();
+                        if($nivel == '1'){
+                            return  $controller->plugin('redirect')->toRoute('authEmpresa');
+                        }
+                    }  
+    }, 100);
+}
+
+
+
+
 }

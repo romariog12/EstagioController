@@ -1,0 +1,70 @@
+<script>
+
+$(document).ready(function(){
+ $("#loginForm").validate({
+       highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success"); 
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        }, errorElement: "em",
+        messages: {
+        login: '',
+        senha: ''
+        },
+        rules:{
+            login: {
+               required: true
+            },
+            senha: {
+              required: true      
+        }
+        }
+    });
+});
+
+</script>
+ 
+
+    <div class=" nav row" style=" background-color: #07485b">
+        <h4 style=" color: white;text-align: center"><i class=" glyphicon glyphicon-log-in"></i> Acesso</h4>
+    </div>
+                    <ul class=" nav nav-tabs row" role="tablist">
+                        <li role="presentation"  ><a href="<?= $this->url('auth')?>">Instituição</a></li>
+                        <li role="presentation" class="active"><a>Aluno</a></li>
+                        <li role="presentation"><a href="<?php echo $this->url('authEmpresa')?>">Empresa</a></li>
+                    </ul>
+    <?php
+            if($this->mensagem){ ?> 
+    <div class=" nav row alert-danger" style=" text-align: center"><?php
+            echo $this->mensagem ;                     
+                ?>
+    </div>
+    <?php  }?><br/>
+    <div class="navbar-collapse" >
+        <form class="col-lg-12 " method="post" id="loginForm">
+            <div> 
+                <div class=" login">
+                    <input id="login" name="login" type="text" class="login  form-control" placeholder="Cpf" /><br/>   
+                </div>
+                <div class="senha">
+                   <input id="senha" name="senha" type="password" class="  form-control" placeholder="Senha" /><br/>   
+                </div> 
+              
+                    <input style=" background-color:  #07485b; color: white"  type="submit" class="btn  btn-block default  " name="Entrar" value="Entrar"/>   
+            </div>
+        </form>
+         
+    </div>
+   
+<?=$this->resp; ?>

@@ -9,6 +9,7 @@
      $agente = $f->getAgente();
      $idAluno = $f->getIdalunovaga();
      $aluno = $f->getAluno();
+     $cursoVaga = $f->getCursovaga();
  endforeach;
  foreach ($this->listaAcompanhamento as $f):
      $idAcompanhamento = $f->getIdacompanhamento();
@@ -20,6 +21,41 @@
     	format: 'yyyy-mm-dd',
     	language: 'pt-BR',
     	todayHighlight: true
+    });
+    $("#my-form").validate({
+        highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success"); 
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        },
+        errorElement: "em",
+        messages: {
+        inicioEnc: 'Entre com uma data válida',
+        fimEnc: 'Entre com uma data válida',
+        documento: 'Por favor selecione o tipo de documento'
+        },
+        rules:{
+        inicioEnc: {
+           required: true
+        },
+        fimEnc: {
+           required: true 
+        },
+        documento:{
+            required: true
+        }
+        }
     });
     $('#fim-recisao-<?= $idVaga?>').datepicker()
             .on('changeDate',function(ev){
@@ -87,32 +123,16 @@
          event.preventDefault();
       }	   
  }
- function excluirAcompanhamento(idDocumento){
-    var apagar = confirm('Deseja realmente excluir este registro?');
-      if (apagar){
-	   $(".excluirAcompanhamento-"+idDocumento)
-            .removeClass("fa-trash")
-            .addClass("fa-spinner fa-pulse fa-fw");
-    $(".btn").attr("disabled",true);
-    $.post(
-        '<?= $this->url('deleteDocumentoPresencial', ['action' => 'excluirAcompanhamento', 'iddelete' => '']) ?>'+idDocumento+'/',
-        'json'
-        ).always(function() {
-             $("#listaAcompanhamento-"+idDocumento).hide('2000');
-             $(".btn").attr("disabled",false);
-        });			
-      }else{
-         event.preventDefault();
-      }	
- 
- }
   function salvarDocumento(idDocumento){
     $(".salvar-"+idDocumento)
             .addClass("fa fa-spinner fa-pulse fa-fw");
     $(".btn").attr("disabled",true);
     $.post(
-    '<?= $this->url('deleteDocumentoPresencial', ['action' => 'salvarDocumento', 'idDocumento' => '']) ?>'+idDocumento,
-    {
+     '<?= $this->url('editarDocumento',['action'=>'salvarDocumento']) ?>',
+        {
+        idDocumento: function(){
+                return idDocumento;
+            },
         operacao1: function(){
             var  operacao1 = $("#list-"+idDocumento+" input[name='operacao1']");
                 if(operacao1.is(":checked")){
@@ -173,8 +193,11 @@
  function editarDocumento(idDocumento){
      $(".btn-edit").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
      $.post(
-        '<?= $this->url('deleteDocumentoPresencial', ['action' => 'editarDocumento', 'idDocumento' => '']) ?>'+idDocumento,
+        '<?= $this->url('editarDocumento',['action'=>'editarDocumento']) ?>',
         {
+            idDocumento: function(){
+                return idDocumento;
+            },
             inicio: function(){
                 return $("#editarInicio-"+idDocumento).val();},
             fim: function(){
@@ -183,103 +206,10 @@
                 return $("#editarTipo-"+idDocumento).val();}
         },
         'json').always(
-                    function(){
-                        location.reload();
-                    }
+                  location.reload()
                 );
  }
-function editarAcompanhamento(idDocumento){
-    $(".btn-edit-acompanhamento").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
-    $.post(
-        '<?= $this->url('salvarDocumento', ['action' => 'editarAcompanhamento', 'idDocumento' => '']) ?>'+idDocumento,
-        {
-            inicio: function(){
-                return $("#editarInicioAcompanhamento-"+idDocumento).val();},
-            fim: function(){
-                return $("#editarFimAcompanhamento-"+idDocumento).val();},
-            relatorioAcompanhamento: function(){ 
-                return $("#relatorioAcompanhamento-"+idDocumento).val();},
-            acompanhante: function(){ 
-                return $("#acompanhante-"+idDocumento).val();}
-        },
-        'json').always(
-                    function(){
-                        location.reload();
-                        }
-                );
- }
-  function recisao(idDocumento){   
-    var inicio = $("#inicio-recisao-"+idDocumento).val();
-    if( inicio === ''){
-        $("#recisaoValidate").addClass("has-error");
-            return false;
-    }else{
-    $("#recisaoValidate").removeClass("has-error").addClass("has-success has-feedback");    
-    $(".btn-recisao").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
-    $.post(
-        '<?= $this->url('salvarDocumento', ['action' => 'recisao', 'idDocumento' => '']) ?>'+idDocumento,
-        {
-            inicioRecisao: function(){
-                return $("#inicio-recisao-"+idDocumento).val();},
-            fimRecisao: function(){
-                return $("#fim-recisao-"+idDocumento).val();}
-        },
-        'json').always(
-            function(){
-                var data = $("#fim-recisao-"+idDocumento).val();
-                if(data === ''){
-                    $("#fimBaixa").html("Ativo até o momento") ;
-                }else{
-                    $("#fimAtivo").html(" "+data) ;
-                }
-                 $(".btn-recisao").html("<i class='fa fa-check '></i>");
-            }
-            );}
- }
  
- function acompanhamento (){
- var inicio = $("#inicioAcompanhamento").val();
- var fim = $("#fimAcompanhamento").val();
- var periodo = $("#periodo").val();
- var acompanhante = $("#acompanhante").val();
- 
-    if(inicio === ''|| fim ==='' ){
-        alert  ("Preencha todos os campos!")
-        return false;
-    }else{
-     $("#btn-acompanhamento").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
-    $.post(
-        '<?= $this->url('salvarDocumento', ['action' => 'acompanhamento','idDocumento'=>'0']) ?>',
-        {
-            inicio: function(){
-            return inicio;    
-             },
-            fim: function(){
-            return fim;
-            },
-            periodo: function (){
-                return periodo;
-            },
-            acompanhante: function (){
-                return acompanhante;
-            },
-            idAluno: function(){
-                return <?= $idAluno ?>
-            },
-            idVaga: function(){
-                return <?= $idVaga ?>
-            }
-        }, 
-        'json'
- 
-    ).always(
-            function(){
-             location.reload();
-            }
-    );   
-    };
-    
-    }
  </script>
         <!--________________________________________Painel principal___________________________________-->
         <div class=" panel panel-primary">
@@ -291,8 +221,8 @@ function editarAcompanhamento(idDocumento){
 
         <!--________________________________________navegação ________________________________________ -->
         <ul class="nav nav-tabs" role="tablist">
-           <li role="presentation" class="active"><a href="#hom" aria-controls="hom" role="tab" data-toggle="tab">Início</a></li>
-           <li role="presentation"><a href="#acompanhamento" aria-controls="acompanhamento" role="tab" data-toggle="tab">Acompanhamento</a></li>
+           <li role="presentation" class="active"><a>Início</a></li>
+           <li role="presentation"><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'acompanhamento','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Acompanhamento</a></li>
         </ul>
         <!--__________________________________________________________________________________________-->
         <div class="navbar pager">
@@ -302,9 +232,8 @@ function editarAcompanhamento(idDocumento){
                 </p>
         </div>
         <!--________________________________________Painel ________________________________________ -->
-        <div class="tab-content">
-         <div role="tabpanel" class="tab-pane fade in active" id="hom">
-        <div class="col-sm-12  ">
+  
+        <div class=" ">
             <div class=" panel panel-primary thumbnail">
             <div class="panel-heading">
                 <?= $this->translate("Processos")?>
@@ -464,14 +393,14 @@ function editarAcompanhamento(idDocumento){
       <?php endif;?>     
             </div>
         </div>  
-    </div>
+   
                  <?php     
                       $this->documentoForm->prepare();
                       echo 
                       $this->form()->openTag($this->documentoForm);
                     ?>
-   <div class="col-sm-12">
-    <div class="well pager">
+   <div >
+    <div class="well pager col-sm-12">
         <button class="btn btn-success  " type="button" data-toggle="collapse" data-target="#NovoProcesso" aria-expanded="false" aria-controls="NovoProcesso">
             Novo Processo <i class="fa fa-bars "></i>
         </button>
@@ -517,157 +446,11 @@ function editarAcompanhamento(idDocumento){
             </div>
     </div>
   </div>
-        </div>
-         </div>
-        <div role="tabpanel" class="tab-pane fade" id="acompanhamento">
-          <div class="col-sm-12">
-            <div class=" panel panel-primary ">
-            <div class="panel-heading">
-                <?= $this->translate("Relatório Semetral")?>
-            </div>
-               <div class="list-group thumbnail">
-                   
-                       
-                   <?php foreach ($this->listaAcompanhamento as $l):?>
-                   <div id="listaAcompanhamento-<?= $l->getIdacompanhamento()?>">
-                   <a  data-toggle="collapse" href="#acompanhamento-<?= $l->getIdacompanhamento()?>" aria-expanded="false" aria-controls="collapseExample" class="list-group-item list-group-item-success">
-                       <?= $l->getPeriodo().' - '.$l->getAcompanhante()?>
-                        <i class=" pull-right fa fa-bars"></i> 
-                </a>
-                <div id="acompanhamento-<?= $l->getIdacompanhamento()?>" class="collapse">
-                    <div class=" pager">
-                        <?= '<div><label>Período: </label> '.date_format($l->getInicio(), 'd/m/Y').' a '.date_format($l->getFim(), 'd/m/Y').'<br>'
-                           . '<label>Data de lançamento: </label>'.$l->getdataAcompanhamento()
-                           . '</div>'?>
-                        <div class="well well-sm">
-                            <button onclick="return excluirAcompanhamento(<?= $l->getIdacompanhamento()?>)" class="btn btn-danger" type="button"><i class="<?= 'excluirAcompanhamento-'.$l->getIdacompanhamento()?> fa fa-remove"></i></button>
-                            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-editar-acompanhamento-'.$l->getIdacompanhamento()?>">
-                                <i class=" fa fa-edit"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="<?= 'modal-editar-acompanhamento-'.$l->getIdacompanhamento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                  <div class="modal-content">
-                      <div class="panel panel-primary "> <h4 class="modal-title panel panel-heading " id="myModalLabel">Editar 
-                          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                     
-                          </h4>
-                    <div class="modal-body">
-                        <form method="post">
-                            <label>Inicio</label>
-                            <input id="<?= 'editarInicioAcompanhamento-'.$l->getIdacompanhamento()?>" name="inicio" class=" form-control date" type="text" value="<?= $l->getInicio()?>"/>
-                            <label>Fim</label>
-                            <input id="<?= 'editarFimAcompanhamento-'.$l->getIdacompanhamento()?>" name="fim" class=" form-control date" type="tex" value="<?= $l->getFim()?>"/>
-                            <label>Relatório</label>
-                            <select class=" form-control" id="<?= 'relatorioAcompanhamento-'.$l->getIdacompanhamento()?>">
-                                <option><?= $l->getPeriodo()?></option>
-                                <option>1º Relatório</option>
-                                <option>2º Relatório</option>
-                                <option>3º Relatório</option>
-                                <option>4º Relatório</option>
-                            </select>
-                            
-                            <label>Acompanhante</label>
-                            <select id="<?= 'acompanhante-'.$l->getIdacompanhamento()?>" name="tipo" class=" form-control" type="text" >
-                                <option>Instituição de Ensino</option>
-                                <option>Empresa Concedente</option>
-                                <option>Agente de Integração</option>
-                            </select>
-                            <div class="pager well">
-                                <button onclick="return editarAcompanhamento(<?= $l->getIdacompanhamento()?>)" type="button" class="btn btn-success btn-edit-acompanhamento">Salvar</button>
-                            </div>
-                        </form>
-                    </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-                </div> </div> 
-                    <?php endforeach;?>
-              
-               </div>
-            </div>
-               <?= $this->form()->closeTag();?> 
-    <div class="well pager">
-        <button class="btn btn-success  " type="button" data-toggle="collapse" data-target="#NovoRelatorio" aria-expanded="false" aria-controls="NovoRelatorio">
-            Novo Relatório <i class="fa fa-bars "></i>
-        </button>
-        <div class="collapse" id="NovoRelatorio">
-            <div class="row "><br/>
-                <div class="input-daterange date">
-                <div class="  col-sm-3 ">
-                    <div  class="inicioEnc" >
-                     <label>Início</label><input  data-provide="datepicker" id="inicioAcompanhamento" name="inicioAcompanhamento" type="text" class="form-control date" />
-                    </div>        
-                </div>
-                <div class="  col-sm-3">
-                    <div class="  fimEnc" >
-                        <label>Fim</label>
-                        <input data-provide="datepicker" id="fimAcompanhamento" name="fimAcompanhamento" type="text" class="form-control date"/>
-                    </div>
-                </div>
-                </div>
-                <div class="  col-sm-2 documento">
-                   <label>Período</label>
-                    <select class=" form-control" id="periodo">
-                        <option>1º Relatório</option>
-                        <option>2º Relatório</option>
-                        <option>3º Relatório</option>
-                        <option>4º Relatório</option>
-                    </select>
-                </div>
-                <div class="  col-sm-3 documento">
-                    <label>Acompanhante</label>
-                    <div class=" input-group">
-                        <select class=" form-control" name="acompanhante" id="acompanhante">
-                        <option>Instituição de Ensino</option>
-                        <option>Empresa Concedente</option>
-                        <option>Agente de Integração</option>
-                    </select>
-                        <span class="input-group-btn">
-                            <button onclick="acompanhamento()" id="btn-acompanhamento"type="button" class="btn btn-success"><i class="fa fa-check"></i></button>   
-                        </span></div>
-                </div>
-            </div>
-    </div>
-  </div>
-              <div class="well-lg pager">
-                <?php
-                 if(!empty($reciao)){
-                    echo "<div   class=' alert alert-warning' role='alert'><p><label>Início:</label>".$inicio.'<label>&nbsp;&nbsp; Fim:</label> <span id="fimBaixa">'.$recisao.'</span></p></div>';
-                    }else{
-                    echo "<div  class=' alert alert-warning' role='alert'><p><label>Início:</label>".$inicio.'<label>&nbsp;&nbsp; Fim:</label><span id="fimAtivo"> Até o momento</span></p></div>';
-                        
-                    }
-                    ?><div class=" well pager">
-                    <button class="btn btn-danger  " type="button" data-toggle="collapse" data-target="#baixa" aria-expanded="false" aria-controls="baixa">
-                    Recisão <i class="fa fa-bars "></i>
-                    </button><br><br>
-                <div class="collapse row input-daterange date" id="baixa">
-                    <div class="col-lg-8 col-sm-offset-2 well thumbnail " id="recisaoValidate">
-                             <div class="col-lg-4 col-sm-offset-2 ">
-                                 <LABEL>Início</LABEL>
-                                 <input  id="<?= 'inicio-recisao-'.$idVaga?>" name="inicioRecisao" type="date"  class="form-control date " value="<?= $inicio;?> ">
-                             </div>
-                             <div class="col-lg-4">
-                                 <LABEL>Recisão</LABEL>
-                                 <input data-provide="datepicker"  id="<?='fim-recisao-'.$idVaga?>"   type="date" name="fimRecisao" class=" form-control date" value="<?= $recisao;?>"  />  
-                             </div> 
-                         </div> 
-                         <br>
-                         <div class="col-sm-8 well-sm col-sm-offset-2">
-                                <button onclick="return recisao(<?= $idVaga?>)" type="button" class=" btn-recisao btn btn-success">Salvar</button>
-                         </div>  
-                </div>
-                </div>
-            </div>
-        </div>                  
-    </div> 
-    </div>
-        <div class="well-lg">
+       
+   </div>
+        <div class="well-lg ">
          <?= '<a  href="'. $this->url('perfil/default', array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno)).'"><span class="btn btn-primary" ><i class="fa fa-arrow-left fa-2x pull-left"></i>Painel do <br>aluno</span></a>';?>
         </div>
-       
-        </div>
+        </div></div>
+   
     <?= $this->resp;?>

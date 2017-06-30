@@ -211,7 +211,7 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action][/:id/][/:idVaga]]',
+                            'route'    => '/[:controller[/:action][/:id]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -222,15 +222,15 @@ return array(
                         ),
                     ),
                 ),
-            ),
-            'documentosPendentes' => array(
+            ), 
+            'empresaMensagem' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/documentosPendentes',
+                    'route'    => '/email',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
                         'controller'    => 'Administrador',
-                        'action'        => 'documentosPresencialPendente',
+                        'action'        => 'mensagem',
                     ),
                 ),
                 'may_terminate' => true,
@@ -238,7 +238,7 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action][/:id/][/:idVaga]]',
+                            'route'    => '/[:controller[/:action][/:id]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -249,8 +249,7 @@ return array(
                         ),
                     ),
                 ),
-            ),
-             
+            ), 
             'excluirAluno' => array(
                   'type'    => 'Segment',
                   'options' => array(
@@ -300,11 +299,37 @@ return array(
             'cadastrarEmpresa' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/empresa',
+                    'route'    => '/cadastrarEmpresa',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
                         'controller'    => 'Empresa',
                         'action'        => 'cadastrarEmpresa',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action][/:id]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+              'editarEmpresa' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/empresa',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Administrador\Controller',
+                        'controller'    => 'Administrador',
+                        'action'        => 'editarEmpresa',
                     ),
                 ),
                 'may_terminate' => true,
@@ -410,7 +435,7 @@ return array(
             'Administrador\Controller\Aluno' => Controller\AlunoController::class,
             'Administrador\Controller\AlunoPresencial' => Controller\AlunoPresencialController::class,
             'Administrador\Controller\Index' => Controller\AlunoController::class,
-            'Administrador\Controller\Empresa' => Controller\EmpresaController::class
+            'Administrador\Controller\Empresa' => Controller\EmpresaController::class,
         ),
     ),
     'view_manager' => array(
@@ -438,6 +463,7 @@ return array(
             'administrador/administrador/editar-empresa' => __DIR__ . '/../view/administrador/index/editarEmpresa.phtml',
             'administrador/administrador/editar-agente' => __DIR__ . '/../view/administrador/index/editarAgente.phtml',
             'administrador/administrador/empresa' => __DIR__ . '/../view/administrador/index/empresa.phtml',
+            'administrador/administrador/mensagem' => __DIR__ . '/../view/administrador/index/mensagem.phtml',
             'administrador/administrador/agente' => __DIR__ . '/../view/administrador/index/agente.phtml',
              'administrador/administrador/documentos-presencial' => __DIR__ . '/../view/administrador/index/documentosPresencial.phtml',
              'administrador/administrador/documentos-presencial-pendente' => __DIR__ . '/../view/administrador/index/documentosPresencialPendente.phtml',

@@ -1,29 +1,120 @@
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-          
-  <?php   $success = $this-> success ?>
-    <h3 class="navbar-brand"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Editar Empresa</h3>
-<br/>
-<br/><br/>
+<script>
+    $(document).ready(function(){
+     $("#cadastrarEmpresaForm").validate({
+            highlight: function(element) {
+            $(element.form).find("." + element.id )
+                .addClass("has-error")
+                .removeClass("has-succes");
+            $("em").css("color","red");
+            $("."+element.id+"-valid").css("display","none");
+            },
+            unhighlight: function(element) {
+            $(element.form).find("." + element.id)
+                .removeClass("has-error")
+                .addClass("has-success"); 
+            $("."+element.id+"-valid").css({
+                display: "inline",
+                color: "green"
+            });
+            },
+            errorElement: "em",
+            messages: {
+            empresa: 'Campo Obrigatório',
+            cnpj: 'cnpj inválido',
+            telefone: 'Telefone inválido',
+            endereco: 'Campo Obrigatório',
+            email:'Email inválido',
+            responsavel:'Campo Obrigatório',
+            tamanho: 'Campo Obrigatório'
+            },
+            rules:{
+            empresa: {
+               required: true
+            },
+            cnpj: {
+               required: true,
+              rangelength: [14, 14],
+              max: 99999999999999
+            },
+            telefone:{
+                required: true,
+                max: 99999999999999,
+                min: 11111111
+            },
+            endereco:{
+                required: true
+            },
+            email:{
+                required: true,
+                email: true
+            },
+            responsavel:{
+                required: true
+            },
+            tamanho:{
+                required: true
+            }
+            }
+        });
+    });
 
-<br/>
-<br/>
-<div class="navbar-collapse" id="aluno">
-  
-<form class="navbar-default" method="post">
-    <?php foreach ($this->listaEmpresa as $l):?>
-    <div class="col-lg-4">
-    <?php echo $this->translate('Empresa')?><br/><input value="<?php echo $l->getEmpresa()?>" name="empresa" type="text" class="form-control" required=""/><br/>
-        <?php echo $this->translate('CNPJ')?><br/><input value="<?php echo $l->getCnpj()?>"  name="cnpj" type="text" class="form-control" required=""/><br/>
-            <?php echo $this->translate('Telefone')?><br/><input value="<?php echo $l->getTelefone()?>"  name="telefone" type="text" class="form-control" required=""/><br/>
-            <input type="submit" class="btn btn-default" name="cadastrar" value="Cadastrar" />
+
+</script>
+    <div class=" panel panel-primary">
+        <div class="panel-heading"><?= $this->translate('Editar Empresa')?></div>
+
+        <?php if($this->alerta): ?>
+            <?='<div class="alert-danger" style=" text-align: center">'. $this->alerta.'</div>'; ?> 
+        <?php endif; ?>
+        
+        <?='<div class="well well-sm">'. $this->translate('Todos os campos são obrigatórios').'</div>'?> 
+        
+        <?php foreach ($this->listaEmpresa as $l):?>
+        <form method="post" id="cadastrarEmpresaForm">
+            <div class="col-lg-12">
+                <div class="col-sm-6 col-sm-offset-1 nome">
+                    <label for="empresa"><?= $this->translate('Empresa')?></label><i style=" display: none;"  class=" empresa-valid glyphicon glyphicon-ok-circle"></i>
+                    <input value="<?= $l->getEmpresa()?>" id="empresa" name="empresa" type="text" class="form-control "  /><br/>
+                </div>
+                <div class="col-sm-4 cnpj">
+                    <label for="cnpj"><?= $this->translate('CNPJ')?></label><i style=" display: none;"  class=" cnpj-valid glyphicon glyphicon-ok-circle"></i>
+                    <input value="<?= $l->getCnpj()?>" maxlength="14" id="cnpj" name="cnpj" type="text" class="form-control" /><br/>
+                </div>
+                <div class="col-sm-offset-1 col-sm-3 telefone">
+                    <label for="telefone"><?= $this->translate('Telefone')?></label><i style=" display: none;"  class=" telefone-valid glyphicon glyphicon-ok-circle"></i>
+                    <input value="<?= $l->getTelefone()?>" name="telefone" id="telefone" type="tel" class="form-control" /><br/>
+                </div>
+                <div class="col-sm-4  endereco">
+                    <label for="endereço"><?= $this->translate('Endereço')?></label><i style=" display: none;"  class=" endereco-valid glyphicon glyphicon-ok-circle"></i>
+                    <input value="<?= $l->getEndereco()?>" id="endereco" name="endereco" type="text" class="form-control" /><br/>
+                </div>
+                <div class="col-sm-3 email">
+                    <label for="email"><?= $this->translate('Email')?></label><i style=" display: none;"  class=" email-valid glyphicon glyphicon-ok-circle"></i>
+                   <input value="<?= $l->getEmail()?>" id="email" name="email"  class="form-control" /><br/>
+                </div>
+              <div class="col-sm-offset-1 col-sm-3 responsavel">
+                  <label for="responsavel"><?= $this->translate('Responsável')?></label><i style=" display: none;"  class=" responsavel-valid glyphicon glyphicon-ok-circle"></i>
+                <input value="<?= $l->getResponsavel()?>" id="responsavel" name="responsavel"  type="text" class="form-control"/><br/>
+             </div>
+                <div class="col-sm-4  tamanho ">
+                    <label for="tamanho"><?= $this->translate('Tamanho da Empresa')?></label><i style=" display: none;"  class=" tamanho-valid glyphicon glyphicon-ok-circle"></i>
+                    <select id="tamanho" name="tamanho" class="form-control">
+                    <option><?=$this->translate('Micro')?></option>
+                    <option><?=$this->translate('Pequena')?></option>
+                    <option><?=$this->translate('Média')?></option>
+                    <option><?=$this->translate('Grande')?></option>
+                    </select>
+                </div>
+        </div>
+        <div class="well-lg col-sm-offset-1">
+        <button type="submit" class="btn btn-success" name="salvar" value="Salvar" ><i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro</button>
+            <?= '<a href="'.$this->url('painelEmpresa/default',  array('controller' => 'empresa',   'action'=>'painelEmpresaEstagiando','id'=>'1',)).'">'; ?>
+                <span class="btn btn-primary  ">
+                   <?= '<i class=" fa fa-user fa-2x pull-left"></i>'. $this->translate('Painel da ').'<br>'.$this->translate('Empresa')?>
+                </span>
+            <?= '</a>' ?>
+        </div>  
+    </form>
+        <?php endforeach?>
     </div>
-    <?php endforeach;?>
-</form>
-   
-</div>
-
-<?php echo $this->resp; ?>
-</body>
-</html>
+    <?= $this->resp; ?>

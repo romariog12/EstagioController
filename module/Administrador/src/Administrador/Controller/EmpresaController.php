@@ -8,12 +8,8 @@
  */
 
 namespace Administrador\Controller;
-/**
- * Description of UsuarioRepository
- *
- * @author romario
- */
-use Zend\Mvc\Controller\AbstractActionController;
+
+use Auth\Controller\AdministradorAbstractActionController;
 use Zend\View\Model\ViewModel;
 use Empresa\Entity\Empresa;
 use Vaga\Entity\VagaPresencial;
@@ -21,12 +17,9 @@ use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Base\Model\Entity;
 
-class EmpresaController extends AbstractActionController
+class EmpresaController extends AdministradorAbstractActionController
 {
-    
- 
     public function cadastrarEmpresaAction(){
-            $this->sairComumAction();
             $request = $this->getRequest();
             $idaluno = $this->params()->fromRoute("id", 0);
             $em = $this->getServiceLocator()->get(Entity::em);
@@ -37,6 +30,7 @@ class EmpresaController extends AbstractActionController
                 $endereco = $request->getPost("endereco");
                 $responsavel = $request->getPost("responsavel");
                 $email = $request->getPost("email");
+                $senha = $request->getPost("cnpj");
                 $selectEmpresa = $em->getRepository(Entity::empresa)->findByEmpresa($nomeEmpresa);
                 $selectCnpj = $em->getRepository(Entity::empresa)->findByCnpj($cnpj);
                 if(count($selectEmpresa)>=1){
@@ -59,6 +53,7 @@ class EmpresaController extends AbstractActionController
                 $empresa ->setEndereco($endereco);
                 $empresa ->setResponsavel($responsavel);
                 $empresa ->setEmail($email);
+                $empresa ->setSenha($senha);
                   $em->persist($empresa);
                   $em->flush();
                   
@@ -84,7 +79,6 @@ class EmpresaController extends AbstractActionController
         }   
     
     public function cadastrarAgenteAction(){
-          $this->sairComumAction();
           $request = $this->getRequest();
           $idaluno = $this->params()->fromRoute("id", 0);
           
@@ -127,7 +121,6 @@ class EmpresaController extends AbstractActionController
           ]);
         }
         public function buscarEmpresaAction(){
-            $this->sairComumAction();
             $request = $this->getRequest();
             if($request->isPost()){
                 $data = $this->params()->fromPost();
@@ -153,7 +146,6 @@ class EmpresaController extends AbstractActionController
                 
                 }
 public function perfilEmpresaAction(){
-      $this->sairComumAction();
       $vaga = new VagaPresencial();
       $em = $this->getServiceLocator()->get(Entity::em);
       $empresa = $this->params()->fromRoute("id", 0);
@@ -191,7 +183,6 @@ public function perfilEmpresaAction(){
         }
         
         public function perfilEmpresaEstagiandoAction(){
-      $this->sairComumAction();
       $vaga = new VagaPresencial();
       $em = $this->getServiceLocator()->get(Entity::em);
       $empresa = $this->params()->fromRoute("id", 0);
@@ -228,7 +219,6 @@ public function perfilEmpresaAction(){
                 ]);        
         }
         public function perfilEmpresaEncerradoAction(){
-      $this->sairComumAction();
       $vaga = new VagaPresencial();
       $em = $this->getServiceLocator()->get(Entity::em);
       $empresa = $this->params()->fromRoute("id", 0);
@@ -240,8 +230,8 @@ public function perfilEmpresaAction(){
                              $vaga->setIdvaga($idVaga);
                     }
                 
-         $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumento($vaga->getIdvaga());
-         $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndEmpresa('',$empresa);
+        $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumento($vaga->getIdvaga());
+        $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndEmpresa('',$empresa);
                  
         $page = $this->params()->fromRoute("idVaga", 0);
             $pagination = new Paginator( new ArrayAdapter($listaVaga));
@@ -249,9 +239,7 @@ public function perfilEmpresaAction(){
                 $count = $pagination->count();
                 $pageNumber = $pagination->getCurrentPageNumber();
                 $getPages = $pagination->getPages();
-        
- 
-                 return new ViewModel([
+                return new ViewModel([
                         'listaVaga'=>$listaVaga,
                         'empresaSelect'=>$empresaSelect,
                         'listaDocumento'=>$listaDocumento,
@@ -262,8 +250,5 @@ public function perfilEmpresaAction(){
                         'empresa'=>$empresa,
                         'listaVagaEstagiando'=>$listaVagaEstagiando
                 ]);        
-        }
-             
-        
-        
+        }        
 }

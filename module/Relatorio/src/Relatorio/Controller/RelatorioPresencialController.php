@@ -2,21 +2,19 @@
 
 namespace Relatorio\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Auth\Controller\AdministradorAbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Aluno\Entity\AlunoPresencial;
 use Base\Model\Entity;
-use Auth\Model\Session;
-class RelatorioPresencialController extends AbstractActionController {
-    
+class RelatorioPresencialController extends AdministradorAbstractActionController {
+    function __construct() {
+        $this->CountPerPage = '10';
+    }
+
     public function relatorioAction()
     {    
-            $session = new Session();
-            $session->sairAdministradorAction();
-          
-            
             $em = $this->getServiceLocator()->get(Entity::em);
             $listaVaga = $em->getRepository(Entity::vagaPresencial)
                     ->findAll();
@@ -73,7 +71,6 @@ class RelatorioPresencialController extends AbstractActionController {
    } 
      public function relatorioGraficoAction()
     {
-        $this->sairComumAction();
                 $em = $this->getServiceLocator()->get(Entity::em);              
                 $request = $this->getRequest();
                 $lista = $em->getRepository(Entity::dadosPresencial)->findAll();
@@ -186,8 +183,7 @@ class RelatorioPresencialController extends AbstractActionController {
     } 
    
     public function infoPresencialAction(){
-        
-        $this->sairComumAction();
+       
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -203,7 +199,7 @@ class RelatorioPresencialController extends AbstractActionController {
         //pagination
         $pagination = new Paginator( new ArrayAdapter($listaVaga));
         $pagination->setCurrentPageNumber($page)
-                ->setDefaultItemCountPerPage(10);
+                ->setDefaultItemCountPerPage( $this->CountPerPage);
         $count = $pagination->count();
         $pageNumber = $pagination->getCurrentPageNumber();
         $getPages = $pagination->getPages();
@@ -236,7 +232,7 @@ class RelatorioPresencialController extends AbstractActionController {
                 );
     }
       public function infoPresencialEstagiandoAction(){
-           $this->sairComumAction();
+        
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -252,7 +248,7 @@ class RelatorioPresencialController extends AbstractActionController {
         //pagination
         $pagination = new Paginator( new ArrayAdapter($listaVaga));
         $pagination->setCurrentPageNumber($page)
-                ->setDefaultItemCountPerPage(10);
+                ->setDefaultItemCountPerPage($this->CountPerPage);
         $count = $pagination->count();
         $pageNumber = $pagination->getCurrentPageNumber();
         $getPages = $pagination->getPages();
@@ -279,7 +275,7 @@ class RelatorioPresencialController extends AbstractActionController {
                 );
     }
      public function infoPresencialEncerradoAction(){
-          $this->sairComumAction();
+        
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -292,11 +288,13 @@ class RelatorioPresencialController extends AbstractActionController {
                 ->findByRecisaoAndCursoVaga('',$curso);
         $listaAlunosCadastrados = $em->getRepository(Entity::alunoPresencial)
                 ->findByCurso($curso1);
+        $listaVagasEncerradas = $em->getRepository(Entity::vagaPresencial)
+                ->findBySituacaoAndCursoVaga('0',$curso);
        
         //pagination
-        $pagination = new Paginator( new ArrayAdapter($listaVaga));
+        $pagination = new Paginator( new ArrayAdapter($listaVagasEncerradas));
         $pagination->setCurrentPageNumber($page)
-                ->setDefaultItemCountPerPage(10);
+                ->setDefaultItemCountPerPage($this->CountPerPage);
         $count = $pagination->count();
         $pageNumber = $pagination->getCurrentPageNumber();
         $getPages = $pagination->getPages();
@@ -311,7 +309,7 @@ class RelatorioPresencialController extends AbstractActionController {
                     'countListaTotalVaga'=> count($listaVaga),
                     'countListaEstagiando'=>count($listaVagaEstagiando),
                     'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
-                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                    'countListaEncerrado'=>count($listaVagasEncerradas),
                     'listaAlunosCadastrados'=>$listaAlunosCadastrados,
                     'mensagem'=>$menstagem =  '<div class="alert-danger" style="margin: initial">
                         <br/>
@@ -323,7 +321,7 @@ class RelatorioPresencialController extends AbstractActionController {
                 );
     }
     public function infoPresencialAlunosCadastradosAction(){
-        $this->sairComumAction();
+       
         $em = $this->getServiceLocator()->get(Entity::em);
         $request = $this->getRequest(); 
         $curso = $this->params()->fromRoute("curso", 0);
@@ -341,7 +339,7 @@ class RelatorioPresencialController extends AbstractActionController {
         //pagination
         $pagination = new Paginator( new ArrayAdapter($listaAlunosCadastrados));
         $pagination->setCurrentPageNumber($page)
-                ->setDefaultItemCountPerPage(10);
+                ->setDefaultItemCountPerPage($this->CountPerPage);
         $count = $pagination->count();
         $pageNumber = $pagination->getCurrentPageNumber();
         $getPages = $pagination->getPages();
@@ -408,7 +406,7 @@ class RelatorioPresencialController extends AbstractActionController {
                 );
     }
      public function infoEstatisticasAction(){
-        $this->sairComumAction();
+       
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -424,7 +422,7 @@ class RelatorioPresencialController extends AbstractActionController {
         //pagination
         $pagination = new Paginator( new ArrayAdapter($listaVaga));
         $pagination->setCurrentPageNumber($page)
-                ->setDefaultItemCountPerPage(3);
+                ->setDefaultItemCountPerPage($this->CountPerPage);
         $count = $pagination->count();
         $pageNumber = $pagination
                 ->getCurrentPageNumber();
@@ -448,7 +446,7 @@ class RelatorioPresencialController extends AbstractActionController {
                     'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
                     'listaAlunosCadastrados'=>$listaAlunosCadastrados,
                     
-                    'mensagem'=>$menstagem=   '<div class="alert-danger" style="margin: initial">
+                    'mensagem'=>$mensagem=   '<div class="alert-danger" style="margin: initial">
                         <br/>
                         <h4 style="text-align: center">Sem dados à apresentar!</h4><br/>      
                         </div>

@@ -1,0 +1,126 @@
+<script>
+function abrirMensagem(idMensagem,status){
+    $("#"+idMensagem).removeClass("fa-envelope");
+    $("#"+idMensagem).removeClass("fa-envelope-open-o");
+    $("#"+idMensagem).addClass("fa-spinner fa-pulse fa-fw");
+    $.post(
+        '<?= $this->url('empresaAjax',['action'=>'abrirMensagem'])?>',
+        {
+            idMensagem:  function(){
+                return idMensagem;
+            },
+            status:  function(){
+                return status;
+            }
+        },
+        function(data){
+            $(".efeitoMensagem").hide('2000');
+            $("#corpoMensagem").show();
+            $("#corpoMensagem").html('<div class="well-lg">'+data.mensagem+"</div><div class='well well-sm'> <button onClick='caixaEntrada("+idMensagem+")' class='btn btn-primary'><i class='fa fa-arrow-left'></i></button>\n\
+        <button  class='btn btn-danger'><i class='fa fa-remove'></i></button></div>");
+            $(".contadorEfeitoMensagem").html(data.mensagensNaoLidas);
+        },'json'
+        );
+} 
+function caixaEntrada(idMensagem){
+    $("#corpoMensagem").hide('2000');
+    $(".efeitoMensagem").show('2000');
+    $("#"+idMensagem).removeClass("fa-spinner fa-pulse fa-fw");
+    $("#"+idMensagem).addClass("fa-envelope-open-o");
+    
+    }
+$(function () {
+  $(".fa-envelope").css({
+     color :'#0066cc' 
+  });
+  $("#rateYo").rateYo({
+    rating    : 3,
+    spacing   : "2px",
+    starWidth: '12px',
+    multiColor: {
+        
+      "startColor": "#FF0000", 
+      "endColor"  : "#ffcf18" 
+    }
+  });
+ 
+});
+</script>
+<div class=" panel panel-primary">
+    <div class="panel-heading">
+        <?= $this->translate('Perfil da empresa')?>
+    </div>
+    <div class="caption" >
+    <ul class="nav  nav-tabs" >
+        <li role="presentation"><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa','action'=>'painelEmpresaEstagiando','id'=>'1'])?>"><?= $this->translate("Painel")?></a></li>
+        <li class="  active"  role="presentation"><a><label><i class="fa fa-envelope-o"></i> Mensagens</label></a></li>
+   </ul>
+    </div>
+    <div class="caption">
+    <?php if(!empty($this->selecionarEmpresa)): foreach ($this->selecionarEmpresa as $f):  $idEmpresa = $f->getIdempresa(); ?>
+        <?=
+        '<div class="navbar pager">'.
+            '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
+        '<h3 class="pager">'.  $f->getEmpresa().'</h3>'?>
+            <span class=" center-block" id="rateYo"></span>
+            <?=
+        '<p class="pager"><label>CNPJ:</label>'.  $f->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $f->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $f->getTelefone().'<br/></div> ';
+            
+        ?>
+    <?php endforeach; endif;?>
+    </div>
+         <div class="caption">
+            <div class="caption">
+                <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                    <li class="  active" role="presentation" ><a><label><?= $this->translate("Caixa de entrada")?></label> <span class="label label-primary contadorEfeitoMensagem "><?= $this->mensagensNaoLidas?></span></a></li>
+                </ul> 
+            </div>
+        </div>
+    
+    <br>
+    <div class="list-group efeitoMensagem">
+        <?php foreach ($this->pagination as $l):?> 
+        <?php if($l->getStatus() == '0'){?>
+        
+        <a onclick="abrirMensagem(<?= $l->getIdmensagem().",".$l->getStatus() ?>)" href="#" class="list-group-item" >
+            <span><i id="<?= $l->getIdmensagem() ?>" class="fa fa-envelope"></i></span>
+            <span><?= $l->getRemetente()?></span>
+        </a>
+        <?php }?>
+        <?php if($l->getStatus() == '1'){?>
+        
+        <a onclick="abrirMensagem(<?= $l->getIdmensagem().",".$l->getStatus() ?>)" href="#" class="list-group-item" >
+            <span><i id="<?= $l->getIdmensagem() ?>" class="fa fa-envelope-open-o"></i></span>
+            <span><?= $l->getRemetente()?></span>
+        </a>
+        <?php }?>
+        
+        
+        <?php endforeach;?> 
+    </div>
+    <div class=" well-lg" id="corpoMensagem"></div>
+    <nav class="efeitoMensagem" aria-label="Page navigation">
+        <ul  class="pager">
+            <li 
+                <?php  if ($this->pageNumber == 1|| $this->pageNumber == 0 ){ ?>
+                <?= "class='disabled'". "style='pointer-events: none'";}?>
+            >
+            <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
+                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
+            </a>
+              </li>
+            <li <?php if ($this->pageNumber >= $this->count){ ?>
+                <?= "class='disabled'". "style='pointer-events: none'";}?>>     
+            <a href="<?= $this->pageNumber + 1?>" aria-label="Next">
+                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
+            </a>
+            </li> 
+       </ul>
+    </nav>
+            <div class="pager efeitoMensagem">
+               <?= $this->pageNumber.' de '.$this->count;?>
+            </div> 
+</div>
+<?= $this->resp; ?>

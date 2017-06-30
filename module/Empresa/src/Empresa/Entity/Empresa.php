@@ -79,6 +79,18 @@ class Empresa
      * @ORM\Column(name="Email", type="string",length=50, nullable=true)
      */
     private $email;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Senha", type="string",length=50, nullable=true)
+     */
+    private $senha;
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="Nivel", type="string",length=50, nullable=true)
+     */
+    private $nivel = 'u2';
     function getIdempresa() {
         return $this->idempresa;
     }
@@ -113,8 +125,14 @@ class Empresa
     function getEmail() {
         return $this->email;
     }
+    function getSenha() {
+        return $this->senha;
+    }
+    function getNivel() {
+        return $this->nivel;
+    }
 
-    function setIdempresa($idempresa) {
+        function setIdempresa($idempresa) {
         $this->idempresa = $idempresa;
         return $this;
     }
@@ -158,7 +176,14 @@ class Empresa
         $this->email = $email;
         return $this;
     }
-
+    function setSenha($senha) {
+        $this->senha = $senha;
+        return $this;
+    }
+    function setNivel($nivel) {
+        $this->nivel = $nivel;
+        return $this;
+    }
 
 
 }

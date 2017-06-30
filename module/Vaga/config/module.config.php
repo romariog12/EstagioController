@@ -38,7 +38,6 @@ return array(
                     ),
                 ),
             ),
-    
             'deleteVagaPresencial' => array(
                   'type'    => 'Segment',
                   'options' => array(
@@ -59,10 +58,10 @@ return array(
                       ),
                   ),
               ),
-            'salvarDocumento' => array(
+             'editarDocumento' => array(
                   'type'    => 'Segment',
                   'options' => array(
-                      'route'    => '/vagaPresencial/flag/[:action]/[:idDocumento]',
+                      'route'    => '/vagaPresencial/[:action]',
                       'defaults' => array(
                           '__NAMESPACE__' => 'Vaga\Controller',
                           'controller'    => 'VagaPresencial',
@@ -112,6 +111,7 @@ return array(
             'vaga/vaga-presencial/perfilvagafinalizada' => __DIR__ . '/../view/vagaPresencial/index/perfilVagaFinalizada.phtml',
             'vaga/vaga-presencial/lancar-contratos-vaga' => __DIR__ . '/../view/vagaPresencial/index/lancarContratosVaga.phtml',
             'vaga/vaga-presencial/lancarcontratos' => __DIR__ . '/../view/vagaPresencial/index/lancarcontratos.phtml', 
+            'vaga/vaga-presencial/acompanhamento' => __DIR__ . '/../view/vagaPresencial/index/acompanhamento.phtml', 
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

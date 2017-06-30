@@ -30,6 +30,7 @@ class Entity {
     const documentoPresencial = 'Vaga\Entity\DocumentoPresencial';
     const documentoEad = 'Vaga\Entity\Encaminhamento';
     const acompanhamento = 'Vaga\Entity\Acompanhamento';
+    const mensagem = 'Base\Entity\Mensagem';
     
   
 }

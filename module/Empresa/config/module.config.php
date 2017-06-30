@@ -15,11 +15,37 @@ return array(
             'empresa' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/empresa',
+                    'route'    => '/cadastrarEmpresa',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Empresa\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'empresa',
+                        'controller'    => 'Empresa',
+                        'action'        => 'cadastrarEmpresa',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:id]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+                'painelEmpresa' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/painelEmpresa',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Empresa\Controller',
+                        'controller'    => 'Empresa',
+                        'action'        => 'painelEmpresa',
                     ),
                 ),
                 'may_terminate' => true,
@@ -38,23 +64,13 @@ return array(
                     ),
                 ),
             ),
-            'excluirEmpresa' => array(
+            'empresaAjax' => array(
                   'type'    => 'Segment',
                   'options' => array(
-                      'route'    => '/empresa/flag/[:action]/[:deleteEmpresa]/[:page][/]',
+                      'route'    => '/painelEmpresa/[:action]',
                       'defaults' => array(
                           '__NAMESPACE__' => 'Empresa\Controller',
-                          'controller'    => 'Index',
-                      ),
-                  ),
-              ),
-            'excluirAgente' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/administrador/flag/[:action]/[:deleteAgente]/[:page][/]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Empresa\Controller',
-                          'controller'    => 'Index',
+                          'controller'    => 'Empresa',
                       ),
                   ),
               ),
@@ -81,7 +97,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Empresa\Controller\Index' => Controller\IndexController::class
+            'Empresa\Controller\Empresa' => Controller\EmpresaController::class
         ),
     ),
     'view_manager' => array(
@@ -93,19 +109,25 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'emrpesa/index/index' => __DIR__ . '/../view/empresa/index/empresa.phtml',
-            'empresa/index/cadastrar-empresa' => __DIR__ . '/../view/empresa/index/cadastrarEmpresa.phtml',
-            'empresa/index/cadastrar-agente' => __DIR__ . '/../view/empresa/index/cadastrarAgente.phtml',
-            'empresa/index/editar-empresa' => __DIR__ . '/../view/empresa/index/editarEmpresa.phtml',
-            'empresa/index/editar-agente' => __DIR__ . '/../view/empresa/index/editarAgente.phtml',
+            'empresa/empresa/cadastrar-empresa' => __DIR__ . '/../view/empresa/index/cadastrarEmpresa.phtml',
+            'empresa/empresa/painel-empresa' => __DIR__ . '/../view/empresa/index/painelEmpresa.phtml',
+            'empresa/empresa/painel-empresa-estagiando' => __DIR__ . '/../view/empresa/index/painelEmpresaEstagiando.phtml',
+            'empresa/empresa/painel-empresa-encerrado' => __DIR__ . '/../view/empresa/index/painelEmpresaEncerrado.phtml',
+            'empresa/empresa/editar-empresa' => __DIR__ . '/../view/empresa/index/editarEmpresa.phtml',
+            'empresa/empresa/painel-empresa-contratos-vencendo' => __DIR__ . '/../view/empresa/index/painelEmpresaContratosVencendo.phtml',
+            'empresa/empresa/mensagens' => __DIR__ . '/../view/empresa/index/mensagens.phtml',
+            'empresa/empresa/processo' => __DIR__ . '/../view/empresa/index/processo.phtml',
+            'Empresa/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+         'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
-    
-    // Placeholder for console routes
     'console' => array(
         'router' => array(
             'routes' => array(

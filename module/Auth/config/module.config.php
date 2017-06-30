@@ -38,6 +38,68 @@ return array(
                     ),
                 ),
             ),
+            'authEmpresa' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/loginEmpresa',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Auth\Controller',
+                        'controller'    => 'Auth\Controller\Index',
+                        'action'        => 'loginEmpresa',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'authAluno' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/loginAluno',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Auth\Controller',
+                        'controller'    => 'Auth\Controller\Index',
+                        'action'        => 'loginAluno',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+               'sair' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/home/flag/[:action][/]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Auth\Controller',
+                          'controller'    => 'Index',
+                      ),
+                  ),
+              ),
             
         ),
     ),
@@ -74,6 +136,8 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
+            'auth/index/login-empresa' => __DIR__ . '/../view/auth/index/loginEmpresa.phtml',
+            'auth/index/login-aluno' => __DIR__ . '/../view/auth/index/loginAluno.phtml',
             'Auth/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',

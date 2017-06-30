@@ -1,3 +1,9 @@
+<?php foreach ($this->empresaSelect as $f):  $idEmpresa = $f[0]->getIdempresa();endforeach; ?>
+<script>
+function mensagemEmpresa(){
+
+}   
+</script>
 <div class=" panel panel-primary">
         <div class="panel-heading">
            <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-user"  style=" color: #fff194"></i> Perfil da empresa</h4>
@@ -9,6 +15,7 @@
                     <div class="caption" >
                         <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                             <li class="  active" role="presentation"><a><label>Painel</label></a></li>
+                            <li role="presentation"><a href="<?=$this->url("empresaMensagem/default",['controller'=> 'administrador', 'action'=>'mensagem', 'id'=>$idEmpresa]) ?>"><?= $this->translate("<i class='fa fa-envelope-o'></i>")?></a></li>
                         </ul> 
                     </div>
                 </div>
@@ -17,19 +24,21 @@
  <div >
      <div class="row">
     <div class="">
-      <div class="caption">
-         <?php if($this->empresaSelect):
-            foreach ($this->empresaSelect as $f): 
-            $idEmpresa = $f[0]->getIdempresa();
-             
-          ?>     
-    <div class="navbar">
-        <h3 class="pager"> <?= $f[0]->getEmpresa(); ?></h3>
-        <p class="pager" style=""><label>CNPJ: </label> <?= $f[0]->getCnpj(); ?> <br/><label>Responável: </label>  <?= $f[0]->getResponsavel(); ?> <label>Telefone: </label>  <?= $f[0]->getTelefone(); ?><br/>
-        </p>
-    </div>     
-        <?php endforeach; endif;?>
-      </div>
+       <div class="caption">
+    <?php if(!empty($this->empresaSelect)): foreach ($this->empresaSelect as $f): ?>
+        <?=
+        '<div class="navbar pager">'.
+            '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
+        '<h3 class="pager">'.  $f[0]->getEmpresa().'</h3>'?>
+            <span class=" center-block" id="rateYo"></span>
+            <?=
+        '<p class="pager"><label>CNPJ:</label>'.  $f[0]->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $f[0]->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $f[0]->getTelefone().'<br/></div> ';
+            
+        ?>
+    <?php endforeach; endif;?>
+    </div>
     </div>
   </div>
  </div>
@@ -112,11 +121,11 @@
     </div>
   </div>
       <div class="well-lg ">
-        <a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$idEmpresa))?>">
+        <a href="<?= $this->url('editarEmpresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$idEmpresa))?>">
             <span class="btn btn-primary  ">
                 <i class=" fa fa-plus fa-2x pull-left"></i>Editar <br>Perfil
             </span>
         </a>
     </div>
 </div>
-<?php echo $this->resp; ?>
+<?= $this->resp; ?>

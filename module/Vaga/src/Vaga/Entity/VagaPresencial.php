@@ -102,6 +102,18 @@ class VagaPresencial
      * @ORM\Column(name="Inicio", type="string", nullable=false)
      */
     private $inicio;
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="idEmpresaVaga", type="string", nullable=false)
+     */
+    private $idEmpresaVaga;
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="Situacao", type="string", nullable=false)
+     */
+    private $situacao = '1';
     
     
     
@@ -153,8 +165,14 @@ class VagaPresencial
         return $this->inicio;
     }
 
-        
-    function setIdvaga($idvaga) {
+    function getIdEmpresaVaga() {
+        return $this->idEmpresaVaga;
+    }    
+    function getSituacao() {
+        return $this->situacao;
+    }
+
+        function setIdvaga($idvaga) {
         $this->idvaga = $idvaga;
         return $this;
     }
@@ -218,6 +236,14 @@ class VagaPresencial
         return $this;
     }
 
+    function setIdEmpresaVaga($idEmpresaVaga) {
+        $this->idEmpresaVaga = $idEmpresaVaga;
+        return $this;
+    }
+    function setSituacao($situacao) {
+        $this->situacao = $situacao;
+        return $this;
+    }
 
-    
+
 }

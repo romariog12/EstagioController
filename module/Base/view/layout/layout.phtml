@@ -1,49 +1,47 @@
 <?=  $this->doctype(); ?>
 <html lang="pt-br">
-    <head>
-        <meta charset="utf-8">
-    <?= $this->headTitle('UCB -  '. $this->translate('Projem'))->setSeparator(' - ')->setAutoEscape(false) ?>
-    <?= $this->headMeta()
-        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-    ?>
-    <?= $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''))
-                    ->prependStylesheet($this->basePath('css/bootstrap.css'))
-                    ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
-                    ->prependStylesheet($this->basePath('css/bootstrap-datepicker.min.css'))
-                    ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-                    ->prependStylesheet($this->basePath('fonts/FontAwesome.otf'))
-                    ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
-                    ->prependStylesheet($this->basePath('css/bootstrap-toggle.min.css'))
-                    ->prependStylesheet($this->basePath('css/style.css'))
-    ?>
-    <?= $this->headScript()
-                    ->prependFile($this->basePath('js/jquery.validate.js'))
-        ->prependFile($this->basePath('js/jquery.tablesorter.min.js'))
-        ->prependFile($this->basePath('js/jquery.jquery-latest.js'))
-                    ->prependFile($this->basePath('js/bootstrap.min.js'))
-                    ->prependFile($this->basePath('js/bootstrap-toggle.min.js'))
-                    ->prependFile($this->basePath('js/locales/bootstrap-datepicker.pt-BR.js'))
-                    ->prependFile($this->basePath('js/bootstrap-datepicker.js'))
-                    ->prependFile($this->basePath('js/bootstrap-datepicker-globalize.js'))
-                    ->prependFile($this->basePath('js/jquery.min.js'))
-                    ->prependFile($this->basePath('js/pace.js'))
-                    ->prependFile($this->basePath('js/Chart.min.js'))
-                    
-    ;?>
-    </head>
-    
+<head>
+    <meta charset="utf-8">
+<?= $this->headTitle('UCB -  '. $this->translate('Projem'))->setSeparator(' - ')->setAutoEscape(false) ?>
+<?= $this->headMeta()
+    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+?>
+<?= $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''))
+                ->prependStylesheet($this->basePath('css/bootstrap.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap-datepicker.min.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                ->prependStylesheet($this->basePath('fonts/FontAwesome.otf'))
+                ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap-toggle.min.css'))
+                ->prependStylesheet($this->basePath('css/style.css'))
+?>
+<?= $this->headScript()
+                ->prependFile($this->basePath('js/jquery.validate.js'))
+    ->prependFile($this->basePath('js/jquery.tablesorter.min.js'))
+    ->prependFile($this->basePath('js/jquery.jquery-latest.js'))
+                ->prependFile($this->basePath('js/bootstrap.min.js'))
+                ->prependFile($this->basePath('js/bootstrap-toggle.min.js'))
+                ->prependFile($this->basePath('js/locales/bootstrap-datepicker.pt-BR.js'))
+                ->prependFile($this->basePath('js/bootstrap-datepicker.js'))
+                ->prependFile($this->basePath('js/bootstrap-datepicker-globalize.js'))
+                ->prependFile($this->basePath('js/jquery.min.js'))
+                ->prependFile($this->basePath('js/pace.js'))
+                ->prependFile($this->basePath('js/Chart.min.js'))
+
+;?>
+</head>
     <body style="  background-color: #f2f2f2">
 	<nav  class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-            <div class="container navbar-inverse navbar-default " style=" background-color: #0089cd" >
+            <div class="container navbar-inverse navbar-default " >
                 <div class="navbar-header  active">
                     <button type="button" class="navbar-toggle  active" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand  active" href="<?php echo $this->url('home') ?>"><i style=" font-size: 23px" class=" fa fa-home"></i></a>
-                    
+                    <a class="navbar-brand  active" href="<?php echo $this->url('home') ?>"><i style=" font-size: 23px" class=" fa fa-home"></i></a>          
                 </div>
                 <div  class="collapse navbar-collapse ">
                     <ul  class="nav navbar-nav  ">
@@ -64,13 +62,9 @@
                                     <li  ><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarEmpresa','id'=>'0']) ?>"><?php echo $this->translate('Cadastrar Empresa') ?></a></li>
                                     <li ><a href="<?php echo $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>"> <?php echo $this->translate('Cadastrar Agente') ?></a></li>
                                 </ul>
-                        </li>
-                      
-                        
+                        </li>            
                         <li class="dropdown active">
-                          
-                            <a href="<?php echo $this->url('relatorioPresencial') ?>"><?php echo $this->translate('Relatórios') ?></a>
-                                 
+                            <a href="<?php echo $this->url('relatorioPresencial') ?>"><?php echo $this->translate('Relatórios') ?></a>   
                        </li>  
                          <li class="dropdown active ">
                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i></i> Vagas<span class="caret"></span></a>
@@ -86,24 +80,21 @@
               'action' => 'logout'
                             )) ?>">Sair&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></a></li>
                     </ul>
-                    <ul>   
-                    </ul>
                 </div><!--/.nav-collapse --> 
             </div>     
-        </nav>
-</div>   
+        </nav>  
      <br/><br/><br/>
-        <div>
-            <div class=" container" >
-                <?= 
-                    $this->content;
-                    $this->inlineScript(); 
-                ?>
-                <footer class="pager"style=" background-color:white; height: 100px; color: #0089cd">
-                    <hr>
-               <?='&copy; Romário Macedo - '. date('Y'); ?>
-                    <hr>
-                </footer>
-            </div>
-        </div> 
+        <div class=" container" >
+        <?= 
+            $this->content;
+            $this->inlineScript(); 
+        ?>
+        
+        </div>
+        <div style=" background-color:white; height: 270px; color: #0089cd">
+                <hr>
+                <?='&copy; Romário Macedo - '. date('Y'); ?>
+                <?='&copy; Romário Macedo - '. date('Y'); ?>
+                <hr>
+        </div>
 </html>

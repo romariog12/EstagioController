@@ -1,0 +1,127 @@
+
+<style>
+.estrelas input[type=radio] {
+  display: none;
+}
+.estrelas label i.fa:before {
+  content:'\f005';
+  color: #FC0;
+}
+.estrelas input[type=radio]:checked ~ label i.fa:before {
+  color: #CCC;
+}
+</style>
+<div class=" panel panel-primary">
+        <div class="panel-heading">
+         <?= $this->translate("Perfil da emrpesa")?>
+        </div>
+    <div>
+        <div class="caption">
+            <ul class="nav  nav-tabs" >
+                <li class="  active" role="presentation"><a><label><?= $this->translate("Painel")?></label></a></li>
+               <li role="presentation"><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'mensagens','id'=>'1'])?>"> <i class="fa fa-envelope-o"></i> <?= $this->translate("Mensagens")?></a></li>
+        
+            </ul> 
+        </div>
+    </div>
+<div class="caption">
+    <?php if($this->empresaSelect): foreach ($this->empresaSelect as $f):  $idEmpresa = $f->getIdempresa(); ?>
+    
+        <?=
+        '<div class="navbar pager">'.
+            '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
+        '<h3 class="pager">'.  $f->getEmpresa().'</h3>'?>
+            <span class=" center-block" id="rateYo"></span>
+            <?=
+        '<p class="pager"><label>CNPJ:</label>'.  $f->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $f->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $f->getTelefone().'<br/></div> ';
+        ?>
+    <?php endforeach; endif;?>
+</div>
+<div class="caption">
+    <div class="caption">
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li class="  active" role="presentation" ><a href=""><label>Estagiando</label> <span class="label label-success"> <?= count($this->listaVagaEstagiando)?></span></a></li>
+            <li role="presentation" ><a href="<?= $this->url('painelEmpresa/default', ['controller'=>'empresa','action'=>'painelEmpresaEncerrado','id'=>'1'])?>"><?= $this->translate("Encerrado ")?><span class="label label-default"> <?= count($this->listaVaga) - count($this->listaVagaEstagiando)  ?></span></a></li>
+            <li   role="presentation"><a href="<?= $this->url('painelEmpresa/default', ['controller'=>'empresa','id'=>'1'])?>"><?= $this->translate("Todos os estágios ")?> <span class="label label-default"> <?= count($this->listaVaga) ?></span> </a></li>
+            <li  role="presentation" ><a href="<?= $this->url('painelEmpresa/default', ['controller'=>'empresa','action'=>'painelEmpresaContratosVencendo','id'=>'1'])?>"><?= $this->translate("Contratos vencendo ")?><span class="label label-default"> <?= count($this->listaContratosVencendo)?></span></a></li>
+        </ul> 
+    </div>
+    <?php if (count($this->listaVagaEstagiando)!=0){?>
+      <form method="post" >
+        <table class="table navbar-default" >
+        <tr>
+            <th><?= $this->translate("Perfil do Aluno")?></th>
+            <th><?= $this->translate("Agente de Integração")?></th>
+            <th><?= $this->translate("Processo")?></th>
+        </tr>
+    <?php foreach ($this->pagination   as $f):?>
+    <?php  if($f[0]->getRecisao() ==('')){ ?>
+        
+        <tr class="table" style="background: #8fee8f; ">
+            <td><?= $f[0]->getAluno()?></td>
+            <td><?= $f[0]->getAgente(); ?></td>
+            <td><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'processo','id'=>$f[0]->getIdalunovaga()])?>"><i class="fa fa-plus"></i></a></td>
+        </tr> 
+        
+    <?php } ?>
+    <?php endforeach;?>
+        </table><br/>  
+    <nav aria-label="Page navigation">
+        <ul  class="pager">
+            <li 
+                <?php  if ($this->pageNumber == 1|| $this->pageNumber == 0 ){ ?>
+                <?= "class='disabled'". "style='pointer-events: none'";}?>
+            >
+            <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
+                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
+            </a>
+              </li>
+            <li <?php if ($this->pageNumber >= $this->count){ ?>
+                <?= "class='disabled'". "style='pointer-events: none'";}?>>     
+            <a href="<?= $this->pageNumber + 1?>" aria-label="Next">
+                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
+            </a>
+            </li> 
+       </ul>
+    </nav>
+            <div class="pager">
+               <?= $this->pageNumber.' de '.$this->count;?>
+            </div>     
+        </form>
+            <?php } else{ ?> 
+    <div class=" thumbnail ">  
+        <div class="alert-danger" style="margin: initial">
+            <br/>
+            <h4 style="text-align: center"><?= $this->translate("Nenhum estágio em andamento")?></h4><br/>      
+        </div>
+    </div>
+        <?php }?>   
+</div> 
+    <div class="well-lg ">
+        <a href="<?= $this->url('painelEmpresa/default', array('controller'=>'empresa', 'action'=>'editarEmpresa', 'id'=>'Y E S H U A'))?>">
+            <span class="btn btn-primary  ">
+                <i class=" fa fa-edit fa-2x pull-left"></i><?= $this->translate("Editar").'<br>'. $this->translate("Perfil")?>
+            </span>
+        </a>
+    </div>
+</div> 
+<script>
+$(function () {
+ 
+  $("#rateYo").rateYo({
+ 
+    rating    : 4.3,
+    spacing   : "2px",
+    starWidth: '12px',
+    multiColor: {
+        
+      "startColor": "#FF0000", //RED
+      "endColor"  : "#ffcf18"  //GREEN
+    }
+  });
+ 
+});
+</script>
+<?= $this->resp; ?>

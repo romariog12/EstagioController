@@ -1,0 +1,108 @@
+<script>
+    $(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+ //Bootstrap Toggle
+    $(".via").bootstrapToggle({
+        on:  'Entregue',
+        off:  'Pendente',
+        onstyle: 'success',
+        offstyle: 'warning',
+        size: 'mini',
+        width: '80',
+        style: 'android'
+    });  
+    });
+   
+</script>
+<div class=" panel panel-primary">
+    <div class="panel-heading">
+       <?= $this->translate("Processo")?>
+    </div>
+    <div class="caption" >
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li class="  active" role="presentation"><a><label>Painel</label></a></li>
+           
+        </ul> 
+    </div>
+    <div class="caption">
+    <?php if($this->empresaSelect): foreach ($this->listaAluno as $f):  ?>
+        <?=
+        '<div class="navbar">'.
+        '<h3 class="pager">'.  $f->getNome().'</h3>'.
+        '<p class="pager"><label>CPF: </label> '.  $f->getCpf().'<br/>'
+            . '<label>Telefone: </label> '. $f->getTelefone().'<br/> '
+            . '<label> Email: </label> '.  $f->getEmail().'<br/></div> ';
+    endforeach;
+    endif;?>
+    </div>
+     <div class="caption">
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li role="presentation" class="active"><a><label><?= $this->translate("Processos ")?></label></a></li>
+            <li  role="presentation"><a><?= $this->translate("Acompanhamento ")?></a></li>
+        </ul> 
+    </div>
+     <?php     
+    $this->lancarDocumentoForm->prepare();
+    echo 
+    $this->form()->openTag($this->lancarDocumentoForm);
+    if(!empty($this->listaContratos)){ ?>
+    <table class="table">
+        <tr>
+            <th>
+               <?= $this->translate("Inicio ")?>
+            </th>
+            <th>
+               <?= $this->translate("Fim ")?>
+            </th>
+            <th>
+                <?= $this->translate("Documento ")?>
+            </th>
+            <th>
+               <?= $this->translate("Via ")?>
+            </th>
+        </tr> 
+        <?php 
+            foreach ($this->listaContratos as $l):
+            ?>
+        <tr id="<?= 'documento-'.$l->getIdDocumento()?>">
+            <td>
+                <?= date_format($l->getInicio(), 'd/m/Y')?>
+            </td>
+            <td>
+                <?= date_format($l->getFim(), 'd/m/Y')?>
+            </td>
+            <td>
+                <?= $l->getRelatorio()?>
+            </td>
+            <td>
+                <?= $this->formRow($this->lancarDocumentoForm->get('operacao1')
+                        ->setAttribute('checked',$l->getViaempresa())
+                        ->setAttribute('class', 'via')
+                        ->setUncheckedValue('0')
+                        ->setCheckedValue('1'))
+                        ?>
+            </td>
+            
+        </tr>
+            <?php endforeach;}
+            else{
+                echo 
+                '<div class=" thumbnail">  
+                    <div class="alert-danger" style="margin: initial">
+                        <br/>
+                        <h4 style="text-align: center">Nenhum documento lançado</h4><br/>      
+                    </div>
+                </div>';}  
+             ?>
+    </table>
+    <?php $this->form()->closeTag($this->lancarDocumentoForm); ?>
+    <div class="well-lg">
+        <a href="<?= $this->url("painelEmpresa/default",['controller'=>'empresa','action'=>'painelEmpresaEstagiando','id'=>'1'])?>">
+        <span class=" btn btn-primary">
+            <i class="fa fa-arrow-left fa-2x pull-left"></i> <?=$this->translate("Painel da <br> Empresa")?>
+        </span>
+    </a>
+    </div>
+    
+</div>
+<?= $this->resp; ?>

@@ -17,12 +17,11 @@
                 <div class="" style=" ">
                     <div class="caption">
                         <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                            <li  role="presentation"><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso])?>">Todas as vagas  <span class="label label-primary"> <?php echo $this->countListaTotalVaga?></span> </a></li>
-                            <li  role="presentation" ><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialestagiando','curso'=>$idCurso,'curso1'=>$curso])?>">Estagiando <span class="label label-success"> <?php echo $this->countListaEstagiando?></span></a></li>
+                            <li  role="presentation"><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso])?>">Todas as vagas  <span class="label label-primary"> <?= $this->countListaTotalVaga?></span> </a></li>
+                            <li  role="presentation" ><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialestagiando','curso'=>$idCurso,'curso1'=>$curso])?>">Estagiando <span class="label label-success"> <?= $this->countListaEstagiando?></span></a></li>
                             <li class="active" role="presentation" ><a href="#"><label>Encerrados </label> <span class="label label-danger"> <?php echo $this->countListaEncerrado?></span></a></li>
-                            <li role="presentation" ><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialalunoscadastrados','curso'=>$idCurso,'curso1'=>$curso])?>">Alunos cadastrados <span class="label label-warning"><?php echo $this->countListaAlunosCadastrados ?></span></a></li>
+                            <li role="presentation" ><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialalunoscadastrados','curso'=>$idCurso,'curso1'=>$curso])?>">Alunos cadastrados <span class="label label-warning"><?= $this->countListaAlunosCadastrados ?></span></a></li>
                             <li role="presentation"><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infoestatisticas','curso'=>$idCurso,'curso1'=>$curso])?>">Estatísticas <i class="fa fa-line-chart"></i></a></li>
-
                         </ul> 
                     </div>
                 </div>
@@ -39,16 +38,15 @@
                  <th>Empresa</th>
                  <th>Agente de Integração</th>
              </tr>
-<?php
-    foreach ($this->pagination as $f){
-              if($f->getRecisao() != ''){ ?>  
+    <?php
+        foreach ($this->pagination as $f){
+              if($f[0]->getSituacao() == '0'){ ?>  
                  <tr style="background-color:  #ae1111; color: white">
-                    <td><a href="<?php echo $this->url('perfilPresencial/default', 
-                         array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$f->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a><?php echo $f->getAluno()?></td>
-                    <td><?php echo  $f->getEmpresa();?></td>
-                    <td><?php echo  $f->getAgente();?></td>  
+                    <td><a href="<?php echo $this->url('perfilPresencial/default', ['controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$f[0]->getIdalunovaga(),]); ?>"><i class=" glyphicon glyphicon-user"></i></a><?php echo $f[0]->getAluno()?></td>
+                    <td><?=  $f[0]->getEmpresa();?></td>
+                    <td><?=  $f[0]->getAgente();?></td>  
                  </tr>   
-    <?php  } ?><?php };?>
+    <?php  }  }?>
           
          </table>
           </div>
@@ -74,11 +72,9 @@
     </li> 
   </ul>
           
-</nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
-
-         <div class="pager" ><br/>
-          
-                
-               <a href="<?php echo $this->url('relatorioPresencial') ?>"><span class="btn btn-default" >Voltar</span></a>
-            
-         </div> </div>
+</nav>
+    <div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div>
+        <div class="pager" ><br/>
+            <a href="<?php echo $this->url('relatorioPresencial') ?>"><span class="btn btn-default" >Voltar</span></a>
+        </div>
+    </div>

@@ -16,7 +16,6 @@ use Base\Model\Entity;
 class BasePresencialController extends AbstractActionController
 {
     public function dadosAction(){
-             $this->sairAdministradorAction();
             $em = $this->getServiceLocator()->get(Entity::em);
             $lista = $em->getRepository(Entity::dadosPresencial)->findAll();
             $quantidadeCursos = count($lista);

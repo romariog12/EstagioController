@@ -107,43 +107,25 @@ class DocumentoPresencial
      */
     private $idalunoDocumento;
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="cursoDocumento", type="integer", nullable=false)
+     * @ORM\Column(name="idEmpresaDocumento", type="string", nullable=false)
     
      */
-    private $cursoDocumento;
-       /**
-     * @var string
-     *
-     * @ORM\Column(name="relatorio1", type="string", nullable=false)
-     */
-    private $relatorio1 = '0';
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="relatorio2", type="string", nullable=false)
-     */
-    private $relatorio2 = '0';
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="relatorio3", type="string", nullable=false)
-     */
-    private $relatorio3 = '0';
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="relatorio4", type="string", nullable=false)
-     */
-    private $relatorio4 = '0';
+    private $idempresaDocumento;
      /**
      * @var string
      *
      * @ORM\Column(name="dataLancamento", type="string", nullable=false)
      */
     private $dataLancamento;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="viaEmpresa", type="string", nullable=false)
+     */
+    private $viaEmpresa = '0';  
+   
     
     function getInicio() {
         return $this->inicio;
@@ -201,30 +183,19 @@ class DocumentoPresencial
     function getIdalunoDocumento() {
         return $this->idalunoDocumento;
     }
-
-    function getCursoDocumento() {
-        return $this->cursoDocumento;
-    }
-    function getRelatorio1() {
-        return $this->relatorio1;
+    function getIdempresaDocumento() {
+        return $this->idempresaDocumento;
     }
 
-    function getRelatorio2() {
-        return $this->relatorio2;
-    }
-
-    function getRelatorio3() {
-        return $this->relatorio3;
-    }
-
-    function getRelatorio4() {
-        return $this->relatorio4;
-    }
-    function getDataLancamento() {
+    
+        function getDataLancamento() {
         return $this->dataLancamento;
     }
+    function getViaEmpresa() {
+        return $this->viaEmpresa;
+    }
 
-    function setInicio(\DateTime $inicio) {
+        function setInicio(\DateTime $inicio) {
         $this->inicio = $inicio;
         return $this;
     }
@@ -295,36 +266,20 @@ class DocumentoPresencial
         return $this;
     }
 
-    function setCursoDocumento($cursoDocumento) {
-        $this->cursoDocumento = $cursoDocumento;
-        return $this;
-    }
-    function setRelatorio1($relatorio1) {
-        $this->relatorio1 = $relatorio1;
+    function setIdempresaDocumento($idempresaDocumento) {
+        $this->idempresaDocumento = $idempresaDocumento;
         return $this;
     }
 
-    function setRelatorio2($relatorio2) {
-        $this->relatorio2 = $relatorio2;
-        return $this;
-    }
-
-    function setRelatorio3($relatorio3) {
-        $this->relatorio3 = $relatorio3;
-        return $this;
-    }
-
-    function setRelatorio4($relatorio4) {
-        $this->relatorio4 = $relatorio4;
-        return $this;
-    }
-
-    function setDataLancamento($dataLancamento) {
+    
+        function setDataLancamento($dataLancamento) {
         $this->dataLancamento = $dataLancamento;
         return $this;
     }
-
-
+    function setViaEmpresa($viaEmpresa) {
+        $this->viaEmpresa = $viaEmpresa;
+        return $this;
+    }
 
 
 

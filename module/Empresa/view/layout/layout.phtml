@@ -1,0 +1,82 @@
+<?= $this->doctype(); ?>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('UCB -  '. $this->translate('Projem'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+        <?= $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . '')) 
+                        ->prependStylesheet($this->basePath('css/style.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap-toggle.min.css'))
+                        ->prependStylesheet($this->basePath('css/jquery.rateyo.css'))
+                        ?>
+        <?= $this->headScript()
+                        
+                        ->prependFile($this->basePath('js/jquery.validate.js'))
+                        ->prependFile($this->basePath('js/Chart.min.js'))
+                        ->prependFile($this->basePath('js/Mascaras.js'))
+                        ->prependFile($this->basePath('js/bootstrap.min.js'))
+                        ->prependFile($this->basePath('js/bootstrap-toggle.min.js'))
+                        ->prependFile($this->basePath('js/jquery.rateyo.js'))
+                        ->prependFile($this->basePath('js/jquery.min.js'))
+                        
+                    ; ?>
+<nav class="navbar navbar-inverse navbar-fixed-top "  role="navigation">
+        <div  class="container navbar-inverse navbar-default ">
+            <div class="navbar-header  active">
+                 <button type="button" class="navbar-toggle  " data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                 <a class="navbar-brand active" href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa','id'=>'1']) ?>"><i class=" fa fa-home "></i></a>           
+             
+            </div>
+            <div  class="collapse navbar-collapse ">
+               <ul  class="nav navbar-nav  ">
+               <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentos<span class="caret"></span></a>
+                                <ul  class="dropdown-menu nav" >
+                                    <li  ><a href="<?php echo $this->url('perfilPresencial') ?>">  <?php echo $this->translate('Perfil do Aluno') ?></a></li>  
+                                    <li> </li>
+                                   <li  ><a href="<?php echo $this->url('aluno/default',['controller'=>'alunoPresencial','action'=>'cadastrar','id'=>'0']) ?>"> <?php echo $this->translate('Cadastro') ?></a></li>    
+                                </ul>
+                </li> 
+               </ul>
+                <ul  class="nav navbar-nav navbar-right ">
+                <li class="dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user "></i> <span class="caret"></span> </a>
+                    <ul  class="dropdown-menu nav" >
+                        <li><a href="<?= $this->url('painelEmpresa/default', ['controller' =>'empresa', 'action' => 'editarEmpresa', 'id' => 'Y E S H U A']) ?>">  <i class="fa fa-edit"></i> <?= $this->translate('Editar Informações') ?></a></li>  
+                       
+                        <li><a href="<?= $this->url('aluno/default',['controller'=>'alunoPresencial','action'=>'cadastrar','id'=>'0']) ?>"> <i class="fa fa-envelope-o"></i> <?= $this->translate('Mensagens') ?><span class="badge pull-right">1</span></a> </li>    
+                        <li role="separator" class="divider"></li>
+                        <li> <a aria-haspopup="true" href="<?= $this->url('sair', ['action' => 'logout']) ?>">Sair <i class="fa fa-sign-out pull-right"></i></a></li>
+                    </ul>
+                </li> 
+                </ul>
+            </div>
+        </div>  
+</nav>
+    </head><br/><br/><br/>
+    <body  style=" background-color:  #f1f0f0; background-position: center; background-position: top">
+       <div>
+        <div class=" container" >
+        <?= 
+            $this->content;
+            $this->inlineScript(); 
+        ?>
+        <footer class="pager"style=" background-color:white; height: 100px; color: #0089cd">
+            <hr>
+                <?='&copy; Romário Macedo - '. date('Y'); ?>
+            <hr>
+        </footer>
+        </div>
+    </div> 
+    </body>
+</html>

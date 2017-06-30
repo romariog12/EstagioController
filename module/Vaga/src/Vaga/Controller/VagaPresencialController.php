@@ -1,7 +1,7 @@
 <?php
 namespace Vaga\Controller;
 
-    use Zend\Mvc\Controller\AbstractActionController;
+    use Auth\Controller\AdministradorAbstractActionController;
     use Zend\View\Model\ViewModel;
     use Vaga\Entity\VagaPresencial;
     use Vaga\Entity\DocumentoPresencial;
@@ -10,42 +10,46 @@ namespace Vaga\Controller;
     use Vaga\Form\LancarDocumentoForm;
     use Vaga\Model\LancarDocumento;
     use Vaga\Model\Vaga;
+    use Aluno\Entity\AlunoPresencial;
     
-class VagaPresencialController extends AbstractActionController
+class VagaPresencialController extends AdministradorAbstractActionController
 {
     public function __construct() {
         $this->route = 'vagaPresencial/default';
-        $this->controller = 'vagapresencial';
-        
+        $this->controller = 'vagapresencial'; 
     }
 
     public function cadastrarVagaPresencialAction(){
         $vagaForm = new vagaForm();
         $request = $this->getRequest();
-        $em = $this->getServiceLocator()
-                ->get(Entity::em);
-        $listaDados = $em->getRepository(Entity::dadosPresencial)
-                ->findAll();
-        $idalunovaga = $this->params()
-                ->fromRoute("id", 0);
-        $aluno = $em->getRepository(Entity::alunoPresencial)
-                ->findByIdaluno($idalunovaga);
+        $em = $this->getServiceLocator()->get(Entity::em);
+        $listaDados = $em->getRepository(Entity::dadosPresencial)->findAll();
+        $idalunovaga = $this->params()->fromRoute("id", 0);
+        $aluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idalunovaga);
+        $auth = new \Zend\Authentication\AuthenticationService();
+        $identidade = $auth->getIdentity();
+        foreach ($identidade as $l){
+            $idUsuario = $l[0]->getIdusuario();
+        }
         if($request->isPost()){
             $vaga = new Vaga();
             $vagaForm->setInputFilter($vaga->getInputFilter());
             $vagaForm->setData($request->getPost());
-            foreach ($this->session()->comum as $l){
-                       $usuarioIdusuario = $l[0]->getIdusuario();
-                    }
-            try {
-                $nomeAluno = $request->getPost('aluno');
+            $vagaPresencial = new VagaPresencial();
+            $nomeAluno = $request->getPost('aluno');
                 $empresa = $request->getPost('empresa');
                 $agente = $request->getPost('agente');
                 $carga = $request->getPost('carga');
                 $bolsa = $request->getPost('bolsa') ;
                 $inicio = $request->getPost('inicio');
                 $cursoVaga = $request->getPost('curso') ;
-                    $vagaPresencial = new VagaPresencial();
+                $empresaSelect = $em->getRepository(Entity::empresa)->findByEmpresa($empresa);
+                foreach ($empresaSelect as $l){
+                    $idEmpresa = $l[0]->getIdempresa();
+                }
+            try {
+                
+                    
                     $vagaPresencial->setIdalunovaga($idalunovaga);
                     $vagaPresencial->setAluno($nomeAluno);
                     $vagaPresencial->setEmpresa($empresa);
@@ -57,7 +61,8 @@ class VagaPresencialController extends AbstractActionController
                     $vagaPresencial->setCursoVaga($cursoVaga);
                     $vagaPresencial->setMesVaga(date('m'));
                     $vagaPresencial->setAnoVaga(date('Y'));
-                    $vagaPresencial->setUsuarioIdusuario($usuarioIdusuario);
+                    $vagaPresencial->setUsuarioIdusuario($idUsuario);
+                    $vagaPresencial->setIdEmpresaVaga($idEmpresa);
                     
                 $em->persist($vagaPresencial);
                 $em->flush();                  
@@ -90,8 +95,8 @@ class VagaPresencialController extends AbstractActionController
                     $em = $this->getServiceLocator()->get(Entity::em);
                     $idvagaDocumento = $this->params()->fromRoute("idVaga", 0);
                     $idaluno = $this->params()->fromRoute("id", 0);
-                    $curso = $this->params()->fromRoute("curso", 0);
-                    $aluno = new \Aluno\Entity\AlunoPresencial();
+                    $empresa = $this->params()->fromRoute("curso", 0);
+                    $aluno = new AlunoPresencial();
                     $aluno->setIdaluno($idaluno);
                     $documento = new DocumentoPresencial();
                     $documento ->setIdvagaDocumento($idvagaDocumento);
@@ -103,13 +108,10 @@ class VagaPresencialController extends AbstractActionController
                             ->findByIdaluno($idaluno);
                     $listaAcompanhamento = $em->getRepository(Entity::acompanhamento)
                             ->findByIdvagaacompanhamento($idvagaDocumento);
-                    foreach ($selectAluno as $l){
-                            $alunoDocumento = $l->getNome();    
-                        }
                     foreach ($listaVaga as $l){
                                     $idUsuario =  $l->getUsuarioIdusuario();
                                     $usuario = $em->getRepository(Entity::usuario)->findByIdusuario($idUsuario);                    
-                    ;}           
+                    }           
         if ($request->isPost()){ 
             $lancarDocumento = new LancarDocumento();
             $documentoForm->setInputFilter($lancarDocumento->getInputFilter());
@@ -130,12 +132,12 @@ class VagaPresencialController extends AbstractActionController
                         $documento->setIdalunoDocumento($aluno->getIdaluno());
                         $documento->setAnoDocumento(date('Y'));
                         $documento->setMesDocumento(date('m'));
-                        $documento ->setCursoDocumento($curso);
+                        $documento ->setIdempresaDocumento($empresa);
                         $documento ->setDataLancamento($dataLancamento);
                         $em->persist($documento);
                         $em->flush();
                     } catch (Exception $ex) {}
-                return $this->redirect()->toRoute($this->route,array('controller' => $this->controller, 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento(), 'curso'=>$documento->getCursoDocumento() ));  
+                return $this->redirect()->toRoute($this->route,array('controller' => $this->controller, 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento(), 'curso'=>$documento->getIdempresaDocumento()));  
             }
     } 
     return new ViewModel([
@@ -149,6 +151,31 @@ class VagaPresencialController extends AbstractActionController
         ]); 
     }
     public function acompanhamentoAction(){
+    $request = $this->getRequest();
+    $em = $this->getServiceLocator()->get(Entity::em);
+                    $idvagaDocumento = $this->params()->fromRoute("idVaga", 0);
+                    $idaluno = $this->params()->fromRoute("id", 0);
+                    $curso = $this->params()->fromRoute("curso", 0);
+                    $aluno = new \Aluno\Entity\AlunoPresencial();
+                    $aluno->setIdaluno($idaluno);
+                    $documento = new DocumentoPresencial();
+                    $documento ->setIdvagaDocumento($idvagaDocumento);
+                    $listaContratos = $em->getRepository(Entity::documentoPresencial)
+                            ->findByIdvagaDocumento($documento->getIdvagaDocumento());   
+                    $listaVaga = $em->getRepository(Entity::vagaPresencial)
+                            ->findByIdvaga($idvagaDocumento);
+                    $selectAluno = $em->getRepository(Entity::alunoPresencial)
+                            ->findByIdaluno($idaluno);
+                    $listaAcompanhamento = $em->getRepository(Entity::acompanhamento)
+                            ->findByIdvagaacompanhamento($idvagaDocumento);
+                    foreach ($selectAluno as $l){
+                            $alunoDocumento = $l->getNome();    
+                        }
+                    foreach ($listaVaga as $l){
+                                    $idUsuario =  $l->getUsuarioIdusuario();
+                                    $usuario = $em->getRepository(Entity::usuario)->findByIdusuario($idUsuario);                    
+                    ;}           
+    if ($request->isPost()){ 
         $acompanhamento = new \Vaga\Entity\Acompanhamento();
         $request = $this->getRequest();
         $em = $this->getServiceLocator()->get(Entity::em);
@@ -157,8 +184,6 @@ class VagaPresencialController extends AbstractActionController
             $fim = $request->getPost("fim");
             $periodo = $request->getPost("periodo");
             $acompanhante = $request->getPost("acompanhante");
-            $idVagaAcompanhamento = $request->getPost("idVaga");
-            $idAlunoAcompanhamento = $request->getPost("idAluno");
             $dataacompanhamento = date("d/m/Y G:i");
             $acompanhamento->setInicio($inicio)
                 ->setFim($fim)
@@ -166,14 +191,25 @@ class VagaPresencialController extends AbstractActionController
                 ->setAcompanhante($acompanhante)
                 ->setAnoacompanhamento(date("Y"))
                 ->setMesacompanhamento(date("m"))
-                ->setIdalunoacompanhamento($idAlunoAcompanhamento)
-                ->setIdvagaacompanhamento($idVagaAcompanhamento)
+                ->setIdalunoacompanhamento($idaluno)
+                ->setIdvagaacompanhamento($idvagaDocumento)
                 ->setDataacompanhamento($dataacompanhamento);
             $em->persist($acompanhamento);
             $em->flush(); 
         } catch (Exception $ex) {
 
-        }  
+         }
+         return $this->redirect()->toRoute($this->route,  ['controller' => $this->controller, 'action' => 'acompanhamento','id'=>$idaluno, 'idVaga'=>$idvagaDocumento, 'curso'=>$curso]);  
+            
+         }
+         return new ViewModel([
+            'listaContratos'=>$listaContratos,
+            'aluno'=>$idaluno,
+            'listaVaga'=>$listaVaga,
+            'usuario'=>$usuario,
+            'selectAluno' => $selectAluno,
+            'listaAcompanhamento' => $listaAcompanhamento
+        ]); 
     }
       public function lancarContratosVagaAction(){
         $documentoForm = new LancarDocumentoForm();
@@ -181,7 +217,7 @@ class VagaPresencialController extends AbstractActionController
                     $em = $this->getServiceLocator()->get(Entity::em);
                     $idvagaDocumento = $this->params()->fromRoute("idVaga", 0);
                     $idaluno = $this->params()->fromRoute("id", 0);
-                    $curso = $this->params()->fromRoute("curso", 0);
+                    $empresa = $this->params()->fromRoute("curso", 0);
                     $aluno = new \Aluno\Entity\AlunoPresencial();
                     $aluno->setIdaluno($idaluno);
                     $documento = new DocumentoPresencial();
@@ -219,7 +255,7 @@ class VagaPresencialController extends AbstractActionController
                         $documento->setIdalunoDocumento($aluno->getIdaluno());
                         $documento->setAnoDocumento(date('Y'));
                         $documento->setMesDocumento(date('m'));
-                        $documento ->setCursoDocumento($curso);
+                        $documento ->setIdempresaDocumento($empresa);
                         $documento->setDataLancamento($dataLancamento);
                         $em->persist($documento);
                         $em->flush();
@@ -260,16 +296,18 @@ class VagaPresencialController extends AbstractActionController
             
             }
     public function excluirAcompanhamentoAction(){
-    $id = $this->params()->fromRoute("iddelete", 0);
     $em = $this->getServiceLocator()->get(Entity::em);
+    $request = $this->getRequest();
+    $id = $request->getPost("idDocumento");
     $acompanhamento = $em->find(Entity::acompanhamento, $id);
     $em->remove($acompanhamento);
     $em->flush();
 
     }
     public function salvarDocumentoAction(){
-        $idVagaDocumento = $this->params()->fromRoute('idDocumento',0);
+        
         $request = $this->getRequest();
+          $idVagaDocumento = $request->getPost("idDocumento");
           $operacao1 = $request->getPost("operacao1");  
           $operacao2 = $request->getPost("operacao2");
           $operacao3 = $request->getPost("operacao3");
@@ -285,27 +323,28 @@ class VagaPresencialController extends AbstractActionController
                     $em->flush();
     }
      public function editarDocumentoAction(){
-        $idVagaDocumento = $this->params()->fromRoute('idDocumento',0);
         $request = $this->getRequest();
           $inicio = $request->getPost("inicio");  
           $fim = $request->getPost("fim");
           $tipo = $request->getPost("tipo");
+          $idVagaDocumento = $request->getPost("idDocumento");
         $em = $this->getServiceLocator()->get(Entity::em);
         $selecionar = $em->find(Entity::documentoPresencial, $idVagaDocumento);
         $selecionar
-                ->setInicio($inicio)
-                ->setFim($fim)
+                ->setInicio(new \DateTime($inicio))
+                ->setFim(new \DateTime($fim))
                 ->setRelatorio($tipo);
                     $em->persist($selecionar);
                     $em->flush();
     }
      public function editarAcompanhamentoAction(){
-        $idVagaAcompanhamento = $this->params()->fromRoute('idDocumento',0);
+        
         $request = $this->getRequest();
             $inicioAcompanhamento = $request->getPost("inicio");  
             $fimAcompanhamento = $request->getPost("fim");
             $relatorioAcompanhamento = $request->getPost("relatorioAcompanhamento");
             $acompanhante = $request->getPost("acompanhante");
+            $idVagaAcompanhamento =  $request->getPost("idDocumento");
             $em = $this->getServiceLocator()->get(Entity::em);
             $selecionar = $em->find(Entity::acompanhamento, $idVagaAcompanhamento);
             $selecionar
@@ -317,25 +356,24 @@ class VagaPresencialController extends AbstractActionController
                     $em->flush();
     }
     public function recisaoAction(){
-        $idVagaDocumento = $this->params()->fromRoute('idDocumento',0);
+        
         $request = $this->getRequest();
           $inicio = $request->getPost("inicioRecisao");  
           $fim = $request->getPost("fimRecisao");
+          $idVagaDocumento =  $request->getPost("idDocumento");
         $em = $this->getServiceLocator()->get(Entity::em);
         $selecionar = $em->find(Entity::vagaPresencial, $idVagaDocumento);
-        $selecionarDocumento = $em->find(Entity::documentoPresencial, $idVagaDocumento);
+            if($fim == ''){
+                $situação = '1';
+            }else{
+                $situação = '0';
+            }
         $selecionar
                 ->setInicio($inicio)
-                ->setRecisao($fim);
+                ->setRecisao($fim)
+                ->setSituacao($situação);
                     $em->persist($selecionar);
-                    $em->flush();
-                    
-                    
-                    $selecionarDocumento
-                    ->setRecisao(new \DateTime($fim));
-                    $em->persist($selecionarDocumento);
-                    $em->flush();
-                    
+                    $em->flush(); 
     }           
     public function salvarDocumentoRelatorioAction(){
         $idVagaDocumento = $this->params()->fromRoute('idDocumento',0);
@@ -357,7 +395,6 @@ class VagaPresencialController extends AbstractActionController
   
       //Excluir Vaga
     public function excluirvagaAction(){
-            $this->sairComumAction();
             $id = $this->params()->fromRoute("iddelete", 0);
             $em = $this->getServiceLocator()->get(Entity::em);
             $vaga = $em->find(Entity::vagaPresencial, $id);
@@ -368,7 +405,6 @@ class VagaPresencialController extends AbstractActionController
      }
      //Editar contratos
      public function editarContratosAction(){
-         $this->sairComumAction();
          $em = $this->getServiceLocator()->get(Entity::em);
          $idDocumento = (int)$_POST['id'];
                 $request = $this->getRequest();

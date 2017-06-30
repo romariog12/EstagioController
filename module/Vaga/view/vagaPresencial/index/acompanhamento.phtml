@@ -1,0 +1,398 @@
+ <?php 
+ foreach ($this->listaVaga as $f):
+     $empresa = $f->getEmpresa();
+     $carga = $f->getCarga();
+     $bolsa = $f->getBolsa();
+     $inicio = $f->getInicio();
+     $recisao = $f->getRecisao();
+     $idVaga = $f->getidVaga();
+     $cursoVaga = $f->getCursovaga();
+     $agente = $f->getAgente();
+     $idAluno = $f->getIdalunovaga();
+     $aluno = $f->getAluno();
+ endforeach;
+ foreach ($this->listaAcompanhamento as $f):
+     $idAcompanhamento = $f->getIdacompanhamento();
+ endforeach;
+?>
+<script>
+ $(document).ready(function(){
+       $('.date').datepicker({
+    	format: 'yyyy-mm-dd',
+    	language: 'pt-BR',
+    	todayHighlight: true
+    });
+    $("#formAcompanhamento").validate({
+        highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success"); 
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        },
+        errorElement: "em",
+        messages: {
+        inicio: 'Entre com uma data válida',
+        fim: 'Entre com uma data válida',
+        },
+        rules:{
+        inicio: {
+           required: true
+        },
+        fim: {
+           required: true 
+        }
+        }
+    });
+    $('#fim-recisao-<?= $idVaga?>').datepicker()
+            .on('changeDate',function(ev){
+                if(ev.date.valueOf() > startDate.valueOf()){
+                    alert("Error");
+                }
+    });
+    
+    $('[data-toggle="popover"]').popover();
+ //Bootstrap Toggle
+    $(".operacao1").bootstrapToggle({
+        on: '<label>1 - </label> Assinado',
+        off: '<label>1 - </label> Em Processo',
+        onstyle: 'success',
+        offstyle: 'warning',
+        size: 'mini',
+        width: '125',
+        style: 'android'
+    });
+    $(".operacao2").bootstrapToggle({
+        on: '<label>2 - </label> Assinado',
+        off: '<label>2 - </label> Em Processo',
+        onstyle: 'success',
+        offstyle: 'warning',
+        size: 'mini',
+        width: '125',
+        style: 'android'
+    });
+    $(".operacao3").bootstrapToggle({
+        on: '<label>3 - </label> Entregue',
+        off: '<label>3 - </label> Não Entregue',
+        onstyle: 'success',
+        offstyle: 'warning',
+        size: 'mini',
+        width: '125',
+        style: 'android'
+    });
+    $(".operacao4").bootstrapToggle({
+        on: '<label>4 - </label> Entregue',
+        off: '<label>4 - </label> pendente',
+        onstyle: 'success',
+        offstyle: 'warning',
+        size: 'mini',
+        width: '125',
+        style: 'android'
+    });
+    //jquery Validate
+  
+ });
+ function excluirAcompanhamento(idDocumento){
+    var apagar = confirm('Deseja realmente excluir este registro?');
+      if (apagar){
+	   $(".excluirAcompanhamento-"+idDocumento)
+            .removeClass("fa-trash")
+            .addClass("fa-spinner fa-pulse fa-fw");
+    $(".btn").attr("disabled",true);
+    $.post(
+        '<?= $this->url('editarDocumento',['action'=>'excluirAcompanhamento']) ?>',
+        {
+        idDocumento: function(){
+                return idDocumento;
+            }}
+                    
+        'json'
+        ).always(function() {
+             $("#listaAcompanhamento-"+idDocumento).hide('2000');
+             $(".btn").attr("disabled",false);
+        });			
+      }else{
+         event.preventDefault();
+      }	
+ 
+ }
+function editarAcompanhamento(idDocumento){
+    $(".btn-edit-acompanhamento").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
+    $.post(
+        '<?= $this->url('editarDocumento',['action'=>'editarAcompanhamento']) ?>',
+        {
+            idDocumento: function(){
+                return idDocumento;
+            },
+            inicio: function(){
+                return $("#editarInicioAcompanhamento-"+idDocumento).val();},
+            fim: function(){
+                return $("#editarFimAcompanhamento-"+idDocumento).val();},
+            relatorioAcompanhamento: function(){ 
+                return $("#relatorioAcompanhamento-"+idDocumento).val();},
+            acompanhante: function(){ 
+                return $("#acompanhante-"+idDocumento).val();}
+        },
+        'json').always(
+                    function(){
+                        location.reload();
+                        }
+                );
+ }
+  function recisao(idDocumento){   
+    var inicio = $("#inicio-recisao-"+idDocumento).val();
+    if( inicio === ''){
+        $("#recisaoValidate").addClass("has-error");
+            return false;
+    }else{
+    $("#recisaoValidate").removeClass("has-error").addClass("has-success has-feedback");    
+    $(".btn-recisao").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
+    $.post(
+        '<?= $this->url('editarDocumento',['action'=>'recisao']) ?>',
+        {
+        idDocumento: function(){
+                return idDocumento;
+            },
+            inicioRecisao: function(){
+                return $("#inicio-recisao-"+idDocumento).val();},
+            fimRecisao: function(){
+                return $("#fim-recisao-"+idDocumento).val();}
+        },
+        'json').always(
+            function(){
+                var data = $("#fim-recisao-"+idDocumento).val();
+                if(data === ''){
+                    $("#fimBaixa").html("Ativo até o momento") ;
+                }else{
+                    $("#fimAtivo").html(" "+data) ;
+                }
+                 $(".btn-recisao").html("<i class='fa fa-check '></i>");
+            }
+            );}
+ }
+ 
+ function acompanhamento (){
+ var inicio = $("#inicioAcompanhamento").val();
+ var fim = $("#fimAcompanhamento").val();
+ var periodo = $("#periodo").val();
+ var acompanhante = $("#acompanhante").val();
+ 
+    if(inicio === ''|| fim ==='' ){
+        alert  ("Preencha todos os campos!")
+        return false;
+    }else{
+     $("#btn-acompanhamento").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
+    $.post(
+        '<?= $this->url('editarDocumento',['action'=>'acompanhamento']) ?>',
+        {
+            inicio: function(){
+            return inicio;    
+             },
+            fim: function(){
+            return fim;
+            },
+            periodo: function (){
+                return periodo;
+            },
+            acompanhante: function (){
+                return acompanhante;
+            },
+            idAluno: function(){
+                return <?= $idAluno ?>
+            },
+            idVaga: function(){
+                return <?= $idVaga ?>
+            }
+        }, 
+        'json'
+ 
+    ).always(
+            function(){
+             location.reload();
+            }
+    );   
+    };
+    
+    }
+ </script>
+        <!--________________________________________Painel principal___________________________________-->
+        <div class=" panel panel-primary">
+        <div class="panel-heading">
+              <?= '<h4>'.$aluno.'</h4>'?>
+            
+        </div>
+        <!--___________________________________________________________________________________________ -->
+
+        <!--________________________________________navegação ________________________________________ -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation"><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Início</a></li>
+           <li role="presentation" class="active"><a>Acompanhamento</a></li>
+        </ul>
+        <!--__________________________________________________________________________________________-->
+        <div class="navbar pager">
+            <p><label>Agente de Integração: </label> <?= $agente?></p>
+            <p><label>Empresa: </label> <?= $empresa?></p>
+                <p class="pager" style=""><label>Carga-Horária: </label> <?php echo $carga; ?> horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$ <?php echo $bolsa ?>,00 
+                </p>
+        </div>
+    
+        <div>
+          <div class="col-sm-12">
+            <div class=" panel panel-primary ">
+            <div class="panel-heading">
+                <?= $this->translate("Relatório Semetral")?>
+            </div>
+               <div class="list-group thumbnail">  
+                   <?php foreach ($this->listaAcompanhamento as $l):?>
+                   <div id="listaAcompanhamento-<?= $l->getIdacompanhamento()?>">
+                   <a  data-toggle="collapse" href="#acompanhamento-<?= $l->getIdacompanhamento()?>" aria-expanded="false" aria-controls="collapseExample" class="list-group-item list-group-item-success">
+                       <?= $l->getPeriodo().' - '.$l->getAcompanhante()?>
+                        <i class=" pull-right fa fa-bars"></i> 
+                </a>
+                <div id="acompanhamento-<?= $l->getIdacompanhamento()?>" class="collapse">
+                    <div class=" pager">
+                        <?= '<div><label>Período: </label> '.$l->getInicio().' a '.$l->getFim().'<br>'
+                           . '<label>Data de lançamento: </label>'.$l->getdataAcompanhamento()
+                           . '</div>'?>
+                        <div class="well well-sm">
+                            <button onclick="return excluirAcompanhamento(<?= $l->getIdacompanhamento()?>)" class="btn btn-danger" type="button"><i class="<?= 'excluirAcompanhamento-'.$l->getIdacompanhamento()?> fa fa-remove"></i></button>
+                            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-editar-acompanhamento-'.$l->getIdacompanhamento()?>">
+                                <i class=" fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="<?= 'modal-editar-acompanhamento-'.$l->getIdacompanhamento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                      <div class="panel panel-primary "> <h4 class="modal-title panel panel-heading " id="myModalLabel">Editar 
+                          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                     
+                          </h4>
+                    <div class="modal-body">
+                        <form method="post">
+                            <label>Inicio</label>
+                            <input id="<?= 'editarInicioAcompanhamento-'.$l->getIdacompanhamento()?>" name="inicio" class=" form-control date" type="text" value="<?= $l->getInicio()?>"/>
+                            <label>Fim</label>
+                            <input id="<?= 'editarFimAcompanhamento-'.$l->getIdacompanhamento()?>" name="fim" class=" form-control date" type="tex" value="<?= $l->getFim()?>"/>
+                            <label>Relatório</label>
+                            <select class=" form-control" id="<?= 'relatorioAcompanhamento-'.$l->getIdacompanhamento()?>">
+                                <option><?= $l->getPeriodo()?></option>
+                                <option>1º Relatório</option>
+                                <option>2º Relatório</option>
+                                <option>3º Relatório</option>
+                                <option>4º Relatório</option>
+                            </select>
+                            
+                            <label>Acompanhante</label>
+                            <select id="<?= 'acompanhante-'.$l->getIdacompanhamento()?>" name="tipo" class=" form-control" type="text" >
+                                <option>Instituição de Ensino</option>
+                                <option>Empresa Concedente</option>
+                                <option>Agente de Integração</option>
+                            </select>
+                            <div class="pager well">
+                                <button onclick="return editarAcompanhamento(<?= $l->getIdacompanhamento()?>)" type="button" class="btn btn-success btn-edit-acompanhamento">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+                </div> </div> 
+                    <?php endforeach;?>
+              
+               </div>
+            </div>
+    <div class="well pager">
+        <button class="btn btn-success  " type="button" data-toggle="collapse" data-target="#NovoRelatorio" aria-expanded="false" aria-controls="NovoRelatorio">
+            Novo Relatório <i class="fa fa-bars "></i>
+        </button>
+        <div class="collapse" id="NovoRelatorio">
+            <div class="row "><br/>
+                <form id="formAcompanhamento" method="post">
+                <div class="input-daterange date">
+                <div class="  col-sm-3 ">
+                    <div  class="inicioAcompanhamento" >
+                        <label for="inicioAcompanhamento">Início</label> <i  style="display: none" class=" inicioAcompanhamento-valid glyphicon glyphicon-ok-circle"></i>
+                     <input  data-provide="datepicker" id="inicioAcompanhamento" name="inicio" type="date" class="form-control date" />
+                    </div>        
+                </div>
+                <div class="  col-sm-3">
+                    <div class="  fimAcompanhamento" >
+                        <label for="fimAcompanhamento">Fim</label> <i  style="display: none" class=" fimAcompanhamento-valid glyphicon glyphicon-ok-circle"></i>
+                        <input data-provide="datepicker" id="fimAcompanhamento" name="fim" type="date" class="form-control date"/>
+                    </div>
+                </div>
+                </div>
+                
+                <div class="  col-sm-2 documento">
+                   <label>Período</label>
+                   <select name="periodo" class=" form-control" id="periodo">
+                        <option>1º Relatório</option>
+                        <option>2º Relatório</option>
+                        <option>3º Relatório</option>
+                        <option>4º Relatório</option>
+                    </select>
+                </div>
+                <div class="  col-sm-3 documento">
+                    <label>Acompanhante</label>
+                    <div class=" input-group">
+                        <select class=" form-control" name="acompanhante" id="acompanhante">
+                        <option>Instituição de Ensino</option>
+                        <option>Empresa Concedente</option>
+                        <option>Agente de Integração</option>
+                    </select>
+                        <span class="input-group-btn">
+                            <button  type="submit" class="btn btn-success"><i class="fa fa-check"></i></button>   
+                        </span></div>
+                </div></form>
+            </div>
+    </div>
+  </div>
+              <div class="well-lg pager">
+                <?php
+                 if(!empty($reciao)){
+                    echo "<div   class=' alert alert-warning' role='alert'><p><label>Início:</label>".$inicio.'<label>&nbsp;&nbsp; Fim:</label> <span id="fimBaixa">'.$recisao.'</span></p></div>';
+                    }else{
+                    echo "<div  class=' alert alert-warning' role='alert'><p><label>Início:</label>".$inicio.'<label>&nbsp;&nbsp; Fim:</label><span id="fimAtivo"> Até o momento</span></p></div>';
+                        
+                    }
+                    ?><div class=" well pager">
+                    <button class="btn btn-danger  " type="button" data-toggle="collapse" data-target="#baixa" aria-expanded="false" aria-controls="baixa">
+                    Recisão <i class="fa fa-bars "></i>
+                    </button><br><br>
+                <div class="collapse row input-daterange date" id="baixa">
+                    <div class="col-lg-8 col-sm-offset-2 well thumbnail " id="recisaoValidate">
+                             <div class="col-lg-4 col-sm-offset-2 ">
+                                 <LABEL>Início</LABEL>
+                                 <input  id="<?= 'inicio-recisao-'.$idVaga?>" name="inicioRecisao" type="date"  class="form-control date " value="<?= $inicio;?> ">
+                             </div>
+                             <div class="col-lg-4">
+                                 <LABEL>Recisão</LABEL>
+                                 <input data-provide="datepicker"  id="<?='fim-recisao-'.$idVaga?>"   type="date" name="fimRecisao" class=" form-control date" value="<?= $recisao;?>"  />  
+                             </div> 
+                         </div> 
+                         <br>
+                         <div class="col-sm-8 well-sm col-sm-offset-2">
+                                <button onclick="return recisao(<?= $idVaga?>)" type="button" class=" btn-recisao btn btn-success">Salvar</button>
+                         </div>  
+                </div>
+                </div>
+            </div>
+        </div>                  
+    </div> 
+         <div class="well-lg">
+         <?= '<a  href="'. $this->url('perfil/default', array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno)).'"><span class="btn btn-primary" ><i class="fa fa-arrow-left fa-2x pull-left"></i>Painel do <br>aluno</span></a>';?>
+        </div>
+    </div>
+       
+    <?= $this->resp;?>

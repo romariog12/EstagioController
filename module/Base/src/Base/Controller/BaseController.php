@@ -12,6 +12,7 @@ namespace Base\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Base\Model\Entity;
+use Zend\Authentication\AuthenticationService;
 class BaseController extends AbstractActionController
 {
     public function dadosAction(){
@@ -49,8 +50,12 @@ class BaseController extends AbstractActionController
     }
       
     public function logoutAction(){
-       unset($this->session()->administrador);
-       unset($this->session()->comum);
-       return $this->redirect()->toUrl('http://127.0.0.1/Projem/public/login');
+       $auth = new AuthenticationService();
+     
+        if ($auth->hasIdentity()){
+            $auth->clearIdentity();
+            $this->flashMessenger()->addSuccessMessage('Voce acabou de ser desconectado!');
+        }
+       return $this->redirect()->toUrl('http://127.0.0.1/Projem_/public/login');
     }
 }

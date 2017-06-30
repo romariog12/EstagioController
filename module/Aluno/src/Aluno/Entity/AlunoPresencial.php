@@ -50,13 +50,7 @@ class AlunoPresencial
      * 
      */
     private $matricula;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Modalidade", type="string", length=50, nullable=true)
-     * 
-     */
-    private $modalidade;
+
     /**
      * @var string
      *
@@ -78,6 +72,13 @@ class AlunoPresencial
      * 
      */
     private $Cpf;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Senha", type="string", length=50, nullable=true)
+     * 
+     */
+    private $senha;
     
     function getIdaluno() {
         return $this->idaluno;
@@ -95,9 +96,6 @@ class AlunoPresencial
         return $this->curso;
     }
 
-    function getMatricula() {
-        return $this->matricula;
-    }
     function getModalidade() {
         return $this->modalidade;
     }
@@ -113,7 +111,15 @@ class AlunoPresencial
     function getCpf() {
         return $this->Cpf;
     }
+    function getMatricula() {
+        return $this->matricula;
+    }
 
+    function getSenha() {
+        return $this->senha;
+    }
+
+    
         function setIdaluno($idaluno) {
         $this->idaluno = $idaluno;
     }
@@ -136,10 +142,7 @@ class AlunoPresencial
         $this->matricula = $matricula;
         return $this;
     }
-    function setModalidade($modalidade) {
-        $this->modalidade = $modalidade;
-        return $this;
-    }
+  
 
 
     function setTelefone($telefone) {
@@ -157,6 +160,11 @@ class AlunoPresencial
         return $this;
     }
 
+
+    function setSenha($senha) {
+        $this->senha = $senha;
+        return $this;
+    }
 
 
 
