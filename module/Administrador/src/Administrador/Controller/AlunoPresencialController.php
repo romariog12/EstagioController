@@ -16,8 +16,6 @@ use Aluno\Entity\AlunoPresencial;
 class AlunoPresencialController extends AdministradorAbstractActionController {
   
     public function buscarAlunoAction()   {
-    $this->logout();
-    $this->acessoNegado();
     $request = $this->getRequest();
     $em = $this->getServiceLocator()->get(Entity::em);
 
@@ -44,15 +42,12 @@ class AlunoPresencialController extends AdministradorAbstractActionController {
     }
     //Vagas cadastradas no Perfil                  
     public function perfilAction(){
-      $this->logout();
-      $this->acessoNegado();
       $em = $this->getServiceLocator()->get(Entity::em);
       $id = $this->params()->fromRoute("id", 0);
       $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($id);
       $listaVagaPresencial = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($id);
-      $listaVagaPresencialEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndIdAlunoVaga('', $id);
+      $listaVagaPresencialEstagiando = $em->getRepository(Entity::vagaPresencial)->findBySituacaoAndIdAlunoVaga('1', $id);
       $lista = $em->getRepository(Entity::alunoPresencial)->findByidaluno($id);
-      
         return new ViewModel([
                 'listaVaga'=>$listaVaga,
                 'listaVagaPresencial'=>$listaVagaPresencial,
@@ -61,8 +56,6 @@ class AlunoPresencialController extends AdministradorAbstractActionController {
             ]);        
     }
      public function estagiosAction(){
-        $this->logout();
-        $this->acessoNegado();
         $vaga = new \Vaga\Entity\VagaPresencial();
         $em = $this->getServiceLocator()->get(Entity::em);
         $id = $this->params()->fromRoute("id", 0);
@@ -80,8 +73,6 @@ class AlunoPresencialController extends AdministradorAbstractActionController {
                     ]);        
     }
      public function cadastrarAction() {
-            $this->logout();
-            $this->acessoNegado();
             $em = $this->getServiceLocator()->get(Entity::em);
             $request = $this->getRequest(); 
             $listaDadosPresencial = $em->getRepository(Entity::dadosPresencial)->findAll();
@@ -127,8 +118,6 @@ class AlunoPresencialController extends AdministradorAbstractActionController {
                 ]);
     }
     public function declaracaoPresencialAction(){
-        $this->logout();
-        $this->acessoNegado();
         $em = $this->getServiceLocator()->get(Entity::em);
         $idAluno = $this->params()->fromRoute("id", 0);
         $idVaga = $this->params()->fromRoute("idVaga", 0);

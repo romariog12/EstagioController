@@ -25,13 +25,13 @@
         </ul> 
     </div>
     <div class="caption">
-    <?php if($this->empresaSelect): foreach ($this->listaAluno as $f):  ?>
+    <?php if($this->empresaSelect): foreach ($this->listaAluno as $l):  ?>
         <?=
         '<div class="navbar">'.
-        '<h3 class="pager">'.  $f->getNome().'</h3>'.
-        '<p class="pager"><label>CPF: </label> '.  $f->getCpf().'<br/>'
-            . '<label>Telefone: </label> '. $f->getTelefone().'<br/> '
-            . '<label> Email: </label> '.  $f->getEmail().'<br/></div> ';
+        '<h3 class="pager">'.  $l->getNome().'</h3>'.
+        '<p class="pager"><label>CPF: </label> '.  $l->getCpf().'<br/>'
+            . '<label>Telefone: </label> '. $l->getTelefone().'<br/> '
+            . '<label> Email: </label> '.  $l->getEmail().'<br/></div> ';
     endforeach;
     endif;?>
     </div>

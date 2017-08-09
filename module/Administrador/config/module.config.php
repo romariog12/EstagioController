@@ -9,20 +9,18 @@
 
 namespace Administrador;
 
-return array(
-    'router' => array(
-        'routes' => array(
-          
-            'administrador' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/aluno',
+return ['router' => 
+    ['routes' =>
+        ['administrador' => 
+            ['type'    => 'Literal',
+                'options' => 
+                ['route'    => '/aluno',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
                         'controller'    => 'Administrador',
                         'action'        => 'aluno',
                     ),
-                ),
+                   ],
                 'may_terminate' => true,
                 'child_routes' => array(
                     'default' => array(
@@ -39,7 +37,7 @@ return array(
                         ),
                     ),
                 ),
-            ),
+               ],
             'cadastrarUsuario' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -273,7 +271,7 @@ return array(
             'empresa' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/listaEmpresa',
+                    'route'    => '/empresa',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
                         'controller'    => 'Administrador',
@@ -405,8 +403,8 @@ return array(
                   ),
               ),
            
-        ),       
-    ),
+             ],       
+       ],
     
 
     
@@ -445,13 +443,12 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'administrador/administrador/dashboard' => __DIR__ . '/../view/administrador/index/dashboard.phtml',
             'administrador/administrador/cadastrar-usuario' => __DIR__ . '/../view/administrador/index/cadastrarUsuario.phtml',
             'administrador/administrador/editar-usuario' => __DIR__ . '/../view/administrador/index/editarUsuario.phtml',
             'administrador/administrador/usuarios' => __DIR__ . '/../view/administrador/index/usuarios.phtml',
             'administrador/administrador/aluno' => __DIR__ . '/../view/administrador/index/aluno.phtml',
-            'administrador/administrador/todosalunospresencial' => __DIR__ . '/../view/administrador/index/todosAlunosPresencial.phtml',
+            'administrador/administrador/todos-alunos' => __DIR__ . '/../view/administrador/index/todosAlunos.phtml',
             'administrador/administrador/editar-aluno' => __DIR__ . '/../view/administrador/index/editarAluno.phtml',
             'administrador/administrador/editar-aluno-presencial' => __DIR__ . '/../view/administrador/index/editarAlunoPresencial.phtml',
             'administrador/empresa/cadastrar-empresa' => __DIR__ . '/../view/empresa/index/cadastrarEmpresa.phtml',
@@ -478,13 +475,13 @@ return array(
             'administrador/aluno-presencial/buscar-aluno' => __DIR__ . '/../view/alunoPresencial/index/buscarAlunoPresencial.phtml',
             'administrador/aluno-presencial/cadastrar' => __DIR__ . '/../view/alunoPresencial/index/cadastroAlunoPresencial.phtml',
             'administrador/aluno-presencial/declaracao-presencial' => __DIR__ . '/../view/alunoPresencial/index/declaracaoPresencial.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
     ),
+    
     
     // Placeholder for console routes
     'console' => array(
@@ -507,5 +504,5 @@ return array(
             )
         )
     ),
-);
+    ];
 

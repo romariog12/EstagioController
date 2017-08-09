@@ -38,14 +38,14 @@
                  <th>Agente de Integração</th>
              </tr>
    <?php
-        foreach ($this->pagination as $f){
-            if($f->getRecisao()== ''){ ?> 
+        foreach ($this->pagination as $l){
+            if($l->getRecisao()== ''){ ?> 
             <tr style="background-color: #c4ffc2;"><?php } else{?>
                  <tr style="background-color:  #ae1111; color: white"><?php };?>  
                     <td><a href="<?php echo $this->url('perfilPresencial/default', 
-                         array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$f->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a> <?php echo $f->getAluno()?></td>
-                    <td><?=  $f->getEmpresa();?></td>
-                    <td><?=  $f->getAgente();?></td>
+                         array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$l->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a> <?php echo $l->getAluno()?></td>
+                    <td><?=  $l->getEmpresa();?></td>
+                    <td><?=  $l->getAgente();?></td>
                  </tr>  
     <?php  } ?>
           

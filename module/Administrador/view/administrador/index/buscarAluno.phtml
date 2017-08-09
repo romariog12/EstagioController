@@ -49,13 +49,13 @@ $lista = $this->lista;
                   <th>CURSO</th>
                   <th></th>
                 </tr>
-                   <?php foreach ($lista as $f): ?>   
+                   <?php foreach ($lista as $l): ?>   
                 <tr  style="background: #cdffff">
-                  <td><?php echo $f->getNome(); ?></td>
-                  <td><?php echo $f->getMatricula(); ?></td>
-                  <td><?php echo $f->getCurso(); ?></td>
+                  <td><?php echo $l->getNome(); ?></td>
+                  <td><?php echo $l->getMatricula(); ?></td>
+                  <td><?php echo $l->getCurso(); ?></td>
                   <td><a href="<?php echo $this->url('perfil/default', 
-                          array('controller' => 'aluno', 'action' => 'perfil', 'id'=>$f->getidaluno(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
+                          array('controller' => 'aluno', 'action' => 'perfil', 'id'=>$l->getidaluno(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
                 </tr><?php endforeach; endif;?>
             </table></div>
         </form>

@@ -81,10 +81,10 @@ class Adapter implements AdapterInterface{
             $user = $this->em->getRepository(Entity::usuario)->findByLoginAndPassword($this->getLogin(), $this->getSenha());    
               if (!empty($user)) {
             
-            return new Result(Result::SUCCESS, $user, array())   ;
+            return new Result(Result::SUCCESS, $user, [])   ;
             } else {
            
-            return new Result(Result::FAILURE_CREDENTIAL_INVALID, null, array('Login e/ou senha nao encontrados'));
+            return new Result(Result::FAILURE_CREDENTIAL_INVALID, null, ['Login e/ou senha nao encontrados']);
 
         }
         }
@@ -93,7 +93,7 @@ class Adapter implements AdapterInterface{
             $userEmpresa = $this->em->getRepository(Entity::empresa)->findByCnpjAndPassword($this->getCnpj(), $this->getSenha());
              if (!empty($userEmpresa)) {
                  
-                return new Result(Result::SUCCESS, $userEmpresa, array());
+                return new Result(Result::SUCCESS, $userEmpresa, []);
                 
             } else {
            
@@ -108,10 +108,10 @@ class Adapter implements AdapterInterface{
        
             if (!empty($userAluno)) {
             
-                return new Result(Result::SUCCESS, $userAluno, array())   ;
+                return new Result(Result::SUCCESS, $userAluno, [])   ;
             } else {
            
-                return new Result(Result::FAILURE_CREDENTIAL_INVALID, null, array('Login e/ou senha nao encontrados'));
+                return new Result(Result::FAILURE_CREDENTIAL_INVALID, null, ['Login e/ou senha nao encontrados']);
 
             }   
         }

@@ -1,4 +1,4 @@
-<?php foreach ($this->empresaSelect as $f):  $idEmpresa = $f[0]->getIdempresa();endforeach; ?>
+<?php foreach ($this->empresaSelect as $l):  $idEmpresa = $l[0]->getIdempresa();endforeach; ?>
 <script>
 function mensagemEmpresa(){
 
@@ -25,16 +25,16 @@ function mensagemEmpresa(){
      <div class="row">
     <div class="">
        <div class="caption">
-    <?php if(!empty($this->empresaSelect)): foreach ($this->empresaSelect as $f): ?>
+    <?php if(!empty($this->empresaSelect)): foreach ($this->empresaSelect as $l): ?>
         <?=
         '<div class="navbar pager">'.
             '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
-        '<h3 class="pager">'.  $f[0]->getEmpresa().'</h3>'?>
+        '<h3 class="pager">'.  $l[0]->getEmpresa().'</h3>'?>
             <span class=" center-block" id="rateYo"></span>
             <?=
-        '<p class="pager"><label>CNPJ:</label>'.  $f[0]->getCnpj().'<br/>'
-            . '<label>Responável: </label> '. $f[0]->getResponsavel().' '
-            . '<label> Telefone: </label> '.  $f[0]->getTelefone().'<br/></div> ';
+        '<p class="pager"><label>CNPJ:</label>'.  $l[0]->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $l[0]->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $l[0]->getTelefone().'<br/></div> ';
             
         ?>
     <?php endforeach; endif;?>
@@ -68,22 +68,22 @@ function mensagemEmpresa(){
               <th>Agente de Integração</th>
 
             </tr>
-                <?php foreach ($this->pagination   as $f):?>
+                <?php foreach ($this->pagination   as $l):?>
                 <?php 
 
-             if($f->getRecisao() !=(null)){ ?>
+             if($l->getRecisao() !=(null)){ ?>
             <tr class="table" style="background: #ab1c1c; color: white">
-                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $f->getAluno()?></td>
-                <td><?php echo $f->getEmpresa(); ?></td>
-                <td><?php echo $f->getAgente(); ?></td>
+                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $l->getAluno()?></td>
+                <td><?php echo $l->getEmpresa(); ?></td>
+                <td><?php echo $l->getAgente(); ?></td>
 
              </tr>   <?php } ?>
 
-                <?php  if($f->getRecisao() ==('')){ ?>
+                <?php  if($l->getRecisao() ==('')){ ?>
             <tr class="table" style="background: #8fee8f; ">
-                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $f->getAluno()?></td>
-                <td><?php echo $f->getEmpresa(); ?></td>
-                <td><?php echo $f->getAgente(); ?></td>          
+                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $l->getAluno()?></td>
+                <td><?php echo $l->getEmpresa(); ?></td>
+                <td><?php echo $l->getAgente(); ?></td>          
             </tr> <?php } ?>
                 <?php
                 endforeach;?>

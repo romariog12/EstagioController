@@ -112,8 +112,8 @@
                             <div class="aluno col-sm-6">
                                 <label for="aluno" >Aluno</label>
                                 <select id="aluno" name="aluno" class="form-control " >
-                                            <?php foreach ($this->aluno as $f): ?>
-                                           <option>  <?php echo  $f->getNome()?></option>
+                                            <?php foreach ($this->aluno as $l): ?>
+                                           <option>  <?php echo  $l->getNome()?></option>
                                             <?php endforeach; ?>         
                                 </select>
                             </div> 
@@ -133,8 +133,8 @@
                                     <label for="agente"><?php echo $this->translate('Agente')?></label>
                                     <select id="agente" name="agente" class="form-control" >
                                            <option></option>
-                                            <?php foreach ($this->listaAgente as $f): ?>
-                                           <option><?php print_r($f->getAgente()); ?></option>
+                                            <?php foreach ($this->listaAgente as $l): ?>
+                                           <option><?php print_r($l->getAgente()); ?></option>
                                             <?php endforeach; ?>         
                                     </select>
                             </div>
@@ -142,8 +142,8 @@
                                 <label for="empresa"><?php echo $this->translate('Empresa')?></label>
                                     <select name="empresa" id="empresa" class="form-control" >
                                        <option></option>
-                                        <?php sort($listaEmpresa); foreach ($listaEmpresa as $f): ?>
-                                       <option><?php print_r($f->getEmpresa()); ?></option>
+                                        <?php sort($listaEmpresa); foreach ($listaEmpresa as $l): ?>
+                                       <option><?php print_r($l->getEmpresa()); ?></option>
                                         <?php endforeach; ?>  
                                     </select>
                             </div>

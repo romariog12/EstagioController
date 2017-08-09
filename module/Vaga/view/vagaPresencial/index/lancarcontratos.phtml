@@ -1,18 +1,18 @@
  <?php 
- foreach ($this->listaVaga as $f):
-     $empresa = $f->getEmpresa();
-     $carga = $f->getCarga();
-     $bolsa = $f->getBolsa();
-     $inicio = $f->getInicio();
-     $recisao = $f->getRecisao();
-     $idVaga = $f->getidVaga();
-     $agente = $f->getAgente();
-     $idAluno = $f->getIdalunovaga();
-     $aluno = $f->getAluno();
-     $cursoVaga = $f->getCursovaga();
+ foreach ($this->listaVaga as $l):
+     $empresa = $l->getEmpresa();
+     $carga = $l->getCarga();
+     $bolsa = $l->getBolsa();
+     $inicio = $l->getInicio();
+     $recisao = $l->getRecisao();
+     $idVaga = $l->getidVaga();
+     $agente = $l->getAgente();
+     $idAluno = $l->getIdalunovaga();
+     $aluno = $l->getAluno();
+     $cursoVaga = $l->getCursovaga();
  endforeach;
- foreach ($this->listaAcompanhamento as $f):
-     $idAcompanhamento = $f->getIdacompanhamento();
+ foreach ($this->listaAcompanhamento as $l):
+     $idAcompanhamento = $l->getIdacompanhamento();
  endforeach;
 ?>
 <script>
@@ -222,7 +222,7 @@
         <!--________________________________________navegação ________________________________________ -->
         <ul class="nav nav-tabs" role="tablist">
            <li role="presentation" class="active"><a>Início</a></li>
-           <li role="presentation"><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'acompanhamento','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Acompanhamento</a></li>
+           <li role="presentation"><a href="<?= $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'acompanhamento','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Acompanhamento</a></li>
         </ul>
         <!--__________________________________________________________________________________________-->
         <div class="navbar pager">
@@ -240,14 +240,14 @@
             </div>  
             <div>     
 <?php  if (!empty($this->listaContratos)):
-    foreach ($this->listaContratos as $f):
+    foreach ($this->listaContratos as $l):
 ?> 
-    <div   id="<?= $f->getIddocumento()?>">
-    <button  type="button" class="list-group-item list-group-item-success"  data-toggle="collapse" href="#list-<?= $f->getIddocumento()?>" aria-expanded="false" aria-controls="collapseExample" style=" border-color: #33610a">
+    <div   id="<?= $l->getIddocumento()?>">
+    <button  type="button" class="list-group-item list-group-item-success"  data-toggle="collapse" href="#list-<?= $l->getIddocumento()?>" aria-expanded="false" aria-controls="collapseExample" style=" border-color: #33610a">
        
         <div class="progress">
         <?php
-        $progress = $f->getOperacao1()+$f->getOperacao2()+$f->getOperacao3()+$f->getOperacao4();
+        $progress = $l->getOperacao1()+$l->getOperacao2()+$l->getOperacao3()+$l->getOperacao4();
         switch($progress){
             case 1: $width = "25%" ;
                 break;
@@ -261,14 +261,14 @@
                                 break;
         }
         ?>
-        <div class="<?= 'progress-'.$f->getIdDocumento()?> progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="10" aria-valuemax="100" style="width:<?= $width?>">
+        <div class="<?= 'progress-'.$l->getIdDocumento()?> progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="10" aria-valuemax="100" style="width:<?= $width?>">
          <?= $width?> 
         </div> 
         </div>
-         <?= $f->getRelatorio()?> <i class=" pull-right fa fa-bars"></i>      
+         <?= $l->getRelatorio()?> <i class=" pull-right fa fa-bars"></i>      
     </button>
         
-   <?= '<div class="collapse" id="list-'.$f->getIddocumento().'">'?>
+   <?= '<div class="collapse" id="list-'.$l->getIddocumento().'">'?>
         <div class="pager">
                     <div class="col-sm-3">
                 <span class="fa-stack fa-sm ">
@@ -299,28 +299,28 @@
                 '<div class=" col-sm-3">'.
                     
                     $this->formRow($this->documentoForm->get('operacao1')
-                        ->setAttribute('checked',$f->getOperacao1())
+                        ->setAttribute('checked',$l->getOperacao1())
                         ->setAttribute('class', 'operacao1')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).' </div>'.
                 '<div class=" col-sm-3">'.
                 
                     $this->formRow($this->documentoForm->get('operacao2')
-                        ->setAttribute('checked', $f->getOperacao2())
+                        ->setAttribute('checked', $l->getOperacao2())
                         ->setAttribute('class', 'operacao2')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).'</div> '.
                 '<div class=" col-sm-3">'.
                 
                      $this->formRow($this->documentoForm->get('operacao3')
-                        ->setAttribute('checked',$f->getOperacao3())
+                        ->setAttribute('checked',$l->getOperacao3())
                         ->setAttribute('class', 'operacao3')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).'</div> '.
                 '<div class=" col-sm-3">'.
                
                     $this->formRow($this->documentoForm->get('operacao4')
-                        ->setAttribute('checked',$f->getOperacao4())
+                        ->setAttribute('checked',$l->getOperacao4())
                         ->setAttribute('class', 'operacao4')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).'</div>'.
@@ -328,16 +328,16 @@
             ?> 
             <div class="pager well thumbnail ">
                <div class="btn-group-sm">
-                   <button class="btn btn-success  " onclick="return salvarDocumento(<?= $f->getIddocumento()?>)"><i class="  fa--save  <?= 'salvar-'.$f->getIddocumento()?>"></i><span ><i class="fa fa-check"></i><br></span></button>
-                    <button class="btn btn-danger " onclick="return excluirDocumento(<?= $f->getIddocumento()?>)" ><i class="  fa--trash  <?= 'excluir-'.$f->getIddocumento()?>"></i><span ><i class="fa fa-remove"></i><br></span></button>
-                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-'.$f->getIddocumento()?>">
+                   <button class="btn btn-success  " onclick="return salvarDocumento(<?= $l->getIddocumento()?>)"><i class="  fa--save  <?= 'salvar-'.$l->getIddocumento()?>"></i><span ><i class="fa fa-check"></i><br></span></button>
+                    <button class="btn btn-danger " onclick="return excluirDocumento(<?= $l->getIddocumento()?>)" ><i class="  fa--trash  <?= 'excluir-'.$l->getIddocumento()?>"></i><span ><i class="fa fa-remove"></i><br></span></button>
+                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-'.$l->getIddocumento()?>">
                         <i class=" fa fa-plus"></i>
                     </button>
-                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-editar-'.$f->getIddocumento()?>">
+                    <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-editar-'.$l->getIddocumento()?>">
                         <i class=" fa fa-edit"></i>
                     </button>
                </div>
-               <div class="modal fade" id="<?= 'modal-'.$f->getIddocumento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+               <div class="modal fade" id="<?= 'modal-'.$l->getIddocumento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-sm" role="document">
                   <div class="modal-content">
                       <div class="panel panel-primary"> <h4 class="modal-title panel panel-heading " id="myModalLabel">Informações 
@@ -345,16 +345,16 @@
                      
                           </h4>
                     <div class="modal-body">
-                        <?= '<label>Documento:</label> '.$f->getRelatorio().'<br>'?>
-                        <?= '<label>Inicio:</label> '.date_format($f->getInicio(), 'd/m/Y').'<br>'?>
-                        <?= '<label>Fim:</label> '.date_format($f->getFim(), 'd/m/Y').'<br>'?>
-                        <?= '<label>Data de lançamento:</label> '.$f->getdataLancamento()?>
+                        <?= '<label>Documento:</label> '.$l->getRelatorio().'<br>'?>
+                        <?= '<label>Inicio:</label> '.date_format($l->getInicio(), 'd/m/Y').'<br>'?>
+                        <?= '<label>Fim:</label> '.date_format($l->getFim(), 'd/m/Y').'<br>'?>
+                        <?= '<label>Data de lançamento:</label> '.$l->getdataLancamento()?>
                     </div>
                       </div>
                   </div>
                 </div>
               </div>
-               <div class="modal fade" id="<?= 'modal-editar-'.$f->getIddocumento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+               <div class="modal fade" id="<?= 'modal-editar-'.$l->getIddocumento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-sm" role="document">
                   <div class="modal-content">
                       <div class="panel panel-primary "> <h4 class="modal-title panel panel-heading " id="myModalLabel">Editar 
@@ -363,14 +363,14 @@
                     <div class="modal-body">
                         <div class="input-daterange date">
                             <label>Inicio</label>
-                            <input id="<?= 'editarInicio-'.$f->getIddocumento()?>" name="inicio" class=" form-control date" type="date" value="<?= date_format($f->getInicio(), 'Y-m-d')?>"/>
+                            <input id="<?= 'editarInicio-'.$l->getIddocumento()?>" name="inicio" class=" form-control date" type="date" value="<?= date_format($l->getInicio(), 'Y-m-d')?>"/>
                             <label>Fim</label>
-                            <input id="<?= 'editarFim-'.$f->getIddocumento()?>" name="fim" class=" form-control date" type="date" value="<?=date_format($f->getFim(), 'Y-m-d')?>"/>
+                            <input id="<?= 'editarFim-'.$l->getIddocumento()?>" name="fim" class=" form-control date" type="date" value="<?=date_format($l->getFim(), 'Y-m-d')?>"/>
                            </div>
                         <label>Tipo</label>
-                            <input id="<?= 'editarTipo-'.$f->getIddocumento()?>" name="tipo" class=" form-control" type="text" value="<?=$f->getRelatorio()?>"/>
+                            <input id="<?= 'editarTipo-'.$l->getIddocumento()?>" name="tipo" class=" form-control" type="text" value="<?=$l->getRelatorio()?>"/>
                             <div class="pager well">
-                                <button onclick="return editarDocumento(<?= $f->getIddocumento()?>)" type="button" class="btn btn-success btn-edit">Salvar</button>
+                                <button onclick="return editarDocumento(<?= $l->getIddocumento()?>)" type="button" class="btn btn-success btn-edit">Salvar</button>
                             </div>
                     </div>
                       </div>
@@ -381,8 +381,8 @@
         </div>
     </div>
 <?php 
-    $idVagaDocumento = $f->getIdvagadocumento();
-    $idaluno = $f->getIdalunodocumento();
+    $idVagaDocumento = $l->getIdvagadocumento();
+    $idaluno = $l->getIdalunodocumento();
     endforeach; 
 ?>
     <?php else:?>

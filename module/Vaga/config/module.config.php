@@ -106,7 +106,6 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'vaga/vaga-presencial/cadastrarvagapresencial' => __DIR__ . '/../view/vagaPresencial/index/cadastrarVagaPresencial.phtml',
             'vaga/vaga-presencial/perfilvagafinalizada' => __DIR__ . '/../view/vagaPresencial/index/perfilVagaFinalizada.phtml',
             'vaga/vaga-presencial/lancar-contratos-vaga' => __DIR__ . '/../view/vagaPresencial/index/lancarContratosVaga.phtml',
@@ -122,8 +121,11 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
-    
-    // Placeholder for console routes
+      'view_helpers' => array(
+        'invokables' => array(
+            'tabelaVaga' => 'Vaga\View\Helper\tabelaVaga',
+      )
+        ),
     'console' => array(
         'router' => array(
             'routes' => array(

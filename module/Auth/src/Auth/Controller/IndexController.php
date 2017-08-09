@@ -16,21 +16,18 @@ class IndexController extends AdministradorAbstractActionController
     $request = $this->getRequest();
     if($request->isPost())
         { 
-                $data = $this->params()->fromPost();
-                $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
-                $adapter = $auth->getAdapter();
-                $login = $data['login'];
-                $senha = $data['senha'];     
-                $adapter->setLogin($login)
-                        ->setSenha($senha);
-                
-                if ($auth->authenticate()->isValid()) {
-                    $this->session()->administrador = $auth->authenticate()->getIdentity();
-                            return $this->redirect()->toRoute('home', array('controller' => 'index', 'action' => 'index')); 
-                } 
-              $mensagem = 'Credenciais inválidas' ;
-              return new ViewModel([
-          'mensagem'=>$mensagem
+        $data = $this->params()->fromPost();
+        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        $adapter = $auth->getAdapter();
+        $login = $data['login'];
+        $senha = $data['senha'];     
+        $adapter->setLogin($login)
+                ->setSenha($senha);
+        if ($auth->authenticate()->isValid()) {
+            return $this->redirect()->toRoute('home', array('controller' => 'index', 'action' => 'index')); 
+        } 
+        return new ViewModel([
+        'mensagem'=> $auth->getAdapter()->authenticate()->getMessages()[0]
       ]
               
               );
@@ -50,12 +47,10 @@ class IndexController extends AdministradorAbstractActionController
                         ->setSenha($senha);
                 
                 if ($auth->authenticate()->isValid()) {
-                     $this->session()->aluno = $auth->authenticate()->getIdentity();
                    return $this->redirect()->toRoute('auth');  
-                } 
-              $mensagem = 'Credenciais inválidas' ;
+                }
               return new ViewModel([
-                    'mensagem'=>$mensagem
+                    'mensagem'=> $auth->getAdapter()->authenticate()->getMessages()[0]
                 ]
               
               );
@@ -75,24 +70,13 @@ class IndexController extends AdministradorAbstractActionController
                         ->setSenha($senha);
                 
                 if ($auth->authenticate()->isValid()) {
-                    $this->session()->empresa = $auth->authenticate()->getIdentity();
                      return $this->redirect()->toRoute('painelEmpresa/default' ,['controller' => 'empresa','action'=>'painelEmpresaEstagiando','id'=>'1']);
                           
                           } 
-              $mensagem = 'Credenciais inválidas' ;
               return new ViewModel([
-                    'mensagem'=>$mensagem
+                   'mensagem'=> $auth->getAdapter()->authenticate()->getMessages()[0]
                 ]
-              
               );
         }
- }
- public function logoutAction(){
-     $auth = new AuthenticationService();
-        if ($auth->hasIdentity()){
-            $auth->clearIdentity();
-            $this->flashMessenger()->addSuccessMessage('Voce acabou de ser desconectado!');
-        }
-        return $this->redirect()->toRoute('auth');    
-    }
+  }
 }

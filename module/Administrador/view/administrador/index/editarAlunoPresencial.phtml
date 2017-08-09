@@ -98,8 +98,8 @@ endif;
                 <label for="curso"><?= $this->translate('Curso')?></label><i style=" display: none;"  class=" curso-valid glyphicon glyphicon-ok-circle"></i>
                 <select id="curso" name="curso" class="form-control">
                 <?= '<option>'. $l->getCurso().'</option>';
-                    foreach ($this->listaCursoPresencial as $f):?>
-                    <?='<option>'. $f->getCurso().'</option>';
+                    foreach ($this->listaCursoPresencial as $l):?>
+                    <?='<option>'. $l->getCurso().'</option>';
                     endforeach;?>
                     
                 </select>

@@ -51,7 +51,7 @@ class LancarDocumentoForm extends Form {
              'name' => 'documento',
              'options' => array(
                      'value_options' => array(
-                        ''=>   '',
+                        '' =>   '',
                         'TCE' => 'TCE',
                         'TA' => 'TA',
                      ),

@@ -1,18 +1,15 @@
  <?php 
- foreach ($this->listaVaga as $f):
-     $empresa = $f->getEmpresa();
-     $carga = $f->getCarga();
-     $bolsa = $f->getBolsa();
-     $inicio = $f->getInicio();
-     $recisao = $f->getRecisao();
-     $idVaga = $f->getidVaga();
-     $cursoVaga = $f->getCursovaga();
-     $agente = $f->getAgente();
-     $idAluno = $f->getIdalunovaga();
-     $aluno = $f->getAluno();
- endforeach;
- foreach ($this->listaAcompanhamento as $f):
-     $idAcompanhamento = $f->getIdacompanhamento();
+ foreach ($this->listaVaga as $l):
+     $empresa = $l->getEmpresa();
+     $carga = $l->getCarga();
+     $bolsa = $l->getBolsa();
+     $inicio = $l->getInicio();
+     $recisao = $l->getRecisao();
+     $idVaga = $l->getidVaga();
+     $cursoVaga = $l->getCursovaga();
+     $agente = $l->getAgente();
+     $idAluno = $l->getIdalunovaga();
+     $aluno = $l->getAluno();
  endforeach;
 ?>
 <script>
@@ -224,20 +221,15 @@ function editarAcompanhamento(idDocumento){
     
     }
  </script>
-        <!--________________________________________Painel principal___________________________________-->
         <div class=" panel panel-primary">
         <div class="panel-heading">
-              <?= '<h4>'.$aluno.'</h4>'?>
+              <?= $aluno?>
             
         </div>
-        <!--___________________________________________________________________________________________ -->
-
-        <!--________________________________________navegação ________________________________________ -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation"><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Início</a></li>
+           <li role="presentation"><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Início</a></li>
            <li role="presentation" class="active"><a>Acompanhamento</a></li>
         </ul>
-        <!--__________________________________________________________________________________________-->
         <div class="navbar pager">
             <p><label>Agente de Integração: </label> <?= $agente?></p>
             <p><label>Empresa: </label> <?= $empresa?></p>

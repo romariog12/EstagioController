@@ -119,8 +119,7 @@ return array(
             'relatorio/relatorio-presencial/infopresencialalunoscadastrados'=> __DIR__ . '/../view/relatorioPresencial/index/infoPresencialAlunosCadastrados.phtml',
             'relatorio/relatorio-presencial/relatorio-grafico' => __DIR__ . '/../view/relatorioPresencial/index/relatorioGrafico.phtml',
             'relatorio/relatorio-presencial/infoestatisticas'=> __DIR__ . '/../view/relatorioPresencial/index/infoEstatisticas.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+         
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

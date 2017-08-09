@@ -57,16 +57,16 @@ $(function () {
    </ul>
     </div>
     <div class="caption">
-    <?php if(!empty($this->selecionarEmpresa)): foreach ($this->selecionarEmpresa as $f):  $idEmpresa = $f->getIdempresa(); ?>
+    <?php if(!empty($this->selecionarEmpresa)): foreach ($this->selecionarEmpresa as $l):  $idEmpresa = $l->getIdempresa(); ?>
         <?=
         '<div class="navbar pager">'.
             '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
-        '<h3 class="pager">'.  $f->getEmpresa().'</h3>'?>
+        '<h3 class="pager">'.  $l->getEmpresa().'</h3>'?>
             <span class=" center-block" id="rateYo"></span>
             <?=
-        '<p class="pager"><label>CNPJ:</label>'.  $f->getCnpj().'<br/>'
-            . '<label>Responável: </label> '. $f->getResponsavel().' '
-            . '<label> Telefone: </label> '.  $f->getTelefone().'<br/></div> ';
+        '<p class="pager"><label>CNPJ:</label>'.  $l->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $l->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $l->getTelefone().'<br/></div> ';
             
         ?>
     <?php endforeach; endif;?>

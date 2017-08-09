@@ -1,91 +1,74 @@
 <?php
-    $lista = $this->lista;
-    $listaVaga = $this->listaVaga;
-    $listaEncaminhamento = $this->listaEncaminhamento;
-if(!empty($lista)):
-    foreach ($lista as $f): 
-    $getidaluno = $f->getidAluno();
-    $nome = $f->getNome();
+    foreach ($this->lista as $l): 
+    $getidaluno = $l->getidAluno();
+    $nome = $l->getNome();
+    $email = $l->getEmail();
+    $telefone = $l->getTelefone();
+    $matricula = $l->getMatricula();
+    $curso = $l->getCurso();
     endforeach;
-endif;
-if (!empty($listaVaga)):
-    foreach ($listaVaga as $f): 
-    $curso = $f->getcursoVaga();
-    endforeach;              
-endif;
+    $th =[
+        '',
+        'Emrpesa',
+        'Processo',
+        'Excluir'
+    ];
+    $td = [];
+    foreach ($this->listaVagaPresencial as $l){
+        array_push($td,
+        [   
+            '<i class="fa fa-square situacao-'.$l->getSituacao().'" aria-hidden="true"></i>',
+            $l->getEmpresa(),
+            '<a href="'.$this->url('vagaPresencial/default', ['controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$l->getidvaga(),'curso'=>$l->getIdempresavaga()]).'" class="btn"><i class="fa fa-reorder"></i></a></td>',   
+            '<a  class="btn" href="'.$this->url('deleteVagaPresencial', array( 'action' => 'excluirvaga', 'iddelete' => $l->getidVaga())).'"><i class=" glyphicon glyphicon-remove" ></i></a></td>'
+        ]);
+    }
+    echo $this->painel('primary');
+    echo $this->painelTitulo($nome)
 ?>
-<div class="panel panel-primary ">
-  <div class=" panel-heading ">
-    <?= '<h4>'.$nome.'</h4>'?>
-  </div>
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Estágio</a></li>
-        </ul>
-       <?php if($lista): foreach ($lista as $f): ?>
+<ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Estágio</a></li>
+</ul>
+   
             <div class="pager">
-                <p><label> Curso: </label> <?= $f->getCurso(); ?> &nbsp;&nbsp; <label>Matricula: </label> <?= $f->getMatricula(); ?></p>
-                <p><label>Email: </label> <?= $f->getEmail(); ?> 
-                <label>Telefone: </label><?= $f->getTelefone(); ?></p> 
-            </div>     
-        <?php endforeach; endif;?>
-<?php if (!empty($this->listaVagaPresencial)){?>
-            <form method="post" >
-                <div class="tab-content ">
-                <div class="col-lg-12">
-                <div role="tabpanel" class="tab-pane fade in active" id="home"><br><br>
-                <div class="panel panel-primary ">
-                            <table class="table " >
-                                <tr>
-                                    <th></th>
-                                    <th>EMPRESA</th>
-                                    <th>PROCESSO</th>
-                                    <th></th>
-                                </tr>
-                                    <?php foreach ($this->listaVagaPresencial as $f):?>
-                                    <?php 
-                                    $idVaga = $f->getIdvaga();
-                                    if($f->getRecisao() !=(null)){ ?>
-                                <tr style=" background-color: #ffd8d8">
-                                    <td  style=" background-color:  #ab1c1c; text-align: center; width: 5px; color: #ab1c1c "></td>
-                                    <td><?= $f->getEmpresa(); ?></td>
-                                    <td><a href="<?= $this->url('vagaPresencial/default', ['controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(),'curso'=>$f->getIdempresavaga()]); ?>" class="btn"><i class="fa fa-reorder"></i></a></td>     
-                                    <td><a  class="btn" href="<?php echo $this->url('deleteVagaPresencial', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidVaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td>
-                                    <td  style=" background-color:  #ab1c1c; text-align: center; width: 5px; color: #ab1c1c "></td>
-                                </tr>
-                                    <?php } ?>
-                                    <?php  if($f->getRecisao() ==('')){ ?>
-                                <tr style=" background-color: #ecfeec">
-                                    <td  style=" background-color: #13c942; text-align: center; width: 5px;"></td>
-                                    <td><?= $f->getEmpresa(); ?></td>
-                                    <td><a href="<?= $this->url('vagaPresencial/default', ['controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga(),'curso'=>$f->getIdempresavaga()]); ?>" class="btn"><i class="fa fa-reorder"></i></a></td>     
-                                    <td><a class="btn" href="<?= $this->url('deleteVagaPresencial', ['action' => 'excluirvaga', 'iddelete' => $f->getidvaga()]) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
-                                    <td  style=" background-color: #13c942; text-align: center; width: 5px;"></td>
-                                </tr><?php } ?>
-                                    <?php endforeach;?>
-                            </table>
-                </div>
-                </div> 
-                </div>
-                        <div role="tabpanel" class="tab-pane fade" id="profile">hghjfghfgh </div>
-                        <div role="tabpanel" class="tab-pane fade" id="messages">.s fsdfs..</div>
-                        <div role="tabpanel" class="tab-pane fade" id="settings">..fss dfsfd sdf s df.</div>
-                </div>
-            </form>
-            <?php }
-            else{?>  <div class="alert-danger pager panel panel-danger col-lg-12">
-                    <br><h4>Nenhum estágio lançado</h4><br>      
-                </div>
-            <?php };?> 
-            <?= $this->resp; ?> 
+                <p><label> Curso: </label> <?= $curso; ?> &nbsp;&nbsp; <label>Matricula: </label> <?= $matricula; ?></p>
+                <p><label>Email: </label> <?= $email; ?> 
+                <label>Telefone: </label><?= $telefone; ?></p> 
+            </div>    
+               
+            <div class="col-lg-12">
+                <?php 
+                if(empty($this->listaVagaPresencial)){
+                    echo '<div class="pager alert alert-danger" role="alert" >Nenhum estágio lançado!</div>';
+                }else{
+                    echo $this->painel('primary');
+                    echo $this->tabela($th, $td);
+                    echo $this->painelFim();
+                }
+                ?>
+             </div>
             <div class=" well-lg">
-                    <a href="<?php echo $this->url('vagaPresencial/default', array('controller' => 'vagapresencial', 'action' => 'cadastrarvagapresencial', 'idVaga'=>$getidaluno)); ?>">
-                        <span class="btn btn-success ">
-                            <i class=" fa fa-plus fa-2x pull-left"></i>Nova<br>Vaga
-                        </span>
-                    </a><a href="<?php echo $this->url('administrador/default', ['controller'=>'administrador', 'action'=>'editarAlunoPresencial', 'id'=>$getidaluno,'page'=>0])?>">
-                        <span class="btn btn-primary ">
-                         <i class=" fa fa-edit fa-2x pull-left"></i>Editar<br>Perfil
-                        </span>
-                    </a>
-                </div>
+                <?php
+                echo $this->botaoGrande(
+                    $this->url('vagaPresencial/default', array('controller' => 'vagapresencial', 'action' => 'cadastrarvagapresencial', 'idVaga'=>$getidaluno)),
+                    'Nova <br> vaga',
+                    'fa-plus',
+                    'success'
+                ); 
+                echo ' ';
+                echo $this->botaoGrande(
+                     $this->url('administrador/default', ['controller'=>'administrador', 'action'=>'editarAlunoPresencial', 'id'=>$getidaluno,'page'=>0]),
+                    'Editar <br> perfil',
+                    'fa-edit',
+                    'primary'
+                ); 
+                ?>
             </div>
+<?= $this->painelFim()?>
+<script>
+$(document).ready(function(){
+$(".situacao-1").css("color","green");  
+$(".situacao-0").css("color","red");  
+});
+</script>
+<?= $this->resp ?> 

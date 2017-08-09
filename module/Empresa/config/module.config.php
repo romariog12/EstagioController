@@ -12,32 +12,6 @@ namespace Empresa;
 return array(
     'router' => array(
         'routes' => array(
-            'empresa' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/cadastrarEmpresa',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Empresa\Controller',
-                        'controller'    => 'Empresa',
-                        'action'        => 'cadastrarEmpresa',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:id]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
                 'painelEmpresa' => array(
                 'type'    => 'Literal',
                 'options' => array(

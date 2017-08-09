@@ -1,0 +1,34 @@
+<?=  $this->doctype(); ?>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+
+<?= $this->headTitle('UCB -  '. $this->translate('Projem'))->setSeparator(' - ')->setAutoEscape(false) ?>
+<?= $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge')?>
+<?= $this->headLink(['rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''])
+                ->prependStylesheet($this->basePath('css/bootstrap.css'))
+                ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                ->prependStylesheet($this->basePath('fonts/FontAwesome.otf'))
+                ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
+                ->prependStylesheet($this->basePath('css/style.css'))
+                ->prependStylesheet($this->basePath('css/home.css'))
+?>
+<?= $this->headScript()
+                ->prependFile($this->basePath('js/bootstrap.min.js'))
+                ->prependFile($this->basePath('js/jquery.min.js'))
+;?>
+</head>
+<body style="  background-color: #f2f2f2"> 
+   <?=  $this->partial('base/layout/nav-bar');?>
+    <div class="container" >
+        <?php
+            echo $this->content;
+            echo $this->inlineScript(); 
+        ?>
+    </div>
+    <div class="well">
+                <hr>
+                <?='&copy; Romário Macedo - '. date('Y'); ?>
+                <hr>
+        </div>
+</html>

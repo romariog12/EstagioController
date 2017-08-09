@@ -35,7 +35,7 @@ class Module
             ),
         );
     }
-       public function initSession($config)
+    public function initSession($config)
         {
             $sessionConfig = new SessionConfig();
             $sessionConfig->setOptions($config);
@@ -43,7 +43,7 @@ class Module
             $sessionManager->start();
             Container::setDefaultManager($sessionManager);
         }
-    public function init(ModuleManager $manager){
+    public function initAuthenticate(ModuleManager $manager){
     $events = $manager->getEventManager();
     $sharedEvents = $events->getSharedManager();
     $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($ev) {
@@ -51,7 +51,7 @@ class Module
         $controller->layout('Empresa/layout/layout');
         $auth = $ev->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
                     if(empty($auth->hasIdentity())){ 
-                     $controller->plugin('redirect')->toRoute('authEmpresa');
+                     return $controller->plugin('redirect')->toRoute('authEmpresa');
                     }
                     foreach ($auth->getIdentity()as $l){
                         $nivel = $l[0]->getNivel();
@@ -61,8 +61,4 @@ class Module
                     }  
     }, 100);
 }
-
-
-
-
 }

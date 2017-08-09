@@ -21,28 +21,12 @@ use Zend\Session\Container;
  */
 class AdministradorAbstractActionController extends \Zend\Mvc\Controller\AbstractActionController
 { 
-     private $session;
-   public function logout(){
+    
+    public function logout(){
          $auth = new AuthenticationService(); 
          if(empty($auth->hasIdentity())){
             return $this->redirect()->toRoute('auth');
            }
        return false;
-   }
-   public function acessoNegado(){
-         $auth = new AuthenticationService();
-           foreach ($auth->getIdentity() as $l){
-               $nivel = $l[0]->getNivel();
-               switch ($nivel):
-                   case 'u2':
-                       return $this->redirect()->toRoute('authEmpresa');
-                       endswitch;
-                    
-           } 
-   }
-   public function session(){
-          $this->session = new Container('namespace');
-          return $this->session;    
-        }
-    
+    }
 }

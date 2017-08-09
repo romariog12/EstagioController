@@ -40,13 +40,13 @@
              </tr>
       <?php
     
-        foreach ($this->pagination as $f){
-            if($f->getRecisao()== ''){ ?> 
+        foreach ($this->pagination as $l){
+            if($l->getRecisao()== ''){ ?> 
             <tr style="background-color: #c4ffc2;">
                     <td><a href="<?php echo $this->url('perfilPresencial/default', 
-                         array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$f->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a><?php echo $f->getAluno()?></td>
-                    <td><?php echo  $f->getEmpresa();?></td>
-                    <td><?php echo  $f->getAgente();?></td> 
+                         array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$l->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a><?php echo $l->getAluno()?></td>
+                    <td><?php echo  $l->getEmpresa();?></td>
+                    <td><?php echo  $l->getAgente();?></td> 
                  </tr>   
     <?php  } ?><?php };?>
           

@@ -25,17 +25,17 @@
         </div>
     </div>
 <div class="caption">
-    <?php if($this->empresaSelect): foreach ($this->empresaSelect as $f):  $idEmpresa = $f->getIdempresa(); ?>
+    <?php if($this->empresaSelect): foreach ($this->empresaSelect as $l):  $idEmpresa = $l->getIdempresa(); ?>
     
         <?=
         '<div class="navbar pager">'.
             '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
-        '<h3 class="pager">'.  $f->getEmpresa().'</h3>'?>
+        '<h3 class="pager">'.  $l->getEmpresa().'</h3>'?>
             <span class=" center-block" id="rateYo"></span>
             <?=
-        '<p class="pager"><label>CNPJ:</label>'.  $f->getCnpj().'<br/>'
-            . '<label>Responável: </label> '. $f->getResponsavel().' '
-            . '<label> Telefone: </label> '.  $f->getTelefone().'<br/></div> ';
+        '<p class="pager"><label>CNPJ:</label>'.  $l->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $l->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $l->getTelefone().'<br/></div> ';
         ?>
     <?php endforeach; endif;?>
 </div>
@@ -56,13 +56,13 @@
             <th><?= $this->translate("Agente de Integração")?></th>
             <th><?= $this->translate("Processo")?></th>
         </tr>
-    <?php foreach ($this->pagination   as $f):?>
-    <?php  if($f[0]->getRecisao() ==('')){ ?>
+    <?php foreach ($this->pagination   as $l):?>
+    <?php  if($l[0]->getRecisao() ==('')){ ?>
         
         <tr class="table" style="background: #8fee8f; ">
-            <td><?= $f[0]->getAluno()?></td>
-            <td><?= $f[0]->getAgente(); ?></td>
-            <td><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'processo','id'=>$f[0]->getIdalunovaga()])?>"><i class="fa fa-plus"></i></a></td>
+            <td><?= $l[0]->getAluno()?></td>
+            <td><?= $l[0]->getAgente(); ?></td>
+            <td><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'processo','id'=>$l[0]->getIdalunovaga()])?>"><i class="fa fa-plus"></i></a></td>
         </tr> 
         
     <?php } ?>

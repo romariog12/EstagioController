@@ -144,6 +144,7 @@ return array(
             'base/base-presencial/dados'           => __DIR__ . '/../view/basePresencial/dadosPresencial.phtml',
             'base/base-presencial/orientacao'           => __DIR__ . '/../view/basePresencial/orientacaoPresencial.phtml',
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'base/layout/nav-bar'           => __DIR__ . '/../view/layout/navBar.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
@@ -154,7 +155,16 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
-    
+    'view_helpers' => array(
+        'invokables' => array(
+            'tabela' => 'Base\View\Helper\tabela',
+            'painelTitulo' => 'Base\View\Helper\painelTitulo',
+            'painel' => 'Base\View\Helper\painel',
+            'painelFim' => 'Base\View\Helper\painelFim',
+            'paginacao' => 'Base\View\Helper\paginacao',
+            'botaoGrande' => 'Base\View\Helper\botaoGrande'
+      )
+        ),
     // Placeholder for console routes
     'console' => array(
         'router' => array(

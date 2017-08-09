@@ -2,17 +2,14 @@
 
 return array(
     'modules' => array(
+        'Base',
         'Auth',
         'Administrador',
         'Home',
         'Aluno',
         'Empresa',
-        'Oportunidade',
         'Vaga',
         'Relatorio',
-        'Base',
-        
-        
         'DoctrineModule',
         'DoctrineORMModule',
     

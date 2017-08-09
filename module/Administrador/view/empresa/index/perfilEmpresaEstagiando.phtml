@@ -19,12 +19,12 @@
     <div>
       <div class="caption">
          <?php if($this->empresaSelect):
-            foreach ($this->empresaSelect as $f):
-              $idEmpresa = $f[0]->getIdempresa();
+            foreach ($this->empresaSelect as $l):
+              $idEmpresa = $l[0]->getIdempresa();
           ?>
     <div class="navbar">
-        <h3 class="pager"> <?php echo $f[0]->getEmpresa(); ?></h3>
-       <p class="pager" style=""><label>CNPJ: </label> <?php echo $f[0]->getCnpj(); ?> <br/><label>Responável: </label>  <?php echo $f[0]->getResponsavel(); ?> <label>Telefone: </label>  <?php echo $f[0]->getTelefone(); ?><br/>
+        <h3 class="pager"> <?php echo $l[0]->getEmpresa(); ?></h3>
+       <p class="pager" style=""><label>CNPJ: </label> <?php echo $l[0]->getCnpj(); ?> <br/><label>Responável: </label>  <?php echo $l[0]->getResponsavel(); ?> <label>Telefone: </label>  <?php echo $l[0]->getTelefone(); ?><br/>
     </div>     
         <?php endforeach; endif;?>
       </div>
@@ -60,12 +60,12 @@
           <th>Agente de Integração</th>
       
         </tr>
-            <?php foreach ($this->pagination   as $f):?>
-            <?php  if($f->getRecisao() ==('')){ ?>
+            <?php foreach ($this->pagination   as $l):?>
+            <?php  if($l->getRecisao() ==('')){ ?>
         <tr class="table" style="background: #8fee8f; ">
-            <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $f->getAluno()?></td>
-            <td><?php echo $f->getEmpresa(); ?></td>
-            <td><?php echo $f->getAgente(); ?></td>
+            <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l->getIdalunovaga()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo $l->getAluno()?></td>
+            <td><?php echo $l->getEmpresa(); ?></td>
+            <td><?php echo $l->getAgente(); ?></td>
            
            
         </tr> <?php } ?>

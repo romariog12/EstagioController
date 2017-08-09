@@ -44,12 +44,12 @@ $lista = $this->lista;
                   <th>CNPJ</th>
                   <th></th>
                 </tr>
-                   <?php foreach ($lista as $f): ?>   
+                   <?php foreach ($lista as $l): ?>   
                 <tr  style="background: #cdffff">
-                  <td><?php echo $f[0]->getEmpresa(); ?></td>
-                  <td><?php echo $f[0]->getCnpj(); ?></td>
+                  <td><?php echo $l[0]->getEmpresa(); ?></td>
+                  <td><?php echo $l[0]->getCnpj(); ?></td>
                   <td><a href="<?php echo $this->url('perfilEmpresa/default', 
-                          array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$f[0]->getEmpresa(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
+                          array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$l[0]->getEmpresa(),)); ?>" class="btn"><i class="glyphicon glyphicon-ok-sign"></i></a></td>
                 </tr><?php endforeach; endif;?>
             </table></div>
         </form>

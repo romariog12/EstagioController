@@ -29,21 +29,12 @@ class Module
     }
     public function init(ModuleManager $manager)
 {
-    // Obtemos o gerenciador de eventos
+    
     $events = $manager->getEventManager();
-    
-    // Para obter os eventos compartilhados
     $sharedEvents = $events->getSharedManager();
-    
-    // Para definir o que precisamos disparar
-    // Utilizamos da variavel \Zend\Mvc\MvcEvent $e 
     $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e) {
 
-        // Quando o controlador for encontrado pelo ActionController
         $controller = $e->getTarget();
-       
-        // Podemos definir o laytout diretamente para qualquer 
-        // que seja o primeiro controller encontrado
         $controller->layout('Auth/layout/layout');
     }, 100);
 }

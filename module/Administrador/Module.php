@@ -3,6 +3,7 @@ namespace Administrador;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\ModuleManager;
+use Base\View\Helper\Constantes;
 
 class Module
 {
@@ -35,14 +36,15 @@ class Module
     $sharedEvents = $events->getSharedManager();
     $sharedEvents->attach(__NAMESPACE__ , 'dispatch', function($ev) {
                     $controller = $ev->getTarget();
+                    $controller ->layout('administrador/layout/layout');
                     $auth = $ev->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
                     if(empty($auth->hasIdentity())){ 
-                    $controller->plugin('redirect')->toRoute('auth');
+                    return $controller->plugin('redirect')->toRoute('auth');
                     }
                     foreach ($auth->getIdentity()as $l){
                         $nivel = $l[0]->getNivel();
                         switch ($nivel){
-                            case 'u2': 
+                            case Constantes::codigoEmpresa: 
                                 return  $controller->plugin('redirect')->toRoute('authEmpresa');
                         }
                     }

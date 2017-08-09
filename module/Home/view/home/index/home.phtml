@@ -1,63 +1,71 @@
-<?=
-    
-        $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''))->prependStylesheet($this->basePath('css/home.css'));
-        $this->headLink(array('rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''))->prependStylesheet($this->basePath('css/bootstrap-toggle.min.css'));
-        $this->headScript()->prependFile($this->basePath('js/home.js'));
-?>
-<style>
-    .principal{
-    font-size: 50px
-}
-</style>
-        <div id="informacao">
-            <br/>
-            <div class="pager">
-                 <img src="<?=$this->basePath('img/ucb_logo.png')?>" class="img-circle " alt="Cinque Terre" width="70" height="70">
-        
-            </div>
-           
-            <div class="pager" style=" color: white;">
-              <h4  >Bem Vindo(a) </h4>
-                <h3  style=" color: #fff194"><?php 
-                    foreach ( $this->identityComum as $l){
-                        echo $l[0]->getNome()      
-                       ;
-                    }?>
-                </h3>
-              <br/>  
-            </div>
-            <div style=" color: white; " class=" pager">
-                <div id="div1" onmousemove="return mouseMove('1')">
-                    <br/>
-                     <a style=" color:white; " href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosalunospresencial']) ?>">
-                        <span><p><i  class="fa fa-mortar-board principal" aria-hidden="true"></i></p></span></a>
-                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de alunos</h5>
-                 </div>
-                <div id="div2"  onmousemove="return mouseMove('2')">
-                    <br/>
-                      <a style=" color:white" href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">
-                    <span><p><i class="fa fa-briefcase principal" aria-hidden="true"></i></p></span></a>
-                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de empresas</h5>
-            
-                 </div>
-                <div id="div3" onmousemove="return mouseMove('3')">
-                    <br/> <a style=" color:white" href="<?php echo $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial', 'id'=>'1']) ?>">
-                         <span><p><i  class="fa fa-archive principal" aria-hidden="true"></i></p></span></a>
-                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de documentos</h5>
-          
-                </div>
-                <div  id="div4" onmousemove="return mouseMove('4')">
-                    <br/> <a style=" color:white" href="<?php echo $this->url('usuarios') ?>">
-                         <span><p><i  class="fa fa-users principal" aria-hidden="true"></i></p></span></a>
-                        <h5 style=" color: #fff194"><i class=" fa fa-cogs" style=" color: white"></i> Controle de acessos</h5>
-                </div>
-                  <div id="div5" onmousemove="return mouseMove('5')">
-                    <br/> <a style=" color:white" href="<?php echo $this->url('dadosPresencial') ?>">
-                         <span><p><i  class="fa fa-refresh principal" aria-hidden="true"></i></p></span></a>
-                        <h5 style=" color: #fff194"> Atualizar dados</h5>
-                </div>
-            </div>
+<div id="informacao">
+    <div class="pager in well-lg">
+        <?= $this->translate("Bem-Vindo(a)")?>
+        <?='<h3 class="in1">'. $this->escapeHtml($this->nome).'</h3>'?> 
+    </div>
+    <div class=" pager in">
+        <a class=" in" href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos','id'=> '1']) ?>">
+        <div id="div1" <?= $this->mouseMove('mouseMove','1')?>><br/>
+            <i  class="fa fa-mortar-board principal" aria-hidden="true"></i>
+            <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de alunos")?></h5>
         </div>
-        
-
-
+        </a>
+        <a class=" in" href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa','id'=> '1']) ?>">
+        <div id="div2"  <?= $this->mouseMove('mouseMove','2')?>><br/>
+            <i class="fa fa-briefcase principal" aria-hidden="true"></i>
+            <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de empresas")?></h5>
+        </div>
+        </a>
+        <a class=" in" href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial', 'id'=>'1']) ?>">
+            <div id="div3" <?= $this->mouseMove('mouseMove','3')?>><br/>
+                <i  class="fa fa-archive principal" aria-hidden="true"></i>
+                <h5 class="in1"><i class=" fa fa-cogs in"></i> <?= $this->translate("Controle de documentos")?></h5>
+            </div>
+        </a>
+        <a class=" in" href="<?= $this->url('usuarios')?>">
+        <div  id="div4" <?= $this->mouseMove('mouseMove','4')?>><br/>
+            <i  class="fa fa-users principal" aria-hidden="true"></i>
+            <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de acessos")?></h5>
+        </div>
+        </a>    
+        <a class=" in" href="<?= $this->url('dadosPresencial') ?>">
+         <div id="div5" <?= $this->mouseMove('mouseMove','5')?>><br/>
+             <i  class="fa fa-refresh principal" aria-hidden="true"></i>
+                <h5 class="in1">  <?= $this->translate("Atualizar dados")?></h5>
+        </div>
+       </a>
+    </div>
+</div>
+<script>
+ $(document).ready(function(){
+    $(".principal").css("font-size","60px");
+    $(".in").css("color","white");
+    $(".in1").css("color","#fff194");
+    for(var x=0; x<=5; x++){
+    $("#div"+x).addClass("img-thumbnail img-rounded")
+            .css({
+               background: '#0089cd', 
+               width: '200'  
+            });
+    };
+    $("#informacao").css({
+        'background-color': '#0089cd',
+        'background-position': 'center',
+         height: '400'
+    }); 
+});
+function mouseMove(x){
+        $("#div"+x).css({
+        background: '#33c2fc', color: 'white'
+    }).click(function(){
+         $("img").attr("src","img/loader.gif");
+    });
+    $("#div"+x).mouseout(function(){
+        $("#div"+x).removeAttr("style")
+        .css({
+        background: '#0089cd',
+        width: '200'
+    });
+    });
+}   
+</script>

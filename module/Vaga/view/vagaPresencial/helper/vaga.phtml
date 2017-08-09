@@ -1,0 +1,23 @@
+ <?php 
+ foreach ($this->listaVaga as $l):
+     $dadosVaga = [
+        'empresa' => $l->getEmpresa(),
+        'carga' =>$l->getCarga(),
+        'bolsa' =>$l->getBolsa(),
+        'inicio'=> $l->getInicio(),
+        'recisao'=>$l->getRecisao(),
+        'idVaga'=>$l->idVaga(),
+        'cursoVaga' =>$l->getCursovaga(),
+        'agente' => $l->getAgente(),
+        'idAluno' => $l->getIdalunovaga(),
+        'aluno' => $l->getAluno()
+     ];
+ endforeach;
+
+?>
+<?php
+if(__){
+    echo $this->partial('home/index/home', $dadosUsuario);
+}
+    
+

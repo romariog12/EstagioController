@@ -18,13 +18,13 @@
     <div class="thumbnail">
       <div class="caption">
          <?php if($lista):
-            foreach ($lista as $f): 
-             $getidaluno = $f->getidAluno();
+            foreach ($lista as $l): 
+             $getidaluno = $l->getidAluno();
           ?>
             
     <div class="navbar">
-        <h3 class="pager"> <i class=" glyphicon glyphicon-user" style="color: #3333ff"></i> <?php echo $f->getNome(); ?></h3>
-        <p class="pager" style=""><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;<?php echo $f->getCurso(); ?> &nbsp;&nbsp; <i class="glyphicon glyphicon-bookmark"></i>  <?php echo $f->getMatricula(); ?></p>
+        <h3 class="pager"> <i class=" glyphicon glyphicon-user" style="color: #3333ff"></i> <?php echo $l->getNome(); ?></h3>
+        <p class="pager" style=""><i class="glyphicon glyphicon-book"></i>&nbsp;&nbsp;<?php echo $l->getCurso(); ?> &nbsp;&nbsp; <i class="glyphicon glyphicon-bookmark"></i>  <?php echo $l->getMatricula(); ?></p>
        
         <br/>
     </div>
@@ -55,19 +55,19 @@
           <th>CONTRATOS</th>
           <th>EXCLUIR</th>
         </tr>
-            <?php foreach ($listaVaga as $f):?>
-            <?php  if($f->getRecisao() !=(null)){ ?>
+            <?php foreach ($listaVaga as $l):?>
+            <?php  if($l->getRecisao() !=(null)){ ?>
         <tr class="table" style="background: #ab1c1c; color: white">
             <?php } ?>
             
-            <?php  if($f->getRecisao() ==('')){ ?>
+            <?php  if($l->getRecisao() ==('')){ ?>
         <tr class="table" style="background: #8fee8f; ">
             <?php } ?>
-            <td><?php echo $f->getidvaga();?></td>
-            <td><?php echo $f->getEmpresa(); ?></td>
-            <td><?php echo $f->getAgente(); ?></td>
-            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$f->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
-            <td><a  class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $f->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
+            <td><?php echo $l->getidvaga();?></td>
+            <td><?php echo $l->getEmpresa(); ?></td>
+            <td><?php echo $l->getAgente(); ?></td>
+            <td><a href="<?php echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$l->getidvaga())); ?>" class="btn"><i class="glyphicon glyphicon-ok"></i></a></td>     
+            <td><a  class="btn" href="<?php echo $this->url('delete', array( 'action' => 'excluirvaga', 'iddelete' => $l->getidvaga())) ?>"><i class=" glyphicon glyphicon-remove" ></i></a></td> 
         </tr> 
             <?php endforeach;?>
     </table>      

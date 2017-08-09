@@ -34,11 +34,11 @@
                  <th>Perfil</th>
                  <th>Matricula</th>
                  <th>Telefone</th>
-             </tr> <?php  foreach ($this->pagination as $f){?>
+             </tr> <?php  foreach ($this->pagination as $l){?>
                  <tr  style=" background-color: #c8fdff">  
-                    <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f[0]->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo  $f[0]->getNome();?></td>
-                    <td><?= $f[0]->getMatricula();?></td>  
-                    <td><?=  $f[0]->getTelefone();?></td> 
+                    <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo  $l[0]->getNome();?></td>
+                    <td><?= $l[0]->getMatricula();?></td>  
+                    <td><?=  $l[0]->getTelefone();?></td> 
                  </tr><?php  } ?>
          </table>
           </div>
@@ -101,12 +101,12 @@
                  
         <table class="table">
                  
-                   <?php foreach ($this->lista as $f): ?>   
+                   <?php foreach ($this->lista as $l): ?>   
                 <tr  style=" background-color: #c8fdff">  
-                    <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$f[0]->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo  $f[0]->getNome();?></td>
+                    <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdaluno()])?>"><i class="glyphicon glyphicon-user"></i></a> <?php echo  $l[0]->getNome();?></td>
                    
-                    <td><?php echo  $f[0]->getMatricula();?></td>  
-                    <td><?php echo  $f[0]->getTelefone();?></td> 
+                    <td><?php echo  $l[0]->getMatricula();?></td>  
+                    <td><?php echo  $l[0]->getTelefone();?></td> 
                  </tr><?php endforeach; endif;?>
         </table>
            </form>

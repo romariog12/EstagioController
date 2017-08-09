@@ -42,6 +42,7 @@ class Module
     $sharedEvents = $events->getSharedManager();
     $sharedEvents->attach(__NAMESPACE__ , 'dispatch', function($ev) {
                     $controller = $ev->getTarget();
+                    $controller ->layout('Home/layout/layout');
                     $auth = $ev->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
                     if(empty($auth->hasIdentity())){ 
                     $controller->plugin('redirect')->toRoute('auth');

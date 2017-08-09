@@ -1,59 +1,35 @@
+<?php
+$th =[
+    'Agente de Integração',
+    'Telefone',
+    'Editar',
+    'Excluir',
+    ];
+$td = [];
+foreach ($this->pagination as $kay=> $l){
+    array_push($td,
+    array(
+        $l->getAgente(),
+        $l->getTelefone(),
+        '<a href="'.$this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarAgente', 'id'=>$l->getIdagente())).'"><i class=" glyphicon glyphicon-edit"></i></a></td>',
+        '<a onclick="return confirm("Tem certeza que deseja deletar este registro?")" style="color: #c81616" href="'. $this->url('excluirAgente',['action'=>'excluirAgente', 'deleteAgente'=>$l->getIdagente(),'page'=>$this->pageNumber] ).'"><i  class=" glyphicon glyphicon-remove"></i></a>'
+        ));
+}
+?>
 <div class=" panel panel-primary">
-        <div class="panel-heading">
-            <h4 style="color: white; text-align: center"><i class=" fa fa-suitcase" ></i> Agentes de Integração</h4>
-        </div>
-    <div >
-            <div>
-                <div >
+       <?= $this->painel('Agentes de Integração')?>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li   role="presentation"><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">Empresas Concedente <span class="label label-default"> <?php echo count($this->listaEmpresa)?></span></a> </li>
                         <li class=" active" role="presentation" ><a href="#"><label>Agentes de Integração</label> <span class="label label-primary"> <?php echo count($this->listaAgente)?></span></a></li>     
                     </ul> 
                 </div>
-              </div>
-            </div>
-        </div>
-    <div class="nav">
-      <div class="caption">
-        <table class="table">
-            <tr>
-                <th>Agente de Integração </th>
-                <th>Telefone</th>
-                <th>Editar</th>
-                <th>Excluir</th>
-                
-            </tr>
-                <?php foreach ($this->pagination as $l):?>
-            <tr>
-                <td><?php echo $l->getAgente()?></td>
-                 <td><?php echo $l->getTelefone()?></td>
-                <td><a href="<?php echo $this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarAgente', 'id'=>$l->getIdagente()))?>"><i class=" glyphicon glyphicon-edit"></i></a></td>
-                <td><a onclick="return confirm('Tem certeza que deseja deletar este registro?')" style="color: #c81616" href="<?php echo $this->url('excluirAgente',['action'=>'excluirAgente', 'deleteAgente'=>$l->getIdagente(),'page'=>$this->pageNumber] )?>"><i  class=" glyphicon glyphicon-remove"></i></a></td>
-            </tr><?php    endforeach;?>
-
-        </table>     
-      </div>
-    </div>
+  
+        <?= '<br><div class="col-lg-12">'?>
+        <?= $this->tabela($th, $td)?>
+        <?= $this->paginacao($this->pageNumber,$this->count)?>
+        <?= '</div>'?>
     
-    <nav aria-label="Page navigation">
-         <ul  class="pager">
-             <li  <?php if ($this->pageNumber == 1|| $this->pageNumber == 0 ){
-     echo "class='disabled'". "style='pointer-events: none'";
-    }
-    ?>>
-      <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
-          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
-      </a>
-    </li>
-    <li  <?php if ($this->pageNumber >= $this->count){ echo "class='disabled'". "style='pointer-events: none'";}?>>
-      <a href="<?php echo $this->pageNumber + 1?>" aria-label="Next">
-          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
-      </a>
-    </li> 
-  </ul>
-          
-</nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
   <div class="well-lg ">
         <a href="<?= $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>">
             <span class="btn btn-success  ">

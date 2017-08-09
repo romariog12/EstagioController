@@ -101,10 +101,10 @@ $idaluno = $this->idaluno;
                             <div class="aluno col-sm-5 col-sm-offset-1">
                                 <label for="aluno" >Aluno </label> <i style=" display: none;"  class=" aluno-valid glyphicon glyphicon-ok-circle"></i>
                                     <?php 
-                                        foreach ($this->aluno as $f):
+                                        foreach ($this->aluno as $l):
                                             echo $this->formRow($this->vagaForm->get("aluno")
                                                 ->setValueOptions([
-                                                $f->getNome() => $f->getNome()
+                                                $l->getNome() => $l->getNome()
                                                 ])
                                                 ->setAttribute('class', 'form-control')
                                                 ->setAttribute('id', 'aluno'));
@@ -127,8 +127,8 @@ $idaluno = $this->idaluno;
                                 <label for="agente"><?= $this->translate('Agente ')?></label> <i style=" display: none;"  class=" agente-valid glyphicon glyphicon-ok-circle"></i>
                                     <select name="agente" id="agente" class="form-control" >
                                         <?=  '<option>N/C</option>';
-                                        foreach ($this->listaAgente as $f): 
-                                        echo '<option>'.$f->getAgente().'</option>';
+                                        foreach ($this->listaAgente as $l): 
+                                        echo '<option>'.$l->getAgente().'</option>';
                                         endforeach; ?>  
                                     </select>
                             </div>
@@ -136,8 +136,8 @@ $idaluno = $this->idaluno;
                                 <label for="empresa"><?= $this->translate('Empresa ')?></label> <i style=" display: none;"  class=" empresa-valid glyphicon glyphicon-ok-circle"></i>
                                     <select name="empresa" id="empresa" class="form-control" >
                                         <?=  '<option></option>';
-                                        foreach ($listaEmpresa as $f): 
-                                        echo '<option>'.$f->getEmpresa().'</option>';
+                                        foreach ($listaEmpresa as $l): 
+                                        echo '<option>'.$l->getEmpresa().'</option>';
                                         endforeach; ?>  
                                     </select>
                             </div>

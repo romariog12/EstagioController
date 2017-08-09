@@ -27,16 +27,16 @@ $(function () {
 </div>
 <div class="row">
     <div class="caption">
-        <?php if($this->identidade): foreach ($this->identidade as $f):  $idEmpresa = $f->getIdempresa(); ?>
+        <?php if($this->identidade): foreach ($this->identidade as $l):  $idEmpresa = $l->getIdempresa(); ?>
          <?=
         '<div class="navbar pager">'.
             '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
-        '<h3 class="pager">'.  $f->getEmpresa().'</h3>'?>
+        '<h3 class="pager">'.  $l->getEmpresa().'</h3>'?>
             <span class=" center-block" id="rateYo"></span>
             <?=
-        '<p class="pager"><label>CNPJ:</label>'.  $f->getCnpj().'<br/>'
-            . '<label>Responável: </label> '. $f->getResponsavel().' '
-            . '<label> Telefone: </label> '.  $f->getTelefone().'<br/></div> ';
+        '<p class="pager"><label>CNPJ:</label>'.  $l->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $l->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $l->getTelefone().'<br/></div> ';
         ?>
         <?php endforeach; endif;?>
     </div>
@@ -62,21 +62,21 @@ $(function () {
                 <th><?= $this->translate("Agente de Integração")?></th>
                 <th><?= $this->translate("Processo")?></th>
             </tr>
-                <?php foreach ($this->pagination   as $f):?>
+                <?php foreach ($this->pagination   as $l):?>
                 <?php 
 
-             if($f->getRecisao() !=(null)){ ?>
+             if($l->getRecisao() !=(null)){ ?>
             <tr class="table" style="background:  #b70909; color: white">
-                <td><?= $f->getAluno()?></td>
-                <td><?= $f->getAgente(); ?></td>
-                <td><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'processo','id'=>$f->getIdalunovaga()])?>"><i class="fa fa-plus"></i></a></td>
+                <td><?= $l->getAluno()?></td>
+                <td><?= $l->getAgente(); ?></td>
+                <td><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'processo','id'=>$l->getIdalunovaga()])?>"><i class="fa fa-plus"></i></a></td>
              </tr>
                 <?php } ?>
-                <?php  if($f->getSituacao() =='1'){ ?>
+                <?php  if($l->getSituacao() =='1'){ ?>
              <tr class="table" style="background: #cafaca; ">
-                <td><?= $f->getAluno()?></td>
-                <td><?= $f->getAgente(); ?></td>  
-                <td><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'processo','id'=>$f->getIdalunovaga()])?>"><i class="fa fa-plus"></i></a></td>
+                <td><?= $l->getAluno()?></td>
+                <td><?= $l->getAgente(); ?></td>  
+                <td><a href="<?= $this->url('painelEmpresa/default',['controller'=>'empresa', 'action'=>'processo','id'=>$l->getIdalunovaga()])?>"><i class="fa fa-plus"></i></a></td>
             </tr> <?php } ?>
                 <?php
                 endforeach;?>
