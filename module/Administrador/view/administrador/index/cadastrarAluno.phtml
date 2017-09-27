@@ -1,0 +1,139 @@
+<?php
+use Base\Model\Constantes;
+    $cursos = [];
+    foreach ($this->listaCursos as $l):
+    $cursos[$l->getCurso()] = $l->getCurso();
+    endforeach;
+?>
+<script>
+$(document).ready(function(){
+ $("#alunoForm").validate({
+        highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success");
+        $("."+element.id+"-valid").addClass("glyphicon glyphicon-ok-circle");
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        },
+        errorElement: "em",
+        messages: {
+        nome: 'Campo Obrigatório',
+        matricula: 'Campo Obrigatório',
+        cpf: 'CPF inválido',
+        email: 'E-mail inválido',
+        telefone:'Telefone inválido',
+        curso:'Campo Obrigatório'
+        },
+        rules:{
+        nome: {
+           required: true
+        },
+        matricula: {
+           required: true
+        },
+        telefone:{
+            required: true,
+            max: 99999999999999,
+            min: 111111111
+        },
+        cpf:{
+            required: true,
+            rangelength: [11, 11],
+            max: 99999999999
+        },
+        email:{
+            required: true,
+            email: true
+        },
+        curso:{
+            required: true
+        }
+        }
+    });
+    $(".glyphicon-ok-circle").css("display", "none");
+});
+</script>
+    <?=
+        $this->painel(Constantes::temaBootstrap).
+        $this->painelTitulo("Editar aluno").
+        '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
+        $this->alunoForm->prepare();
+        echo $this->form()->openTag($this->alunoForm);
+        ?>
+        <div class="col-lg-12">
+            <div class="col-sm-5 col-sm-offset-1 nome">
+                <i  class="nome-valid"></i>
+                 <?= $this->formRow($this->alunoForm->get('nome')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'nome')
+                         ->setLabel('Nome'))
+                         ?>
+                <br/>
+            </div>
+            <div class="col-sm-3 matricula">
+                <i   class="matricula-valid"></i>
+                <?= $this->formRow($this->alunoForm->get('matricula')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'matricula')
+                         ->setLabel('Matricula'))
+                         ?>
+                <br/>
+            </div>
+            <div class=" col-sm-3 cpf">
+                <i class="cpf-valid"></i>
+                 <?= $this->formRow($this->alunoForm->get('cpf')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'cpf')
+                         ->setLabel('Cpf'))
+                         ?>
+                <br/>
+            </div>
+            <div class="col-sm-3 email col-sm-offset-1">
+              <i class=" email-valid "></i>
+              <?= $this->formRow($this->alunoForm->get('email')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'email')
+                        ->setLabel('Email'))
+                        ?>
+               <br/>
+           </div>
+            <div class="col-sm-4  telefone">
+                <i class=" telefone-valid"></i>
+                 <?= $this->formRow($this->alunoForm->get('telefone')
+                             ->setAttribute('class', 'form-control')
+                             ->setAttribute('id', 'telefone')
+                             ->setLabel('Telefone'))
+                             ?>
+                    <br/>
+            </div>
+            <div class="col-sm-4  curso ">
+               <i  class=" curso-valid"></i>
+                <?= $this->formRow($this->alunoForm->get('curso')
+                         ->setAttribute('id', 'curso')
+                         ->setLabel('Curso')
+                         ->setValueOptions($cursos))
+                         ?>
+                <br/>
+            </div>
+        </div>
+    <?=         '<div class="well-lg col-sm-offset-1">'.
+                $this->formRow($this->alunoForm->get('salvar')
+                            ->setAttribute('id', 'salvar')
+                            ->setAttribute('value', 'Salvar')
+                            ->setAttribute('class', 'btn btn-success')
+                            ->setAttribute('type', 'submit')
+                            ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro')).
+                
+                '</div>'. 
+    $this->form()->closeTag();
+    echo $this->painelFim();

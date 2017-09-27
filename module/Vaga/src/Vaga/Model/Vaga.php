@@ -14,16 +14,20 @@ use Zend\InputFilter\InputFilter;
      public $carga;
      public $bolsa;
      public $inicio;
-     protected $inputFilter;                       // <-- Add this variable
+     protected $inputFilter;                       
 
      public function exchangeArray($data)
      {
-         $this->id     = (isset($data['id']))     ? $data['id']     : null;
-         $this->artist = (isset($data['artist'])) ? $data['artist'] : null;
-         $this->title  = (isset($data['title']))  ? $data['title']  : null;
+         $this->aluno     = (isset($data['aluno']))     ? $data['aluno']     : null;
+         $this->curso = (isset($data['curso'])) ? $data['curso'] : null;
+         $this->empresa  = (isset($data['empresa']))  ? $data['empresa']  : null;
+         $this->agente    = (isset($data['agente']))     ? $data['agente']     : null;
+         $this->carga = (isset($data['carga'])) ? $data['carga'] : null;
+         $this->bolsa  = (isset($data['bolsa']))  ? $data['bolsa']  : null;
+         $this->inicio  = (isset($data['inicio']))  ? $data['inicio']  : null;
      }
 
-     // Add content to these methods:
+     
      public function setInputFilter(InputFilterInterface $inputFilter)
      {
          throw new \Exception("Not used");

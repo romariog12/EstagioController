@@ -14,13 +14,13 @@ use Zend\InputFilter\InputFilter;
 class LancarDocumento implements InputFilterAwareInterface{
    
     public $inicioEnc;
-    public $fimEnc;
+    public $editarFim;
+    public $editarDocumento;
     protected $inputFilter; 
-    public function exchangeArray($data)
-     {
-       
+    public function exchangeArray($data){
          $this->inicioEnc = (isset($data['inicioEnc'])) ? $data['inicioEnc'] : null;
          $this->fimEnc  = (isset($data['fimEnc']))  ? $data['fimEnc']  : null;
+         $this->documento  = (isset($data['documento']))  ? $data['documento']  : null;
      }
      
     public function getInputFilter() {
@@ -63,6 +63,24 @@ class LancarDocumento implements InputFilterAwareInterface{
                      ),
                  ),
              ));
+             $inputFilter->add(array(
+                 'name'     => 'documento',
+                 'required' => true,
+                 'filters'  => array(
+                     array('name' => 'StripTags'),
+                     array('name' => 'StringTrim'),
+                 ),
+                 'validators' => array(
+                     array(
+                         'name'    => 'StringLength',
+                         'options' => array(
+                             'encoding' => 'UTF-8',
+                             'min'      => 1,
+                             'max'      => 100,
+                         ),
+                     ),
+                 ),
+             ));
 
              $this->inputFilter = $inputFilter;
          }
@@ -74,6 +92,4 @@ class LancarDocumento implements InputFilterAwareInterface{
     public function setInputFilter(InputFilterInterface $inputFilter) {
          throw new \Exception("Not used");
     }
-
-//put your code here
 }

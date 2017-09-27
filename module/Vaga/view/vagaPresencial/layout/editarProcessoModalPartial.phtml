@@ -1,0 +1,43 @@
+<?php
+$this->editarDocumentoForm->prepare();
+?>
+<div class="modal fade" id="<?= 'modal-editar-'.$this->idDocumento?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <?= $this->painel(\Base\Model\Constantes::temaBootstrap)?> 
+                <h4 class="modal-title panel panel-heading " id="myModalLabel">
+                    Editar 
+                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </h4>
+           
+                <div class="modal-body "> 
+        <?=    $this->form()->openTag($this->editarDocumentoForm);  ?>
+                        <div class="input-daterange date">
+                        <?= $this->formRow($this->editarDocumentoForm->get('editarInicio')
+                                ->setAttribute('id','editarInicio-'.$this->idDocumento)
+                                ->setAttribute('required', 'true')
+                                ->setAttribute('class', 'form-control date')
+                                ->setAttribute('value', date_format($this->inicio, 'Y-m-d'))
+                                ->setLabel('Inicio')).
+                            $this->formRow($this->editarDocumentoForm->get('editarFim')
+                                ->setAttribute('id','editarFim-'.$this->idDocumento)
+                                ->setAttribute('required', 'true')
+                                ->setAttribute('class', 'form-control date')
+                                ->setAttribute('value', date_format($this->fim, 'Y-m-d'))
+                                ->setLabel('Fim')).
+                            $this->formRow($this->editarDocumentoForm->get('editarDocumento')
+                                ->setAttribute('class', 'form-control')
+                                ->setAttribute('id', 'editarTipo-'.$this->idDocumento)
+                                ->setLabel('Documento')      
+                            );
+                        ?>
+                        </div>
+                       
+                </div>
+                        <div class="pager well">
+                            <span onclick="return editarDocumento(<?= $this->idDocumento?>)" class="btn btn-success btn-edit">Salvar</span>
+                        </div> <?=   $this->form()->closeTag();  ?> 
+            <?= $this->painelFim()?>
+        </div>
+    </div>
+</div>

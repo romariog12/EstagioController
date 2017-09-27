@@ -145,39 +145,33 @@ class EmpresaController extends AdministradorAbstractActionController
                 }
                 
                 }
-public function perfilEmpresaAction(){
-      $vaga = new VagaPresencial();
-      $em = $this->getServiceLocator()->get(Entity::em);
-      $empresa = $this->params()->fromRoute("id", 0);
-      $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByEmpresa($empresa);
-     
-      $empresaSelect = $em->getRepository(Entity::empresa)->findByEmpresa($empresa);
-      $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndEmpresa('',$empresa);
-      
-        foreach ($listaVaga as $l){
+    public function perfilEmpresaAction(){
+        $em = $this->getServiceLocator()->get(Entity::em);
+        $idEmpresa = $this->params()->fromRoute("id", 0);
+        $selecionarVaga = $em->getRepository(Entity::vaga)->findByIdempresa($idEmpresa);
+        $selecionarEmpresa = $em->find(Entity::empresa, $idEmpresa);
+        $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findBySituacaoAndIdEmpresaVaga('1',$idEmpresa);
+        foreach ($selecionarVaga as $l){
                              $idVaga = $l->getidvaga();
-                             $vaga->setIdvaga($idVaga);
                     }
-             
-          $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumento($vaga->getIdvaga());
-       
-        $page = $this->params()->fromRoute("idVaga", 0);
-            $pagination = new Paginator( new ArrayAdapter($listaVaga));
+            $listaDocumento = $em->getRepository(Entity::documento)->findByIdvagaDocumento($idVaga);
+            $page = $this->params()->fromRoute("idVaga", 0);
+            $pagination = new Paginator( new ArrayAdapter($selecionarVaga));
             $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
-                $count = $pagination->count();
-                $pageNumber = $pagination->getCurrentPageNumber();
-                $getPages = $pagination->getPages();
+            $count = $pagination->count();
+            $pageNumber = $pagination->getCurrentPageNumber();
+            $getPages = $pagination->getPages();
         
  
                  return new ViewModel([
-                        'listaVaga'=>$listaVaga,
-                        'empresaSelect'=>$empresaSelect,
+                        'listaVaga'=>$selecionarVaga,
+                        'empresaSelect'=>$selecionarEmpresa,
                         'listaDocumento'=>$listaDocumento,
                         'getPages'=>$getPages,
                         'pageNumber'=>$pageNumber,
                         'count'=>$count,
                         'pagination'=>$pagination,
-                        'empresa'=>$empresa,
+                        'empresa'=>$idEmpresa,
                         'listaVagaEstagiando'=>$listaVagaEstagiando
                 ]);        
         }
@@ -186,16 +180,16 @@ public function perfilEmpresaAction(){
       $vaga = new VagaPresencial();
       $em = $this->getServiceLocator()->get(Entity::em);
       $empresa = $this->params()->fromRoute("id", 0);
-      $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByEmpresa($empresa);
+      $listaVaga = $em->getRepository(Entity::vaga)->findByEmpresa($empresa);
       $empresaSelect = $em->getRepository(Entity::empresa)->findByEmpresa($empresa);
-      $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndEmpresa('',$empresa);
+      $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findByRecisaoAndEmpresa('',$empresa);
       
       
         foreach ($listaVaga as $l){
                              $idVaga = $l->getidvaga();
                              $vaga->setIdvaga($idVaga);
                     }
-        $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumento($vaga->getIdvaga());
+        $listaDocumento = $em->getRepository(Entity::documento)->findByIdvagaDocumento($vaga->getIdvaga());
        
         $page = $this->params()->fromRoute("idVaga", 0);
             $pagination = new Paginator( new ArrayAdapter($listaVaga));
@@ -222,7 +216,7 @@ public function perfilEmpresaAction(){
       $vaga = new VagaPresencial();
       $em = $this->getServiceLocator()->get(Entity::em);
       $empresa = $this->params()->fromRoute("id", 0);
-      $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByEmpresa($empresa);
+      $listaVaga = $em->getRepository(Entity::vaga)->findByEmpresa($empresa);
       $empresaSelect = $em->getRepository(Entity::empresa)->findByEmpresa($empresa);
       
         foreach ($listaVaga as $l){
@@ -230,8 +224,8 @@ public function perfilEmpresaAction(){
                              $vaga->setIdvaga($idVaga);
                     }
                 
-        $listaDocumento = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumento($vaga->getIdvaga());
-        $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndEmpresa('',$empresa);
+        $listaDocumento = $em->getRepository(Entity::documento)->findByIdvagaDocumento($vaga->getIdvaga());
+        $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findByRecisaoAndEmpresa('',$empresa);
                  
         $page = $this->params()->fromRoute("idVaga", 0);
             $pagination = new Paginator( new ArrayAdapter($listaVaga));

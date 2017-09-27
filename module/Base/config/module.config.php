@@ -118,7 +118,7 @@ return array(
         ),
     ),
     'translator' => array(
-        'locale' => 'en_US',
+        'locale' => 'pt_BR',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',
@@ -143,6 +143,7 @@ return array(
             'base/base/dados'           => __DIR__ . '/../view/base/dados.phtml',
             'base/base-presencial/dados'           => __DIR__ . '/../view/basePresencial/dadosPresencial.phtml',
             'base/base-presencial/orientacao'           => __DIR__ . '/../view/basePresencial/orientacaoPresencial.phtml',
+            'base/index/respostaCadastro'           => __DIR__ . '/../view/base/respostaCadastro.phtml',
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'base/layout/nav-bar'           => __DIR__ . '/../view/layout/navBar.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
@@ -162,7 +163,14 @@ return array(
             'painel' => 'Base\View\Helper\painel',
             'painelFim' => 'Base\View\Helper\painelFim',
             'paginacao' => 'Base\View\Helper\paginacao',
-            'botaoGrande' => 'Base\View\Helper\botaoGrande'
+            'botaoGrande' => 'Base\View\Helper\botaoGrande',
+            'tabelaEstagios' => 'Base\View\Helper\tabelaEstagios',
+            'cursos' => 'Base\View\Helper\cursos',
+            'agentes' => 'Base\View\Helper\agentes',
+            'empresas' => 'Base\View\Helper\empresas',
+            'alertaDanger' => 'Base\View\Helper\alertaDanger',
+            'alertaSuccess' => 'Base\View\Helper\alertaSuccess'
+            
       )
         ),
     // Placeholder for console routes

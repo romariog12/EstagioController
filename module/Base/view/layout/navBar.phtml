@@ -1,3 +1,11 @@
+<?php
+use Base\Model\Constantes;
+$authenticate = new \Zend\Authentication\AuthenticationService();
+$identidade = $authenticate->getIdentity();
+foreach ($identidade as $l){
+    $id = $l[0]->getidUsuario();
+}
+?>
 <nav  class="navbar navbar-fixed-top navbar-inverse" role="navigation">
             <div class="container navbar-inverse navbar-default " >
                 <div class="navbar-header ">
@@ -13,28 +21,45 @@
                         <li class="dropdown ">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-mortar-board"></i> Aluno<span class="caret"></span></a>
                                 <ul  class="dropdown-menu nav" >
-                                    <li><a href="<?= $this->url('perfilPresencial') ?>">  <?= $this->translate('Perfil do Aluno') ?></a></li>  
+                                    <li><a href="<?= $this->url('perfilAluno') ?>">  <?= $this->translate('Perfil do Aluno') ?></a></li>  
                                     <li></li>
-                                    <li><a href="<?= $this->url('aluno/default',['controller'=>'alunoPresencial','action'=>'cadastrar','id'=>'0']) ?>"> <?php echo $this->translate('Cadastro') ?></a></li>    
+                                    <li><a href="<?= $this->url(Constantes::rotaPerfilAlunoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::cadastrarAluno,'id'=>'0']) ?>"> <?= $this->translate('Cadastro') ?></a></li>    
                                 </ul>
-                        </li> 
-                        
+                        </li>
                        <li class="dropdown ">
                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-briefcase"></i> Empresa<span class="caret"></span></a>
                                 <ul  class="dropdown-menu nav  " >
-                                    <li><a href="<?= $this->url('buscarEmpresa') ?>"> <?= $this->translate('Perfil da Empresa') ?></a></li>
-                                    <li><a href="<?= $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarEmpresa','id'=>'0']) ?>"><?php echo $this->translate('Cadastrar Empresa') ?></a></li>
-                                    <li><a href="<?= $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>"> <?php echo $this->translate('Cadastrar Agente') ?></a></li>
+                                    <li><a href="<?= $this->url('perfilEmpresa') ?>"> <?= $this->translate('Perfil da Empresa') ?></a></li>
+                                    <li><a href="<?= $this->url(Constantes::rotaEmpresaDefault, ['controller'=>  Constantes::administrador, 'action' =>  Constantes::cadastrarEmpresa,'id'=>'0']) ?>"><?= $this->translate('Cadastrar Empresa')  ?></a></li>
+                                    <li><a href="<?= $this->url(Constantes::rotaEmpresaDefault, ['controller'=>Constantes::administrador, 'action' =>  Constantes::cadastrarAgente,'id'=>'0']) ?>"> <?= $this->translate('Cadastrar Agente') ?></a></li>
                                 </ul>
-                        </li>            
+                        </li> 
+                        
                         <li class="dropdown">
-                            <a href="<?= $this->url('relatorioPresencial') ?>"><?php echo $this->translate('Relatórios') ?></a>   
+                            <a href="<?= $this->url('relatorioPresencial') ?>"><i class=" fa fa-bar-chart"></i><?= $this->translate('Relatórios') ?></a>   
                        </li>  
+                        <li class="dropdown ">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-cogs"></i> Controle<span class="caret"></span></a>
+                                <ul  class="dropdown-menu nav  " >
+                                    <li><a href="<?= $this->url('paginator', ['controller'=> Constantes::administrador, 'action' =>  Constantes::todosAlunos,'id'=> '1'])?>">   <?= $this->translate('Alunos') ?></a></li>
+                                    <li><a href="<?= $this->url('paginator', ['controller'=> Constantes::administrador, 'action' =>  Constantes::empresa,'id'=> '1']) ?>">      <?= $this->translate('Empresa') ?></a></li>
+                                    <li><a href="<?= $this->url('documentos/default',['controller'=>Constantes::administrador,'action'=>  Constantes::documentos, 'id'=>'1']) ?>">          <?= $this->translate('Documentos') ?></a></li>
+                                    <li><a href="<?= $this->url('usuarios') ?>"> <?= $this->translate("Controle de acessos") ?></a></li>
+                                    <li><a href="<?= $this->url('dadosPresencial') ?>"> <?= $this->translate("Atualizar dados") ?></a></li>
+                                </ul>
+                        </li>
                     </ul>
                     <ul class=" nav navbar-nav navbar-right">
-                        <li> <a aria-haspopup="true" style="color:  #e2a8b3; " href="<?php echo $this->url('sair', array(
-              'action' => 'logout'
-                            )) ?>">Sair&nbsp;&nbsp;<i class="glyphicon glyphicon-log-out"></i></a></li>
+                        <li class="dropdown ">
+                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class=" fa fa-user"></i><span class="caret"></span></a>
+                                <ul  class="dropdown-menu nav  " >
+                                    <li><a aria-haspopup="true"  href="<?= $this->url() ?>">Mensagens<i class="pull-right fa fa-envelope-o"></i></a></li> 
+                                    <li><a aria-haspopup="true"  href="<?= $this->url('usuarios/default', ['controller'=>Constantes::administrador,'action' => Constantes::editarUsuario, 'id' => $id]) ?>">Editar perfil<i class="pull-right fa fa-edit"></i></a></li> 
+                                    <li role="separator" class="divider"></li>
+                                    <li><a aria-haspopup="true"  href="<?php echo $this->url('sair', array('action' => 'logout')) ?>">Sair<i class="pull-right glyphicon glyphicon-log-out"></i></a></li> 
+                                </ul>
+                        </li>
+                        
                     </ul>
                 </div><!--/.nav-collapse --> 
             </div>     

@@ -103,7 +103,7 @@ class Adapter implements AdapterInterface{
         
             }
         if(!empty( $this->getCpf())){
-         $userAluno = $this->em->getRepository(Entity::alunoPresencial)->findByCpfAndSenha($this->getCpf(), $this->getSenha());
+         $userAluno = $this->em->getRepository(Entity::aluno)->findByCpfAndSenha($this->getCpf(), $this->getSenha());
       
        
             if (!empty($userAluno)) {

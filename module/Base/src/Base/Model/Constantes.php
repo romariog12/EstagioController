@@ -12,13 +12,24 @@ namespace Base\Model;
  * @author romario
  */
 class Constantes {
-    
+    //View
+    const temaBootstrap = 'primary';
     const contadorPorPagina = '10';
+    const cadastroSucesso = 'Cadastro realizado com sucesso!';
+    const alteraçãoSucesso = 'Alterações realizada com sucesso!';
+    //rotas
+    const rotaPerfilAluno = 'perfilAluno';
     const rotaAdministradorDefault = 'administrador/default';
     const rotaAlunoDefault = 'aluno/default';
     const rotaEmpresaDefault = 'empresa/default';
+    const rotaPerfilEmpresaDefault = 'perfilEmpresa/default';
+    const rotaPerfilAlunoDefault = 'perfilAluno/default';
+    const rotaVagaDefault = 'vagaPresencial/default';
     const administrador = 'administrador';
     const aluno = 'alunoPresencial';
+    const vaga = 'vagaPresencial';
+    const excluir = 'excluir';
+    const id = 'id';
     //Controllers
     const AdministradorController = 'Administrador\Controller';
     const EmpresaController = 'Empresa\Controller';
@@ -26,12 +37,12 @@ class Constantes {
     const RelatorioController = 'Relatorio\Controller';
     const BaseController = 'Base\Controller';
     const AuthController = 'Auth\Controller';
-    const VagaController = 'Vaga\Controller';
+    const VagaController = 'vagaPresencial\Controller';
     const codigoEmpresa = 'u2';
     const codigoAdministrador = 'u1';
     const codigoAluno = 'u3';
     
-    //actions módulo: administrador 
+    // actions módulo: administrador 
     const todosAlunos = 'todosAlunos';
     const cadastrarUsuario = 'cadastrarUsuario';
     const usuario = 'usuario';
@@ -40,6 +51,7 @@ class Constantes {
     const excluirAluno = 'excluirAluno';
     const editarAluno = 'editarAluno';
     const empresa = 'empresa';
+    const perfilAluno = 'perfilAluno';
     const agente = 'agente';
     const editarEmpresa = 'editarEmpresa';
     const editarAgente = 'editarAgente';
@@ -48,14 +60,17 @@ class Constantes {
     const documentos = 'documentosPresencial';
     const documentosPendente = 'documentosPresencialPendente';
     const mensagem = 'mensagem';
+    const cadastrarEmpresa = 'cadastrarEmpresa';
+    const cadastrarAgente = 'cadastrarAgente';
+    const cadastrarAluno = 'cadastrarAluno';
+    const perfilEmpresa = 'perfilEmpresa';
     
     //actions módulo: Auth
     const login = 'login';
     const loginAluno = 'loginAluno';
-    const loginEmpresa = 'loginEmpresa';
+    const loginEmpresa = 'loginEmpresa'; 
     
     
-    
-    
-    
+    const cadastrarVagaPresencial = 'cadastrarVagaPresencial';
+    const perfilVagaFinalizada = 'perfilVagaFinalizada';
 }

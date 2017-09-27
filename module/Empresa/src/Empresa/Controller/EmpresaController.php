@@ -72,10 +72,10 @@ class EmpresaController extends AdministradorAbstractActionController{
             $vencimento3 = new \DateTime(date('Y-m-d').'+2 days');
             $vencimento4 = new \DateTime(date('Y-m-d').'+3 days');
             $vencimento5 = new \DateTime(date('Y-m-d').'+4 days');
-            $listaContratosVencendo = $em->getRepository(Entity::documentoPresencial)->findByFimAndIdEmpresa($vencimento1,$vencimento2, $vencimento3, $vencimento4, $vencimento5,$idEmpresa);    
-            $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
+            $listaContratosVencendo = $em->getRepository(Entity::documento)->findByFimAndIdEmpresa($vencimento1,$vencimento2, $vencimento3, $vencimento4, $vencimento5,$idEmpresa);    
+            $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
             $perfilEmpresa = $em->getRepository(Entity::empresa)->findByIdempresa($idEmpresa);
-            $vagas = $em->getRepository(Entity::vagaPresencial)->findByIdEmpresaVaga($idEmpresa);
+            $vagas = $em->getRepository(Entity::vaga)->findByIdEmpresaVaga($idEmpresa);
             $page = $this->params()->fromRoute("id", 0);
                 $pagination = new Paginator( new ArrayAdapter($vagas));
                 $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->itemPorPagina);
@@ -106,10 +106,10 @@ class EmpresaController extends AdministradorAbstractActionController{
             $vencimento3 = new \DateTime(date('Y-m-d').'+2 days');
             $vencimento4 = new \DateTime(date('Y-m-d').'+3 days');
             $vencimento5 = new \DateTime(date('Y-m-d').'+4 days');
-            $listaContratosVencendo = $em->getRepository(Entity::documentoPresencial)->findByFimAndIdEmpresa($vencimento1,$vencimento2, $vencimento3, $vencimento4, $vencimento5,$idEmpresa);    
-            $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdEmpresaVaga($idEmpresa);
+            $listaContratosVencendo = $em->getRepository(Entity::documento)->findByFimAndIdEmpresa($vencimento1,$vencimento2, $vencimento3, $vencimento4, $vencimento5,$idEmpresa);    
+            $listaVaga = $em->getRepository(Entity::vaga)->findByIdEmpresaVaga($idEmpresa);
             $selecionarEmpresa = $em->getRepository(Entity::empresa)->findByIdempresa($idEmpresa);
-            $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
+            $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
 
                     $page = $this->params()->fromRoute("id", 0);
                     $pagination = new Paginator( new ArrayAdapter($listaVagaEstagiando));
@@ -143,12 +143,12 @@ class EmpresaController extends AdministradorAbstractActionController{
             $vencimento3 = new \DateTime(date('Y-m-d').'+2 days');
             $vencimento4 = new \DateTime(date('Y-m-d').'+3 days');
             $vencimento5 = new \DateTime(date('Y-m-d').'+4 days');
-            $listaContratosVencendo = $em->getRepository(Entity::documentoPresencial)->findByFimAndIdEmpresa($vencimento1,$vencimento2, $vencimento3, $vencimento4, $vencimento5,$idEmpresa);
+            $listaContratosVencendo = $em->getRepository(Entity::documento)->findByFimAndIdEmpresa($vencimento1,$vencimento2, $vencimento3, $vencimento4, $vencimento5,$idEmpresa);
         
-            $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdEmpresaVaga($idEmpresa);
+            $listaVaga = $em->getRepository(Entity::vaga)->findByIdEmpresaVaga($idEmpresa);
             $selecionarEmpresa = $em->getRepository(Entity::empresa)->findByIdempresa($idEmpresa);
-            $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
-            $vagasEncerradas = $em->getRepository(Entity::vagaPresencial)->findBySituacaoAndIdEmpresaVaga('0',$idEmpresa);
+            $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
+            $vagasEncerradas = $em->getRepository(Entity::vaga)->findBySituacaoAndIdEmpresaVaga('0',$idEmpresa);
                     $page = $this->params()->fromRoute("id", 0);
                     $pagination = new Paginator( new ArrayAdapter($vagasEncerradas));
                     $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->itemPorPagina);
@@ -218,11 +218,11 @@ public function painelEmpresaContratosVencendoAction(){
             $vencimento3 = new \DateTime(date('Y-m-d').'+2 days');
             $vencimento4 = new \DateTime(date('Y-m-d').'+3 days');
             $vencimento5 = new \DateTime(date('Y-m-d').'+4 days');
-        $listaContratosVencendo = $em->getRepository(Entity::documentoPresencial)
+        $listaContratosVencendo = $em->getRepository(Entity::documento)
             ->findByFimAndIdEmpresa($vencimento1,$vencimento2, $vencimento3,$vencimento4, $vencimento5,$idEmpresa);
         $selecionarEmpresa = $em->getRepository(Entity::empresa)->findByIdempresa($idEmpresa);
-        $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdEmpresaVaga($idEmpresa);
-        $listaVagaEstagiando = $em->getRepository(Entity::vagaPresencial)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
+        $listaVaga = $em->getRepository(Entity::vaga)->findByIdEmpresaVaga($idEmpresa);
+        $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findByRecisaoAndIdEmpresaVaga('',$idEmpresa);
      
                     $page = $this->params()->fromRoute("id", 0);
                     $pagination = new Paginator( new ArrayAdapter($listaContratosVencendo));
@@ -252,9 +252,9 @@ public function painelEmpresaContratosVencendoAction(){
         $idalunovaga = $this->params()->fromRoute("id", 0);
         $em = $this->getServiceLocator()->get(Entity::em);
         $selecionarEmpresa = $em->getRepository(Entity::empresa)->findByIdempresa($idEmpresa);
-        $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdalunovaga($idalunovaga);
-        $listaAluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idalunovaga);
-        $listaContratos = $em->getRepository(Entity::documentoPresencial)->findByIdalunoDocumento($idalunovaga);
+        $listaVaga = $em->getRepository(Entity::vaga)->findByIdalunovaga($idalunovaga);
+        $listaAluno = $em->getRepository(Entity::aluno)->findByIdaluno($idalunovaga);
+        $listaContratos = $em->getRepository(Entity::documento)->findByIdalunoDocumento($idalunovaga);
         
          return new ViewModel([
             'empresaSelect'=>$selecionarEmpresa,
@@ -271,7 +271,7 @@ public function painelEmpresaContratosVencendoAction(){
         if($request ->isPost()){
             $via = $request->getPost("via");
             $idDocumento = $request("idDocumento");
-            $documento = $em->find(Entity::documentoPresencial, $idDocumento);
+            $documento = $em->find(Entity::documento, $idDocumento);
             $documento->setViaempresa($via);
             $em->persist($documento);
             $em->flush();

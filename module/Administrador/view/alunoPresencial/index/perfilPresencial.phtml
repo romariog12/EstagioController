@@ -1,5 +1,6 @@
 <?php
-    foreach ($this->lista as $l): 
+use Base\Model\Constantes;
+    foreach ($this->aluno as $l): 
     $getidaluno = $l->getidAluno();
     $nome = $l->getNome();
     $email = $l->getEmail();
@@ -7,68 +8,49 @@
     $matricula = $l->getMatricula();
     $curso = $l->getCurso();
     endforeach;
-    $th =[
-        '',
-        'Emrpesa',
-        'Processo',
-        'Excluir'
-    ];
-    $td = [];
-    foreach ($this->listaVagaPresencial as $l){
-        array_push($td,
-        [   
-            '<i class="fa fa-square situacao-'.$l->getSituacao().'" aria-hidden="true"></i>',
-            $l->getEmpresa(),
-            '<a href="'.$this->url('vagaPresencial/default', ['controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$getidaluno, 'idVaga'=>$l->getidvaga(),'curso'=>$l->getIdempresavaga()]).'" class="btn"><i class="fa fa-reorder"></i></a></td>',   
-            '<a  class="btn" href="'.$this->url('deleteVagaPresencial', array( 'action' => 'excluirvaga', 'iddelete' => $l->getidVaga())).'"><i class=" glyphicon glyphicon-remove" ></i></a></td>'
-        ]);
-    }
-    echo $this->painel('primary');
+    echo $this->painel(Constantes::temaBootstrap);
     echo $this->painelTitulo($nome)
-?>
-<ul class="nav nav-tabs" role="tablist">
-  <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Estágio</a></li>
-</ul>
-   
-            <div class="pager">
-                <p><label> Curso: </label> <?= $curso; ?> &nbsp;&nbsp; <label>Matricula: </label> <?= $matricula; ?></p>
-                <p><label>Email: </label> <?= $email; ?> 
-                <label>Telefone: </label><?= $telefone; ?></p> 
-            </div>    
-               
-            <div class="col-lg-12">
-                <?php 
-                if(empty($this->listaVagaPresencial)){
-                    echo '<div class="pager alert alert-danger" role="alert" >Nenhum estágio lançado!</div>';
-                }else{
-                    echo $this->painel('primary');
-                    echo $this->tabela($th, $td);
-                    echo $this->painelFim();
-                }
-                ?>
-             </div>
-            <div class=" well-lg">
-                <?php
-                echo $this->botaoGrande(
-                    $this->url('vagaPresencial/default', array('controller' => 'vagapresencial', 'action' => 'cadastrarvagapresencial', 'idVaga'=>$getidaluno)),
-                    'Nova <br> vaga',
-                    'fa-plus',
-                    'success'
-                ); 
-                echo ' ';
-                echo $this->botaoGrande(
-                     $this->url('administrador/default', ['controller'=>'administrador', 'action'=>'editarAlunoPresencial', 'id'=>$getidaluno,'page'=>0]),
-                    'Editar <br> perfil',
-                    'fa-edit',
-                    'primary'
-                ); 
-                ?>
-            </div>
-<?= $this->painelFim()?>
+?>     
 <script>
 $(document).ready(function(){
 $(".situacao-1").css("color","green");  
 $(".situacao-0").css("color","red");  
 });
-</script>
-<?= $this->resp ?> 
+</script>      
+        <?=    '<div class="media-body pager well-lg">'.
+                '<h4 class="media-heading">'.$curso.'</h4>'.
+                $matricula.'<br>'.
+                $email.'<br>'.
+                $telefone.
+                '</div>'
+        ?>     
+        <div class="caption">
+            <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                <li  class=" active" role="presentation"><a><label>Estágios </label> <span class="label label-primary"> <?= count($this->listaVagaPresencial)?></span></a> </li>
+            </ul> 
+        </div>
+        <?=     '<div class="col-lg-12 well-lg">';    
+        if(empty($this->listaVagaPresencial)){
+                echo $this->alertaDanger("Nenhum estágio lançado");
+        }else{
+        echo    $this->painel(Constantes::temaBootstrap).
+                $this->tabelaEstagios(['Emrpesa','Processo','Excluir'], $this->listaVagaPresencial).
+                $this->painelFim();
+            }
+        echo    '</div>'.
+                '<div class=" well-lg">'.
+                $this->botaoGrande(
+                    $this->url(Constantes::rotaVagaDefault, ['controller' => Constantes::vaga   , 'action' => Constantes::cadastrarVagaPresencial, 'idVaga'=>$getidaluno]),
+                    'Nova <br> vaga',
+                    'fa-plus',
+                    'success'
+                ). 
+                 ' '.
+                $this->botaoGrande(
+                    $this->url(Constantes::rotaAdministradorDefault, ['controller'=>  Constantes::administrador, 'action'=>  Constantes::editarAluno, 'id'=>$getidaluno,'page'=>0]),
+                    'Editar <br> aluno',
+                    'fa-edit',
+                    'primary'
+                ). 
+                '</div>'.
+                $this->painelFim();

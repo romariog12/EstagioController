@@ -1,0 +1,23 @@
+<button  type="button" class="list-group-item list-group-item-success"  data-toggle="collapse" href="#list-<?= $this->idDocumento?>" aria-expanded="false" aria-controls="collapseExample">
+    <div class="progress">  
+    <?php
+                $progress = $this->operacao1+$this->operacao2+$this->operacao3+$this->operacao4;
+                switch($progress){
+                    case 1: $width = "25%" ;
+                        break;
+                        case 2: $width = "50%" ;
+                            break;
+                            case 3: $width = "75%" ;
+                                break;
+                                case 4: $width = "100%" ;
+                                    break;
+                                    case 0: $width = "10%" ;
+                                        break;
+        }
+    ?>
+    <div class="<?= 'progress-'.$this->idDocumento?> progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="10" aria-valuemax="100" style="width:<?= $width?>">
+        <?= $width?> 
+    </div> 
+    </div>
+    <?=        $this->relatorio?> <i class=" pull-right fa fa-bars"></i>      
+</button>

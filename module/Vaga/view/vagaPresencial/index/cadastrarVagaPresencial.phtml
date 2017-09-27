@@ -1,11 +1,7 @@
 <?php
-$listaEmpresa = $this->listaEmpresa;
-$listaVaga = $this->vagas;
-$listaAluno = $this->listaAluno;
-$idaluno = $this->idaluno;
+use Base\Model\Constantes;
 ?>
 <script>
-    
     $(document).ready(function(){ 
         $('.date').datepicker({
     	format: 'yyyy-mm-dd',
@@ -33,7 +29,7 @@ $idaluno = $this->idaluno;
     $(element.form).find("." + element.id)
             .removeClass("has-error")
             .addClass("has-success");
-    
+    $("."+element.id+"-valid").addClass("glyphicon glyphicon-ok-circle");
     $("."+element.id+"-valid").css({
         display: "inline",
         color: "green"
@@ -59,121 +55,107 @@ $idaluno = $this->idaluno;
         }
     }
     });
-    
+    $(".glyphicon-ok-circle").css("display", "none");
     });
     
 </script> 
 <div>
-    <div>
-    <div  class=" panel panel-primary well-lg">
-        <div class="panel-heading"> 
-            <div class="row bs-wizard " style="border-bottom:0;">     
-                <div class="col-xs-4 bs-wizard-step active">
-                  <div class="bs-wizard-info text-center bs-wizard-stepnum">Cadastro</div>
-                  <div class="progress"><div class="progress-bar"></div></div>
-                  <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">  
-                  </div>
-                </div> 
-                <div class="col-xs-4 bs-wizard-step disabled"><!-- complete -->
-                  <div class="bs-wizard-info text-center bs-wizard-stepnum">Documentos</div>
-                  <div class="progress"><div class="progress-bar"></div></div>
-                  <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">
-                  </div>
-                </div>
-                <div class="col-xs-4 bs-wizard-step disabled"><!-- complete -->
-                  <div class="bs-wizard-info text-center bs-wizard-stepnum">Fim</div>
-                  <div class="progress"><div class="progress-bar"></div></div>
-                  <a href="#" class="bs-wizard-dot"></a>
-                  <div class="bs-wizard-info text-center">
-                  </div>
-                </div>
-            </div><br>     
-        </div>
-        <?php
-                $this->vagaForm->prepare();
-                echo 
-                $this->form()->openTag($this->vagaForm);    
-         ?>
-        <br/>
+    <?=     $this->painel(Constantes::temaBootstrap.' well-lg').
+            $this->painelTitulo($this->partial('vagaPresencial/layout/cadastrarVagaPartial'));
+            $this->vagaForm->prepare();
+    echo    $this->form()->openTag($this->vagaForm);    
+   ?>
+    <br/>
                             <div class="row">
                             <div class="aluno col-sm-5 col-sm-offset-1">
-                                <label for="aluno" >Aluno </label> <i style=" display: none;"  class=" aluno-valid glyphicon glyphicon-ok-circle"></i>
+                             <i class=" aluno-valid"></i>
                                     <?php 
                                         foreach ($this->aluno as $l):
                                             echo $this->formRow($this->vagaForm->get("aluno")
-                                                ->setValueOptions([
-                                                $l->getNome() => $l->getNome()
-                                                ])
+                                                ->setValueOptions([$l->getNome() => $l->getNome()])
                                                 ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'aluno'));
+                                                ->setAttribute('id', 'aluno')
+                                                ->setLabel('Aluno'));
                                         endforeach;
                                     ?>  
                             </div> 
                             <div class=" curso col-sm-5">
-                                <label for="curso">Curso </label> <i style=" display: none;"  class=" curso-valid glyphicon glyphicon-ok-circle"></i>
-                                <select name="curso" id="curso" class="form-control">
-                                        <option></option>
-                                        <?php  foreach ( $this->listaDados as $chave => $l): ?>
-                                        <option value="<?= $l->getIddados()?>"><?= $l->getCurso()?></option>
-                                        <?php endforeach; ?> 
-                                    </select>
+                                <i class=" curso-valid"></i>
+                                <?= $this->formRow($this->vagaForm->get("curso")
+                                                ->setValueOptions($this->cursos($this->listaDados))
+                                                ->setAttribute('class', 'form-control')
+                                                ->setAttribute('id', 'curso')
+                                                ->setLabel('Curso'));
+                                ?>  
                             </div>
                             </div>
                             <br/>
                             <div class="row">            
                             <div class="col-sm-5 agente col-sm-offset-1">
-                                <label for="agente"><?= $this->translate('Agente ')?></label> <i style=" display: none;"  class=" agente-valid glyphicon glyphicon-ok-circle"></i>
-                                    <select name="agente" id="agente" class="form-control" >
-                                        <?=  '<option>N/C</option>';
-                                        foreach ($this->listaAgente as $l): 
-                                        echo '<option>'.$l->getAgente().'</option>';
-                                        endforeach; ?>  
-                                    </select>
+                                <i class=" agente-valid "></i>
+                                    <?= $this->formRow($this->vagaForm->get("agente")
+                                                ->setValueOptions($this->agentes($this->listaAgente))
+                                                ->setAttribute('class', 'form-control')
+                                                ->setAttribute('id', 'agente')
+                                                ->setLabel('Agente'));
+                                    ?>  
                             </div>
                             <div class="col-sm-5 nome">
-                                <label for="empresa"><?= $this->translate('Empresa ')?></label> <i style=" display: none;"  class=" empresa-valid glyphicon glyphicon-ok-circle"></i>
-                                    <select name="empresa" id="empresa" class="form-control" >
-                                        <?=  '<option></option>';
-                                        foreach ($listaEmpresa as $l): 
-                                        echo '<option>'.$l->getEmpresa().'</option>';
-                                        endforeach; ?>  
-                                    </select>
+                                <i class=" empresa-valid "></i>
+                                    <?= $this->formRow($this->vagaForm->get("empresa")
+                                                ->setValueOptions($this->empresas($this->listaEmpresa))
+                                                ->setAttribute('class', 'form-control')
+                                                ->setAttribute('id', 'empresa')
+                                                ->setLabel('Empresa'));
+                                    ?>  
                             </div>
                             </div>
                             <br/>
                             <div class="row">
                             <div class="  col-sm-3 carga col-sm-offset-1">
-                                <label for="carga"><?= $this->translate('Carga ')?></label> <i style=" display: none;"  class=" carga-valid glyphicon glyphicon-ok-circle"></i>
+                                <i  class=" carga-valid"></i>
                                  <?= $this->formRow($this->vagaForm->get("carga")
                                                 ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'carga'))?>
+                                                ->setAttribute('id', 'carga')
+                                                ->setLabel('Carga'))?>
                             </div>
                             <div class="col-sm-3 bolsa">
-                                <label for="bolsa"><?= $this->translate('Bolsa ')?></label> <i style=" display: none;"  class=" bolsa-valid glyphicon glyphicon-ok-circle"></i>
+                                <i  class=" bolsa-valid "></i>
                                 <?= $this->formRow($this->vagaForm->get("bolsa")
                                                 ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'bolsa'))?>
+                                                ->setAttribute('id', 'bolsa')
+                                                ->setLabel('Bolsa'))?>
                             </div> 
                                 <div class="  col-sm-4 inicio">
                                     <div >
-                                        <label for="inicio"><?= $this->translate('Início ')?></label> <i style=" display: none;"  class=" inicio-valid glyphicon glyphicon-ok-circle"></i>
+                                        <i  class=" inicio-valid "></i>
                                         <?= $this->formRow($this->vagaForm->get("inicio")
                                                 ->setAttribute('class', 'form-control date')
-                                                ->setAttribute('id', 'inicio'))
+                                                ->setAttribute('id', 'inicio')
+                                                ->setLabel('Inicio'))
                                         ?>
                                     </div>
                                 </div>
                             </div>      
                             <br/> 
-                            <button    type="submit" class="btn btn-success col-sm-offset-1 " ><i class="fa fa-check-square-o fa-2x pull-left"></i>Salvar<br>Vaga</button> 
-                            <a  href="<?= $this->url('empresa/default', array('controller' => 'empresa', 'action' => 'cadastrarEmpresa', 'id'=>$idaluno)); ?>"><span class="btn btn-primary" ><i class="fa fa-briefcase fa-2x pull-left"></i>Cadastrar<br> Empresa</span></a>
-                             
-                            <?= '<a  href="'. $this->url('perfil/default', array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idaluno)).'"><span class="btn btn-primary" ><i class="fa fa-arrow-left fa-2x pull-left"></i>Voltar ao <br>Painel</span></a>';?>
-                          
-                                        <?= $this->form()->closeTag();?>
-        </div>
-    </div>
-</div>
-<?=$this->resp; ?>
+                            <?= $this->formRow($this->vagaForm->get('salvar')
+                                ->setAttribute('id', 'salvar')
+                                ->setAttribute('value', 'Salvar')
+                                ->setAttribute('class', 'btn btn-success')
+                                ->setAttribute('type', 'submit')
+                                ->setLabel(' <i class="fa fa-check-square-o fa-2x pull-left"></i> Salvar<br>vaga')).
+                                ' '.   
+                                $this->botaoGrande(
+                                $this->url(Constantes::rotaEmpresaDefault, ['controller' => Constantes::administrador, 'action' => Constantes::cadastrarEmpresa, 'id'=>$this->idaluno]) ,
+                                'Cadastrar<br> Empresa',
+                                'fa-briefcase',
+                                'primary'
+                                ).' '.
+                                $this->botaoGrande(
+                                $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::aluno, 'action' => Constantes::perfilAluno,'id'=>$this->idaluno]) ,
+                                'Voltar ao <br>Painel',
+                                'fa-arrow-left',
+                                'primary'
+                                ).
+                            $this->form()->closeTag().
+                            $this->painelFim();

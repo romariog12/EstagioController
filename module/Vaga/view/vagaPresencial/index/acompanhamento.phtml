@@ -1,4 +1,5 @@
  <?php 
+ use Base\Model\Constantes;
  foreach ($this->listaVaga as $l):
      $empresa = $l->getEmpresa();
      $carga = $l->getCarga();
@@ -14,7 +15,7 @@
 ?>
 <script>
  $(document).ready(function(){
-       $('.date').datepicker({
+        $('.date').datepicker({
     	format: 'yyyy-mm-dd',
     	language: 'pt-BR',
     	todayHighlight: true
@@ -39,7 +40,7 @@
         errorElement: "em",
         messages: {
         inicio: 'Entre com uma data válida',
-        fim: 'Entre com uma data válida',
+        fim: 'Entre com uma data válida'
         },
         rules:{
         inicio: {
@@ -184,7 +185,7 @@ function editarAcompanhamento(idDocumento){
  var acompanhante = $("#acompanhante").val();
  
     if(inicio === ''|| fim ==='' ){
-        alert  ("Preencha todos os campos!")
+        alert  ("Preencha todos os campos!");
         return false;
     }else{
      $("#btn-acompanhamento").html("<i class='fa fa-spinner fa-pulse fa-fw'></i>");
@@ -211,99 +212,61 @@ function editarAcompanhamento(idDocumento){
             }
         }, 
         'json'
- 
     ).always(
             function(){
              location.reload();
             }
     );   
     };
-    
     }
  </script>
-        <div class=" panel panel-primary">
-        <div class="panel-heading">
-              <?= $aluno?>
-            
-        </div>
-        <ul class="nav nav-tabs" role="tablist">
-           <li role="presentation"><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Início</a></li>
-           <li role="presentation" class="active"><a>Acompanhamento</a></li>
-        </ul>
-        <div class="navbar pager">
-            <p><label>Agente de Integração: </label> <?= $agente?></p>
-            <p><label>Empresa: </label> <?= $empresa?></p>
-                <p class="pager" style=""><label>Carga-Horária: </label> <?php echo $carga; ?> horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$ <?php echo $bolsa ?>,00 
-                </p>
-        </div>
-    
-        <div>
-          <div class="col-sm-12">
-            <div class=" panel panel-primary ">
-            <div class="panel-heading">
-                <?= $this->translate("Relatório Semetral")?>
+    <?=     $this->painel(Constantes::temaBootstrap)?>
+    <?=     $this->painelTitulo($aluno)?>
+            <ul class="nav nav-tabs" role="tablist">
+               <li role="presentation"><a href="<?php echo $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Início</a></li>
+               <li role="presentation" class="active"><a>Acompanhamento</a></li>
+            </ul>
+            <div class="pager">
+               <?=     '<p><label>Agente de Integração: </label>  $agente</p>'.
+                   '<p><label>Empresa: </label>'.$empresa.'</p>'.
+                   '<p><label>Carga-Horária: </label> '.$carga.' horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$'.$bolsa.',00 </p>';?>
             </div>
+            <div class="col-sm-12">
+    <?=     $this->painel(Constantes::temaBootstrap)?>
+    <?=     $this->painelTitulo("Relatorio semestral")?>
                <div class="list-group thumbnail">  
                    <?php foreach ($this->listaAcompanhamento as $l):?>
                    <div id="listaAcompanhamento-<?= $l->getIdacompanhamento()?>">
                    <a  data-toggle="collapse" href="#acompanhamento-<?= $l->getIdacompanhamento()?>" aria-expanded="false" aria-controls="collapseExample" class="list-group-item list-group-item-success">
                        <?= $l->getPeriodo().' - '.$l->getAcompanhante()?>
                         <i class=" pull-right fa fa-bars"></i> 
-                </a>
+                    </a>
                 <div id="acompanhamento-<?= $l->getIdacompanhamento()?>" class="collapse">
-                    <div class=" pager">
-                        <?= '<div><label>Período: </label> '.$l->getInicio().' a '.$l->getFim().'<br>'
-                           . '<label>Data de lançamento: </label>'.$l->getdataAcompanhamento()
-                           . '</div>'?>
-                        <div class="well well-sm">
-                            <button onclick="return excluirAcompanhamento(<?= $l->getIdacompanhamento()?>)" class="btn btn-danger" type="button"><i class="<?= 'excluirAcompanhamento-'.$l->getIdacompanhamento()?> fa fa-remove"></i></button>
-                            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-editar-acompanhamento-'.$l->getIdacompanhamento()?>">
-                                <i class=" fa fa-edit"></i>
-                            </button>
-                        </div>
+                <div class=" pager">
+                    <?= '<div><label>Período: </label> '.$l->getInicio().' a '.$l->getFim().'<br>'
+                       . '<label>Data de lançamento: </label>'.$l->getdataAcompanhamento()
+                       . '</div>'?>
+                    <div class="well well-sm">
+                        <button onclick="return excluirAcompanhamento(<?= $l->getIdacompanhamento()?>)" class="btn btn-danger" type="button"><i class="<?= 'excluirAcompanhamento-'.$l->getIdacompanhamento()?> fa fa-remove"></i></button>
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-editar-acompanhamento-'.$l->getIdacompanhamento()?>"><i class=" fa fa-edit"></i></button>
                     </div>
-                    <div class="modal fade" id="<?= 'modal-editar-acompanhamento-'.$l->getIdacompanhamento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                  <div class="modal-content">
-                      <div class="panel panel-primary "> <h4 class="modal-title panel panel-heading " id="myModalLabel">Editar 
-                          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                     
-                          </h4>
-                    <div class="modal-body">
-                        <form method="post">
-                            <label>Inicio</label>
-                            <input id="<?= 'editarInicioAcompanhamento-'.$l->getIdacompanhamento()?>" name="inicio" class=" form-control date" type="text" value="<?= $l->getInicio()?>"/>
-                            <label>Fim</label>
-                            <input id="<?= 'editarFimAcompanhamento-'.$l->getIdacompanhamento()?>" name="fim" class=" form-control date" type="tex" value="<?= $l->getFim()?>"/>
-                            <label>Relatório</label>
-                            <select class=" form-control" id="<?= 'relatorioAcompanhamento-'.$l->getIdacompanhamento()?>">
-                                <option><?= $l->getPeriodo()?></option>
-                                <option>1º Relatório</option>
-                                <option>2º Relatório</option>
-                                <option>3º Relatório</option>
-                                <option>4º Relatório</option>
-                            </select>
-                            
-                            <label>Acompanhante</label>
-                            <select id="<?= 'acompanhante-'.$l->getIdacompanhamento()?>" name="tipo" class=" form-control" type="text" >
-                                <option>Instituição de Ensino</option>
-                                <option>Empresa Concedente</option>
-                                <option>Agente de Integração</option>
-                            </select>
-                            <div class="pager well">
-                                <button onclick="return editarAcompanhamento(<?= $l->getIdacompanhamento()?>)" type="button" class="btn btn-success btn-edit-acompanhamento">Salvar</button>
-                            </div>
-                        </form>
-                    </div>
-                      </div>
-                  </div>
                 </div>
-              </div>
-                </div> </div> 
+               <?= $this->partialLoop('vagaPresencial/layout/editarAcompanhamentoPartial',[
+                    [
+                    'editarAcompanhamentoForm' =>$this->editarAcompanhamentoForm,
+                    'idAcompanhamento'=> $l->getIdacompanhamento(),
+                    'inicio'=>$l->getInicio(),
+                    'fim'=>$l->getFim(),
+                    'periodo'=>$l->getPeriodo(),
+                    'acompanhante'=>$l->getAcompanhante()
+                        ]
+                ]);?>
+                </div>
+                   </div> 
                     <?php endforeach;?>
               
                </div>
-            </div>
+<?=     $this->painelFim();?>
     <div class="well pager">
         <button class="btn btn-success  " type="button" data-toggle="collapse" data-target="#NovoRelatorio" aria-expanded="false" aria-controls="NovoRelatorio">
             Novo Relatório <i class="fa fa-bars "></i>
@@ -325,7 +288,6 @@ function editarAcompanhamento(idDocumento){
                     </div>
                 </div>
                 </div>
-                
                 <div class="  col-sm-2 documento">
                    <label>Período</label>
                    <select name="periodo" class=" form-control" id="periodo">
@@ -379,12 +341,14 @@ function editarAcompanhamento(idDocumento){
                          </div>  
                 </div>
                 </div>
-            </div>
-        </div>                  
+            </div>                
     </div> 
-         <div class="well-lg">
-         <?= '<a  href="'. $this->url('perfil/default', array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno)).'"><span class="btn btn-primary" ><i class="fa fa-arrow-left fa-2x pull-left"></i>Painel do <br>aluno</span></a>';?>
-        </div>
-    </div>
-       
-    <?= $this->resp;?>
+        <?=     '<div class="well-lg ">'.
+                    $this->botaoGrande(
+                        $this->url('perfil/default', ['controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno]) ,
+                        'Painel do <br>aluno',
+                        'fa-arrow-left',
+                        'primary'
+                    ).           
+                '</div>'.
+    $this->painelFim();?>

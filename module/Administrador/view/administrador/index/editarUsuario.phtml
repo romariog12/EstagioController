@@ -58,12 +58,13 @@ $(document).ready(function(){
     });
 });
 </script>
-<div class=" panel panel-primary">
-        <div class="panel-heading">
-            <h4 style="color: white; text-align: center"><i class=" fa fa-user-plus" ></i> Cadastrar usuário</h4>
-        </div>
-<div class="well well-sm"> Todos os campos são obrigatórios
-</div>
+<?php
+
+use Base\Model\Constantes;
+
+        echo    $this->painel(Constantes::temaBootstrap).
+               $this->painelTitulo('Editar usuário').'<br>'?>
+
     
     <form method="post" id="cadastrarUsuarioForm">
     <div class="col-lg-12">

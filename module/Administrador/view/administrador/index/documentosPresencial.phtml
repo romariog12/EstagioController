@@ -1,59 +1,15 @@
-<div class=" panel panel-primary">
-        <div class="panel-heading">
-            <?= '<h4><i class=" fa fa-file" ></i>' . $this->translate(' Documentos').'</h4>'?>
+<?php
+use Base\Model\Constantes;
+
+echo    $this->painel(Constantes::temaBootstrap).
+        $this->painelTitulo("Documentos")?>
+        <div class="caption">
+            <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                <li role="presentation" class="active"><a><label>Documentos vencendo</label> <span class="label label-warning"><?= count($this->listaContratosVencendo)?></span></a> </li>
+                <li role="presentation"><a href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencialPendente','id'=>'1'])?>">Vias Pendentes <span class="label label-default"><?= count($this->listaDocumentoPendente)?></span></a></li>     
+            </ul>
         </div>
-    <div >
-      <div>
-          <div>
-            <div>
-                <div>
-                <div class="caption">
-                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li role="presentation" class="active"><a><label>Documentos vencendo</label> <span class="label label-warning"><?= count($this->listaContratosVencendo)?></span></a> </li>
-                        <li role="presentation"><a href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencialPendente','id'=>'1'])?>">Vias Pendentes <span class="label label-default"><?= count($this->listaDocumentoPendente)?></span></a></li>     
-                    </ul> 
-                </div>
-              </div>
-            </div>
-        </div>
-        <table class="table">
-            <tr>
-                <th></th>
-                <th>Processo</th>
-                <th>Início</th>
-                <th>Fim</th>
-            </tr>
-        <?php foreach ($this->pagination as $l):?>
-            <tr style=" background-color: #ffffcc">
-                                <td  style=" background-color: #ffcc00; text-align: center; width: 5px; "></td>
-                                <td><a href="<?= $this->url('vagaPresencial/default', ['controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$l[0]->getIdalunoDocumento(), 'idVaga'=>$l[0]->getIdvagaDocumento(),'curso'=>$l[0]->getIdempresaDocumento()]); ?>"><i class="fa fa-file"></i></a></td>
-                                <td><?= date_format($l[0]->getInicio(), 'd/m/Y')?></td>
-                                <td><?= date_format($l[0]->getFim(), 'd/m/Y')?></td>
-                            </tr>
-        <?php endforeach;?>
-        </table>
-    </div>
-        <nav aria-label="Page navigation">
-        <ul  class="pager">
-            <li 
-                <?php  if ($this->pageNumber == 1|| $this->pageNumber == 0 ){ ?>
-                <?= "class='disabled'". "style='pointer-events: none'";}?>
-            >
-            <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
-                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
-            </a>
-              </li>
-            <li <?php if ($this->pageNumber >= $this->count){ ?>
-                <?= "class='disabled'". "style='pointer-events: none'";}?>>     
-            <a href="<?= $this->pageNumber + 1?>" aria-label="Next">
-                <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
-            </a>
-            </li> 
-       </ul>
-    </nav>
-            <div class="pager">
-               <?= $this->pageNumber.' de '.$this->count;?>
-            </div>  
-</div> 
-</div>
-<?= $this->resp; ?>
+        <?=
+        $this->tabelaDocumentos(['','Processo', 'Início','Fim'],$this->pagination).
+        $this->paginacao($this->pageNumber,$this->count).
+        $this->painelFim();?>

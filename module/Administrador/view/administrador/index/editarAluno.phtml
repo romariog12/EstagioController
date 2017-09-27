@@ -1,60 +1,159 @@
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-  <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-edit"  style=" color: #fff194"></i> Editar aluno</h4>
-  
- </div>
-     <br/><br/>
-<div style="height: 400px" class="nav">
-      <div class="caption">
-<form class="navbar-collapse" method="post">
-    <div class="col-lg-4">
-        
-        <div><?php foreach ($this->listaAluno as $l):?>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Nome')?></span>
-                <input value="<?php echo $l->getNome()?>" name="nome" type="text" class="form-control " required="" />
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Matricula UCB')?></span>
-                <input value="<?php echo $l->getMatricula()?>" name="matricula" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Cpf')?></span>
-                <input value="<?php echo $l->getCpf()?>" id="cpf" name="cpf" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Telefone')?></span>
-                <input id="telefone" value="<?php echo $l->getTelefone()?>" name="telefone" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" ><?php echo $this->translate('Email')?></span>
-                <input value="<?php echo $l->getEmail()?>" name="email" type="text" class="form-control" required=""/><br/>
-            </div><br/>
-            <div class="input-group">
-                <span class="input-group-addon" > <?php echo $this->translate('Curso')?></span>
-                <select name="curso" class="form-control" required="">
-                    <option><?php echo $l->getCurso()?></option>
-                    <?php foreach ($this->listaCurso as $l):?>
-                    <option><?php echo $l->getCurso()?></option><?php endforeach;?>
-                        
-                </select><br/><?php endforeach;?> 
+<?php
+use Base\Model\Constantes;
+?>
+<script>
+$(document).ready(function(){
+ $("#alunoForm").validate({
+        highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success");
+        $("."+element.id+"-valid").addClass("glyphicon glyphicon-ok-circle");
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        },
+        errorElement: "em",
+        messages: {
+        nome: 'Campo Obrigatório',
+        matricula: 'Campo Obrigatório',
+        cpf: 'CPF inválido',
+        email: 'E-mail inválido',
+        telefone:'Telefone inválido',
+        curso:'Campo Obrigatório'
+        },
+        rules:{
+        nome: {
+           required: true
+        },
+        matricula: {
+           required: true
+        },
+        telefone:{
+            required: true,
+            max: 99999999999999,
+            min: 111111111
+        },
+        cpf:{
+            required: true,
+            rangelength: [11, 11],
+            max: 99999999999
+        },
+        email:{
+            required: true,
+            email: true
+        },
+        curso:{
+            required: true
+        }
+        }
+    });
+    $(".glyphicon-ok-circle").css("display", "none");
+});
+</script>
+    <?=
+        $this->painel(Constantes::temaBootstrap).
+        $this->painelTitulo("Editar aluno").
+        '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
+        foreach ($this->listaAluno as $l): 
+        $this->alunoForm->prepare();
+        echo $this->form()->openTag($this->alunoForm);
+        ?>
+        <div class="col-lg-12">
+            <?php
+            if($this->resposta == true):
+                    echo $this->alertaSuccess(Constantes::alteraçãoSucesso);
+            endif;
+            ?>
+            <div class="col-sm-5  nome">
+                <i  class="nome-valid"></i>
+                 <?= $this->formRow($this->alunoForm->get('nome')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('value', $l->getNome())
+                         ->setAttribute('id', 'nome')
+                         ->setLabel('Nome'))
+                         ?>
+                <br/>
+            </div>
+            <div class="col-sm-3 matricula">
+                <i   class="matricula-valid"></i>
+                <?= $this->formRow($this->alunoForm->get('matricula')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('value', $l->getMatricula())
+                         ->setAttribute('id', 'matricula')
+                         ->setLabel('Matricula'))
+                         ?>
+                <br/>
+            </div>
+            <div class=" col-sm-4 cpf">
+                <i class="cpf-valid"></i>
+                 <?= $this->formRow($this->alunoForm->get('cpf')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('value', $l->getCpf())
+                         ->setAttribute('id', 'cpf')
+                         ->setLabel('Cpf'))
+                         ?>
+                <br/>
+            </div>
+            <div class="col-sm-5 email ">
+              <i class=" email-valid "></i>
+              <?= $this->formRow($this->alunoForm->get('email')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('value', $l->getEmail())
+                        ->setAttribute('id', 'email')
+                        ->setLabel('Email'))
+                        ?>
+               <br/>
+           </div>
+            <div class="col-sm-3  telefone">
+                <i class=" telefone-valid"></i>
+                 <?= $this->formRow($this->alunoForm->get('telefone')
+                             ->setAttribute('class', 'form-control')
+                             ->setAttribute('value', $l->getTelefone())
+                             ->setAttribute('id', 'telefone')
+                             ->setLabel('Telefone'))
+                             ?>
+                    <br/>
+            </div>
+            <div class="col-sm-4  curso ">
+               <i  class=" curso-valid"></i>
+               <?php
+                $cursos = [];
+                foreach ($this->listaCursoPresencial as $f):
+                $cursos[$f->getCurso()] = $f->getCurso();
+                endforeach;
+               ?>
+                <?= $this->formRow($this->alunoForm->get('curso')
+                         ->setAttribute('id', 'curso')
+                         ->setLabel('Curso')
+                         ->setValueOptions($cursos))
+                         ?>
+                <br/>
             </div>
         </div>
-       
-        <br/>
-        <input type="submit" class="btn btn-primary" name="cadastrar" value="Salvar" /> 
-    </div>         
-</form></div></div>
-<nav>
-        <div style="">
-            <ul class="pager">
+    <?=         '<div class="well-lg ">'.
+                $this->formRow($this->alunoForm->get('salvar')
+                            ->setAttribute('id', 'salvar')
+                            ->setAttribute('value', 'Salvar')
+                            ->setAttribute('class', 'btn btn-success')
+                            ->setAttribute('type', 'submit')
+                            ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Salvar as<br>alterações')).
+                ' '.
+                $this->botaoGrande(
+                        $this->url(Constantes::rotaPerfilAluno, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$l->getIdaluno()]),
+                        'Perfil do <br> aluno',
+                        'fa-user',
+                        'primary'
+                    ).'</div>'. 
+    $this->form()->closeTag();
+    endforeach;
+    echo $this->painelFim();
 
-                <li ><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'aluno', 'id'=>$this->page]) ?>"><span class="btn btn-default" >&larr;&nbsp;&nbsp;Voltar</span></a></li> 
-            </ul>
-        </div> 
-    </nav>
-<?php echo $this->resp; ?>
-</body></html>

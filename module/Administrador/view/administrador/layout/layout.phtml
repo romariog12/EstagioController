@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
-<?= $this->headTitle('UCB -  '. $this->translate('Projem'))->setSeparator(' - ')->setAutoEscape(false) ?>
+<?= $this->headTitle('UCB -  '. $this->translate('EstagioController'))->setSeparator(' - ')->setAutoEscape(false) ?>
 <?= $this->headMeta()
     ->appendName('viewport', 'width=device-width, initial-scale=1.0')
     ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
@@ -29,10 +29,9 @@
                 ->prependFile($this->basePath('js/jquery.min.js'))
                 ->prependFile($this->basePath('js/pace.js'))
                 ->prependFile($this->basePath('js/Chart.min.js'))
-
 ;?>
 </head>
-    <body style="  background-color: #f2f2f2">
+<body style="  background-color: #f2f2f2">
        <?=  $this->partial('base/layout/nav-bar');?>
         <div class=" container" >
         <?= 
@@ -40,10 +39,12 @@
             $this->inlineScript(); 
         ?>
         </div>
-        <div style=" background-color:white; height: 270px; color: #0089cd">
+        <div class="well pager">
+                <i class=" well-lg fa fa-github fa-3x" aria-hidden="true"></i>
+                <i class="well-lg fa fa-facebook-official fa-3x" aria-hidden="true"></i>
+                <i class="well-lg fa fa-youtube fa-3x" aria-hidden="true"></i>
                 <hr>
-                <?='&copy; Romário Macedo - '. date('Y'); ?>
-                <?='&copy; Romário Macedo - '. date('Y'); ?>
-                <hr>
+                <?= '&copy Romário Macedo - 2017' ?> 
         </div>
+</body>
 </html>

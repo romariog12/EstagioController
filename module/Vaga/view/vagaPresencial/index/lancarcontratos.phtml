@@ -1,19 +1,17 @@
  <?php 
- foreach ($this->listaVaga as $l):
-     $empresa = $l->getEmpresa();
-     $carga = $l->getCarga();
-     $bolsa = $l->getBolsa();
-     $inicio = $l->getInicio();
-     $recisao = $l->getRecisao();
-     $idVaga = $l->getidVaga();
-     $agente = $l->getAgente();
-     $idAluno = $l->getIdalunovaga();
-     $aluno = $l->getAluno();
-     $cursoVaga = $l->getCursovaga();
- endforeach;
- foreach ($this->listaAcompanhamento as $l):
-     $idAcompanhamento = $l->getIdacompanhamento();
- endforeach;
+ use Base\Model\Constantes;
+    foreach ($this->listaVaga as $l):
+        $empresa = $l->getEmpresa();
+        $carga = $l->getCarga();
+        $bolsa = $l->getBolsa();
+        $inicio = $l->getInicio();
+        $recisao = $l->getRecisao();
+        $idVaga = $l->getidVaga();
+        $agente = $l->getAgente();
+        $idAluno = $l->getIdalunovaga();
+        $aluno = $l->getAluno();
+        $cursoVaga = $l->getCursovaga();
+    endforeach;
 ?>
 <script>
  $(document).ready(function(){
@@ -202,133 +200,78 @@
                 return $("#editarInicio-"+idDocumento).val();},
             fim: function(){
                 return $("#editarFim-"+idDocumento).val();},
-            tipo: function(){ 
+            documento: function(){ 
                 return $("#editarTipo-"+idDocumento).val();}
         },
         'json').always(
                   location.reload()
                 );
  }
- 
  </script>
-        <!--________________________________________Painel principal___________________________________-->
-        <div class=" panel panel-primary">
-        <div class="panel-heading">
-              <?= '<h4>'.$aluno.'</h4>'?>
-            
-        </div>
-        <!--___________________________________________________________________________________________ -->
-
-        <!--________________________________________navegação ________________________________________ -->
+    <?= $this->painel(Constantes::temaBootstrap)?>
+    <?= $this->painelTitulo($aluno)?>
         <ul class="nav nav-tabs" role="tablist">
            <li role="presentation" class="active"><a>Início</a></li>
-           <li role="presentation"><a href="<?= $this->url('vagaPresencial/default',  array('controller' => 'vagapresencial', 'action' => 'acompanhamento','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga)); ?>">Acompanhamento</a></li>
+          <!-- <li role="presentation"><a href="<?php //$this->url('vagaPresencial/default', ['controller' => 'vagapresencial', 'action' => 'acompanhamento','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga]); ?>">Acompanhamento</a></li>-->
         </ul>
-        <!--__________________________________________________________________________________________-->
         <div class="navbar pager">
-            <p><label>Agente de Integração: </label> <?= $agente?></p>
-            <p><label>Empresa: </label> <?= $empresa?></p>
-                <p class="pager" style=""><label>Carga-Horária: </label> <?php echo $carga; ?> horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$ <?php echo $bolsa ?>,00 
-                </p>
+        <?=     '<p><label>Agente de Integração: </label>  '.$agente.'</p>'.
+                '<p><label>Empresa: </label>'.$empresa.'</p>'.
+                '<p><label>Carga-Horária: </label> '.$carga.' horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$'.$bolsa.',00 </p>';?>
         </div>
-        <!--________________________________________Painel ________________________________________ -->
-  
-        <div class=" ">
-            <div class=" panel panel-primary thumbnail">
-            <div class="panel-heading">
-                <?= $this->translate("Processos")?>
-            </div>  
-            <div>     
-<?php  if (!empty($this->listaContratos)):
-    foreach ($this->listaContratos as $l):
-?> 
-    <div   id="<?= $l->getIddocumento()?>">
-    <button  type="button" class="list-group-item list-group-item-success"  data-toggle="collapse" href="#list-<?= $l->getIddocumento()?>" aria-expanded="false" aria-controls="collapseExample" style=" border-color: #33610a">
-       
-        <div class="progress">
-        <?php
-        $progress = $l->getOperacao1()+$l->getOperacao2()+$l->getOperacao3()+$l->getOperacao4();
-        switch($progress){
-            case 1: $width = "25%" ;
-                break;
-                case 2: $width = "50%" ;
-                    break;
-                    case 3: $width = "75%" ;
-                        break;
-                        case 4: $width = "100%" ;
-                            break;
-                            case 0: $width = "10%" ;
-                                break;
-        }
-        ?>
-        <div class="<?= 'progress-'.$l->getIdDocumento()?> progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="10" aria-valuemax="100" style="width:<?= $width?>">
-         <?= $width?> 
-        </div> 
-        </div>
-         <?= $l->getRelatorio()?> <i class=" pull-right fa fa-bars"></i>      
-    </button>
-        
-   <?= '<div class="collapse" id="list-'.$l->getIddocumento().'">'?>
-        <div class="pager">
-                    <div class="col-sm-3">
-                <span class="fa-stack fa-sm ">
-                    <i class="fa fa-square-o fa-stack-2x"></i>
-                    <span class="fa-stack-1x">1</span> 
-                </span> Direção do Curso <i class="fa fa-chevron-right"></i>
-            </div>
-                    <div class="col-sm-3">
-                <span class="fa-stack fa-sm">
-                    <i class="fa fa-square-o fa-stack-2x"></i>
-                    <span class="fa-stack-1x">2</span> 
-                </span>Instituição de Ensino <i class="fa fa-chevron-right"></i>
-            </div>
-                    <div class="col-sm-3" >
-                <span class="fa-stack fa-sm">
-                    <i class="fa fa-square-o fa-stack-2x"></i>
-                    <span class="fa-stack-1x">3</span> 
-                </span>Entregue ao aluno? <i class="fa fa-chevron-right"></i>
-            </div>
-                    <div class="col-sm-3" >
-                <span class="fa-stack fa-sm">
-                    <i class="fa fa-square-o fa-stack-2x"></i>
-                    <span class="fa-stack-1x">4</span> 
-                </span>Via do documento 
-            </div>
-        </div>
-            <?=    '<div class="pager">'.
+    <?= $this->painel(Constantes::temaBootstrap. ' thumbnail')?>
+    <?= $this->painelTitulo("Processos");
+    if (!empty($this->listaContratos)):
+        foreach ($this->listaContratos as $l): 
+        echo '<div   id="'.$l->getIddocumento().'">'.
+        $this->partialLoop('vagaPresencial/layout/processoPartial',[
+                    [
+                        'idDocumento'=> $l->getIddocumento(),
+                        'operacao1'=>$l->getOperacao1(),
+                        'operacao2'=>$l->getOperacao2(),
+                        'operacao3'=>$l->getOperacao3(),
+                        'operacao4'=>$l->getOperacao4(),
+                        'relatorio'=>$l->getRelatorio()
+                    ]
+                ]).
+        '<div class="collapse" id="list-'.$l->getIddocumento().'">'.
+        '<div class="pager">'.
+            $this->partial('vagaPresencial/layout/painelProcessoPartial').
+        '</div>';
+            $this->processoForm->prepare();
+            echo    $this->form()->openTag($this->processoForm).
+            '<div class="pager">'.
                 '<div class=" col-sm-3">'.
                     
-                    $this->formRow($this->documentoForm->get('operacao1')
+                    $this->formRow($this->processoForm->get('operacao1')
                         ->setAttribute('checked',$l->getOperacao1())
                         ->setAttribute('class', 'operacao1')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).' </div>'.
                 '<div class=" col-sm-3">'.
-                
-                    $this->formRow($this->documentoForm->get('operacao2')
+                    $this->formRow($this->processoForm->get('operacao2')
                         ->setAttribute('checked', $l->getOperacao2())
                         ->setAttribute('class', 'operacao2')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).'</div> '.
                 '<div class=" col-sm-3">'.
-                
-                     $this->formRow($this->documentoForm->get('operacao3')
+                     $this->formRow($this->processoForm->get('operacao3')
                         ->setAttribute('checked',$l->getOperacao3())
                         ->setAttribute('class', 'operacao3')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).'</div> '.
                 '<div class=" col-sm-3">'.
-               
-                    $this->formRow($this->documentoForm->get('operacao4')
+                    $this->formRow($this->processoForm->get('operacao4')
                         ->setAttribute('checked',$l->getOperacao4())
                         ->setAttribute('class', 'operacao4')
                         ->setUncheckedValue('0')
                         ->setCheckedValue('1')).'</div>'.
-                    '</div>'
+                    '</div>'.
+                    $this->form()->closeTag();
             ?> 
             <div class="pager well thumbnail ">
                <div class="btn-group-sm">
-                   <button class="btn btn-success  " onclick="return salvarDocumento(<?= $l->getIddocumento()?>)"><i class="  fa--save  <?= 'salvar-'.$l->getIddocumento()?>"></i><span ><i class="fa fa-check"></i><br></span></button>
+                    <button class="btn btn-success  " onclick="return salvarDocumento(<?= $l->getIddocumento()?>)"><i class="  fa--save  <?= 'salvar-'.$l->getIddocumento()?>"></i><span ><i class="fa fa-check"></i><br></span></button>
                     <button class="btn btn-danger " onclick="return excluirDocumento(<?= $l->getIddocumento()?>)" ><i class="  fa--trash  <?= 'excluir-'.$l->getIddocumento()?>"></i><span ><i class="fa fa-remove"></i><br></span></button>
                     <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#<?= 'modal-'.$l->getIddocumento()?>">
                         <i class=" fa fa-plus"></i>
@@ -337,69 +280,32 @@
                         <i class=" fa fa-edit"></i>
                     </button>
                </div>
-               <div class="modal fade" id="<?= 'modal-'.$l->getIddocumento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                  <div class="modal-content">
-                      <div class="panel panel-primary"> <h4 class="modal-title panel panel-heading " id="myModalLabel">Informações 
-                          <button type="button" class="close " data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                     
-                          </h4>
-                    <div class="modal-body">
-                        <?= '<label>Documento:</label> '.$l->getRelatorio().'<br>'?>
-                        <?= '<label>Inicio:</label> '.date_format($l->getInicio(), 'd/m/Y').'<br>'?>
-                        <?= '<label>Fim:</label> '.date_format($l->getFim(), 'd/m/Y').'<br>'?>
-                        <?= '<label>Data de lançamento:</label> '.$l->getdataLancamento()?>
-                    </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-               <div class="modal fade" id="<?= 'modal-editar-'.$l->getIddocumento()?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                  <div class="modal-content">
-                      <div class="panel panel-primary "> <h4 class="modal-title panel panel-heading " id="myModalLabel">Editar 
-                          <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          </h4>
-                    <div class="modal-body">
-                        <div class="input-daterange date">
-                            <label>Inicio</label>
-                            <input id="<?= 'editarInicio-'.$l->getIddocumento()?>" name="inicio" class=" form-control date" type="date" value="<?= date_format($l->getInicio(), 'Y-m-d')?>"/>
-                            <label>Fim</label>
-                            <input id="<?= 'editarFim-'.$l->getIddocumento()?>" name="fim" class=" form-control date" type="date" value="<?=date_format($l->getFim(), 'Y-m-d')?>"/>
-                           </div>
-                        <label>Tipo</label>
-                            <input id="<?= 'editarTipo-'.$l->getIddocumento()?>" name="tipo" class=" form-control" type="text" value="<?=$l->getRelatorio()?>"/>
-                            <div class="pager well">
-                                <button onclick="return editarDocumento(<?= $l->getIddocumento()?>)" type="button" class="btn btn-success btn-edit">Salvar</button>
-                            </div>
-                    </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
             </div>
-        </div>
-    </div>
-<?php 
-    $idVagaDocumento = $l->getIdvagadocumento();
-    $idaluno = $l->getIdalunodocumento();
-    endforeach; 
-?>
-    <?php else:?>
-    <div class="alert-danger" style="margin: initial">
-           <br/>
-           <h4 style="text-align: center">Nenhum documento lançado </h4><br/>      
-    </div>
-      <?php endif;?>     
-            </div>
-        </div>  
-   
-                 <?php     
-                      $this->documentoForm->prepare();
-                      echo 
-                      $this->form()->openTag($this->documentoForm);
-                    ?>
-   <div >
+    <?=     $this->partialLoop('vagaPresencial/layout/infoProcessoModalPartial',[
+                    ['idDocumento'=> $l->getIddocumento(),
+                    'inicio'=>$l->getInicio(),
+                    'fim'=>$l->getFim(),
+                    'relatorio'=>$l->getRelatorio(),
+                    'dataLancamento'=> $l->getdataLancamento()]
+                ]).    
+            $this->partialLoop('vagaPresencial/layout/editarProcessoModalPartial',[
+                    [
+                    'editarDocumentoForm' =>$this->editarDocumentoForm,
+                    'idDocumento'=> $l->getIddocumento(),
+                    'inicio'=>$l->getInicio(),
+                    'fim'=>$l->getFim(),
+                    'relatorio'=>$l->getRelatorio()]
+                ]).
+            '</div>'
+                    . '</div>';
+        endforeach;
+    else:
+        echo    $this->alertaDanger("Nenhum processo lançado"); 
+    endif;
+        echo    $this->painelFim();  
+                $this->documentoForm->prepare();
+        echo    $this->form()->openTag($this->documentoForm);
+    ?>
     <div class="well pager col-sm-12">
         <button class="btn btn-success  " type="button" data-toggle="collapse" data-target="#NovoProcesso" aria-expanded="false" aria-controls="NovoProcesso">
             Novo Processo <i class="fa fa-bars "></i>
@@ -444,13 +350,14 @@
                     ?>
                 </div>
             </div>
-    </div>
-  </div>
-       
-   </div>
-        <div class="well-lg ">
-         <?= '<a  href="'. $this->url('perfil/default', array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno)).'"><span class="btn btn-primary" ><i class="fa fa-arrow-left fa-2x pull-left"></i>Painel do <br>aluno</span></a>';?>
         </div>
-        </div></div>
-   
-    <?= $this->resp;?>
+  </div>
+<?= '<div class="well-lg ">'.
+              $this->botaoGrande(
+                        $this->url('perfil/default', ['controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno]) ,
+                        'Painel do <br>aluno',
+                        'fa-arrow-left',
+                        'primary'
+                    ).           
+                '</div>'.
+$this->painelFim();

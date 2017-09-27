@@ -1,5 +1,11 @@
+<?php
+use Base\Model\Constantes;
+    $cursos = [];
+    foreach ($this->listaCursos as $l):
+    $cursos[$l->getCurso()] = $l->getCurso();
+    endforeach;
+?>
 <script>
-
 $(document).ready(function(){
  $("#editarAlunoForm").validate({
         highlight: function(element) {
@@ -12,7 +18,8 @@ $(document).ready(function(){
         unhighlight: function(element) {
         $(element.form).find("." + element.id)
             .removeClass("has-error")
-            .addClass("has-success"); 
+            .addClass("has-success");
+        $("."+element.id+"-valid").addClass("glyphicon glyphicon-ok-circle");
         $("."+element.id+"-valid").css({
             display: "inline",
             color: "green"
@@ -53,63 +60,80 @@ $(document).ready(function(){
         }
         }
     });
+    $(".glyphicon-ok-circle").css("display", "none");
 });
-
-
 </script>
-<div class=" panel panel-primary">
-    <div class="panel-heading">
-        <?= 'Cadastrar aluno'?>
-    </div>
-    <?php if($this->alerta): ?>
-<div class="alert-danger" style=" text-align: center"><?php  echo $this->alerta; ?></div> 
-<?php
-endif;
-    ?>
-<div class="well well-sm"> Todos os campos são obrigatórios
-</div> 
-    <form method="post" id="editarAlunoForm">
-    <div class="col-lg-12">
-        <div>
-           
+    <?=
+        $this->painel(Constantes::temaBootstrap).
+        $this->painelTitulo("Editar aluno").
+        '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
+        $this->editarAlunoForm->prepare();
+        echo $this->form()->openTag($this->editarAlunoForm);
+        ?>
+        <div class="col-lg-12">
             <div class="col-sm-5 col-sm-offset-1 nome">
-                <label for="nome"><?= $this->translate('Nome')?></label><i style=" display: none;"  class=" nome-valid glyphicon glyphicon-ok-circle"></i>
-                <input  id="nome" name="nome" type="text" class="form-control "  /><br/>
-           </div>
+                <i  class="nome-valid"></i>
+                 <?= $this->formRow($this->editarAlunoForm->get('nome')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'nome')
+                         ->setLabel('Nome'))
+                         ?>
+                <br/>
+            </div>
             <div class="col-sm-3 matricula">
-                <label for="matricula"><?= $this->translate('Matricula')?></label><i style=" display: none;"  class=" matricula-valid glyphicon glyphicon-ok-circle"></i>
-                <input   id="matricula" name="matricula" type="text" class="form-control" /><br/>
+                <i   class="matricula-valid"></i>
+                <?= $this->formRow($this->editarAlunoForm->get('matricula')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'matricula')
+                         ->setLabel('Matricula'))
+                         ?>
+                <br/>
             </div>
             <div class=" col-sm-3 cpf">
-                <label for="cpf"><?= $this->translate('Cpf')?></label><i style=" display: none;"  class=" cpf-valid glyphicon glyphicon-ok-circle"></i>
-                <input maxlength="11"  name="cpf" id="cpf" type="text" class="form-control" /><br/>
+                <i class="cpf-valid"></i>
+                 <?= $this->formRow($this->editarAlunoForm->get('cpf')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'cpf')
+                         ->setLabel('Cpf'))
+                         ?>
+                <br/>
             </div>
-             <div class="col-sm-3 email col-sm-offset-1">
-                <label for="email"><?= $this->translate('Email')?></label><i style=" display: none;"  class=" email-valid glyphicon glyphicon-ok-circle"></i>
-                <input  id="email" name="email"  class="form-control" /><br/>
+            <div class="col-sm-3 email col-sm-offset-1">
+              <i class=" email-valid "></i>
+              <?= $this->formRow($this->editarAlunoForm->get('email')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'email')
+                        ->setLabel('Email'))
+                        ?>
+               <br/>
+           </div>
+            <div class="col-sm-4  telefone">
+                <i class=" telefone-valid"></i>
+                 <?= $this->formRow($this->editarAlunoForm->get('telefone')
+                             ->setAttribute('class', 'form-control')
+                             ->setAttribute('id', 'telefone')
+                             ->setLabel('Telefone'))
+                             ?>
+                    <br/>
             </div>
-        <div class="col-sm-4  telefone">
-            <label for="telefone"><?= $this->translate('Telefone')?></label><i style=" display: none;"  class=" telefone-valid glyphicon glyphicon-ok-circle"></i>
-            <input  id="telefone" name="telefone" type="tel" class="form-control" /><br/>
-        </div>
-        
             <div class="col-sm-4  curso ">
-                <label for="curso"><?= $this->translate('Curso')?></label><i style=" display: none;"  class=" curso-valid glyphicon glyphicon-ok-circle"></i>
-                <select id="curso" name="curso" class="form-control">
-                <?= '<option></option>';
-                    foreach ($this->listaDadosPresencial as $l):?>
-                    <?='<option>'. $l->getCurso().'</option>';
-                    endforeach;?>
-                    
-                </select>
+               <i  class=" curso-valid"></i>
+                <?= $this->formRow($this->editarAlunoForm->get('curso')
+                         ->setAttribute('id', 'curso')
+                         ->setLabel('Curso')
+                         ->setValueOptions($cursos))
+                         ?>
+                <br/>
             </div>
-            
-        </div>  
-    </div>
-    <div class="well-lg col-sm-offset-1">
-    <button type="submit" class="btn btn-success" name="salvar" value="Salvar" ><i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro</button>                  
-    </div>  
-</form>
- 
-</div>
-<?= $this->resp; ?>
+        </div>
+    <?=         '<div class="well-lg col-sm-offset-1">'.
+                $this->formRow($this->editarAlunoForm->get('salvar')
+                            ->setAttribute('id', 'salvar')
+                            ->setAttribute('value', 'Salvar')
+                            ->setAttribute('class', 'btn btn-success')
+                            ->setAttribute('type', 'submit')
+                            ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro')).
+                
+                '</div>'. 
+    $this->form()->closeTag();
+    echo $this->painelFim();

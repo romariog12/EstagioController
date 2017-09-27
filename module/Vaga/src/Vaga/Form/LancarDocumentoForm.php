@@ -1,7 +1,6 @@
 <?php
 namespace Vaga\Form;
 use Zend\Form\Form;
-use Zend\Form\Element;
 
 /**
  * Description of LancarDocumentoForm
@@ -50,44 +49,15 @@ class LancarDocumentoForm extends Form {
              'type' => 'Zend\Form\Element\Select',
              'name' => 'documento',
              'options' => array(
-                     'value_options' => array(
+                    'disable_inarray_validator' => true,
+                    'value_options' => array(
                         '' =>   '',
                         'TCE' => 'TCE',
                         'TA' => 'TA',
+                         
                      ),
              )    
      ));
-         $this->add(array(
-             'type' => 'Zend\Form\Element\Select',
-             'name' => 'relatorioInstituicao',
-             'options' => array(
-                     'value_options' => array(
-                        ''=>   '',
-                        'instituicao' => 'Institui',
-                        'empresa' => '2º RT Instituição',
-                       
-
-                     ),
-             )    
-     ));
-         
-    $this->add(array(
-   'type' => 'Zend\Form\Element\Checkbox',
-   'name' => 'operacao1',
-   ));
-   $this->add(array(
-   'type' => 'Zend\Form\Element\Checkbox',
-   'name' => 'operacao2',
-
-   ));
-   $this->add(array(
-   'type' => 'Zend\Form\Element\Checkbox',
-   'name' => 'operacao3',
-   ));
-   $this->add(array(
-   'type' => 'Zend\Form\Element\Checkbox',
-   'name' => 'operacao4',
-   ));    
-     }
     }
+}
     

@@ -106,8 +106,8 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'vaga/vaga-presencial/cadastrarvagapresencial' => __DIR__ . '/../view/vagaPresencial/index/cadastrarVagaPresencial.phtml',
-            'vaga/vaga-presencial/perfilvagafinalizada' => __DIR__ . '/../view/vagaPresencial/index/perfilVagaFinalizada.phtml',
+            'vaga/vaga-presencial/cadastrar-vaga-presencial' => __DIR__ . '/../view/vagaPresencial/index/cadastrarVagaPresencial.phtml',
+            'vaga/vaga-presencial/perfil-vaga-finalizada' => __DIR__ . '/../view/vagaPresencial/index/perfilVagaFinalizada.phtml',
             'vaga/vaga-presencial/lancar-contratos-vaga' => __DIR__ . '/../view/vagaPresencial/index/lancarContratosVaga.phtml',
             'vaga/vaga-presencial/lancarcontratos' => __DIR__ . '/../view/vagaPresencial/index/lancarcontratos.phtml', 
             'vaga/vaga-presencial/acompanhamento' => __DIR__ . '/../view/vagaPresencial/index/acompanhamento.phtml', 

@@ -107,8 +107,8 @@
                 </div>
         </div>
         <div class="well-lg col-sm-offset-1">
-        <button type="submit" class="btn btn-success" name="salvar" value="Salvar" ><i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro</button>
-            <?= '<a href="'.$this->url('perfilEmpresa/default',  array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$l->getEmpresa(),)).'">'; ?>
+        <button type="submit" class="btn btn-success" name="salvar" value="Salvar" ><i class="fa fa-check fa-2x pull-left"></i> Salvar as <br>Alterações</button>
+            <?= '<a href="'.$this->url('perfilEmpresa/default',  array('controller' => 'empresa', 'action' => 'perfilempresa', 'id'=>$l->getIdEmpresa(),)).'">'; ?>
                 <span class="btn btn-primary  ">
                    <?= '<i class=" fa fa-user fa-2x pull-left"></i>'. $this->translate('Perfil da ').'<br>'.$this->translate('Empresa')?>
                 </span>
@@ -117,4 +117,3 @@
     </form>
         <?php endforeach?>
     </div>
-    <?= $this->resp; ?>

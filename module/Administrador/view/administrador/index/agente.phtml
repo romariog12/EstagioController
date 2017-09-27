@@ -1,46 +1,31 @@
 <?php
-$th =[
-    'Agente de Integração',
-    'Telefone',
-    'Editar',
-    'Excluir',
-    ];
-$td = [];
-foreach ($this->pagination as $kay=> $l){
-    array_push($td,
-    array(
-        $l->getAgente(),
-        $l->getTelefone(),
-        '<a href="'.$this->url('empresa/default', array('controller'=>'administrador', 'action'=>'editarAgente', 'id'=>$l->getIdagente())).'"><i class=" glyphicon glyphicon-edit"></i></a></td>',
-        '<a onclick="return confirm("Tem certeza que deseja deletar este registro?")" style="color: #c81616" href="'. $this->url('excluirAgente',['action'=>'excluirAgente', 'deleteAgente'=>$l->getIdagente(),'page'=>$this->pageNumber] ).'"><i  class=" glyphicon glyphicon-remove"></i></a>'
-        ));
-}
-?>
-<div class=" panel panel-primary">
-       <?= $this->painel('Agentes de Integração')?>
+use Base\Model\Constantes;
+
+echo    $this->painel(Constantes::temaBootstrap).
+        $this->painelTitulo("Agentes de Integracao")?>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li   role="presentation"><a href="<?php echo $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">Empresas Concedente <span class="label label-default"> <?php echo count($this->listaEmpresa)?></span></a> </li>
+                        <li   role="presentation"><a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">Empresas Concedente <span class="label label-default"> <?php echo count($this->listaEmpresa)?></span></a> </li>
                         <li class=" active" role="presentation" ><a href="#"><label>Agentes de Integração</label> <span class="label label-primary"> <?php echo count($this->listaAgente)?></span></a></li>     
                     </ul> 
                 </div>
-  
-        <?= '<br><div class="col-lg-12">'?>
-        <?= $this->tabela($th, $td)?>
-        <?= $this->paginacao($this->pageNumber,$this->count)?>
-        <?= '</div>'?>
-    
-  <div class="well-lg ">
-        <a href="<?= $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ?>">
-            <span class="btn btn-success  ">
-                <i class=" fa fa-plus fa-2x pull-left"></i>Cadastrar <br>Agente
-            </span>
-        </a>
-        <a href="<?= $this->url('buscarEmpresa') ?>">
-            <span class="btn btn-primary  ">
-                <i class=" fa fa-search fa-2x pull-left"></i>Procurar <br>Empresa
-            </span>
-        </a>
-    </div>
-<?php echo $this->resp; ?>
-</div>
+        <?=   '<br><div class="col-lg-12">'.
+                $this->tabelaAgentes([ 'Agente de Integração','Telefone','Editar','Excluir',],$this->pagination, $this->pageNumber).
+                $this->paginacao($this->pageNumber,$this->count).
+                '</div>'.
+                '<div class=" well-lg">'.
+                $this->botaoGrande(
+                $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ,
+                'Cadastrar <br> agente',
+                'fa-plus',
+                'success'
+                ).
+                ' '.
+                $this->botaoGrande(
+                $this->url('buscarEmpresa'),
+                'Buscar <br> empresa',
+                'fa-search',
+                'primary'
+                ).
+                '</div>'. 
+                $this->painelFIm();

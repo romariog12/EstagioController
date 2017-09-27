@@ -119,7 +119,7 @@ return ['router' =>
                     'route'    => '/perfil',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
-                        'controller'    => 'Aluno',
+                        'controller'    => 'Administrador',
                         'action'        => 'buscarAluno',
                     ),
                 ),
@@ -140,13 +140,13 @@ return ['router' =>
                     ),
                 ),
             ),
-              'perfilPresencial' => array(
+              'perfilAluno' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/perfilPresencial',
+                    'route'    => '/perfilAluno',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
-                        'controller'    => 'AlunoPresencial',
+                        'controller'    => 'administrador',
                         'action'        => 'buscarAluno',
                     ),
                 ),
@@ -174,7 +174,7 @@ return ['router' =>
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
                         'controller'    => 'Empresa',
-                        'action'        => 'perfilEmpresa',
+                        'action'        => 'buscarEmpresa',
                     ),
                 ),
                 'may_terminate' => true,
@@ -283,7 +283,7 @@ return ['router' =>
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action][/:id]]',
+                            'route'    => '/[:controller[/:action][/:id][/:page]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -346,46 +346,10 @@ return ['router' =>
                     ),
                 ),
             ),
-            'buscarEmpresa' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/buscarEmpresa',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Administrador\Controller',
-                        'controller'    => 'Empresa',
-                        'action'        => 'buscarEmpresa',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action][/:id]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-             'excluirEmpresa' => array(
+             'excluir' => array(
                   'type'    => 'Segment',
                   'options' => array(
                       'route'    => '/administrador/flag/[:action]/[:deleteEmpresa]/[:page][/]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Administrador\Controller',
-                          'controller'    => 'Administrador',
-                      ),
-                  ),
-              ),
-            'excluirAgente' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/empresa/flag/[:action]/[:deleteAgente]/[:page][/]',
                       'defaults' => array(
                           '__NAMESPACE__' => 'Administrador\Controller',
                           'controller'    => 'Administrador',
@@ -405,9 +369,6 @@ return ['router' =>
            
              ],       
        ],
-    
-
-    
     'service_manager' => array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
@@ -418,7 +379,7 @@ return ['router' =>
         ),
     ),
     'translator' => array(
-        'locale' => 'pr-BR',
+        'locale' => 'pt-BR',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',
@@ -429,10 +390,8 @@ return ['router' =>
     ),
     'controllers' => array(
         'invokables' => array(
-            'Administrador\Controller\Administrador' => Controller\AdministradorController::class, 
-            'Administrador\Controller\Aluno' => Controller\AlunoController::class,
+            'Administrador\Controller\Administrador' => Controller\AdministradorController::class,
             'Administrador\Controller\AlunoPresencial' => Controller\AlunoPresencialController::class,
-            'Administrador\Controller\Index' => Controller\AlunoController::class,
             'Administrador\Controller\Empresa' => Controller\EmpresaController::class,
         ),
     ),
@@ -450,11 +409,10 @@ return ['router' =>
             'administrador/administrador/aluno' => __DIR__ . '/../view/administrador/index/aluno.phtml',
             'administrador/administrador/todos-alunos' => __DIR__ . '/../view/administrador/index/todosAlunos.phtml',
             'administrador/administrador/editar-aluno' => __DIR__ . '/../view/administrador/index/editarAluno.phtml',
-            'administrador/administrador/editar-aluno-presencial' => __DIR__ . '/../view/administrador/index/editarAlunoPresencial.phtml',
-            'administrador/empresa/cadastrar-empresa' => __DIR__ . '/../view/empresa/index/cadastrarEmpresa.phtml',
+            'administrador/administrador/cadastrar-empresa' => __DIR__ . '/../view/administrador/index/cadastrarEmpresa.phtml',
             'administrador/empresa/cadastrar-agente' => __DIR__ . '/../view/empresa/index/cadastrarAgente.phtml',
             'administrador/empresa/buscar-empresa' => __DIR__ . '/../view/empresa/index/buscarEmpresa.phtml',
-            'administrador/empresa/perfilempresa' => __DIR__ . '/../view/empresa/index/perfilEmpresa.phtml',
+            'administrador/administrador/perfil-empresa' => __DIR__ . '/../view/administrador/index/perfilEmpresa.phtml',
             'administrador/empresa/perfilempresaestagiando' => __DIR__ . '/../view/empresa/index/perfilEmpresaEstagiando.phtml',
             'administrador/empresa/perfilempresaencerrado' => __DIR__ . '/../view/empresa/index/perfilEmpresaEncerrado.phtml',
             'administrador/administrador/editar-empresa' => __DIR__ . '/../view/administrador/index/editarEmpresa.phtml',
@@ -467,13 +425,13 @@ return ['router' =>
             'administrador/aluno/perfil' => __DIR__ . '/../view/aluno/index/perfil.phtml',
             'administrador/aluno/estagios' => __DIR__ . '/../view/aluno/index/estagios.phtml',  
             'administrador/aluno/buscar-aluno' => __DIR__ . '/../view/aluno/index/buscarAluno.phtml',
-            'administrador/aluno/cadastrar' => __DIR__ . '/../view/aluno/index/cadastroAluno.phtml',
+            'administrador/administrador/cadastrar-aluno' => __DIR__ . '/../view/administrador/index/cadastrarAluno.phtml',
             'administrador/aluno/declaracao' => __DIR__ . '/../view/aluno/index/declaracao.phtml',
             'administrador/aluno-presencial/perfil' => __DIR__ . '/../view/alunoPresencial/index/perfilPresencial.phtml',
-            
+            'administrador/administrador/perfil-aluno' => __DIR__ . '/../view/administrador/index/perfilAluno.phtml',
             'administrador/aluno-presencial/estagios' => __DIR__ . '/../view/alunoPresencial/index/estagiosPresencial.phtml',  
-            'administrador/aluno-presencial/buscar-aluno' => __DIR__ . '/../view/alunoPresencial/index/buscarAlunoPresencial.phtml',
-            'administrador/aluno-presencial/cadastrar' => __DIR__ . '/../view/alunoPresencial/index/cadastroAlunoPresencial.phtml',
+            'administrador/administrador/buscar-aluno' => __DIR__ . '/../view/administrador/index/buscarAluno.phtml',
+            'administrador/administardor/cadastrar' => __DIR__ . '/../view/administrador/index/cadastrarAluno.phtml',
             'administrador/aluno-presencial/declaracao-presencial' => __DIR__ . '/../view/alunoPresencial/index/declaracaoPresencial.phtml',
             
         ),
@@ -481,9 +439,17 @@ return ['router' =>
             __DIR__ . '/../view',
         ),
     ),
-    
-    
-    // Placeholder for console routes
+    'view_helpers' => [
+        'invokables' =>
+            [
+                'tabelaTodosAlunos' => 'Administrador\View\Helper\tabelaTodosAlunos',
+                'tabelaEmpresas' => 'Administrador\View\Helper\tabelaEmpresas',
+                'tabelaAgentes' => 'Administrador\View\Helper\tabelaAgentes',
+                'tabelaDocumentos' => 'Administrador\View\Helper\tabelaDocumentos',
+                'tabelaUsuarios' => 'Administrador\View\Helper\tabelaUsuarios',
+                'tabelaBuscarAluno' => 'Administrador\View\Helper\tabelaBuscarAluno'
+                ]
+        ],
     'console' => array(
         'router' => array(
             'routes' => array(

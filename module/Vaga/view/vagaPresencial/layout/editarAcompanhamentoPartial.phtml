@@ -1,0 +1,44 @@
+<?php
+$this->editarAcompanhamentoForm->prepare();
+?>
+ <div class="modal fade" id="<?= 'modal-editar-acompanhamento-'.$this->idAcompanhamento?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog modal-sm" role="document">
+  <div class="modal-content">
+      <div class="panel panel-primary "> 
+            <h4 class="modal-title panel panel-heading " id="myModalLabel">Editar 
+                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </h4>
+            <div class="modal-body">
+                  <?=    $this->form()->openTag($this->editarAcompanhamentoForm);  ?>
+                        <div class="input-daterange date">
+                        <?= $this->formRow($this->editarAcompanhamentoForm->get('editarInicio')
+                                ->setAttribute('id','editarInicio-'.$this->idAcompanhamento)
+                                ->setAttribute('required', 'true')
+                                ->setAttribute('class', 'form-control date')
+                                ->setAttribute('value', $this->inicio)
+                                ->setLabel('Inicio')).
+                            $this->formRow($this->editarAcompanhamentoForm->get('editarFim')
+                                ->setAttribute('id','editarFim-'.$this->idAcompanhamento)
+                                ->setAttribute('required', 'true')
+                                ->setAttribute('class', 'form-control date')
+                                ->setAttribute('value', $this->fim)
+                                ->setLabel('Fim')).
+                            $this->formRow($this->editarAcompanhamentoForm->get('editarPeriodo')
+                                ->setAttribute('class', 'form-control')
+                                ->setAttribute('id', 'editarTipo-'.$this->idAcompanhamento)
+                                ->setLabel('Periodo')).
+                            $this->formRow($this->editarAcompanhamentoForm->get('acompanhante')
+                                ->setAttribute('class', 'form-control')
+                                ->setAttribute('id', 'editarTipo-'.$this->idAcompanhamento)
+                                ->setLabel('Acompanhante')      
+                            );
+                        ?>
+                        <div class="pager well">
+                            <span onclick="return editarAcompanhamento(<?= $this->idAcompanhamento?>)" class="btn btn-success btn-edit">Salvar</span>
+                        </div> <?=   $this->form()->closeTag();  ?> 
+            <?= $this->painelFim()?>
+            </div>
+      </div>
+  </div>
+</div>
+</div>

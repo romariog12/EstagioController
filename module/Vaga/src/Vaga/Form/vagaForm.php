@@ -18,19 +18,31 @@ class vagaForm extends Form {
         ]);
         $this->add(array(
              'type' => 'Zend\Form\Element\Select',
-             'name' => 'aluno',   
+             'name' => 'aluno',
+            'options'=> [
+                    'disable_inarray_validator' => true,
+                ]
         ));
          $this->add(array(
              'name' => 'curso',
              'type' => 'Zend\Form\Element\Select',
+             'options'=> [
+                    'disable_inarray_validator' => true,
+                ]
          ));
          $this->add(array(
              'type' => 'Zend\Form\Element\Select',
              'name' => 'agente',
+             'options'=> [
+                    'disable_inarray_validator' => true,
+                ]
          ));
          $this->add(array(
              'type' => 'Zend\Form\Element\Select',
              'name' => 'empresa',
+             'options'=> [
+                    'disable_inarray_validator' => true,
+                ]
          ));
          $this->add(array(
              'type' => 'text',
@@ -44,14 +56,15 @@ class vagaForm extends Form {
              'type' => 'date',
              'name' => 'inicio',
          ));
-         $this->add(array(
-             'type' => 'submit',
-             'name' => 'salvar',
-             'attributes' => array(
-                 'class' =>'btn  btn-success',
-            
-             ),
-         ));
+          $this->add([
+                'type' => 'Button',
+                'name' => 'salvar',
+                'options' => [
+                    'label_options' => array(
+                    'disable_html_escape' => true,
+            )
+                ]
+        ]);
      }
     }
     
