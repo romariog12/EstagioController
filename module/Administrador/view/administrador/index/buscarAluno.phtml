@@ -24,16 +24,16 @@
                       </div>
                     </div>
                 </div><br><br><br>
-<?php 
-if(!empty($this->lista)):
-    echo
-    $this->tabelaBuscarAluno(['Nome', 'Curso', 'Matricula', 'Perfil'],$this->lista);
-endif;
-?>
+        <?php 
+        if(!empty($this->lista)):
+        echo
+        $this->tabelaBuscarAluno(['Nome', 'Curso', 'Matricula', 'Perfil'],$this->lista);
+        endif;
+        ?>
             </div>
         </form>
          <div class="well-lg">
-             <a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosalunospresencial']) ?>"> <span class="btn btn-primary"><i class="fa fa-users fa-2x pull-left"></i>Todos <br>Aluno</span></a>
+             <a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos', 'id'=>'1']) ?>"> <span class="btn btn-primary"><i class="fa fa-users fa-2x pull-left"></i>Todos <br>Aluno</span></a>
            
          </div>
     </div>

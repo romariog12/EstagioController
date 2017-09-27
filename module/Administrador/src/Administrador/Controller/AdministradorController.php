@@ -3,7 +3,6 @@ namespace Administrador\Controller;
 /**
  * @author romario <romariomacedo18@gmail.com>
  */
-use Administrador\Controller\AdministradorAbstractActionController;
 use Zend\View\Model\ViewModel;
 use Base\Model\Entity;
 use Zend\Paginator\Paginator;
@@ -13,7 +12,8 @@ use Base\Model\Constantes;
 use Administrador\Form\alunoForm;
 use Administrador\Model\Aluno;
 use Administrador\Form\empresaForm;
-class AdministradorController extends AdministradorAbstractActionController
+use Zend\Mvc\Controller\AbstractActionController;
+class AdministradorController extends AbstractActionController
 {
     private $resposta = false;
     private $empresa = false;
@@ -274,6 +274,26 @@ class AdministradorController extends AdministradorAbstractActionController
                         'idEmpresa'=>$idEmpresa
                 ]);        
         }
+    public function buscarEmpresaAction(){
+            $request = $this->getRequest();
+            if($request->isPost()){
+                $data = $this->params()->fromPost();
+                $em = $this->getServiceLocator()->get(Entity::em);
+                switch ($data['buscar']){
+                    case 'buscarPorCnpj':
+                            $cnpj = $request->getPost('porCnpj');
+                            $lista = $em->getRepository(Entity::empresa)->findByCnpj($cnpj);
+                            break;
+                    case 'buscarPorNome':
+                            $nome = $request->getPost('porNome');
+                            $lista = $em->getRepository(Entity::empresa)->findByEmpresa($nome);
+                            break;
+                }
+                return new ViewModel([
+                'lista' => $lista,
+                    ]);  
+             }      
+    }    
     public function agenteAction(){
             $em = $this->getServiceLocator()->get(Entity::em);
             $listaEmpresa = $em->getRepository(Entity::empresa)->findAll();

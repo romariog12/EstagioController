@@ -219,7 +219,7 @@
                 '<p><label>Empresa: </label>'.$empresa.'</p>'.
                 '<p><label>Carga-Horária: </label> '.$carga.' horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$'.$bolsa.',00 </p>';?>
         </div>
-    <?= $this->painel(Constantes::temaBootstrap. ' thumbnail')?>
+    <?= $this->painel(Constantes::temaBootstrap. ' well-sm')?>
     <?= $this->painelTitulo("Processos");
     if (!empty($this->listaContratos)):
         foreach ($this->listaContratos as $l): 
@@ -354,7 +354,7 @@
   </div>
 <?= '<div class="well-lg ">'.
               $this->botaoGrande(
-                        $this->url('perfil/default', ['controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno]) ,
+                        $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno]) ,
                         'Painel do <br>aluno',
                         'fa-arrow-left',
                         'primary'

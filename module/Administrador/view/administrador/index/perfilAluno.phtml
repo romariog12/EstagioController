@@ -9,21 +9,14 @@ use Base\Model\Constantes;
     $curso = $l->getCurso();
     endforeach;
     echo $this->painel(Constantes::temaBootstrap);
-    echo $this->painelTitulo("Perfil do aluno")
-?>     
-<script>
-$(document).ready(function(){
-$(".situacao-1").css("color","green");  
-$(".situacao-0").css("color","red");  
-});
-</script>      
-        <?=    '<div class="media-body pager well-lg">'.
-                '<h4 class="media-heading">'.$nome.'</h4>'.
-                $curso.'<br>'.
-                $matricula.'<br>'.
-                $email.'<br>'.
-                $telefone.
-                '</div>'
+    echo $this->painelTitulo("Perfil do aluno").
+            '<div class="media-body pager well-lg">'.
+            '<h4 class="media-heading">'.$nome.'</h4>'.
+            $curso.'<br>'.
+            $matricula.'<br>'.
+            $email.'<br>'.
+            $telefone.
+            '</div>'
         ?>     
         <div class="caption">
             <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
@@ -34,7 +27,7 @@ $(".situacao-0").css("color","red");
         if(empty($this->listaVagaPresencial)){
                 echo $this->alertaDanger("Nenhum estágio lançado");
         }else{
-        echo    $this->painel(Constantes::temaBootstrap).
+        echo    $this->painel('default').
                 $this->tabelaEstagios(['Emrpesa','Processo','Excluir'], $this->listaVagaPresencial).
                 $this->painelFim();
             }
@@ -42,7 +35,7 @@ $(".situacao-0").css("color","red");
                 '<div class=" well-lg">'.
                 $this->botaoGrande(
                     $this->url(Constantes::rotaVagaDefault, ['controller' => Constantes::vaga   , 'action' => Constantes::cadastrarVagaPresencial, 'idVaga'=>$getidaluno]),
-                    'Nova <br> vaga',
+                    'Novo <br> estágio',
                     'fa-plus',
                     'success'
                 ). 
