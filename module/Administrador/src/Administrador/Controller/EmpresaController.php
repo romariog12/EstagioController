@@ -8,10 +8,14 @@
  */
 
 namespace Administrador\Controller;
-
+/**
+ * Description of UsuarioRepository
+ *
+ * @author romario
+ */
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Administrador\Entity\Empresa;
+use Empresa\Entity\Empresa;
 use Vaga\Entity\VagaPresencial;
 use Vaga\Entity\Vaga;
 use Zend\Paginator\Paginator;

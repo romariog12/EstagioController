@@ -7,16 +7,25 @@ use Zend\View\Model\ViewModel;
 use Vaga\Entity\VagaPresencial;
 use Vaga\Entity\DocumentoPresencial;
 use Base\Model\Entity;
-
+use Zend\View\Model\JsonModel;
 class VagaPresencialController extends AbstractActionController
 {
+    public function __construct() {
+        $this->route = 'vaga/default';
+        $this->controller = 'vagapresencial';
+    }
+
     public function cadastrarVagaPresencialAction(){
         $this->sairComumAction();
         $request = $this->getRequest();
-        $em = $this->getServiceLocator()->get(Entity::em);
-        $listaDados = $em->getRepository(Entity::dadosPresencial)->findAll();
-        $idalunovaga = $this->params()->fromRoute("id", 0);
-        $aluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idalunovaga);
+        $em = $this->getServiceLocator()
+                ->get(Entity::em);
+        $listaDados = $em->getRepository(Entity::dadosPresencial)
+                ->findAll();
+        $idalunovaga = $this->params()
+                ->fromRoute("id", 0);
+        $aluno = $em->getRepository(Entity::alunoPresencial)
+                ->findByIdaluno($idalunovaga);
         if($request->isPost()){ 
             foreach ($this->session()->comum as $l){
                        $usuarioIdusuario = $l[0]->getIdusuario();
@@ -77,9 +86,12 @@ class VagaPresencialController extends AbstractActionController
         $aluno->setIdaluno($idaluno);
         $documento = new DocumentoPresencial();
         $documento ->setIdvagaDocumento($idvagaDocumento);
-        $listaContratos = $em->getRepository(Entity::documentoPresencial)->findByIdvagaDocumento($documento->getIdvagaDocumento());   
-        $listaVaga = $em->getRepository(Entity::vagaPresencial)->findByIdvaga($idvagaDocumento);
-        $selectAluno = $em->getRepository(Entity::alunoPresencial)->findByIdaluno($idaluno);
+        $listaContratos = $em->getRepository(Entity::documentoPresencial)
+                ->findByIdvagaDocumento($documento->getIdvagaDocumento());   
+        $listaVaga = $em->getRepository(Entity::vagaPresencial)
+                ->findByIdvaga($idvagaDocumento);
+        $selectAluno = $em->getRepository(Entity::alunoPresencial)
+                ->findByIdaluno($idaluno);
         foreach ($selectAluno as $l){
                 $alunoDocumento = $l->getNome();    
             }
@@ -93,14 +105,18 @@ class VagaPresencialController extends AbstractActionController
                     $inicio = $request->getPost("inicioEnc");
                     $fim = $request->getPost("fimEnc");
                     $relatorio = $request->getPost("relatorio");
-                    $entregue = $request->getPost("entregue");
+                   // $entregue = $request->getPost("entregue");
        
                     try { 
                         $documento ->setIdvagaDocumento($idvagaDocumento);
-                        $documento ->setInicio($inicio);
-                        $documento->setFim($fim);  
+                        $documento ->setInicio(new \DateTime($inicio));
+                        $documento->setFim(new \DateTime($fim));
+                        $documento->setOperacao1('Checked');
+                        $documento->setOperacao2('Checked');
+                        $documento->setOperacao3('Checked');
+                        $documento->setOperacao4('Checked');
                         $documento->setRelatorio($relatorio);
-                        $documento->setEntregue($entregue);
+                        $documento->setEntregue('NULL');
                         $documento->setIdalunoDocumento($aluno->getIdaluno());
                         $documento->setAnoDocumento(date('Y'));
                         $documento->setMesDocumento(date('m'));
@@ -109,7 +125,7 @@ class VagaPresencialController extends AbstractActionController
                         $em->flush();
 
                     } catch (Exception $ex) {}
-                return $this->redirect()->toRoute('vaga/default',array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento(), 'curso'=>$documento->getCursoDocumento() ));  
+                return $this->redirect()->toRoute($this->route,array('controller' => $this->controller, 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento(), 'curso'=>$documento->getCursoDocumento() ));  
             }      
             if ($data['salvar']=='Salvar'){
                     $recisao = $request->getPost("recisao");
@@ -127,16 +143,13 @@ class VagaPresencialController extends AbstractActionController
                     $relatorio = $request->getPost("relatorio");
                     $entregue = $request->getPost("entregue"); 
                     $select = $em->find(Entity::documentoPresencial, $idDocumento);
-                   
                         $select ->setInicio($inicio);
                         $select->setFim($fim);  
                         $select->setRelatorio($relatorio);
-                        $select->setEntregue($entregue);
-                    
-                    
+                        $select->setEntregue($entregue); 
                     $em->persist($select);
                     $em->flush();
-                    $this->redirect()->toRoute('vaga/default',array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento()));         
+                    $this->redirect()->toRoute($this->route,array('controller' => $this->controller, 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento()));         
             }
             }
            
@@ -157,11 +170,7 @@ class VagaPresencialController extends AbstractActionController
             $documento = $em->find(Entity::documentoPresencial, $id);
             $em->remove($documento);
             $em->flush();
-          
-        return $this->redirect()->toRoute('vaga/default', 
-                  array('controller' => 'vagapresencial', 'action' => 'lancarcontratos','id'=>$documento->getIdalunoDocumento(), 'idVaga'=>$documento->getIdvagaDocumento(),'curso'=>$documento->getcursoDocumento()));       
-    }
-      
+            }
       //Excluir Vaga
     public function excluirvagaAction(){
             $this->sairComumAction();
@@ -177,36 +186,23 @@ class VagaPresencialController extends AbstractActionController
      public function editarContratosAction(){
          $this->sairComumAction();
          $em = $this->getServiceLocator()->get(Entity::em);
-         $idDocumento = $this->params()->fromRoute("id", 0);
-         $idVaga =  $this->params()->fromRoute("idVaga", 0);
-          $listaContratos = $em->getRepository(Entity::documentoPresencial)->findByIddocumento($idDocumento);
-          $request = $this->getRequest();
-          
-          if ($request->isPost()){
-              $select = $em->find(Entity::documentoPresencial, $idDocumento);
-                    $inicio = $request->getPost("inicioEnc");
-                    $fim = $request->getPost("fimEnc");
-                    $relatorio = $request->getPost("relatorio");
-                    $entregue = $request->getPost("entregue");
-                    
-          
-                    try { 
-                        $select ->setInicio(new \DateTime($inicio));
-                        $select->setFim(new \DateTime($fim));  
-                        $select->setRelatorio($relatorio);
-                        $select->setEntregue($entregue);
-                        $em->persist($select);
-                        $em->flush();
+         $idDocumento = (int)$_POST['id'];
+                $request = $this->getRequest();
+                $select = $em->find(Entity::documentoPresencial, $idDocumento);
+                $inicio = $request->getPost("inicioEnc");
+                $fim = $request->getPost("fimEnc");
+                $relatorio = $request->getPost("relatorio");
+                $entregue = $request->getPost("entregue");
+                try { 
+                    $select ->setInicio(new \DateTime($inicio));
+                    $select->setFim(new \DateTime($fim));  
+                    $select->setRelatorio($relatorio);
+                    $select->setEntregue($entregue);
+                    $em->persist($select);
+                    $em->flush();
 
-                    } catch (Exception $ex) {}
-                return $this->redirect()->toRoute('vaga/default',array('controller' => 'VagaPresencial', 'action' => 'lancarcontratos','id'=>42, 'idVaga'=>$idVaga));  
-                    
-              
-          }
-                
-        return new ViewModel([
-            'listaContratos' =>$listaContratos
-        ]);
+                } catch (Exception $ex) {}
+               
     }
     
 

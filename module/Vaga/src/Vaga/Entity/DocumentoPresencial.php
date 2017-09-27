@@ -14,18 +14,42 @@ use Doctrine\ORM\Mapping as ORM;
 class DocumentoPresencial
 {
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="Inicio", type="string", nullable=false)
+     * @ORM\Column(name="Inicio", type="date", nullable=false)
      */
     private $inicio;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="Fim", type="string", nullable=false)
+     * @ORM\Column(name="Fim", type="date", nullable=false)
      */
     private $fim;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Operacao1", type="string", nullable=false)
+     */
+    private $operacao1;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Operacao2", type="string", nullable=false)
+     */
+    private $operacao2;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Operacao3", type="string", nullable=false)
+     */
+    private $operacao3;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Operacao4", type="string", nullable=false)
+     */
+    private $operacao4;
 
     /**
      * @var \DateTime
@@ -98,7 +122,23 @@ class DocumentoPresencial
     function getFim() {
         return $this->fim;
     }
+    function getOperacao1() {
+        return $this->operacao1;
+    }
 
+    function getOperacao2() {
+        return $this->operacao2;
+    }
+
+    function getOperacao3() {
+        return $this->operacao3;
+    }
+
+    function getOperacao4() {
+        return $this->operacao4;
+    }
+
+        
     function getRecisao() {
         return $this->recisao;
     }
@@ -135,16 +175,36 @@ class DocumentoPresencial
         return $this->cursoDocumento;
     }
 
-    function setInicio($inicio) {
+    function setInicio(\DateTime $inicio) {
         $this->inicio = $inicio;
         return $this;
     }
 
-    function setFim($fim) {
+    function setFim(\DateTime $fim) {
         $this->fim = $fim;
         return $this;
     }
+    function setOperacao1($operacao1) {
+        $this->operacao1 = $operacao1;
+        return $this;
+    }
 
+    function setOperacao2($operacao2) {
+        $this->operacao2 = $operacao2;
+        return $this;
+    }
+
+    function setOperacao3($operacao3) {
+        $this->operacao3 = $operacao3;
+        return $this;
+    }
+
+    function setOperacao4($operacao4) {
+        $this->operacao4 = $operacao4;
+        return $this;
+    }
+
+     
     function setRecisao(\DateTime $recisao) {
         $this->recisao = $recisao;
         return $this;

@@ -49,7 +49,7 @@ return array(
         
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
-            'AuthenticationService'=> 'Auth\Model\Factory\AuthenticationFactory'
+            
         ),
     ),
     'translator' => array(

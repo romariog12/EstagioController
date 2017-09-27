@@ -8,6 +8,8 @@ return [
         ],
         'factories' => array(
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+            'AuthenticationService'=> 'Auth\Model\Factory\AuthenticationFactory',
+            
             
             
         ),

@@ -8,10 +8,15 @@ use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Aluno\Entity\AlunoPresencial;
 use Base\Model\Entity;
+use Auth\Model\Session;
 class RelatorioPresencialController extends AbstractActionController {
     
     public function relatorioAction()
-    {    $this->sairComumAction();
+    {    
+            $session = new Session();
+            $session->sairAdministradorAction();
+          
+            
             $em = $this->getServiceLocator()->get(Entity::em);
             $listaVaga = $em->getRepository(Entity::vagaPresencial)
                     ->findAll();

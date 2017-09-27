@@ -1731,9 +1731,9 @@
 		datesDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		keyboardNavigation: true,
-		language: 'en',
+		language: 'pt-BR',
 		minViewMode: 0,
 		maxViewMode: 4,
 		multidate: false,
@@ -1766,8 +1766,8 @@
 	var dates = $.fn.datepicker.dates = {
 		en: {
 			days: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-			daysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Ter", "Sab"],
-			daysMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Ter", "Sab"],
+			daysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+			daysMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
 			months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
 			monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
 			today: "Today",

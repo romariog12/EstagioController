@@ -38,6 +38,7 @@ class Module
         $sessionConfig->setOptions($config); 
         $sessionManager = new SessionManager($sessionConfig); 
         $sessionManager->start(); Container::setDefaultManager($sessionManager); 
+       
     
     }
     public function bootstrapSession($e)
@@ -92,14 +93,14 @@ class Module
                     $config = $sm->get('config');
                     if (isset($config['session'])) {
                         $session = $config['session'];
-
+    
                         $sessionConfig = null;
                         if (isset($session['config'])) {
                             $class = isset($session['config']['class'])  ? $session['config']['class'] : 'Zend\Session\Config\SessionConfig';
                             $options = isset($session['config']['options']) ? $session['config']['options'] : array();
                             $sessionConfig = new $class();
                             $sessionConfig->setOptions($options);
-                        }
+}
 
                         $sessionStorage = null;
                         if (isset($session['storage'])) {

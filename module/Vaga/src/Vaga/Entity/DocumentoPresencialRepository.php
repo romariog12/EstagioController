@@ -1,6 +1,7 @@
 <?php
 
 namespace Vaga\Entity;
+use Base\Model\Entity;
 
 class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
     
@@ -8,16 +9,27 @@ class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
      public function findBySituacaoAndTipo($situacao, $tipo) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.entregue', 'l')
-                        ->from('Vaga\Entity\DocumentoPresencial','l')
+                        ->from(Entity::documentoPresencial,'l')
                         ->where('l.entregue = :a1','l.relatorio = :a2')
                         ->setParameter('a1', $situacao)
                         ->setParameter('a2', $tipo)->getQuery()->getResult();
         return $result;
     }
+     public function findBySituacaoAndTipoAndData( $tipo,$data) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.entregue', 'l')
+                        ->from(Entity::documentoPresencial,'l')
+                        ->where('l.relatorio LIKE :a2','l.fim = :a3')
+                       
+                        ->setParameter('a2', '%'.$tipo.'%')
+                        ->setParameter('a3', $data)
+                        ->getQuery()->getResult();
+        return $result;
+    }
     public function findByIdvagaDocumentoAndSituacao($idVagaDocumento, $situacao) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.idvagaDocumento', 'l')
-                        ->from('Vaga\Entity\DocumentoPresencial','l')
+                        ->from(Entity::documentoPresencial,'l')
                         ->where('l.idvagaDocumento = :a1','l.entregue = :a2')
                         ->setParameter('a1', $idVagaDocumento)
                         ->setParameter('a2', $situacao)->getQuery()->getResult();
@@ -26,7 +38,7 @@ class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
     public function findByAnoDocumentoAndTipoAndCurso ($anoVaga, $tipo,$curso ) {
         $userLogin = $this->createQueryBuilder('u')
                         ->select('u.iddocumento', 'l')
-                        ->from('Vaga\Entity\DocumentoPresencial','l')
+                        ->from(Entity::documentoPresencial,'l')
                         ->where('l.anoDocumento = :a1','l.relatorio LIKE :a2','l.cursoDocumento = :a3 ')
                         ->setParameter('a1', $anoVaga)
                         ->setParameter('a2', '%'.$tipo.'%')
@@ -37,7 +49,7 @@ class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
        public function findByAnoVagaAndTipo ($anoVaga, $tipo ) {
         $userLogin = $this->createQueryBuilder('u')
                         ->select('u.iddocumento', 'l')
-                        ->from('Vaga\Entity\DocumentoPresencial','l')
+                        ->from(Entity::documentoPresencial,'l')
                         ->where('l.anoDocumento = :a1','l.relatorio LIKE :a2')
                         ->setParameter('a1', $anoVaga)
                         ->setParameter('a2', '%'.$tipo.'%')

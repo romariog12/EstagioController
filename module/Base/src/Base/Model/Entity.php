@@ -22,8 +22,8 @@ class Entity {
     const alunoEad = 'Aluno\Entity\Aluno';
     const alunoPresencial = 'Aluno\Entity\AlunoPresencial';
     const em           = 'Doctrine\ORM\EntityManager';
-    const empresa      = 'Administrador\Entity\Empresa';
-    const agente = 'Administrador\Entity\Agente';
+    const empresa      = 'Empresa\Entity\Empresa';
+    const agente = 'Empresa\Entity\Agente';
     const dadosPresencial = 'Base\Entity\DadosPresencial';
     const dadosEad    = 'Base\Entity\Dados';
     const vagaEad = 'Vaga\Entity\Vaga';

@@ -16,6 +16,7 @@ namespace Auth\Model;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Doctrine\ORM\EntityManager;
 use Zend\Authentication\Result;
+use Base\Model\Entity;
 
 
 class Adapter implements AdapterInterface{
@@ -56,7 +57,7 @@ class Adapter implements AdapterInterface{
     }
 
     public function authenticate() {
-        $user = $this->em->getRepository('Administrador\Entity\Usuario')->findByLoginAndPassword($this->getLogin(), $this->getSenha());
+        $user = $this->em->getRepository(Entity::usuario)->findByLoginAndPassword($this->getLogin(), $this->getSenha());
         if ($user) {
             
             return new Result(Result::SUCCESS, $user, array())   ;

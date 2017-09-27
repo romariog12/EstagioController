@@ -45,8 +45,25 @@ class Agente
      * @ORM\Column(name="Telefone", type="string",length=50, nullable=true)
      */
     private $telefone;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Endereco", type="string",length=100, nullable=true)
+     */
+    private $endereco;
     
-
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Responsavel", type="string",length=50, nullable=true)
+     */
+    private $responsavel;
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="Email", type="string",length=50, nullable=true)
+     */
+    private $email;
     
     function getIdagente() {
         return $this->idagente;
@@ -63,8 +80,18 @@ class Agente
     function getTelefone() {
         return $this->telefone;
     }
+    function getEndereco() {
+        return $this->endereco;
+    }
+    function getResponsavel() {
+        return $this->responsavel;
+    }
 
-    function setIdagente($idagente) {
+    function getEmail() {
+        return $this->email;
+    }
+
+            function setIdagente($idagente) {
         $this->idagente = $idagente;
         return $this;
     }
@@ -84,9 +111,19 @@ class Agente
         $this->telefone = $telefone;
         return $this;
     }
+    function setEndereco($endereco) {
+        $this->endereco = $endereco;
+        return $this;
+    }
+    function setResponsavel($responsavel) {
+        $this->responsavel = $responsavel;
+        return $this;
+    }
 
-
-  
+    function setEmail($email) {
+        $this->email = $email;
+        return $this;
+    }
 
 }
 

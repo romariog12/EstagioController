@@ -14,9 +14,8 @@
                 <div class="" style=" ">
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li class=" active" role="presentation"><a><label>Documentos Pendentes</label>   <span class="label label-warning"> <?php echo count($this->documentoPendente)?></span></a></li>
-                        <li  role="presentation" ><a href="<?php echo $this->url('administrador/default',['controller'=>'administrador','action'=>'aluno','id'=>1])?>">Modalidade EAD  <span class="label label-default"> <?php echo count($this->listaAlunoEAD)?></span></a></li>
-                      
+                        <li class=" active" role="presentation"><a><label>Documentos Vencendo Hoje</label>   <span class="label label-warning"> <?php echo count($this->documentoPendenteTCE )+  count( $this->documentoPendenteTA)?></span></a></li>
+                        
                     </ul> 
                 </div>
               </div>
@@ -31,17 +30,26 @@
                 <th>Fim</th>
                 
             </tr>
-                <?php foreach ($this->pagination as $l):?>
+                <?php foreach ($this->documentoPendenteTCE as $l):?>
             <tr  style="background: #fff194">
                  <td  style=" background-color:  #cec215; text-align: center; width: 5px; color: #726b0b "><i class=" fa fa-exclamation "></i></td>
-                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l->getIdalunodocumento()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
+                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdalunodocumento()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
                 
-                <td><?php echo $l->getRelatorio()?></td>
-                <td><?php echo $l->getInicio()?></td>
-                <td><?php echo $l->getFim()?></td>
+                <td><?php echo $l[0]->getRelatorio()?></td>
+                <td><?php echo date_format($l[0]->getInicio(),'d/m/Y')?></td>
+                <td><?php echo date_format($l[0]->getFim(),'d/m/Y')?></td>
                 
                </tr><?php    endforeach;?>
-
+                   <?php foreach ($this->documentoPendenteTA as $l):?>
+            <tr  style="background: #fff194">
+                 <td  style=" background-color:  #cec215; text-align: center; width: 5px; color: #726b0b "><i class=" fa fa-exclamation "></i></td>
+                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdalunodocumento()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
+                
+                <td><?php echo $l[0]->getRelatorio()?></td>
+                <td><?php echo date_format($l[0]->getInicio(),'d/m/Y')?></td>
+                <td><?php echo date_format($l[0]->getFim(),'d/m/Y')?></td>
+                
+               </tr><?php    endforeach;?>
         </table>     
       </div>
     </div>
