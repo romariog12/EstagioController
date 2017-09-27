@@ -1,6 +1,8 @@
 <?php
 namespace Administrador\Controller;
-
+/**
+ * @author romario <romariomacedo18@gmail.com>
+ */
 use Administrador\Controller\AdministradorAbstractActionController;
 use Zend\View\Model\ViewModel;
 use Base\Model\Entity;
@@ -218,7 +220,7 @@ class AdministradorController extends AdministradorAbstractActionController
                     $em->persist($aluno);
                     $em->flush();     
                     }catch (Exception $e){ }
-                    return $this->redirect()->toRoute(Constantes::rotaPerfilAlunoDefault,['controller'=>  Constantes::administrador, 'action'=>'perfilAluno', 'id'=>$aluno->getIdaluno()]);    
+                    return $this->redirect()->toRoute(Constantes::rotaPerfilAlunoDefault,['controller'=>  Constantes::administrador, 'action'=>  Constantes::perfilAluno, 'id'=>$aluno->getIdaluno()]);    
                     }
             }  
         return new ViewModel(
@@ -315,7 +317,7 @@ class AdministradorController extends AdministradorAbstractActionController
                     $em->persist($select);
                     $em->flush();     
                 } catch (Exception $ex) {}   
-            return $this->redirect()->toRoute('paginator', ['controller'=>'administrador', 'action' =>'empresa','id'=>$page]);            
+            return $this->redirect()->toRoute('paginator', ['controller'=>  Constantes::administrador, 'action' =>  Constantes::empresa,'id'=>$page]);            
             }
             return new ViewModel([
                     'listaEmpresa' => $listaEmpresa
@@ -345,7 +347,7 @@ class AdministradorController extends AdministradorAbstractActionController
                     $em->persist($select);
                     $em->flush();     
                 } catch (Exception $ex){}   
-                return $this->redirect()->toRoute('paginator', ['controller'=>'administrador', 'action' =>'agente','id'=>$page]);            
+                return $this->redirect()->toRoute('paginator', ['controller'=>  Constantes::administrador, 'action' =>  Constantes::agente,'id'=>$page]);            
             } 
             return new ViewModel([
                     'listaAgente' => $selecionarAgente
@@ -358,7 +360,6 @@ class AdministradorController extends AdministradorAbstractActionController
             $empresa = $em->find(Entity::empresa, $id);
             $em->remove($empresa);
             $em->flush();
-          
         return $this->redirect()->toRoute(Constantes::rotaAdministradorDefault ,['controller'=>  Constantes::administrador,'action'=>'empresa', 'id'=>$page]);       
     }
     public function excluirAgenteAction(){
