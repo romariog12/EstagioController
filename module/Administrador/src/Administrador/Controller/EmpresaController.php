@@ -8,8 +8,17 @@
  */
 
 namespace Administrador\Controller;
+<<<<<<< HEAD
 
 use Auth\Controller\AdministradorAbstractActionController;
+=======
+/**
+ * Description of UsuarioRepository
+ *
+ * @author romario
+ */
+use Zend\Mvc\Controller\AbstractActionController;
+>>>>>>> origin/master
 use Zend\View\Model\ViewModel;
 use Empresa\Entity\Empresa;
 use Vaga\Entity\VagaPresencial;

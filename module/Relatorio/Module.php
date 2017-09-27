@@ -11,7 +11,13 @@ namespace Relatorio;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+<<<<<<< HEAD
 use Zend\ModuleManager\ModuleManager;
+=======
+use Zend\Session\Config\SessionConfig;
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
+>>>>>>> origin/master
 
 class Module
 {
@@ -20,6 +26,14 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+<<<<<<< HEAD
+=======
+       $this->initSession(array(
+            'remember_me_seconds' => 180,
+            'use_cookies' => true,
+            'cookie_httponly' => true,
+        ));
+>>>>>>> origin/master
     }
 
     public function getConfig()
@@ -37,6 +51,7 @@ class Module
             ),
         );
     }
+<<<<<<< HEAD
     public function init(ModuleManager $manager){
     $events = $manager->getEventManager();
     $sharedEvents = $events->getSharedManager();
@@ -56,4 +71,14 @@ class Module
                     }
     }, 99);
 }
+=======
+    public function initSession($config)
+        {
+            $sessionConfig = new SessionConfig();
+            $sessionConfig->setOptions($config);
+            $sessionManager = new SessionManager($sessionConfig);
+            $sessionManager->start();
+            Container::setDefaultManager($sessionManager);
+        }
+>>>>>>> origin/master
 }

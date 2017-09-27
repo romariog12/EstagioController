@@ -9,9 +9,19 @@ return [
         ],
         'factories' => [
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+<<<<<<< HEAD
             'Zend\Authentication\AuthenticationService' => Auth\Model\Factory\AuthenticationFactory::class,
     
            ],
+=======
+            'AuthenticationService'=> 'Auth\Model\Factory\AuthenticationFactory',
+            
+            
+            
+        ),
+        
+        
+>>>>>>> origin/master
     ],
     'doctrine' => ['connection' => [
         'orm_default' => [

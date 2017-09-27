@@ -14,10 +14,22 @@ use Administrador\Model\Aluno;
 use Administrador\Form\empresaForm;
 use Zend\Mvc\Controller\AbstractActionController;
 class AdministradorController extends AbstractActionController
+<<<<<<< HEAD
 {
     private $resposta = false;
     private $empresa = false;
     public function cadastrarUsuarioAction(){
+=======
+{   
+    public function __construct() {
+        $this->route        = 'administrador/default';
+        $this->controller   = 'administrador';
+        $this->countPerPage = '10';
+    }
+
+    public function cadastrarUsuarioAction(){    
+        $this->sairAdministradorAction();
+>>>>>>> origin/master
         $em = $this->getServiceLocator()->get(Entity::em);
         $request = $this->getRequest();
         if($request->isPost()){
@@ -86,6 +98,7 @@ class AdministradorController extends AbstractActionController
             'listaUsuario' =>$listaUsuario
         ]);
     }
+<<<<<<< HEAD
     public function buscarAlunoAction(){
     $request = $this->getRequest();
     $em = $this->getServiceLocator()->get(Entity::em);
@@ -101,6 +114,20 @@ class AdministradorController extends AbstractActionController
                     $lista = $em->getRepository(Entity::aluno)->findByNome($nome);
                     break;
         }
+=======
+     public function alunoAction(){
+        $this->sairAdministradorAction();
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $listaAlunoPresencial = $em->getRepository(Entity::alunoPresencial)->findAll();
+            $listaAlunoEAD = $em->getRepository(Entity::alunoEad)->findAll();
+            $page = $this->params()->fromRoute("id", 0);
+            $pagination = new Paginator( new ArrayAdapter($listaAlunoEAD));
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->countPerPage);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
+             
+>>>>>>> origin/master
         return new ViewModel([
         'lista' => $lista,
             ]);  
@@ -111,11 +138,19 @@ class AdministradorController extends AbstractActionController
             $listaAlunoPresencial = $em->getRepository(Entity::aluno)->findAll();
             $page = $this->params()->fromRoute("id", 0);
             $pagination = new Paginator( new ArrayAdapter($listaAlunoPresencial));
+<<<<<<< HEAD
             $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(Constantes::contadorPorPagina);
             $count = $pagination->count();
             $pageNumber = $pagination->getCurrentPageNumber();
             $getPages = $pagination->getPages();
        
+=======
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->countPerPage);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
+             
+>>>>>>> origin/master
         return new ViewModel([
             'getPages'=>$getPages,
             'pageNumber'=>$pageNumber,
@@ -131,6 +166,7 @@ class AdministradorController extends AbstractActionController
             $aluno = $em->find(Entity::aluno, $id);
             $em->remove($aluno);
             $em->flush();
+<<<<<<< HEAD
         return $this->redirect()->toRoute($this->route ,['controller'=>Constantes::administrador,'action'=>  Constantes::todosAlunos,'id'=>$page]);       
     }
     public function perfilAlunoAction(){
@@ -145,6 +181,21 @@ class AdministradorController extends AbstractActionController
                 'listaVagaPresencialEstagiando'=>$listaVagaEstagiando,
                 'aluno'=>$aluno,
             ]);        
+=======
+          
+        return $this->redirect()->toRoute($this->route ,['controller' => $this->controller,'action'=>'aluno','id'=>$page]);       
+    }
+     public function excluirAlunoPresencialAction(){
+            $this->sairAdministradorAction();
+            $page = $this->params()->fromRoute("page", 0);
+            $id = $this->params()->fromRoute("deleteAluno", 0);
+            $em = $this->getServiceLocator()->get(Entity::em);
+            $aluno = $em->find(Entity::alunoPresencial, $id);
+            $em->remove($aluno);
+            $em->flush();
+          
+        return $this->redirect()->toRoute($this->route ,['controller'=>$this->controller,'action'=>'todosalunospresencial','id'=>$page]);       
+>>>>>>> origin/master
     }
     public function editarAlunoAction(){
             $alunoForm = new alunoForm();
@@ -156,6 +207,7 @@ class AdministradorController extends AbstractActionController
             $listaCursoPresencial = $em->getRepository(Entity::dados)->findAll();
             $request = $this->getRequest();
             if($request ->isPost()){
+<<<<<<< HEAD
                 $editarAluno = new Aluno();
                 $alunoForm->setInputFilter($editarAluno->getInputFilter());
                 $alunoForm->setData($request->getPost());
@@ -177,6 +229,34 @@ class AdministradorController extends AbstractActionController
                         $em->flush();     
                     } catch (Exception $e) {}
                 $this->resposta = true;
+=======
+                $select = $em ->find(Entity::alunoPresencial, $idAluno);
+                $nome = $request->getPost("nome");
+                $matricula = $request->getPost("matricula");
+                $curso = $request->getPost("curso");
+                $email = $request->getPost("email");
+                $telefone = $request->getPost("telefone");
+                 $cpf = $request->getPost("cpf");
+
+                try{
+                    $select->setNome($nome);
+                    $select->setMatricula($matricula);
+                    $select->setCurso($curso);
+                    $select->setEmail($email);
+                    $select->setTelefone($telefone);
+                     $select->setCpf($cpf);
+                    $em->persist($select);
+                    $em->flush();     
+                } catch (Exception $ex) {
+
+                }
+                if($page>0){
+                     return $this->redirect()->toRoute($this->route ,['controller'=>$this->controller,'action'=>'todosalunospresencial','id'=>$idAluno, 'page'=>$page]);
+                }else{
+                     return $this->redirect()->toRoute('perfil/default', 
+                          array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$idAluno,));
+               
+>>>>>>> origin/master
                 }
     }
     return new ViewModel([              
@@ -237,10 +317,19 @@ class AdministradorController extends AbstractActionController
             $listaAgente = $em->getRepository(Entity::agente)->findAll();
             $page = $this->params()->fromRoute('id', 0);
             $pagination = new Paginator( new ArrayAdapter($listaEmpresa));
+<<<<<<< HEAD
             $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(Constantes::contadorPorPagina);
             $count = $pagination->count();
             $pageNumber = $pagination->getCurrentPageNumber();
             $getPages = $pagination->getPages();
+=======
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->countPerPage);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
+            
+            
+>>>>>>> origin/master
             return new ViewModel([
                     'getPages'=>$getPages,
                     'pageNumber'=>$pageNumber,
@@ -300,10 +389,19 @@ class AdministradorController extends AbstractActionController
             $listaAgente = $em->getRepository(Entity::agente)->findAll();
             $page = $this->params()->fromRoute("id", 0);
             $pagination = new Paginator( new ArrayAdapter($listaAgente));
+<<<<<<< HEAD
             $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(Constantes::contadorPorPagina);
             $count = $pagination->count();
             $pageNumber = $pagination->getCurrentPageNumber();
             $getPages = $pagination->getPages();
+=======
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->countPerPage);
+                $count = $pagination->count();
+                $pageNumber = $pagination->getCurrentPageNumber();
+                $getPages = $pagination->getPages();
+            
+            
+>>>>>>> origin/master
             return new ViewModel([
                     'getPages'=>$getPages,
                     'pageNumber'=>$pageNumber,
@@ -380,7 +478,12 @@ class AdministradorController extends AbstractActionController
             $empresa = $em->find(Entity::empresa, $id);
             $em->remove($empresa);
             $em->flush();
+<<<<<<< HEAD
         return $this->redirect()->toRoute(Constantes::rotaAdministradorDefault ,['controller'=>  Constantes::administrador,'action'=>'empresa', 'id'=>$page]);       
+=======
+          
+        return $this->redirect()->toRoute($this->route ,['controller'=>$this->controller,'action'=>'empresa', 'id'=>$page]);       
+>>>>>>> origin/master
     }
     public function excluirAgenteAction(){
             $page = $this->params()->fromRoute("page", 0);
@@ -390,10 +493,15 @@ class AdministradorController extends AbstractActionController
             $em->remove($agente);
             $em->flush();
           
+<<<<<<< HEAD
         return $this->redirect()->toRoute(Constantes::rotaAdministradorDefault,['controller'=>Constantes::administrador,'action'=>'agente','id'=>$page]);       
+=======
+        return $this->redirect()->toRoute($this->route ,['controller'=>$this->controller,'action'=>'agente','id'=>$page]);       
+>>>>>>> origin/master
     }
     public function documentosPresencialAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
+<<<<<<< HEAD
         $listaDocumentoPendente = $em->getRepository(Entity::documento)->findByOperacao('1','1','1','0');
         $documentoPendenteTCE = $em->getRepository(Entity::documento)->findBySituacaoAndTipoAndData("TCE", date('d/m/Y'));
         $documentoPendente = $em->getRepository(Entity::documento)->findByEntregue("Nao");
@@ -407,6 +515,16 @@ class AdministradorController extends AbstractActionController
             $page = $this->params()->fromRoute("id", 0);
             $pagination = new Paginator( new ArrayAdapter($listaContratosVencendo));
             $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(Constantes::contadorPorPagina);
+=======
+        $documentoPendenteTCE = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("TCE", date('d/m/Y'));
+       
+        $documentoPendenteTA = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("TA", date('d/m/Y'));
+        $documentoPendente = $em->getRepository(Entity::documentoPresencial)->findByEntregue("Nao");
+        
+            $page = $this->params()->fromRoute("id", 0);
+            $pagination = new Paginator( new ArrayAdapter($documentoPendente));
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage($this->countPerPage);
+>>>>>>> origin/master
                 $count = $pagination->count();
                 $pageNumber = $pagination->getCurrentPageNumber();
                 $getPages = $pagination->getPages();
@@ -496,6 +614,7 @@ class AdministradorController extends AbstractActionController
                 ]
                 );
     }
+<<<<<<< HEAD
     public function mensagemAction(){
             $idempresa = $this->params()->fromRoute("id", 0);
             $em = $this->getServiceLocator()->get(Entity::em);
@@ -525,4 +644,17 @@ class AdministradorController extends AbstractActionController
                 'empresa' => $selecionarEmpresa
             ]);    
     }
+=======
+    public function documentosPresencialVencendo(){
+        $em = $this->getServiceLocator()->get(Entity::em);
+        $documentosVencendoHojeTCE = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("Nao","TCE", date('Y-m-d'));
+        $documentosVencendoHojeTA = $em->getRepository(Entity::documentoPresencial)->findBySituacaoAndTipoAndData("Nao","TA", date('Y-m-d'));
+        $documentosVencendoHoje = $em->getRepository(Entity::documentoPresencial)->findByEntregue("Nao", date('Y-m-d'));
+        
+        
+        
+        
+    }
+ 
+>>>>>>> origin/master
 }

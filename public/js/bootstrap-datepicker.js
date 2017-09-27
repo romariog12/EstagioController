@@ -1693,10 +1693,14 @@
 		datesDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
+<<<<<<< HEAD
 		format: 'mm/dd/yyyy',
 		keepEmptyValues: false,
+=======
+		format: 'dd-mm-yyyy',
+>>>>>>> origin/master
 		keyboardNavigation: true,
-		language: 'en',
+		language: 'pt-BR',
 		minViewMode: 0,
 		maxViewMode: 4,
 		multidate: false,
@@ -1730,11 +1734,19 @@
 	$.fn.datepicker.Constructor = Datepicker;
 	var dates = $.fn.datepicker.dates = {
 		en: {
+<<<<<<< HEAD
 			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
 			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
 			months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+=======
+			days: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+			daysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+			daysMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+			months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+			monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+>>>>>>> origin/master
 			today: "Today",
 			clear: "Clear",
 			titleFormat: "MM yyyy"

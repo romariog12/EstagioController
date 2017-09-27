@@ -8,6 +8,7 @@ use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Aluno\Entity\AlunoPresencial;
 use Base\Model\Entity;
+<<<<<<< HEAD
 class RelatorioPresencialController extends AdministradorAbstractActionController {
     function __construct() {
         $this->CountPerPage = '10';
@@ -15,6 +16,17 @@ class RelatorioPresencialController extends AdministradorAbstractActionControlle
 
     public function relatorioAction()
     {    
+=======
+use Auth\Model\Session;
+class RelatorioPresencialController extends AbstractActionController {
+    
+    public function relatorioAction()
+    {    
+            $session = new Session();
+            $session->sairAdministradorAction();
+          
+            
+>>>>>>> origin/master
             $em = $this->getServiceLocator()->get(Entity::em);
             $listaVaga = $em->getRepository(Entity::vaga)
                     ->findAll();

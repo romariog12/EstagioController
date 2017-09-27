@@ -1,0 +1,189 @@
+<?php
+    echo $this->doctype();
+    $listaContratos = $this->listaContratos;
+    $idaluno = $this->aluno;
+    $listaVaga = $this->listaVaga;
+?>
+<?php
+            foreach ($listaVaga as $l){
+                $reciao = $l->getRecisao();
+                $carga = $l->getCarga();
+                $bolsa = $l->getBolsa();
+                $empresa = $l->getEmpresa();
+                $agente = $l->getAgente();
+            }
+    ?>
+<html lang="pt-br" ng-app="">
+    <meta charset="utf-8">
+    <style>
+        
+    </style>
+<script>
+   function noenter() {
+      return !(window.event && window.event.keyCode === 13);
+    };
+    function mascaraData( campo, e )
+    {
+    var kC = (document.all) ? event.keyCode : e.keyCode;
+    var data = campo.value;
+
+    if( kC!=8 && kC!=46 )
+    {
+        if( data.length==2 )
+        {
+                campo.value = data += '/';
+        }
+        else if( data.length==5 )
+        {
+                campo.value = data += '/';
+        }
+        else
+                campo.value = data;
+    }
+   
+    $('.datepicker').datepicker();
+}
+</script>
+<body>
+    
+       <div class=" nav row" style=" background-color: #1989f1">
+   
+     <h4 style="color: white; text-align: center"><i class=" glyphicon glyphicon-file"  style=" color: #fff194"></i> Documentos</h4>
+  
+ </div>
+    <br/>
+<br/>
+ <div class="navbar">
+        <h3 class="pager"><?php echo $empresa; ?></h3>
+        <p class="pager" style=""><label>Carga-Horária: </label> <?php echo $carga; ?> horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$ <?php echo $bolsa ?>,00
+      <?php
+              if($reciao){
+                  echo "<h5 class='pager' style='color: #cf0000'>Recisão:  ".$reciao.'</h5>';
+              }
+              ?> </p>
+        <div><p class=" pager" style=" color: #bdbdbd; font-size: 12px">
+                Vaga lançada por : 
+            <?php
+            foreach ($this->usuario as $l){
+               echo $l->getNome(); 
+            }
+    
+            ?></p>
+        </div>
+      
+      
+        <br/>
+        
+    </div> 
+<form class="navbar-default" method="post" onKeyPress="return noenter()" >
+    <div class="thumbnail">
+      <div class="caption">
+<?php if ($listaContratos):?>    <table class="table">   
+        <tr>  
+                <th>Inicio</th>
+                <th>Fim</th>
+                <th>Tipo Doc.</th>
+                <th>Termo Entregue?</th>
+               
+                <th>Editar</th>
+                <th>Excluir</th>
+        </tr>
+                <?php foreach ($listaContratos as $f):
+                    $idalunoEncaminhamento = $f->getidalunoEncaminhamento() ;
+                    $idVagaEncaminhamento = $f->getidvagaEncaminhamento() ;
+                    $idDocumento = $f->getidEncaminhamento() ;
+                    $inicio = $f->getInicio();
+                    $fim = $f->getFim();
+                ?>
+         
+        <tr style="background: #cdffff">
+            <td> <?php echo $inicio; ?>   </td>
+            <td> <?php echo $fim ; ?></td>
+            <td>  <?php echo sprintf($f->getRelatorio()) ;?></td>
+            <td>  <?php echo $f->getEntregue();?> </td>
+            <td><a data-toggle="modal" data-target="#editarcontrato" ><i  class="glyphicon glyphicon-edit"></i></a></td>
+            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" style="color: #c81616" class="btn" href="<?php echo $this->url('delete', array('action' => 'excluir', 'iddelete' => $f->getIdencaminhamento(),'curso'=>$f->getcursoDocumento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
+        </tr><?php endforeach;?> 
+    </table>
+    
+   <?php else:?>
+    <div class="alert-danger" style="margin: initial">
+           <br/>
+           <h4 style="text-align: center">Nenhum documento lançado </h4><br/>      
+    </div>
+      <?php endif;?>
+      </div>
+        </div>
+    
+
+            <div style="background:  #bef1ba; border: #38820c" class=" navbar-brand">
+                <div class="  col-lg-3">
+                    <div  class="input-group date" data-provide="datepicker">
+                        <input  placeholder="Início" data-date-format="dd/mm/yyyy"  class="form-control" type="text" name="inicioEnc"  id="dataInicio"  required="" />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    </div>
+                        
+                
+                    
+                    </div>
+                 <div class="  col-lg-3">
+                <div class="input-group date " data-provide="datepicker">
+                    
+                        <input  data-provide="datepicker" placeholder="Fim" data-date-format="dd/mm/yyyy" class=" form-control" type="text" name="fimEnc" id="dataFim"  required="" /><div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    </div>
+                 </div>
+                <div class="  col-lg-3">
+                            <select class="form-control"  name="relatorio"  >
+                            <option>TCE</option>
+                            <option>TA</option>
+                            <option>1º RT (Instituição)</option>
+                            <option>2° RT (Instituição)</option>
+                            <option>3° RT (Instituição)</option>
+                            <option>4º RT (Instituição)</option>
+                            <option>1° RT (Empresa)</option>
+                            <option>2° RT (Empresa)</option>
+                            <option>3° RT (Empresa)</option>
+                            <option>4º RT (Empresa)</option>
+                            </select>
+                        </div>
+               
+                    &nbsp;&nbsp;&nbsp;Via da Instituição
+                 <span class="col-lg-3"><input type="radio" name="entregue" value="Sim" required=""/>Ok<input type="radio" name="entregue" value="Nao" style="margin-left: 5%"/>Pendente</span>
+                 
+            </div>
+            <div class="navbar-brand">
+                <button  type="submit" name="lançar" class="btn  btn-default " value="Lançar">Lançar Documento</button>
+
+            </div>
+  
+</form>
+
+<form method="post" class="nav" >
+     <div  style=" margin-top: 20%" >
+      <div class="col-lg-3">
+          <div class=" input-group">
+              <span class="input-group-addon" id="basic-addon1">Recisão</span><input data-provide="datepicker" placeholder="Recisão" value="<?php echo $reciao;?>" type="text" name="recisao" class=" form-control" maxlength="10"  />  
+              <span class=" input-group-btn">
+                  <button type="submit" value="Salvar" name="salvar" class="btn btn-default info"><i  class="glyphicon glyphicon-ok"></i></button>
+              </span>
+           <!-- <a href="<?php //echo $this->url('vaga/default',  array('controller' => 'index', 'action' => 'contratoCompleto','id'=>$idaluno, 'idVaga'=>$idVagaEncaminhamento)); ?>"><span class="btn btn-default" style=" margin-left:  15px;"><i class=" glyphicon glyphicon-file "></i>Visualizar Contrato</span></a>
+       -->   </div>
+      </div>
+    </div>
+</form>
+            <div style=" margin-top: 10%"><br/>
+            <ul class="pager">
+                
+                <li ><a href="<?php echo $this->url('perfil/default',array('controller' => 'aluno', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" > Voltar</span></a></li> 
+            </ul>
+            </div> 
+
+<!--  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+<!--  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+<?php  echo $this->resp; ?>
+</body>
+</html>
