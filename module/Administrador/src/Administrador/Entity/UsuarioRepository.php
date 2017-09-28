@@ -5,8 +5,7 @@ use Doctrine\ORM\EntityRepository;
 use Base\Model\Entity;
 
 /**
- * Description of UsuarioRepository
- *
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  * @author romario
  */
 

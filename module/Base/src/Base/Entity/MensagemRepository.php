@@ -4,7 +4,9 @@ namespace Base\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Query\Parameter;
 use Base\Model\Entity;
-
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class MensagemRepository extends \Doctrine\ORM\EntityRepository {
     
     public function findByStatusAndIdEmpresa($status, $idDestinatario){

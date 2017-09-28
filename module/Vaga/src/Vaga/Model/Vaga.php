@@ -2,9 +2,11 @@
 namespace Vaga\Model;
 
 use Zend\InputFilter\InputFilter;
- use Zend\InputFilter\InputFilterAwareInterface;
- use Zend\InputFilter\InputFilterInterface;
-
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
  class Vaga implements InputFilterAwareInterface
  {
      public $aluno;

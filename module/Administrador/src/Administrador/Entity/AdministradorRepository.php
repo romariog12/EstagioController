@@ -1,20 +1,11 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
-
 namespace Administrador\Entity;
 use Doctrine\ORM\EntityRepository;
 use Base\Model\Entity;
 
-/**
- * Description of AdministradorRepository
- *
- * @author romario
- */
 class AdministradorRepository extends EntityRepository{
     
     public function findByLoginAndPassword($login, $password) {

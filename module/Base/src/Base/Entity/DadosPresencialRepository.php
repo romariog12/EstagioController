@@ -2,7 +2,9 @@
 
 namespace Base\Entity;
 use Base\Model\Entity;
-
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class DadosPresencialRepository extends \Doctrine\ORM\EntityRepository{
     
     public function listaCursos($idcurso, $idDados) {

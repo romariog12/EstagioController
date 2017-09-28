@@ -7,9 +7,7 @@ use Zend\InputFilter\InputFilter;
  use Zend\InputFilter\InputFilterAwareInterface;
  use Zend\InputFilter\InputFilterInterface;
 /**
- * Description of LancarDocumento
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 class EditarAcompanhamento implements InputFilterAwareInterface{
    

@@ -10,7 +10,9 @@
 namespace Base;
 use Zend\Mvc\Router\Http\Literal;
 use Zend\Mvc\Router\Http\Segment;
-
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 return array(
     
      'router' => array(

@@ -10,9 +10,7 @@ use Zend\Authentication\Storage\Session;
 use Base\Model\Entity;
 
 /**
- * Description of AuthenticationFactory
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 class AuthenticationFactory implements FactoryInterface {
 

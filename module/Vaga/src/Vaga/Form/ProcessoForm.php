@@ -3,9 +3,7 @@ namespace Vaga\Form;
 use Zend\Form\Form;
 
 /**
- * Description of LancarDocumentoForm
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 class ProcessoForm extends Form {
     

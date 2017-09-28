@@ -1,6 +1,9 @@
 <?php
 namespace Base;
 use Zend\ModuleManager\ModuleManager;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class Module
 {
     public function getConfig()

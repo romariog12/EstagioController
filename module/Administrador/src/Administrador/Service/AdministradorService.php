@@ -1,17 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Administrador\Service;
 
 /**
- * Description of AdministradorService
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 use Zend\Mvc\Controller\AbstractActionController;
 class AdministradorService extends AbstractActionController{

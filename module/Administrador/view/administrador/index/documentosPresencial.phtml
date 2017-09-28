@@ -1,5 +1,7 @@
-<<<<<<< HEAD
 <?php
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 use Base\Model\Constantes;
 
 echo    $this->painel(Constantes::temaBootstrap).
@@ -14,82 +16,3 @@ echo    $this->painel(Constantes::temaBootstrap).
         $this->tabelaDocumentos(['','Processo', 'Início','Fim'],$this->pagination).
         $this->paginacao($this->pageNumber,$this->count).
         $this->painelFim();?>
-=======
-<?php echo $this->doctype(); ?>
-<html lang="pt-br">
-<meta charset="utf-8">
-<body>
-      <div class=" nav row" style=" background-color: #1989f1">
-   
-     <h4 style="color: white; text-align: center">Controle de alunos</h4>
-  
- </div>
-    <div class="nav">
-      <div class="caption">
-          <div class="row" >
-            <div>
-                <div class="" style=" ">
-                <div class="caption">
-                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li class=" active" role="presentation"><a><label>Documentos Vencendo Hoje</label>   <span class="label label-warning"> <?php echo count($this->documentoPendenteTCE )+  count( $this->documentoPendenteTA)?></span></a></li>
-                        
-                    </ul> 
-                </div>
-              </div>
-            </div>
-        </div>
-        <table class="table">
-            <tr>
-                <th></th>
-                <th>Aluno</th>    
-                <th>Tipo do documento</th>
-                <th>Início</th>
-                <th>Fim</th>
-                
-            </tr>
-                <?php foreach ($this->documentoPendenteTCE as $l):?>
-            <tr  style="background: #fff194">
-                 <td  style=" background-color:  #cec215; text-align: center; width: 5px; color: #726b0b "><i class=" fa fa-exclamation "></i></td>
-                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdalunodocumento()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
-                
-                <td><?php echo $l[0]->getRelatorio()?></td>
-                <td><?php echo date_format($l[0]->getInicio(),'d/m/Y')?></td>
-                <td><?php echo date_format($l[0]->getFim(),'d/m/Y')?></td>
-                
-               </tr><?php    endforeach;?>
-                   <?php foreach ($this->documentoPendenteTA as $l):?>
-            <tr  style="background: #fff194">
-                 <td  style=" background-color:  #cec215; text-align: center; width: 5px; color: #726b0b "><i class=" fa fa-exclamation "></i></td>
-                <td><a href="<?php echo $this->url('perfilPresencial/default',['controller'=>'alunoPresencial', 'action'=>'perfil', 'id'=>$l[0]->getIdalunodocumento()])?>"><i class="glyphicon glyphicon-user"></i></a></td>
-                
-                <td><?php echo $l[0]->getRelatorio()?></td>
-                <td><?php echo date_format($l[0]->getInicio(),'d/m/Y')?></td>
-                <td><?php echo date_format($l[0]->getFim(),'d/m/Y')?></td>
-                
-               </tr><?php    endforeach;?>
-        </table>     
-      </div>
-    </div>
-    
-    <nav aria-label="Page navigation">
-         <ul  class="pager">
-             <li  <?php if ($this->pageNumber == 1|| $this->pageNumber == 0 ){
-     echo "class='disabled'". "style='pointer-events: none'";
-    }
-    ?>>
-      <a href="<?php if ($this->pageNumber > 1){echo $this->pageNumber - 1; }?>" aria-label="Previous">
-          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-left"> </i></span>
-      </a>
-    </li>
-    <li  <?php if ($this->pageNumber >= $this->count){ echo "class='disabled'". "style='pointer-events: none'";}?>>
-      <a href="<?php echo $this->pageNumber + 1?>" aria-label="Next">
-          <span aria-hidden="true"><i class="glyphicon glyphicon-chevron-right"></i></span>
-      </a>
-    </li> 
-  </ul>
-          
-</nav><div class="pager"><?php echo $this->pageNumber.' de '.$this->count;?></div> 
-<?php echo $this->resp; ?>
-</body>
-</html>
->>>>>>> origin/master

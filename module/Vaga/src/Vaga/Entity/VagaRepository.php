@@ -2,6 +2,9 @@
 
 namespace Vaga\Entity;
 use Base\Model\Entity;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class VagaRepository extends \Doctrine\ORM\EntityRepository{
     
     public function findByRecisaoAndCursoVaga($recisao, $curso) {

@@ -3,9 +3,7 @@
 namespace Administrador\Form;
 use Zend\Form\Form;
 /**
- * Description of editarAlunoForm
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 class empresaForm extends Form{
     public function __construct() {

@@ -5,7 +5,7 @@ namespace Administrador\Entity;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * Usuario
- *
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  * @ORM\Table(name="usuario")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Administrador\Entity\UsuarioRepository")

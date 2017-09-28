@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Mensagem
- *
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  * @ORM\Table(name="mensagem")
  * @ORM\Entity (repositoryClass="Base\Entity\MensagemRepository")
  */

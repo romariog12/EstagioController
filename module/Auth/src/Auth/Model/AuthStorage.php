@@ -10,9 +10,7 @@ namespace Auth\Model;
 
 use Zend\Authentication\Storage;
 /**
- * Description of AuthStorage
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 class AuthStorage extends Storage\Session {
     public function setRememberMe($rememberMe = 0, $time = 2)

@@ -5,9 +5,7 @@ namespace Administrador\View\Helper;
 use Base\Model\Constantes;
 use Zend\View\Helper\AbstractHelper;
 /**
- * @author: Romário Macedo
- * romariomacedo18@gmail.com
- *
+ *@author Romário Macedo Portela <romariomacedo18@gmail.com>
  **/
 class tabelaAgentes extends AbstractHelper{
     protected $td;

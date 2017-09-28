@@ -6,9 +6,7 @@ namespace Administrador\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 use Base\Model\Constantes;
 /**
- * @author: Romário Macedo
- * romariomacedo18@gmail.com
- *
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  **/
 class tabelaBuscarAluno extends AbstractHelper{
     protected $td;

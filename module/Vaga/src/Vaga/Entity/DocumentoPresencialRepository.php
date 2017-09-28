@@ -2,11 +2,11 @@
 
 namespace Vaga\Entity;
 use Base\Model\Entity;
-
-use Base\Model\Entity;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\Common\Collections\ArrayCollection;
-
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
     
     public function findBySituacaoAndTipo($situacao, $tipo) {

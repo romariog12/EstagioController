@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * VagaPresencial
- *
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  * @ORM\Table(name="vagapresencial", indexes={@ORM\Index(name="Vaga_FKIndex1", columns={"Usuario_idUsuario"})})
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Vaga\Entity\VagaPresencialRepository")

@@ -5,9 +5,8 @@ namespace Base\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 /**
- * @Author: Romário Macedo
- *Email: romariomacedo18@gmail.com
- **/
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class tabelaEstagios extends AbstractHelper{
     protected $td;
     protected $th;

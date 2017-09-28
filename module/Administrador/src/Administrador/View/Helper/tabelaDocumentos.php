@@ -5,8 +5,7 @@ namespace Administrador\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 /**
- *@author: Romário Macedo
- *Email: romariomacedo18@gmail.com
+ *@author Romário Macedo Portela <romariomacedo18@gmail.com>
  **/
 class tabelaDocumentos extends AbstractHelper{
     protected $td;

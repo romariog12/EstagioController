@@ -9,9 +9,7 @@
 namespace Base\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 /**
- * Description of painel
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 class painel extends AbstractHelper{
     protected $painel = '<div class="panel panel-';

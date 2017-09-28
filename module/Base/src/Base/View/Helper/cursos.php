@@ -9,9 +9,7 @@
 namespace Base\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 /**
- * Description of cursos
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 class cursos extends AbstractHelper{
     protected $cursos = [];

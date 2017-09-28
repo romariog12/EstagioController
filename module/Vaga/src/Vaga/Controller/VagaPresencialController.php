@@ -17,7 +17,9 @@ namespace Vaga\Controller;
     use Base\Model\Constantes;
     use Vaga\Form\editarAcompanhamentoForm;
     use Vaga\Model\EditarAcompanhamento;
-    
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */ 
 class VagaPresencialController extends AdministradorAbstractActionController
 {
     public function __construct() {

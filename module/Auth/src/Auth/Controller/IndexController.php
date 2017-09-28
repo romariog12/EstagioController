@@ -3,6 +3,9 @@ namespace Auth\Controller;
 
 use Auth\Controller\AdministradorAbstractActionController;
 use Zend\View\Model\ViewModel;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class IndexController extends AdministradorAbstractActionController
 {
     const administrador = '1';

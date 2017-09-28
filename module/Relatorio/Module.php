@@ -1,7 +1,7 @@
 <?php
 /**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  * Zend Framework (http://framework.zend.com/)
- *
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
@@ -42,6 +42,7 @@ class Module
     $sharedEvents = $events->getSharedManager();
     $sharedEvents->attach(__NAMESPACE__ , 'dispatch', function($ev) {
                     $controller = $ev->getTarget();
+                    $controller ->layout('relatorioPresencial/layout/layout');
                     $auth = $ev->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
                     if(empty($auth->hasIdentity())){ 
                     $controller->plugin('redirect')->toRoute('auth');

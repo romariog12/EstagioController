@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * DocumentoPresencial
- *
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  * @ORM\Table(name="documentopresencial")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="Vaga\Entity\DocumentoPresencialRepository")

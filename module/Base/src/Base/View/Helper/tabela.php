@@ -1,13 +1,12 @@
 <?php
 
 namespace Base\View\Helper;
-
-
 use Zend\View\Helper\AbstractHelper;
-/*
- * @Autor Romário Macedo
- * Email: romariomacedo18@gmail.com
+
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
+
 class tabela extends AbstractHelper{
     protected $td;
     protected $th;
