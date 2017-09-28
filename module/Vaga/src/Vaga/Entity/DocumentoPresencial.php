@@ -13,11 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DocumentoPresencial
 {
-<<<<<<< HEAD
         /**
-=======
-    /**
->>>>>>> origin/master
      * @var \DateTime
      *
      * @ORM\Column(name="Inicio", type="date", nullable=false)
@@ -35,41 +31,26 @@ class DocumentoPresencial
      *
      * @ORM\Column(name="Operacao1", type="string", nullable=false)
      */
-<<<<<<< HEAD
     private $operacao1 = '0';
-=======
-    private $operacao1;
->>>>>>> origin/master
+
      /**
      * @var string
      *
      * @ORM\Column(name="Operacao2", type="string", nullable=false)
      */
-<<<<<<< HEAD
     private $operacao2 = '0';
-=======
-    private $operacao2;
->>>>>>> origin/master
      /**
      * @var string
      *
      * @ORM\Column(name="Operacao3", type="string", nullable=false)
      */
-<<<<<<< HEAD
     private $operacao3 = '0';
-=======
-    private $operacao3;
->>>>>>> origin/master
      /**
      * @var string
      *
      * @ORM\Column(name="Operacao4", type="string", nullable=false)
      */
-<<<<<<< HEAD
     private $operacao4 = '0';
-=======
-    private $operacao4;
->>>>>>> origin/master
 
     /**
      * @var \DateTime
@@ -169,27 +150,6 @@ class DocumentoPresencial
     function getOperacao4() {
         return $this->operacao4;
     }
-
-<<<<<<< HEAD
-        function getOperacao1() {
-        return $this->operacao1;
-    }
-
-    function getOperacao2() {
-        return $this->operacao2;
-    }
-
-    function getOperacao3() {
-        return $this->operacao3;
-    }
-
-    function getOperacao4() {
-        return $this->operacao4;
-    }
-
-=======
->>>>>>> origin/master
-        
     function getRecisao() {
         return $this->recisao;
     }
@@ -232,12 +192,7 @@ class DocumentoPresencial
     function getViaEmpresa() {
         return $this->viaEmpresa;
     }
-
-<<<<<<< HEAD
         function setInicio(\DateTime $inicio) {
-=======
-    function setInicio(\DateTime $inicio) {
->>>>>>> origin/master
         $this->inicio = $inicio;
         return $this;
     }
@@ -246,27 +201,6 @@ class DocumentoPresencial
         $this->fim = $fim;
         return $this;
     }
-    function setOperacao1($operacao1) {
-        $this->operacao1 = $operacao1;
-        return $this;
-    }
-
-    function setOperacao2($operacao2) {
-        $this->operacao2 = $operacao2;
-        return $this;
-    }
-
-    function setOperacao3($operacao3) {
-        $this->operacao3 = $operacao3;
-        return $this;
-    }
-
-    function setOperacao4($operacao4) {
-        $this->operacao4 = $operacao4;
-        return $this;
-    }
-
-<<<<<<< HEAD
         function setOperacao1($operacao1) {
         $this->operacao1 = $operacao1;
         return $this;
@@ -286,9 +220,6 @@ class DocumentoPresencial
         $this->operacao4 = $operacao4;
         return $this;
     }
-
-=======
->>>>>>> origin/master
      
     function setRecisao(\DateTime $recisao) {
         $this->recisao = $recisao;
@@ -334,8 +265,6 @@ class DocumentoPresencial
         $this->idempresaDocumento = $idempresaDocumento;
         return $this;
     }
-
-    
         function setDataLancamento($dataLancamento) {
         $this->dataLancamento = $dataLancamento;
         return $this;

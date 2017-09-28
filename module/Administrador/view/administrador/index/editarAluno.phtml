@@ -148,7 +148,7 @@ $(document).ready(function(){
                             ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Salvar as<br>alterações')).
                 ' '.
                 $this->botaoGrande(
-                        $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$l->getIdaluno()]),
+                        $this->url(Constantes::rotaPerfilAluno, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$l->getIdaluno()]),
                         'Perfil do <br> aluno',
                         'fa-user',
                         'primary'

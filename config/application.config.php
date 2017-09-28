@@ -8,10 +8,6 @@ return array(
         'Home',
         'Aluno',
         'Empresa',
-<<<<<<< HEAD
-=======
-        'Oportunidade',
->>>>>>> origin/master
         'Vaga',
         'Relatorio',
         'DoctrineModule',

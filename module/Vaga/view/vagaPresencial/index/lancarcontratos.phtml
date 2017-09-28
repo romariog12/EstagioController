@@ -13,25 +13,6 @@
         $cursoVaga = $l->getCursovaga();
     endforeach;
 ?>
-<<<<<<< HEAD
-=======
-<?php
-            foreach ($this->listaVaga as $l){
-                $reciao = $l->getRecisao();
-                $carga = $l->getCarga();
-                $bolsa = $l->getBolsa();
-                $empresa = $l->getEmpresa();
-                $agente = $l->getAgente();
-                $inicio = $l->getInicio();
-            }
-            foreach ($this->selectAluno as $l){
-                $aluno = $l->getNome();
-                $telefoneAluno = $l->getTelefone();
-            }
-    ?>
-<html lang="pt-br" ng-app="">
-    <meta charset="utf-8">
->>>>>>> origin/master
 <script>
  $(document).ready(function(){
        $('.date').datepicker({
@@ -73,7 +54,6 @@
             required: true
         }
         }
-<<<<<<< HEAD
     });
     $('#fim-recisao-<?= $idVaga?>').datepicker()
             .on('changeDate',function(ev){
@@ -239,7 +219,7 @@
                 '<p><label>Empresa: </label>'.$empresa.'</p>'.
                 '<p><label>Carga-Horária: </label> '.$carga.' horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$'.$bolsa.',00 </p>';?>
         </div>
-    <?= $this->painel(Constantes::temaBootstrap. ' well-sm')?>
+    <?= $this->painel(Constantes::temaBootstrap. ' thumbnail')?>
     <?= $this->painelTitulo("Processos");
     if (!empty($this->listaContratos)):
         foreach ($this->listaContratos as $l): 
@@ -374,220 +354,10 @@
   </div>
 <?= '<div class="well-lg ">'.
               $this->botaoGrande(
-                        $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno]) ,
+                        $this->url('perfil/default', ['controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno]) ,
                         'Painel do <br>aluno',
                         'fa-arrow-left',
                         'primary'
                     ).           
                 '</div>'.
 $this->painelFim();
-=======
-        else
-                campo.value = data;
-    }
-   
-   
-};
- function select(id){
-             $.ajax({
-                 type: '',
-                 url: '',
-                 data: '',
-                 
-             })
- 
-    
-    }
-$('#myButton').on('click', function () {
-    var $btn = $(this).button('loading')
-    // business logic...
-    $btn.button('reset')
-  });
-</script>
-<body>
-           <div class=" nav row" style=" background-color: #1989f1">
-             <h5>
-                <span style=" color:white"> &nbsp;&nbsp;<?php echo $aluno?></span>
-                
-                <span style=" color: #fff194" class=" navbar-right"><?php echo $telefoneAluno; ?>&nbsp;&nbsp;</span>
-                <span style="color: white" class=" navbar-right">TELEFONE:&nbsp;&nbsp; </span>
-             </h5>
-            </div>
-    <div>
-        <div class="row">
-            <div class="" style=" ">
-            <div class="caption">
-                <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                    <li class="  active" role="presentation"><a><label>Documentos</label></a></li> 
-                </ul>
-            </div>
-          </div>
-     </div>
-    </div>
-    <br/>
-<br/>
-<div class="navbar">
-        <h3 class="pager"><?php echo $empresa; ?></h3>
-        <p class="pager" style=""><label>Carga-Horária: </label> <?php echo $carga; ?> horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$ <?php echo $bolsa ?>,00
-       </p>
-         <div><p class=" pager" style=" color: #bdbdbd; font-size: 12px">
-                Vaga lançada por : 
-            <?php
-            foreach ($this->usuario as $l){
-               echo $l->getNome(); 
-            }
-            ?></p><br/> 
-        <form method="post"  >
-            <div class=" row ">
-             <div class="col-lg-4">
-                 <div class=" input-group">
-                       <span class="input-group-addon date" id="basic-addon1" style=""><b> <a tabindex="0" role="button" data-toggle="popover"  data-placement="top" data-trigger="focus" title="Início e término do estágio" data-content="caso o aluno saia do estágio, é necessário o preenchimento da data final."><i class=" fa fa-question-circle"></i></a>
-                       </b></span>
-                       <input disabled="" data-provide="datepicker" type="text" class="form-control" value="<?php echo date_format($inicio, 'd/m/Y');?> ">
-                       <span class="input-group-addon date" id="basic-addon1" style=""><b> - </b></span><input  style='color: #cf0000' data-provide="datepicker" placeholder="Fim" value="<?php echo $reciao;?>" type="text" name="recisao" class=" form-control" maxlength="10"  />  
-                       <span class=" input-group-btn">
-                       <button type="submit" value="Salvar" name="salvar" class="btn btn-default info"><i  class="glyphicon glyphicon-ok"></i></button>
-                     </span>
-                  </div>
-             </div>
-           </div>
-        </form>
-        </div>  
-    </div> 
-<form class="navbar-default" method="post" id="form-documento" onKeyPress="return noenter()"  >
-    <div class="row">
-      <div class="">
-<?php if ($listaContratos):?>    
-        <table class="table" onclick="" >   
-            <tr  style=" background-color:  #ffffcc;">  
-                <th style=" background-color: #fff194; width: 3px"></th>
-                <th style="text-align: center">Inicio</th>
-                <th style="text-align: center">Fim</th>
-                <th style="text-align: center">Tipo Doc.</th>
-                <th style="text-align: center; ">Enc.</th>
-                <th style="text-align: center;">Liberado</th>
-                <th style="text-align: center;">Entregue</th>
-                <th style="text-align: center;">Via</th>
-                <th style="text-align: center; width: 60px">Editar</th>
-                <th style="text-align: center" >Excluir</th>
-            </tr>
-       
-                <?php foreach ($listaContratos as $f):
-                    $idalunoEncaminhamento = $f->getidalunoDocumento() ;
-                    $idVagaEncaminhamento = $f->getidvagaDocumento() ;
-                    $idDocumento = $f->getidDocumento() ;
-                    $inicio = $f->getInicio();
-                    $fim = $f->getFim();
-                ?> 
-            <tr style=" text-align:  center" >
-            <td  style=" background-color: #1989f1; text-align: center; width: 3px;"></td>
-            <td> <?php echo date_format($inicio, 'd/m/Y'); ?>    </td>
-            <td> <?php echo date_format($fim, 'd/m/Y') ; ?></td>
-            <td>  <?php echo sprintf($f->getRelatorio()) ;?></td>
-            <td style="text-align: center;"><input name="encaminhado"  type="checkbox"<?php echo $f->getOperacao1()?>/></td>
-            <td style="text-align: center;"><input  name="liberado" type="checkbox" <?php echo $f->getOperacao2()?>/></td>
-            <td style="text-align: center;"><input name="entregue" type="checkbox"  <?php echo $f->getOperacao3()?>/></td>
-            <td style="text-align: center;"><input name="via" type="checkbox"  <?php echo $f->getOperacao4()?>/></td>
-            <td><a data-toggle="modal" data-target="#editarcontrato" ><i  class="glyphicon glyphicon-edit"></i></a></td>
-            <td><a onclick="return confirm('Tem certeza que deseja deletar este lançamento?')" style="color: #c81616" class="btn" href="<?php echo $this->url('deleteDocumentoPresencial', array('action' => 'excluir', 'iddelete' => $f->getIdDocumento(),'curso'=>$f->getcursoDocumento())) ?>"><i class=" glyphicon glyphicon-remove"></i></a></td>      
-        </tr>
-        
-        
-                    <?php  endforeach;?> 
-    </table>
-    
-   <?php else:?>
-    <div class="alert-danger" style="margin: initial">
-           <br/>
-           <h4 style="text-align: center">Nenhum documento lançado </h4><br/>      
-    </div>
-      <?php endif;?>
-      </div>
-        </div>
-            <div style="background:  #bef1ba; border: #38820c" class=" navbar-brand">
-                <div class="  col-lg-3">
-                    <div  class="input-group date" >
-                        <input  class="form-control" type="date" name="inicioEnc"   required="" />
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                    </div>        
-                    </div>
-                 <div class="  col-lg-3">
-                <div class="input-group date " >
-                    
-                    <input   class=" form-control datepicker"  name="fimEnc" type="date" required="" /><div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                    </div>
-                 </div>
-                <div class="  col-lg-3">
-                            <select class="form-control"  name="relatorio" >
-                            <option>TCE</option>
-                            <option>TA</option>
-                            <option>1º RT (Instituição)</option>
-                            <option>2° RT (Instituição)</option>
-                            <option>3° RT (Instituição)</option>
-                            <option>4º RT (Instituição)</option>
-                            <option>1° RT (Empresa)</option>
-                            <option>2° RT (Empresa)</option>
-                            <option>3° RT (Empresa)</option>
-                            <option>4º RT (Empresa)</option>
-                            </select>
-                        </div>
-               
-                   
-                 <div class="">
-                     <button  type="submit" name="lançar" class="btn  btn-primary" value="Lançar" id="myButton" data-loading-text="Lançando..." autocomplete="off" >Lançar Documento</button>
-            </div>
-            </div>
-           
-</form>
-<script> 
-    $('.input-group.date').datepicker({
-    	format: 'yyyy-mm-dd',
-    	language: 'pt-BR',
-    	weekStart: 0,
-    	startDate:'',
-    	todayHighlight: true
-    });
-$(function () {
-  $('[data-toggle="popover"]').popover();
-});
-
-</script>
-            <div style=" margin-top: 10%"><br/>
-            <div class="pager">
-                <a href="<?php echo $this->url('perfilPresencial/default',array('controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idaluno)) ?>"><span class="btn btn-default" > Voltar</span></a>
-            </div>
-            </div> 
-<?php  echo $this->resp; ?>
-<script type="text/javascript">
-function toogle_disabled( bool )
-{
-	var input = document.getElementsByTagName('input');
-	for( var i=0; i<=(input.length-1); i++ )
-	{
-		if( input[i].type!='button' ) 
-			input[i].disabled = bool;
-	}
-	
-};
-$("form#form-documento").submit(
-        function(){
-        var id = $("#id").val();
-        
-     $.ajax({
-        url: 'vagaPresencial/flag/excluir/'+id+'/',
-        type: 'POST',
-        data:{ 
-            documentoId : $('td[id='+id+']').val()
-        }
-    }).done();
-    }
-            );
-   
-</script>
-</body>
-</html>
->>>>>>> origin/master

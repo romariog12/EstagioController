@@ -2,14 +2,10 @@
 namespace Empresa;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-<<<<<<< HEAD
 use Zend\ModuleManager\ModuleManager;
 use Zend\Session\Container;
 use Zend\Session\SessionManager;
 use Zend\Session\Config\SessionConfig;
-
-=======
->>>>>>> origin/master
 class Module
 {
      public function getConfig()
@@ -17,7 +13,6 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
      public function onBootstrap(MvcEvent $e)
-<<<<<<< HEAD
     {
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
@@ -28,15 +23,6 @@ class Module
             'cookie_httponly' => true,
         ));
     }
-=======
-    { 
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager); 
-        
-    }
-   
->>>>>>> origin/master
 
     public function getAutoloaderConfig()
     {

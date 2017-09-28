@@ -12,30 +12,17 @@ class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
     public function findBySituacaoAndTipo($situacao, $tipo) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.entregue', 'l')
-<<<<<<< HEAD
                         ->from(Entity::documento,'l')
-=======
-                        ->from(Entity::documentoPresencial,'l')
->>>>>>> origin/master
                         ->where('l.entregue = :a1','l.relatorio = :a2')
                         ->setParameter('a1', $situacao)
                         ->setParameter('a2', $tipo)->getQuery()->getResult();
         return $result;
     }
-<<<<<<< HEAD
     public function findBySituacaoAndTipoAndData( $tipo,$data) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.entregue', 'l')
                         ->from(Entity::documento,'l')
                         ->where('l.relatorio LIKE :a2','l.fim = :a3')
-=======
-     public function findBySituacaoAndTipoAndData( $tipo,$data) {
-        $result = $this->createQueryBuilder('u')
-                        ->select('u.entregue', 'l')
-                        ->from(Entity::documentoPresencial,'l')
-                        ->where('l.relatorio LIKE :a2','l.fim = :a3')
-                       
->>>>>>> origin/master
                         ->setParameter('a2', '%'.$tipo.'%')
                         ->setParameter('a3', $data)
                         ->getQuery()->getResult();
@@ -44,11 +31,7 @@ class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
     public function findByIdvagaDocumentoAndSituacao($idVagaDocumento, $situacao) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.idvagaDocumento', 'l')
-<<<<<<< HEAD
                         ->from(Entity::documento,'l')
-=======
-                        ->from(Entity::documentoPresencial,'l')
->>>>>>> origin/master
                         ->where('l.idvagaDocumento = :a1','l.entregue = :a2')
                         ->setParameter('a1', $idVagaDocumento)
                         ->setParameter('a2', $situacao)->getQuery()->getResult();
@@ -110,11 +93,7 @@ class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
     public function findByAnoDocumentoAndTipoAndCurso ($anoVaga, $tipo,$curso ) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.iddocumento', 'l')
-<<<<<<< HEAD
                         ->from(Entity::documento,'l')
-=======
-                        ->from(Entity::documentoPresencial,'l')
->>>>>>> origin/master
                         ->where('l.anoDocumento = :a1','l.relatorio LIKE :a2','l.cursoDocumento = :a3 ')
                         ->setParameter('a1', $anoVaga)
                         ->setParameter('a2', '%'.$tipo.'%')
@@ -125,11 +104,7 @@ class DocumentoPresencialRepository extends \Doctrine\ORM\EntityRepository{
     public function findByAnoVagaAndTipo ($anoVaga, $tipo ) {
         $result = $this->createQueryBuilder('u')
                         ->select('u.iddocumento', 'l')
-<<<<<<< HEAD
                         ->from(Entity::documento,'l')
-=======
-                        ->from(Entity::documentoPresencial,'l')
->>>>>>> origin/master
                         ->where('l.anoDocumento = :a1','l.relatorio LIKE :a2')
                         ->setParameter('a1', $anoVaga)
                         ->setParameter('a2', '%'.$tipo.'%')
