@@ -3,7 +3,7 @@ namespace Administrador;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\ModuleManager;
-use Base\View\Helper\Constantes;
+use Base\Model\Constantes;
 
 class Module
 {

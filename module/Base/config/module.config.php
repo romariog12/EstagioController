@@ -171,7 +171,8 @@ return array(
             'agentes' => 'Base\View\Helper\agentes',
             'empresas' => 'Base\View\Helper\empresas',
             'alertaDanger' => 'Base\View\Helper\alertaDanger',
-            'alertaSuccess' => 'Base\View\Helper\alertaSuccess'
+            'alertaSuccess' => 'Base\View\Helper\alertaSuccess',
+            'tabelaAlunoEmEstagio' => 'Base\View\Helper\tabelaAlunoEmEstagio'
             
       )
         ),

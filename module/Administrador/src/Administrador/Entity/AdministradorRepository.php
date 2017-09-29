@@ -1,11 +1,10 @@
 <?php
-/**
- * @author Romário Macedo Portela <romariomacedo18@gmail.com>
- */
 namespace Administrador\Entity;
 use Doctrine\ORM\EntityRepository;
 use Base\Model\Entity;
-
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 class AdministradorRepository extends EntityRepository{
     
     public function findByLoginAndPassword($login, $password) {

@@ -1,8 +1,6 @@
 <?php
 namespace Administrador\Controller;
-/**
- * @author romario <romariomacedo18@gmail.com>
- */
+
 use Zend\View\Model\ViewModel;
 use Base\Model\Entity;
 use Zend\Paginator\Paginator;
@@ -13,6 +11,9 @@ use Administrador\Form\alunoForm;
 use Administrador\Model\Aluno;
 use Administrador\Form\empresaForm;
 use Zend\Mvc\Controller\AbstractActionController;
+/**
+ * @author romario <romariomacedo18@gmail.com>
+ */
 class AdministradorController extends AbstractActionController
 {
     private $resposta = false;
@@ -255,9 +256,9 @@ class AdministradorController extends AbstractActionController
         $selecionarVaga = $em->getRepository(Entity::vaga)->findByIdEmpresaVaga($idEmpresa);
         $selecionarEmpresa = $em->getRepository(Entity::empresa)->findByIdempresa($idEmpresa);
         $listaVagaEstagiando = $em->getRepository(Entity::vaga)->findBySituacaoAndIdEmpresaVaga('1',$idEmpresa);
-            $page = $this->params()->fromRoute("idVaga", 0);
+            $page = $this->params()->fromRoute("page", 0);
             $pagination = new Paginator( new ArrayAdapter($selecionarVaga));
-            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(10);
+            $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(Constantes::contadorPorPagina);
             $count = $pagination->count();
             $pageNumber = $pagination->getCurrentPageNumber();
             $getPages = $pagination->getPages();
@@ -379,7 +380,7 @@ class AdministradorController extends AbstractActionController
             $empresa = $em->find(Entity::empresa, $id);
             $em->remove($empresa);
             $em->flush();   
-        return $this->redirect()->toRoute(Constantes::rotaAdministradorDefault ,['controller'=>  Constantes::administrador,'action'=>'empresa', 'id'=>$page]);       
+        return $this->redirect()->toRoute(Constantes::rotaAdministradorDefault ,['controller'=>  Constantes::administrador,'action'=>  Constantes::empresa, 'id'=>$page]);       
     }
     public function excluirAgenteAction(){
             $page = $this->params()->fromRoute("page", 0);

@@ -17,14 +17,14 @@ echo    $this->painel(Constantes::temaBootstrap).
         '</div>'.
         '<div class=" well-lg">'.
         $this->botaoGrande(
-            $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarEmpresa','id'=>'0']),
+            $this->url(Constantes::rotaEmpresaDefault, ['controller'=>  Constantes::administrador, 'action' =>  Constantes::cadastrarEmpresa,'id'=>'0']),
             'Cadastrar <br> empresa',
             'fa-plus',
             'success'
             ). 
         ' '.
         $this->botaoGrande(
-            $this->url('buscarEmpresa') ,
+            $this->url(Constantes::perfilEmpresa) ,
             'Buscar <br> empresa',
             'fa-search',
             'primary'

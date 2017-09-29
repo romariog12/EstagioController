@@ -1,14 +1,15 @@
 <?php
 /**
  * Zend Framework (http://framework.zend.com/)
- * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Administrador;
-
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
 return ['router' => 
     ['routes' =>
         ['administrador' => 
@@ -173,7 +174,7 @@ return ['router' =>
                     'route'    => '/perfilEmpresa',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Administrador\Controller',
-                        'controller'    => 'Empresa',
+                        'controller'    => 'Administrador',
                         'action'        => 'buscarEmpresa',
                     ),
                 ),
@@ -182,7 +183,7 @@ return ['router' =>
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action][/:id/][/:idVaga]]',
+                            'route'    => '/[:controller[/:action][/:id/][/:page]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -294,32 +295,6 @@ return ['router' =>
                     ),
                 ),
             ),
-            'cadastrarEmpresa' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/cadastrarEmpresa',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Administrador\Controller',
-                        'controller'    => 'Empresa',
-                        'action'        => 'cadastrarEmpresa',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action][/:id]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
               'editarEmpresa' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -391,7 +366,6 @@ return ['router' =>
     'controllers' => array(
         'invokables' => array(
             'Administrador\Controller\Administrador' => Controller\AdministradorController::class,
-            'Administrador\Controller\AlunoPresencial' => Controller\AlunoPresencialController::class,
             'Administrador\Controller\Empresa' => Controller\EmpresaController::class,
         ),
     ),
@@ -420,16 +394,11 @@ return ['router' =>
             'administrador/administrador/empresa' => __DIR__ . '/../view/administrador/index/empresa.phtml',
             'administrador/administrador/mensagem' => __DIR__ . '/../view/administrador/index/mensagem.phtml',
             'administrador/administrador/agente' => __DIR__ . '/../view/administrador/index/agente.phtml',
-             'administrador/administrador/documentos-presencial' => __DIR__ . '/../view/administrador/index/documentosPresencial.phtml',
-             'administrador/administrador/documentos-presencial-pendente' => __DIR__ . '/../view/administrador/index/documentosPresencialPendente.phtml',
-            'administrador/aluno/perfil' => __DIR__ . '/../view/aluno/index/perfil.phtml',
-            'administrador/aluno/estagios' => __DIR__ . '/../view/aluno/index/estagios.phtml',  
+            'administrador/administrador/documentos-presencial' => __DIR__ . '/../view/administrador/index/documentosPresencial.phtml',
+            'administrador/administrador/documentos-presencial-pendente' => __DIR__ . '/../view/administrador/index/documentosPresencialPendente.phtml', 
             'administrador/aluno/buscar-aluno' => __DIR__ . '/../view/aluno/index/buscarAluno.phtml',
             'administrador/administrador/cadastrar-aluno' => __DIR__ . '/../view/administrador/index/cadastrarAluno.phtml',
-            'administrador/aluno/declaracao' => __DIR__ . '/../view/aluno/index/declaracao.phtml',
-            'administrador/aluno-presencial/perfil' => __DIR__ . '/../view/alunoPresencial/index/perfilPresencial.phtml',
             'administrador/administrador/perfil-aluno' => __DIR__ . '/../view/administrador/index/perfilAluno.phtml',
-            'administrador/aluno-presencial/estagios' => __DIR__ . '/../view/alunoPresencial/index/estagiosPresencial.phtml',  
             'administrador/administrador/buscar-aluno' => __DIR__ . '/../view/administrador/index/buscarAluno.phtml',
             'administrador/administardor/cadastrar' => __DIR__ . '/../view/administrador/index/cadastrarAluno.phtml',
             'administrador/aluno-presencial/declaracao-presencial' => __DIR__ . '/../view/alunoPresencial/index/declaracaoPresencial.phtml',

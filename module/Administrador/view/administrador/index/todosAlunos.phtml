@@ -12,7 +12,7 @@ use Base\Model\Constantes;
                 '</div>'.
                 '<div class=" well-lg">'.
                 $this->botaoGrande(
-                $this->url('aluno/default',['controller'=>'alunoPresencial','action'=>'cadastrar','id'=>'0']),
+                $this->url(Constantes::rotaAlunoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::cadastrarAluno,'id'=>'0']),
                 'Novo <br> aluno',
                 'fa-plus',
                 'success'

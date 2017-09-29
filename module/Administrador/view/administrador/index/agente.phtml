@@ -3,7 +3,6 @@
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 use Base\Model\Constantes;
-
 echo    $this->painel(Constantes::temaBootstrap).
         $this->painelTitulo("Agentes de Integracao")?>
                 <div class="caption">
@@ -18,14 +17,14 @@ echo    $this->painel(Constantes::temaBootstrap).
                 '</div>'.
                 '<div class=" well-lg">'.
                 $this->botaoGrande(
-                $this->url('cadastrarEmpresa/default', ['controller'=>'empresa', 'action' =>'cadastrarAgente','id'=>'0']) ,
+                $this->url(Constantes::rotaEmpresaDefault, ['controller'=>  Constantes::administrador, 'action' =>  Constantes::cadastrarAgente,'id'=>'0']) ,
                 'Cadastrar <br> agente',
                 'fa-plus',
                 'success'
                 ).
                 ' '.
                 $this->botaoGrande(
-                $this->url('buscarEmpresa'),
+                $this->url(Constantes::perfilEmpresa),
                 'Buscar <br> empresa',
                 'fa-search',
                 'primary'
