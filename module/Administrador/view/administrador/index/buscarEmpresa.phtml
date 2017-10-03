@@ -1,0 +1,50 @@
+<?php
+use Base\Model\Constantes;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ **/
+
+echo  $this->painel(Constantes::temaBootstrap).
+      $this->painelTitulo("Buscar Empresa")
+?>
+<script>
+function noenter() {
+   return !(window.event && window.event.keyCode === 13);
+ };
+</script>
+<form  method="post" onKeyPress="return noenter()">
+    <div class="well-lg">
+        <div class="row ">
+        <div class="col-sm-6">
+          <div class="input-group">
+              <input id="cnpj" name="porCnpj" type="text" class="form-control" placeholder="Procurar por CNPJ">
+             <span class="input-group-btn">
+                <button class="btn btn-primary" name="buscar" value="buscarPorCnpj" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group">
+             <input name="porNome" type="text" class="form-control" placeholder="Procurar por nome">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" name="buscar" value="buscarPorNome" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
+            </span>
+          </div>
+        </div>
+        </div>
+      </div>
+</form>
+<?php if($this->lista):
+    echo  '<div class=" well-lg">'.
+    $this->tabelaBuscarEmpresa(['Nome', 'Cnpj', 'Perfil'],$this->lista).
+    '</div>';
+    endif;
+    echo '<div class=" well-lg">'.
+    $this->botaoGrande(
+    $this->url('paginator', ['controller'=>  Constantes::administrador, 'action' =>  Constantes::empresa]) ,
+    'Lista de <br> empresas',
+    'fa-list-alt',
+    'primary'
+        ).
+    '</div>'.
+    $this->painelFim();

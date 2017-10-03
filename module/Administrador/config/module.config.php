@@ -385,7 +385,7 @@ return ['router' =>
             'administrador/administrador/editar-aluno' => __DIR__ . '/../view/administrador/index/editarAluno.phtml',
             'administrador/administrador/cadastrar-empresa' => __DIR__ . '/../view/administrador/index/cadastrarEmpresa.phtml',
             'administrador/empresa/cadastrar-agente' => __DIR__ . '/../view/empresa/index/cadastrarAgente.phtml',
-            'administrador/empresa/buscar-empresa' => __DIR__ . '/../view/empresa/index/buscarEmpresa.phtml',
+            'administrador/administrador/buscar-empresa' => __DIR__ . '/../view/administrador/index/buscarEmpresa.phtml',
             'administrador/administrador/perfil-empresa' => __DIR__ . '/../view/administrador/index/perfilEmpresa.phtml',
             'administrador/empresa/perfilempresaestagiando' => __DIR__ . '/../view/empresa/index/perfilEmpresaEstagiando.phtml',
             'administrador/empresa/perfilempresaencerrado' => __DIR__ . '/../view/empresa/index/perfilEmpresaEncerrado.phtml',
@@ -416,7 +416,8 @@ return ['router' =>
                 'tabelaAgentes' => 'Administrador\View\Helper\tabelaAgentes',
                 'tabelaDocumentos' => 'Administrador\View\Helper\tabelaDocumentos',
                 'tabelaUsuarios' => 'Administrador\View\Helper\tabelaUsuarios',
-                'tabelaBuscarAluno' => 'Administrador\View\Helper\tabelaBuscarAluno'
+                'tabelaBuscarAluno' => 'Administrador\View\Helper\tabelaBuscarAluno',
+                'tabelaBuscarEmpresa' => 'Administrador\View\Helper\tabelaBuscarEmpresa'
                 ]
         ],
     'console' => array(

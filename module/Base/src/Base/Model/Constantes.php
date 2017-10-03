@@ -8,7 +8,7 @@ namespace Base\Model;
 class Constantes {
     //View
     const temaBootstrap = 'primary';
-    const contadorPorPagina = '100';
+    const contadorPorPagina = '10';
     const cadastroSucesso = 'Cadastro realizado com sucesso!';
     const alteraçãoSucesso = 'Alterações realizada com sucesso!';
     //rotas

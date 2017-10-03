@@ -199,14 +199,14 @@ class AdministradorController extends AbstractActionController
                 $alunoForm->setInputFilter($Aluno->getInputFilter());
                 $alunoForm->setData($request->getPost());
                 if($alunoForm->isValid()){
+                    $nome = $request->getPost("nome");
+                    $curso = $request->getPost("curso");
+                    $matricula = $request->getPost("matricula");
+                    $email = $request->getPost("email");
+                    $telefone = $request->getPost("telefone");
+                    $cpf = $request->getPost("cpf");
+                    $senha = $request->getPost("cpf");
                     try{  
-                        $nome = $request->getPost("nome");
-                        $curso = $request->getPost("curso");
-                        $matricula = $request->getPost("matricula");
-                        $email = $request->getPost("email");
-                        $telefone = $request->getPost("telefone");
-                        $cpf = $request->getPost("cpf");
-                        $senha = $request->getPost("cpf");
                         $aluno = new \Aluno\Entity\AlunoPresencial();
                         $aluno->setAdministradorIdadministrador("0");
                         $aluno->setNome($nome);
@@ -350,7 +350,7 @@ class AdministradorController extends AbstractActionController
             $selecionarAgente = $em->getRepository(Entity::agente)->findByIdagente($idAgente);
             $request = $this->getRequest();
             if($request ->isPost()){
-                $select = $em ->find(Entity::agente, $idAgente);
+                $selecionarAgente = $em ->find(Entity::agente, $idAgente);
                 $agente = $request->getPost("agente");
                 $cnpj = $request->getPost("cnpj");
                 $telefone = $request->getPost("telefone");
@@ -358,13 +358,13 @@ class AdministradorController extends AbstractActionController
                 $responsavel = $request->getPost("responsavel");
                 $email = $request->getPost("email");
                 try{
-                    $select->setAgente($agente);
-                    $select->setCnpj($cnpj);
-                    $select->setTelefone($telefone);
-                    $select->setEndereco($endereco);
-                    $select->setResponsavel($responsavel);
-                    $select->setEmail($email);
-                    $em->persist($select);
+                    $selecionarAgente->setAgente($agente);
+                    $selecionarAgente->setCnpj($cnpj);
+                    $selecionarAgente->setTelefone($telefone);
+                    $selecionarAgente->setEndereco($endereco);
+                    $selecionarAgente->setResponsavel($responsavel);
+                    $selecionarAgente->setEmail($email);
+                    $em->persist($selecionarAgente);
                     $em->flush();     
                 } catch (Exception $ex){}   
                 return $this->redirect()->toRoute('paginator', ['controller'=>  Constantes::administrador, 'action' =>  Constantes::agente,'id'=>$page]);            
@@ -432,8 +432,7 @@ class AdministradorController extends AbstractActionController
             $empresaFiltrer = new \Administrador\Model\Empresa();
             $empresaForm->setInputFilter($empresaFiltrer->getInputFilter());
             $empresaForm->setData($request->getPost());
-            if($empresaForm->isValid()){ 
-              try {
+            if($empresaForm->isValid()){
                 $nomeEmpresa = $request->getPost("empresa");
                 $cnpj = $request->getPost("cnpj");
                 $telefone = $request->getPost("telefone");
@@ -441,6 +440,7 @@ class AdministradorController extends AbstractActionController
                 $responsavel = $request->getPost("responsavel");
                 $email = $request->getPost("email");
                 $senha = $request->getPost("cnpj");
+              try {
                 $empresa = new \Empresa\Entity\Empresa();
                 $empresa ->setEmpresa($nomeEmpresa);
                 $empresa ->setCnpj($cnpj);

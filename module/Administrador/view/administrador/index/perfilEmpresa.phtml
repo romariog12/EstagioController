@@ -6,13 +6,13 @@ use Base\Model\Constantes;
  echo $this->painel(Constantes::temaBootstrap);
  echo $this->painelTitulo("Perfil da empresa")
 ?>
-                    <div class="caption" >
-                        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                            <li class="  active" role="presentation"><a><label>Painel</label></a></li>
-                            <li role="presentation"><a href="<?=$this->url("empresaMensagem/default",['controller'=> 'administrador', 'action'=>'mensagem', 'id'=>$this->idEmpresa]) ?>"><?= $this->translate("<i class='fa fa-envelope-o'></i>")?></a></li>
-                        </ul> 
-                    </div>
-       <div class="caption">
+    <div class="caption" >
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li class="  active" role="presentation"><a><label>Painel</label></a></li>
+            <li role="presentation"><a href="<?=$this->url("empresaMensagem/default",['controller'=> 'administrador', 'action'=>'mensagem', 'id'=>$this->idEmpresa]) ?>"><?= $this->translate("<i class='fa fa-envelope-o'></i>")?></a></li>
+        </ul> 
+    </div>
+    <div class="caption">
     <?php if(!empty($this->empresaSelect)): foreach ($this->empresaSelect as $l): ?>
         <?=
         '<div class="navbar pager">'.
@@ -22,33 +22,32 @@ use Base\Model\Constantes;
             <?=
         '<p class="pager"><label>CNPJ:</label>'.  $l->getCnpj().'<br/>'
             . '<label>Responável: </label> '. $l->getResponsavel().' '
-            . '<label> Telefone: </label> '.  $l->getTelefone().'<br/></div> ';
-            
+            . '<label> Telefone: </label> '.  $l->getTelefone().'<br/></div> ';  
         ?>
     <?php endforeach; endif;?>
     </div>
-                <div class="caption">
-                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li  class="  active" role="presentation"><a href="#"><label>Todas as vagas </label>  <span class="label label-primary"> <?php echo count($this->listaVaga) ?></span> </a></li>
-                        <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaestagiando','id'=>$this->empresa])?>">Estagiando <span class="label label-success"> <?php echo count($this->listaVagaEstagiando)?></span></a></li>
-                         <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaencerrado','id'=>$this->empresa])?>">Encerrado <span class="label label-danger"> <?php echo count($this->listaVaga) - count($this->listaVagaEstagiando)  ?></span></a></li>
-                    </ul> 
-                </div>
-<?php if ($this->listaVaga){
-        echo $this->tabelaAlunoEmEstagio(['Aluno','Empresa','Agente'],$this->pagination, $this->pageNumber).'</br>'.
-             $this->paginacao($this->pageNumber,$this->count);
-        }else{
-        echo '<div class=" well-lg">'.
-                $this->alertaDanger('Nenhum estágio lançado').
-              '</div>';
-        } 
-        echo '<div class=" well-lg">'.
-                $this->botaoGrande(
-                $this->url('editarEmpresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$this->idEmpresa)),
-                'Editar <br> perfil',
-                'fa-edit',
-                'primary'
-                ).
-                '</div>'. 
-                $this->painelFim();
-       ?> 
+    <div class="caption">
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li  class="  active" role="presentation"><a href="#"><label>Todas as vagas </label>  <span class="label label-primary"> <?php echo count($this->listaVaga) ?></span> </a></li>
+            <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaestagiando','id'=>$this->empresa])?>">Estagiando <span class="label label-success"> <?php echo count($this->listaVagaEstagiando)?></span></a></li>
+             <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaencerrado','id'=>$this->empresa])?>">Encerrado <span class="label label-danger"> <?php echo count($this->listaVaga) - count($this->listaVagaEstagiando)  ?></span></a></li>
+        </ul> 
+    </div>
+    <?php if ($this->listaVaga){
+            echo $this->tabelaAlunoEmEstagio(['Aluno','Empresa','Agente'],$this->pagination, $this->pageNumber).'</br>'.
+                 $this->paginacao($this->pageNumber,$this->count);
+            }else{
+            echo '<div class=" well-lg">'.
+                    $this->alertaDanger('Nenhum estágio lançado').
+                  '</div>';
+            } 
+            echo '<div class=" well-lg">'.
+                    $this->botaoGrande(
+                    $this->url('editarEmpresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$this->idEmpresa)),
+                    'Editar <br> perfil',
+                    'fa-edit',
+                    'primary'
+                    ).
+                    '</div>'. 
+                    $this->painelFim();
+           ?> 

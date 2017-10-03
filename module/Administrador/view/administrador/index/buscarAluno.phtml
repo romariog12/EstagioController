@@ -5,10 +5,13 @@
   */
  echo  $this->painel(Constantes::temaBootstrap).
        $this->painelTitulo("Buscar Aluno")?>
-     <div>
-    <div class="caption"> 
-        <form class="navbar-collapse nav" method="post">
-            <div class="navbar-collapse well-lg"  >  
+<script>
+function noenter() {
+   return !(window.event && window.event.keyCode === 13);
+ };
+</script>
+        <form  method="post" onKeyPress="return noenter()">
+            <div class="well-lg"  >  
                 <div class="row ">
                     <div class="col-lg-6">
                       <div class="input-group">
@@ -26,19 +29,21 @@
                         </span>
                       </div>
                     </div>
-                </div><br><br><br>
-<?php 
-if(!empty($this->lista)):
-    echo
-    $this->tabelaBuscarAluno(['Nome', 'Curso', 'Matricula', 'Perfil'],$this->lista);
-endif;
-?>
+                </div> 
             </div>
         </form>
-         <div class="well-lg">
-             <a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosalunospresencial']) ?>"> <span class="btn btn-primary"><i class="fa fa-users fa-2x pull-left"></i>Todos <br>Aluno</span></a>
-           
-         </div>
-    </div>
-</div>
-<?= $this->painelFim();
+<?php 
+if(!empty($this->lista)):
+    echo'<div class=" well-lg">'.
+    $this->tabelaBuscarAluno(['Nome', 'Curso', 'Matricula', 'Perfil'],$this->lista).
+    '</div>';
+endif;
+echo '<div class=" well-lg">'.
+    $this->botaoGrande(
+    $this->url('paginator', ['controller'=>  Constantes::administrador, 'action' =>  Constantes::todosAlunos]) ,
+    'Lista de <br> alunos',
+    'fa-list-alt',
+    'primary'
+        ).
+    '</div>'.
+    $this->painelFim();
