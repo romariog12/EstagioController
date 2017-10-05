@@ -1,6 +1,6 @@
-Projem Virtual
+EstágioController
 ======================
-Projeto desenvolvido para controle de Contratos de estágios da Universidade Católica de Brasília
+Projeto de Controle
 ----------------------
-Autor:
-Romário Macedo Portela
+/**
+*@author Romário Macedo Portela <romariomacedo18@gmail.com>
