@@ -9,12 +9,8 @@
                 <span style=" color:white"><?= $curso?></span>
                 <span style=" color: #fff194" class=" pull-right"><?= $orientador; ?>&nbsp;&nbsp;</span>
                 <span style="color: white" class=" pull-right">ORIENTADOR:&nbsp;&nbsp; </span>
- </div>
+        </div>
      <div class="nav">
-      <div class="caption">
-          <div >
-            <div>
-                <div>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li  class="  active" role="presentation"><a href="#"><label>Todas as vagas </label>  <span class="label label-primary"><?php echo $this->countListaTotalVaga?></span> </a></li>
@@ -22,13 +18,10 @@
                         <li role="presentation" ><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialencerrado','curso'=>$idCurso,'curso1'=>$curso])?>">Encerrados <span class="label label-danger"> <?php echo $this->countListaEncerrado?></span></a></li>
                         <li role="presentation" ><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialalunoscadastrados','curso'=>$idCurso,'curso1'=>$curso])?>">Alunos cadastrados <span class="label label-warning"><?php echo $this->countListaAlunosCadastrados ?></span></a></li>
                         <li role="presentation"><a href="<?= $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infoestatisticas','curso'=>$idCurso,'curso1'=>$curso])?>"> Estatísticas <i class="fa fa-line-chart"></i></a></li>
-                    </ul> 
-                </div>
-              </div>
-            </div>
-        </div>         
-          <br/><div class="pager"><i style="color:   #c4ffc2" class=" glyphicon glyphicon-stop"></i>Ativo
-              <i style="  color:#ae1111" class=" glyphicon glyphicon-stop"></i>Encerrado</div>
+                    </ul>    
+          <br/>
+          <div class="pager"><i style="color:   #c4ffc2" class=" glyphicon glyphicon-stop"></i>Ativo
+              <i style="color:#ae1111" class=" glyphicon glyphicon-stop"></i>Encerrado</div>
           <br/><br/>
           <div class="panel panel-default col-sm-12">
          <table class="table ">
@@ -39,11 +32,11 @@
              </tr>
    <?php
         foreach ($this->pagination as $l){
-            if($l->getRecisao()== ''){ ?> 
+            if($l->getSituacao()== '1'){ ?> 
             <tr style="background-color: #c4ffc2;"><?php } else{?>
                  <tr style="background-color:  #ae1111; color: white"><?php };?>  
-                    <td><a href="<?php echo $this->url('perfilPresencial/default', 
-                         array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$l->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a> <?php echo $l->getAluno()?></td>
+                    <td><a href="<?php echo $this->url('perfil/default', 
+                         array('controller' => 'administrador', 'action' => 'perfilAluno', 'id'=>$l->getIdalunovaga(),)); ?>"><i class=" glyphicon glyphicon-user"></i></a> <?php echo $l->getAluno()?></td>
                     <td><?=  $l->getEmpresa();?></td>
                     <td><?=  $l->getAgente();?></td>
                  </tr>  

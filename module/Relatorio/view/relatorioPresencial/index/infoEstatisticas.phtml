@@ -13,32 +13,19 @@
                 <span style="color: white" class=" pull-right">ORIENTADOR:&nbsp;&nbsp; </span>
         </div>
      <div class="nav">
-      <div class="caption">
-          <div>
-            <div>
-                <div class="" style=" ">
-                <div class="caption">
-                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li  role="presentation"><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso])?>">Todas as vagas  <span class="label label-primary"> <?php echo $this->countListaTotalVaga?></span> </a></li>
-                        <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialestagiando','curso'=>$idCurso,'curso1'=>$curso])?>">Estagiando <span class="label label-success"> <?php echo $this->countListaEstagiando?></span></a></li>
-                        <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialencerrado','curso'=>$idCurso,'curso1'=>$curso])?>">Encerrados <span class="label label-danger"> <?php echo $this->countListaEncerrado?></span></a></li>
-                        <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialalunoscadastrados','curso'=>$idCurso,'curso1'=>$curso])?>">Alunos cadastrados <span class="label label-warning"><?php echo $this->countListaAlunosCadastrados ?></span></a></li>
-                        <li  class="  active" role="presentation"><a href="#"><label>Estatísticas </label> <i class="fa fa-line-chart"></i></a></li>
-                        
-                    </ul> 
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
+        <div class="caption">
+            <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                <li  role="presentation"><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso])?>">Todas as vagas  <span class="label label-primary"> <?php echo $this->countListaTotalVaga?></span> </a></li>
+                <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialestagiando','curso'=>$idCurso,'curso1'=>$curso])?>">Estagiando <span class="label label-success"> <?php echo $this->countListaEstagiando?></span></a></li>
+                <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialencerrado','curso'=>$idCurso,'curso1'=>$curso])?>">Encerrados <span class="label label-danger"> <?php echo $this->countListaEncerrado?></span></a></li>
+                <li role="presentation" ><a href="<?php echo $this->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action'=>'infopresencialalunoscadastrados','curso'=>$idCurso,'curso1'=>$curso])?>">Alunos cadastrados <span class="label label-warning"><?php echo $this->countListaAlunosCadastrados ?></span></a></li>
+                <li  class="  active" role="presentation"><a href="#"><label>Estatísticas </label> <i class="fa fa-line-chart"></i></a></li>
+            </ul>
+        </div>
      </div><br/><br/> 
 <div id="curve_chart" ></div>
-
          <div class="pager" ><br/>
-           
-                
                 <a href="<?php echo $this->url('relatorioPresencial') ?>"><span class="btn btn-default" >Voltar</span></a>
-            
             </div> 
 
     <script type="text/javascript">

@@ -126,7 +126,7 @@ class AdministradorController extends AbstractActionController
         } 
     public function excluirAlunoAction(){
             $page = $this->params()->fromRoute("page", 0);
-            $id = $this->params()->fromRoute("deleteAluno", 0);
+            $id = $this->params()->fromRoute("iddelete", 0);
             $em = $this->getServiceLocator()->get(Entity::em);
             $aluno = $em->find(Entity::aluno, $id);
             $em->remove($aluno);

@@ -2,7 +2,6 @@
 
 namespace Administrador\View\Helper;
 
-
 use Zend\View\Helper\AbstractHelper;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
@@ -21,7 +20,6 @@ class tabelaUsuarios extends AbstractHelper{
         return $html;
     }
     public function tdTh($valueTh = [],$valueTd = []){
-        
         $html    = ''; 
         $html   .=  '<tr>';
         foreach ($valueTh as $l){
