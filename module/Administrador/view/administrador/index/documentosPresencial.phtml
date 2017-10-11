@@ -12,7 +12,14 @@ echo    $this->painel(Constantes::temaBootstrap).
                 <li role="presentation"><a href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencialPendente','id'=>'1'])?>">Vias Pendentes <span class="label label-default"><?= count($this->listaDocumentoPendente)?></span></a></li>     
             </ul>
         </div>
-        <?=
-        $this->tabelaDocumentos(['','Processo', 'Início','Fim'],$this->pagination).
-        $this->paginacao($this->pageNumber,$this->count).
-        $this->painelFim();?>
+        <?php
+        if(count($this->pagination)>0):
+            echo    $this->tabelaDocumentos(['','Processo', 'Início','Fim'],$this->pagination).
+                    $this->paginacao($this->pageNumber,$this->count); 
+        else:
+            echo
+            '<div class="well-lg">'.
+            $this->alertaDanger("Sem dados a apresentar").
+            '</div>';
+        endif;
+        echo $this->painelFim();?>

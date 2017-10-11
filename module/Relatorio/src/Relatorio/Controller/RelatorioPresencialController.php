@@ -2,32 +2,31 @@
 
 namespace Relatorio\Controller;
 
-use Auth\Controller\AdministradorAbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Aluno\Entity\AlunoPresencial;
 use Base\Model\Entity;
 use Base\Model\Constantes;
-class RelatorioPresencialController extends AdministradorAbstractActionController {
+class RelatorioPresencialController extends AbstractActionController {
     
-    public function relatorioAction()
-    {    
-            $em = $this->getServiceLocator()->get(Entity::em);
-            $listaVaga = $em->getRepository(Entity::vaga)->findAll();
-            $findCurso = $em->getRepository(Entity::aluno)->findAll();
-            $findEmpresa = $em->getRepository(Entity::empresa)->findAll();
-            $recisaoRow = $em->getRepository(Entity::vaga)->findByRecisao('');
-            $findAgente = $em->getRepository(Entity::agente)->findAll();
-            $listaContratos = $em->getRepository(Entity::documento)->findAll();
-            $listaCursos = $em->getRepository(Entity::dados)->findAll();
-            $quantidadeCursos = count($listaCursos);
-            $totalEstagioPorCurso = [];
-            $estagiando = [];
-            for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                $totalEstagioPorCurso[$count] =  count($em->getRepository(Entity::vaga)->findBycursoVaga($count));
-                $estagiando[$count] = count($em->getRepository(Entity::vaga)->findByRecisaoAndCursoVaga('',$count));
-            }
+    public function relatorioAction(){    
+        $em = $this->getServiceLocator()->get(Entity::em);
+        $listaVaga = $em->getRepository(Entity::vaga)->findAll();
+        $findCurso = $em->getRepository(Entity::aluno)->findAll();
+        $findEmpresa = $em->getRepository(Entity::empresa)->findAll();
+        $recisaoRow = $em->getRepository(Entity::vaga)->findByRecisao('');
+        $findAgente = $em->getRepository(Entity::agente)->findAll();
+        $listaContratos = $em->getRepository(Entity::documento)->findAll();
+        $listaCursos = $em->getRepository(Entity::dados)->findAll();
+        $quantidadeCursos = count($listaCursos);
+        $totalEstagioPorCurso = [];
+        $estagiando = [];
+        for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+            $totalEstagioPorCurso[$count] =  count($em->getRepository(Entity::vaga)->findBycursoVaga($count));
+            $estagiando[$count] = count($em->getRepository(Entity::vaga)->findByRecisaoAndCursoVaga('',$count));
+        }
         return new ViewModel([  
             'fetchRow'=>$findCurso,
             'row'=> count($findCurso),
@@ -43,80 +42,75 @@ class RelatorioPresencialController extends AdministradorAbstractActionControlle
             'quantidadeCursos'=> $quantidadeCursos
         ]);
    } 
-     public function relatorioGraficoAction()
-    {
-                $em = $this->getServiceLocator()->get(Entity::em);              
-                $request = $this->getRequest();
-                $lista = $em->getRepository(Entity::dados)->findAll();
-                $quantidadeCursos = count($lista);
-                if($request->isPost()){
-                        $ano = $request->getPost('ano');
-                        $listaTodosCursos = $em->getRepository(Entity::vaga)->findByanoVaga($ano);
-                        $mes = [];
-                        $cursoVagas = [];
-                        $cursoTce = [];
-                        $cursoTa = [];
-                         for($count = 1 ;$count<=12 ;$count++){
-                         $mes[$count]= count($em->getRepository(Entity::vaga)->findByAnoVagaAndMesVaga($ano, $count)) ;   
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTce[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE',$count ));   
-                         $cursoTa[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA',$count ));
-                         $cursoVagas[$count] = count($em->getRepository(Entity::vaga)->findByAnoVagaAndCursoVaga($ano, $count));   
-                         }   
-                    $tce = $em->getRepository(Entity::documento)
-                            ->findByAnoVagaAndTipo ($ano, 'TCE' );
-                    $ta = $em->getRepository(Entity::documento)
-                            ->findByAnoVagaAndTipo($ano,  'TA' );
-                        return new ViewModel([
-                            'listaTodosCursos'=>$listaTodosCursos,
-                            'rowTodosCursos'=> count($listaTodosCursos),
-                            'listaDados' => $lista,
-                            'mes'=>[$mes],
-                            'cursoVagas'=>[$cursoVagas],
-                            'cursoTce' =>[$cursoTce],
-                            'cursoTa'=>[$cursoTa],
-                            'ano'=>$ano,          
-                            'tceRow'=> count($tce),
-                            'taRow'=> count($ta),                      
-                        ]);
+     public function relatorioGraficoAction(){
+        $em = $this->getServiceLocator()->get(Entity::em);              
+        $request = $this->getRequest();
+        $lista = $em->getRepository(Entity::dados)->findAll();
+        $quantidadeCursos = count($lista);
+        if($request->isPost()){
+            $ano = $request->getPost('ano');
+            $listaTodosCursos = $em->getRepository(Entity::vaga)->findByanoVaga($ano);
+            $mes = [];
+            $cursoVagas = [];
+            $cursoTce = [];
+            $cursoTa = [];
+            for($count = 1 ;$count<=12 ;$count++){
+                $mes[$count]= count($em->getRepository(Entity::vaga)->findByAnoVagaAndMesVaga($ano, $count)) ;   
+            }
+            for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+                $cursoTce[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso ($ano, 'TCE',$count ));   
+                $cursoTa[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso ($ano, 'TA',$count ));
+                $cursoVagas[$count] = count($em->getRepository(Entity::vaga)->findByAnoVagaAndCursoVaga($ano, $count));   
+            }   
+        $tce = $em->getRepository(Entity::documento)->findByAnoVagaAndTipo ($ano, 'TCE' );
+        $ta = $em->getRepository(Entity::documento)->findByAnoVagaAndTipo($ano,  'TA' );
+        return new ViewModel([
+            'listaTodosCursos'=>$listaTodosCursos,
+            'rowTodosCursos'=> count($listaTodosCursos),
+            'listaDados' => $lista,
+            'mes'=>[$mes],
+            'cursoVagas'=>[$cursoVagas],
+            'cursoTce' =>[$cursoTce],
+            'cursoTa'=>[$cursoTa],
+            'ano'=>$ano,          
+            'tceRow'=> count($tce),
+            'taRow'=> count($ta),                      
+        ]);
                         
-                }else{
-                        $listaTodosCursos = $em->getRepository(Entity::vaga)->findByanoVaga(date('Y'));
-                        $mes = [];
-                        $cursoVagas = [];
-                        $cursoTce = [];
-                        $cursoTa = [];
-                         for($count = 1 ;$count<=12 ;$count++){
-                         $mes[$count]=count($em->getRepository(Entity::vaga)->findByAnoVagaAndMesVaga(date('Y'), $count));   
-                         }
-                         for($count = 1 ;$count<=$quantidadeCursos ;$count++){
-                         $cursoTce[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE',$count ));
-                         $cursoTa[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA',$count ));
-                         $cursoVagas[$count] = count($em->getRepository(Entity::vaga)->findByAnoVagaAndCursoVaga(date('Y'), $count));  
-                         }
-                        $tce = $em->getRepository(Entity::documento)
-                            ->findByAnoVagaAndTipo (date('Y'), 'TCE' );
-                        $ta = $em->getRepository(Entity::documento)
-                            ->findByAnoVagaAndTipo(date('Y'),  'TA' );
-                        return new ViewModel([
-                            'listaTodosCursos'=>$listaTodosCursos,
-                            'rowTodosCursos'=> count($listaTodosCursos),
-                            'listaDados' => $lista,
-                            'mes'=>[$mes],
-                            'cursoVagas'=>[$cursoVagas],
-                            'cursoTce' =>[$cursoTce],
-                            'cursoTa'=>[$cursoTa],  
-                            'ano'=> date('Y'),          
-                            'tceRow'=> count($tce),
-                            'taRow'=> count($ta)                          
-                ]);
-                        
-                         }
+        }else{
+            $listaTodosCursos = $em->getRepository(Entity::vaga)->findByanoVaga(date('Y'));
+            $mes = [];
+            $cursoVagas = [];
+            $cursoTce = [];
+            $cursoTa = [];
+             for($count = 1 ;$count<=12 ;$count++){
+             $mes[$count]=count($em->getRepository(Entity::vaga)->findByAnoVagaAndMesVaga(date('Y'), $count));   
+             }
+             for($count = 1 ;$count<=$quantidadeCursos ;$count++){
+             $cursoTce[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TCE',$count ));
+             $cursoTa[$count] = count($em->getRepository(Entity::documento)->findByAnoDocumentoAndTipoAndCurso (date('Y'), 'TA',$count ));
+             $cursoVagas[$count] = count($em->getRepository(Entity::vaga)->findByAnoVagaAndCursoVaga(date('Y'), $count));  
+             }
+            $tce = $em->getRepository(Entity::documento)
+                ->findByAnoVagaAndTipo (date('Y'), 'TCE' );
+            $ta = $em->getRepository(Entity::documento)
+                ->findByAnoVagaAndTipo(date('Y'),  'TA' );
+            return new ViewModel([
+                'listaTodosCursos'=>$listaTodosCursos,
+                'rowTodosCursos'=> count($listaTodosCursos),
+                'listaDados' => $lista,
+                'mes'=>[$mes],
+                'cursoVagas'=>[$cursoVagas],
+                'cursoTce' =>[$cursoTce],
+                'cursoTa'=>[$cursoTa],  
+                'ano'=> date('Y'),          
+                'tceRow'=> count($tce),
+                'taRow'=> count($ta)                          
+            ]);
+
+        }
     } 
-   
     public function infoPresencialAction(){
-       
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -136,23 +130,22 @@ class RelatorioPresencialController extends AdministradorAbstractActionControlle
            $mes[$Count]=$em->getRepository(Entity::vaga)->findByAnoVagaAndMesVagaAndCursoVaga(date('Y'), $Count,$curso) ;           
         }
         return new ViewModel(
-                array(
-                    'getPages'=>$getPages,
-                    'pageNumber'=>$pageNumber,
-                    'count'=>$count,
-                    'pagination'=>$pagination,
-                    'listaVaga'=>$listaVaga,
-                    'countListaTotalVaga'=> count($listaVaga),
-                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
-                    'countListaEstagiando'=>count($listaVagaEstagiando),
-                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
-                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
-                    'curso'=>$selectCurso,
-                    'listaMensal'=>$mes
-                    )
-                );
+            ['getPages'=>$getPages,
+            'pageNumber'=>$pageNumber,
+            'count'=>$count,
+            'pagination'=>$pagination,
+            'listaVaga'=>$listaVaga,
+            'countListaTotalVaga'=> count($listaVaga),
+            'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+            'countListaEstagiando'=>count($listaVagaEstagiando),
+            'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+            'listaAlunosCadastrados'=>$listaAlunosCadastrados,
+            'curso'=>$selectCurso,
+            'listaMensal'=>$mes
+            ]
+        );
     }
-      public function infoPresencialEstagiandoAction(){
+    public function infoPresencialEstagiandoAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -184,7 +177,7 @@ class RelatorioPresencialController extends AdministradorAbstractActionControlle
                     )
                 );
     }
-     public function infoPresencialEncerradoAction(){
+    public function infoPresencialEncerradoAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -200,25 +193,22 @@ class RelatorioPresencialController extends AdministradorAbstractActionControlle
         $count = $pagination->count();
         $pageNumber = $pagination->getCurrentPageNumber();
         $getPages = $pagination->getPages();
-     
         return new ViewModel(
-                array(
-                    'getPages'=>$getPages,
-                    'pageNumber'=>$pageNumber,
-                    'count'=>$count,
-                    'pagination'=>$pagination,
-                    'listaVaga'=>$listaVaga,
-                    'countListaTotalVaga'=> count($listaVaga),
-                    'countListaEstagiando'=>count($listaVagaEstagiando),
-                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
-                    'countListaEncerrado'=>count($listaVagasEncerradas),
-                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
-                    'curso'=>$selectCurso
-                    )
-                );
+            ['getPages'=>$getPages,
+            'pageNumber'=>$pageNumber,
+            'count'=>$count,
+            'pagination'=>$pagination,
+            'listaVaga'=>$listaVaga,
+            'countListaTotalVaga'=> count($listaVaga),
+            'countListaEstagiando'=>count($listaVagaEstagiando),
+            'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+            'countListaEncerrado'=>count($listaVagasEncerradas),
+            'listaAlunosCadastrados'=>$listaAlunosCadastrados,
+            'curso'=>$selectCurso
+            ]
+        );
     }
     public function infoPresencialAlunosCadastradosAction(){
-       
         $em = $this->getServiceLocator()->get(Entity::em);
         $request = $this->getRequest(); 
         $curso = $this->params()->fromRoute("curso", 0);
@@ -281,7 +271,6 @@ class RelatorioPresencialController extends AdministradorAbstractActionControlle
                     ]);
     }
      public function infoEstatisticasAction(){
-       
         $em = $this->getServiceLocator()->get(Entity::em);
         $curso = $this->params()->fromRoute("curso", 0);
         $curso1 = $this->params()->fromRoute("curso1", 0);
@@ -302,18 +291,18 @@ class RelatorioPresencialController extends AdministradorAbstractActionControlle
          }
         return new ViewModel(
                 ['getPages'=>$getPages,
-                    'pageNumber'=>$pageNumber,
-                    'count'=>$count,
-                    'pagination'=>$pagination,
-                    'listaVaga'=>$listaVaga,
-                    'countListaTotalVaga'=> count($listaVaga),
-                    'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
-                    'countListaEstagiando'=>count($listaVagaEstagiando),
-                    'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
-                    'listaAlunosCadastrados'=>$listaAlunosCadastrados,
-                    'curso'=>$selectCurso,
-                    'listaMensal'=>$mes
-                    ]);
+                'pageNumber'=>$pageNumber,
+                'count'=>$count,
+                'pagination'=>$pagination,
+                'listaVaga'=>$listaVaga,
+                'countListaTotalVaga'=> count($listaVaga),
+                'countListaAlunosCadastrados'=>count($listaAlunosCadastrados),
+                'countListaEstagiando'=>count($listaVagaEstagiando),
+                'countListaEncerrado'=>count($listaVaga) - count($listaVagaEstagiando),
+                'listaAlunosCadastrados'=>$listaAlunosCadastrados,
+                'curso'=>$selectCurso,
+                'listaMensal'=>$mes
+                ]);
     }
 }
     

@@ -2,11 +2,11 @@
 
 namespace Home\Controller;
 
-use Auth\Controller\AdministradorAbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\AuthenticationService;
 use Base\Model\Entity;
-class IndexController extends AdministradorAbstractActionController {
+class IndexController extends AbstractActionController {
 
   
    public function partialHomeAction(){

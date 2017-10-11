@@ -1,6 +1,6 @@
 <?php
 namespace Vaga\Controller;
-    use Auth\Controller\AdministradorAbstractActionController;
+    use Zend\Mvc\Controller\AbstractActionController;
     use Zend\View\Model\ViewModel;
     use Vaga\Entity\VagaPresencial;
     use Vaga\Entity\DocumentoPresencial;
@@ -8,25 +8,18 @@ namespace Vaga\Controller;
     use Vaga\Form\vagaForm;
     use Vaga\Form\LancarDocumentoForm;
     use Vaga\Form\editarDocumentoForm;
-    use Vaga\Model\EditarDocumento;
     use Vaga\Form\ProcessoForm;
     use Vaga\Model\LancarDocumento;
     use Vaga\Model\Processo;
     use Vaga\Model\Vaga;
-    use Aluno\Entity\AlunoPresencial;
     use Base\Model\Constantes;
     use Vaga\Form\editarAcompanhamentoForm;
     use Vaga\Model\EditarAcompanhamento;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */ 
-class VagaPresencialController extends AdministradorAbstractActionController
+class VagaPresencialController extends AbstractActionController
 {
-    public function __construct() {
-        $this->route = 'vagaPresencial/default';
-        $this->controller = 'vagapresencial'; 
-    }
-
     public function cadastrarVagaPresencialAction(){
         $vagaForm = new vagaForm();
         $request = $this->getRequest();
@@ -105,19 +98,12 @@ class VagaPresencialController extends AdministradorAbstractActionController
         $em = $this->getServiceLocator()->get(Entity::em);
                     $idvagaDocumento = $this->params()->fromRoute("idVaga", 0);
                     $idaluno = $this->params()->fromRoute("id", 0);
-                    $empresa = $this->params()->fromRoute("curso", 0);
-                    $aluno = new AlunoPresencial();
-                    $aluno->setIdaluno($idaluno);
+                    $idEmpresa = $this->params()->fromRoute("curso", 0);
                     $documento = new DocumentoPresencial();
-                    $documento ->setIdvagaDocumento($idvagaDocumento);
-                    $listaContratos = $em->getRepository(Entity::documento)
-                            ->findByIdvagaDocumento($documento->getIdvagaDocumento());   
-                    $listaVaga = $em->getRepository(Entity::vaga)
-                            ->findByIdvaga($idvagaDocumento);
-                    $selectAluno = $em->getRepository(Entity::aluno)
-                            ->findByIdaluno($idaluno);
-                    $listaAcompanhamento = $em->getRepository(Entity::acompanhamento)
-                            ->findByIdvagaacompanhamento($idvagaDocumento);
+                    $listaContratos = $em->getRepository(Entity::documento)->findByIdvagaDocumento($idvagaDocumento);   
+                    $listaVaga = $em->getRepository(Entity::vaga)->findByIdvaga($idvagaDocumento);
+                    $selectAluno = $em->getRepository(Entity::aluno)->findByIdaluno($idaluno);
+                    $listaAcompanhamento = $em->getRepository(Entity::acompanhamento)->findByIdvagaacompanhamento($idvagaDocumento);
                     foreach ($listaVaga as $l){
                                     $idUsuario =  $l->getUsuarioIdusuario();
                                     $usuario = $em->getRepository(Entity::usuario)->findByIdusuario($idUsuario);                    
@@ -140,15 +126,15 @@ class VagaPresencialController extends AdministradorAbstractActionController
                         $documento->setFim(new \DateTime($fim));
                         $documento->setRelatorio($relatorio);
                         $documento->setEntregue('NULL');
-                        $documento->setIdalunoDocumento($aluno->getIdaluno());
+                        $documento->setIdalunoDocumento($idUsuario);
                         $documento->setAnoDocumento(date('Y'));
                         $documento->setMesDocumento(date('m'));
-                        $documento ->setIdempresaDocumento($empresa);
+                        $documento ->setIdempresaDocumento($idEmpresa);
                         $documento ->setDataLancamento($dataLancamento);
                         $em->persist($documento);
                         $em->flush();
                     } catch (Exception $ex) {}
-                return $this->redirect()->toRoute($this->route,array('controller' => $this->controller, 'action' => 'lancarcontratos','id'=>$aluno->getIdaluno(), 'idVaga'=>$documento->getIdvagaDocumento(), 'curso'=>$documento->getIdempresaDocumento()));  
+                return $this->redirect()->toRoute(Constantes::rotaVagaDefault,  ['controller' => Constantes::vaga, 'action' => Constantes::lancarContratos,'id'=>$idaluno, 'idVaga'=>$idvagaDocumento, 'curso'=>$idEmpresa]);  
             }
         } }
     return new ViewModel([

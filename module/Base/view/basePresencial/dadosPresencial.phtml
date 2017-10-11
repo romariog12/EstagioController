@@ -1,43 +1,19 @@
-<script>
-function excluirDado(idDados){
- var apagar = confirm('Deseja realmente excluir este registro?');
- if(apagar){
-$.post(
-    '<?= $this->url('deleteDados', ['action' => 'excluirDados', 'idDeleteDados' => ''])?>'+idDados,
-    'json'
-).always(
-  $("#linha-"+idDados).hide("1000")
- );  
- }else{
-     event.preventDefault();
- }
-}
-
-</script>
-
-
-<div class=" panel panel-primary">
-        <div class="panel-heading">
-            <h4 style="color: white; text-align: center"><i class=" fa fa-database" ></i> Dados</h4>
-  
-        </div>
-                <div class="" style=" ">
+<?php
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
+use Base\Model\Constantes;
+echo    $this->painel(Constantes::temaBootstrap).
+        $this->painelTitulo("Dados")?>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li  class=" active" role="presentation"><a href=""><label>Modalidade Presencial</label></a></li> 
                     </ul> 
                 </div>
-              </div>
-        <br/>
-        <div >
-      <div class="caption">
-        <div>
+      <div class="well-lg">
             <form  method="post">
-                <div >
                      <table class="table">
-                       <?php foreach ( $this->listaPresencial as $l){
-                         
-                       ?>
+                       <?php foreach ( $this->listaPresencial as $l){?>
                         <tr id="<?= 'linha-'.$l->getIddados()?>" style=" background-color: #e0f0f4">
                             <td>
                                 <div>
@@ -50,25 +26,15 @@ $.post(
                             <td >
                                 <input name="<?= $l->getIddados()+100?>" value="<?= $this->translate($l->getMeta())?>" type="number" class="form-control input-group" required=""/>   
                             </td>
-                            <td >
-                                
-                                <input name="<?= "orientador".$l->getIddados()?>" value="<?= $this->translate($l->getOrientador())?>" type="text" class="form-control input-group" />   
-                                
-                              
+                            <td>
+                                <input name="<?= "orientador".$l->getIddados()?>" value="<?= $this->translate($l->getOrientador())?>" type="text" class="form-control input-group" />     
                             </td>
-                           
-                        </tr><?php }
-                            ?>
-                        
+                        </tr><?php }?>
                     </table>
                      <nav class="pager">
                     <input type="submit" value="Salvar" class=" btn btn-primary"/>
                     </nav><br/>
-                </div>
             </form>
-        </div>
       </div>
-    </div>
-</div>
-<?= $this->resp; ?>
+<?= $this->painelFim();
 

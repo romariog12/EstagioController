@@ -219,8 +219,8 @@
                 '<p><label>Empresa: </label>'.$empresa.'</p>'.
                 '<p><label>Carga-Horária: </label> '.$carga.' horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$'.$bolsa.',00 </p>';?>
         </div>
-    <?= $this->painel(Constantes::temaBootstrap. ' thumbnail')?>
-    <?= $this->painelTitulo("Processos");
+    <?= $this->painel('default well-lg')?>
+    <?php
     if (!empty($this->listaContratos)):
         foreach ($this->listaContratos as $l): 
         echo '<div   id="'.$l->getIddocumento().'">'.
@@ -354,7 +354,7 @@
   </div>
 <?= '<div class="well-lg ">'.
               $this->botaoGrande(
-                        $this->url('perfil/default', ['controller' => 'alunoPresencial', 'action' => 'perfil','id'=>$idAluno]) ,
+                        $this->url(Constantes::rotaPerfilDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno]) ,
                         'Painel do <br>aluno',
                         'fa-arrow-left',
                         'primary'

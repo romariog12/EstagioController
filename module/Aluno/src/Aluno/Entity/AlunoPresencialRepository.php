@@ -5,15 +5,13 @@ use Doctrine\ORM\EntityRepository;
 use Base\Model\Entity;
 
 /**
- * Description of AdministradorRepository
- *
- * @author romario
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 
 class AlunoPresencialRepository extends EntityRepository{
     
-    public function findByNomeL($nome) {
-        $qb = $this->createQueryBuilder('u')
+    public function findByNome($nome) {
+        $result = $this->createQueryBuilder('u')
                         ->select('u.nome', 'l')
                         ->from(Entity::aluno,'l')
                         ->where('l.nome LIKE :a1')
@@ -21,11 +19,22 @@ class AlunoPresencialRepository extends EntityRepository{
                         ->getQuery()
                         ->getResult();
         
-                return $qb;      
+                return $result;      
         
     }  
+    public function findByMatricula($matricula) {
+        $result = $this->createQueryBuilder('u')
+                        ->select('u.matricula', 'l')
+                        ->from(Entity::aluno,'l')
+                        ->where('l.matricula = :a1')
+                        ->setParameter('a1', $matricula)
+                        ->getQuery()
+                        ->getResult();
+        
+                return $result;  
+    } 
      public function findByMatriculaAndCurso($matricula, $curso) {
-        $qb = $this->createQueryBuilder('u')
+        $result = $this->createQueryBuilder('u')
                         ->select('u.matricula', 'l')
                         ->from(Entity::aluno,'l')
                         ->where('l.matricula = :a1','l.curso = :a2')
@@ -34,11 +43,11 @@ class AlunoPresencialRepository extends EntityRepository{
                         ->getQuery()
                         ->getResult();
         
-                return $qb;      
+                return $result;      
         
     }  
     public function findByNomeAndCurso($nome, $curso) {
-        $qb = $this->createQueryBuilder('u')
+        $result = $this->createQueryBuilder('u')
                         ->select('u.nome', 'l')
                         ->from(Entity::aluno,'l')
                         ->where('l.nome LIKE :a1','l.curso LIKE :a2')
@@ -47,10 +56,10 @@ class AlunoPresencialRepository extends EntityRepository{
                         ->getQuery()
                         ->getResult();
         
-                return $qb;      
+                return $result;      
     }
     public function findByCurso($curso) {
-        $qb = $this->createQueryBuilder('u')
+        $result = $this->createQueryBuilder('u')
                         ->select('u.nome', 'l')
                         ->from(Entity::aluno,'l')
                         ->where('l.curso LIKE :a1')
@@ -58,13 +67,13 @@ class AlunoPresencialRepository extends EntityRepository{
                         ->getQuery()
                         ->getResult();
         
-                return $qb;   
+                return $result;   
     }
     public function findAll() {
          return $this->findBy(array(), array('nome' => 'ASC'));
     }
     public function findByCpfAndSenha($cpf, $password) {
-        $userLogin = $this->createQueryBuilder('u')
+        $result = $this->createQueryBuilder('u')
                         ->select('u.Cpf', 'u.senha','l')
                         ->from(Entity::aluno,'l')
                         ->where('l.Cpf = :a1','l.senha = :a2')
@@ -72,8 +81,8 @@ class AlunoPresencialRepository extends EntityRepository{
                         ->setParameter('a2', $password)
                         ->getQuery()
                         ->getResult();
-        if (!is_null($userLogin)) {
-                return $userLogin;      
+        if (!is_null($result)) {
+                return $result;      
         }
         return false;
     }

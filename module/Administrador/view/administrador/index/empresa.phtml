@@ -32,13 +32,3 @@ echo    $this->painel(Constantes::temaBootstrap).
         '</div>'.             
         $this->painelFim();
 ?>
-<script>
-function perfilEmpresa(idEmpresa){
-    $.post(
-        <?= $this->url(Constantes::rotaPerfilEmpresaDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilEmpresa])?>,
-        {idEmpresa: function(){ return idEmpresa;}},
-        'json'        
-        );
-}
-
-</script>

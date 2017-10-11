@@ -31,10 +31,10 @@ class tabelaBuscarAluno extends AbstractHelper{
         $html   .= '</tr>';
         foreach ($valueTd as $l){
             $html   .= '<tr>';
-            $html   .= '<td>'.$l->getNome().'</td>';
-            $html   .= '<td>'.$l->getCurso().'</td>';
-            $html   .= '<td>'.$l->getMatricula().'</td>';
-            $html   .= '<td><a href="'.$this->view->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno, 'id'=>$l->getidaluno(),]).'"><i class="glyphicon glyphicon-user"></i></a></td>';
+            $html   .= '<td>'.$l[0]->getNome().'</td>';
+            $html   .= '<td>'.$l[0]->getCurso().'</td>';
+            $html   .= '<td>'.$l[0]->getMatricula().'</td>';
+            $html   .= '<td><a href="'.$this->view->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno, 'id'=>$l[0]->getidaluno(),]).'"><i class="glyphicon glyphicon-user"></i></a></td>';
             $html   .= '</tr>';
         }
         return $html;

@@ -18,6 +18,7 @@ class Constantes {
     const rotaEmpresaDefault = 'empresa/default';
     const rotaPerfilEmpresaDefault = 'perfilEmpresa/default';
     const rotaPerfilAlunoDefault = 'perfilAluno/default';
+    const rotaPerfilDefault = 'perfil/default';
     const rotaVagaDefault = 'vagaPresencial/default';
     const administrador = 'administrador';
     const aluno = 'alunoPresencial';
@@ -63,8 +64,12 @@ class Constantes {
     const login = 'login';
     const loginAluno = 'loginAluno';
     const loginEmpresa = 'loginEmpresa'; 
-    
-    
     const cadastrarVagaPresencial = 'cadastrarVagaPresencial';
     const perfilVagaFinalizada = 'perfilVagaFinalizada';
+    const AuthenticationService = 'Zend\Authentication\AuthenticationService';
+    // actions módulo: Empresa
+    const painelEmpresaEstagiando = 'painelEmpresaEstagiando';
+    const painelEmpresaDefault = 'painelEmpresa/default';
+    //actions módulo: Vaga
+    const lancarContratos = 'lancarcontratos';
 }
