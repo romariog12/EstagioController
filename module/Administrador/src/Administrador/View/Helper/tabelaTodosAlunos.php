@@ -36,7 +36,7 @@ class tabelaTodosAlunos extends AbstractHelper{
             $html   .= '<td>'.$l->getNome().'</td>';
             $html   .= '<td>'.$l->getMatricula().'</td>';
             $html   .= '<td><a href="'.$this->view->url(Constantes::rotaAdministradorDefault, ['controller'=>Constantes::administrador, 'action'=>  Constantes::editarAluno, 'id'=>$l->getIdaluno(),'page'=>$numeroPagina]).'"><i class=" glyphicon glyphicon-edit"></i></a></td>';
-            $html   .= '<td><a onclick="return confirm("Tem certeza que deseja deletar este registro?")" style="color: #c81616" href="'.$this->view->url('excluirAluno',['action'=>'excluirAluno', 'deleteAluno'=>$l->getIdaluno(),'page'=>$numeroPagina]).'"><i  class=" glyphicon glyphicon-remove"></i></a></td>';
+            $html   .= '<td><a onclick="return confirm("Tem certeza que deseja deletar este registro?")" style="color: #c81616" href="'.$this->view->url(Constantes::excluir,['action'=>  Constantes::excluirAluno, 'id'=>$l->getIdaluno(),'page'=>$numeroPagina]).'"><i  class=" glyphicon glyphicon-remove"></i></a></td>';
             $html   .= '</tr>';
         }
         return $html;

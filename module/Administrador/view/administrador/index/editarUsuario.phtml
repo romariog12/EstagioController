@@ -49,7 +49,7 @@ $(document).ready(function(){
             required: true
         },
         nivel:{
-            required: true,
+            required: true
         },
         senha:{
             required: true,
@@ -65,53 +65,83 @@ $(document).ready(function(){
 });
 </script>
 <?php
-        echo    $this->painel(Constantes::temaBootstrap).
-               $this->painelTitulo('Editar usuário').'<br>'?>
-
-    
-    <form method="post" id="cadastrarUsuarioForm">
+echo    $this->painel(Constantes::temaBootstrap).
+        $this->painelTitulo("Cadastro de usuário").
+        '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
+        $this->usuarioForm->prepare();
+        echo $this->form()->openTag($this->usuarioForm);
+        foreach ($this->listaUsuario as $l):
+?>
     <div class="col-lg-12">
-        <?php foreach ($this->listaUsuario as $l):?>
-        <div>
             <div class="col-sm-6 col-sm-offset-1 nome">
-                <label for="nome"><?= $this->translate('Nome')?></label><i style=" display: none;"  class=" nome-valid glyphicon glyphicon-ok-circle"></i>
-                <input value="<?= $l->getNome()?>" id="nome" name="nome" type="text" class="form-control "  /><br/>
+                <i style=" display: none;"  class=" nome-valid glyphicon glyphicon-ok-circle"></i>
+                <?= $this->formRow($this->usuarioForm->get('nome')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'nome')
+                         ->setLabel('Nome')
+                         ->setValue($l->getNome()))
+                         ?><br/>
            </div>
             <div class="col-sm-4 login">
-                <label for="login"><?= $this->translate('Login')?></label><i style=" display: none;"  class=" login-valid glyphicon glyphicon-ok-circle"></i>
-                <input value="<?= $l->getLogin()?>"id="login" name="login" type="text" class="form-control" /><br/>
+                <i style=" display: none;"  class=" login-valid glyphicon glyphicon-ok-circle"></i>
+                <?= $this->formRow($this->usuarioForm->get('login')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'login')
+                        ->setLabel('Login')
+                        ->setValue($l->getLogin()))
+                         ?><br/>
             </div>
             <div class="col-sm-offset-1 col-sm-3 matricula">
-                <label for="matricula"><?= $this->translate('Matricula')?></label><i style=" display: none;"  class=" matricula-valid glyphicon glyphicon-ok-circle"></i>
-                <input value="<?= $l->getMatricula()?>"name="matricula" id="telefone" type="text" class="form-control" /><br/>
+                <i style=" display: none;"  class=" matricula-valid glyphicon glyphicon-ok-circle"></i>
+                <?= $this->formRow($this->usuarioForm->get('matricula')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'matricula')
+                        ->setLabel('Matricula')
+                        ->setValue($l->getMatricula()))
+                         ?><br/>
             </div>
             <div class="col-sm-4  cargo">
-                <label for="cargo"><?= $this->translate('Cargo')?></label><i style=" display: none;"  class=" cargo-valid glyphicon glyphicon-ok-circle"></i>
-                <input value="<?= $l->getCargo()?>"id="cargo" name="cargo" type="text" class="form-control" /><br/>
+                <i style=" display: none;"  class=" cargo-valid glyphicon glyphicon-ok-circle"></i>
+                <?= $this->formRow($this->usuarioForm->get('cargo')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'cargo')
+                        ->setLabel('Cargo')
+                        ->setValue($l->getCargo()))
+                         ?><br/>
             </div>
         
             <div class="col-sm-3  nivel ">
-                <label for="nivel"><?= $this->translate('Nivel')?></label><i style=" display: none;"  class=" nivel-valid glyphicon glyphicon-ok-circle"></i>
-                <select id="nivel" name="nivel" class="form-control">
-                    <option></option>
-                    <option value="1">Administrador</option>
-                    <option value="2">Usuário comum</option>
-                </select>
+                <i style=" display: none;"  class=" nivel-valid glyphicon glyphicon-ok-circle"></i>
+                <?= $this->formRow($this->usuarioForm->get('nivel')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'nivel')
+                        ->setLabel('Nivel')
+                        ->setValue($l->getNivel()))
+                         ?>
             </div>
             <div class="col-sm-4 col-sm-offset-1 senha">
-                <label for="senha"><?= $this->translate('Senha')?></label><i style=" display: none;"  class=" senha-valid glyphicon glyphicon-ok-circle"></i>
-                <input value="<?= $l->getSenha()?>"id="senha" name="senha" type="password" class="form-control "  /><br/>
+                <i style=" display: none;"  class=" senha-valid glyphicon glyphicon-ok-circle"></i>
+                <?= $this->formRow($this->usuarioForm->get('senha')
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'senha')
+                        ->setLabel('Senha')
+                        ->setValue($l->getSenha()))
+                         ?><br/>
            </div>
             <div class="col-sm-4 confirmarSenha">
                 <label for="confirmarSenha"><?= $this->translate('Confirmar Senha')?></label><i style=" display: none;"  class=" confirmarSenha-valid glyphicon glyphicon-ok-circle"></i>
                 <input id="confirmarSenha" name="confirmarSenha" type="password" class="form-control" /><br/>
             </div>
-        </div>  
     </div>
-    <div class="well-lg col-sm-offset-1">
-    <button type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar" ><i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro</button>
-     <a href="<?php echo $this->url('usuarios') ?>"><span class="btn btn-primary" ><i class="fa fa-arrow-left fa-2x pull-left"></i>Controle de <br> usuários</span></a>
-    </div>
-    </form></div>
-   <?php endforeach;?>
-<?php echo $this->resp; ?>
+    <?php endforeach;?>
+    <?=     '<div class="well-lg col-sm-offset-1">'.
+            $this->formRow($this->usuarioForm->get('salvar')
+                        ->setAttribute('id', 'salvar')
+                        ->setAttribute('value', 'Salvar')
+                        ->setAttribute('class', 'btn btn-primary')
+                        ->setAttribute('type', 'submit')
+                        ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro')).
+
+            '</div>'.
+            $this->form()->closeTag().
+            $this->painelFim();

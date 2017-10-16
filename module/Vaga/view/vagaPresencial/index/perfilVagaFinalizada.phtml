@@ -23,13 +23,13 @@ $(document).ready(function(){
         <?=     $this->alertaSuccess("Vaga cadastrada com sucesso!").
                         '<div class="list-group-item well pager ">'.
                 $this->botaoGrande(
-                        $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::aluno, 'action' => constantes::perfilAluno, 'id'=>$l->getidalunovaga(),]),
+                        $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => constantes::perfilAluno, 'id'=>$l->getidalunovaga(),]),
                          'Perfil do <br> aluno',
                          'fa-user',
                          'primary'
                      ).' '.
                  $this->botaoGrande(
-                         $this->url(Constantes::rotaPerfilEmpresaDefault, ['controller' => Constantes::empresa, 'action' => Constantes::perfilEmpresa, 'id'=>$l->getEmpresa()]),
+                         $this->url(Constantes::rotaPerfilEmpresaDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilEmpresa, 'id'=>$l->getEmpresa()]),
                          'Perfil da <br> empresa',
                          'fa-briefcase',
                          'primary'

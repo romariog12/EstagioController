@@ -72,4 +72,6 @@ class Constantes {
     const painelEmpresaDefault = 'painelEmpresa/default';
     //actions módulo: Vaga
     const lancarContratos = 'lancarcontratos';
+    const lancarContratosVaga = 'lancarContratosVaga';
+    const acompanhamento = 'acompanhamento';
 }

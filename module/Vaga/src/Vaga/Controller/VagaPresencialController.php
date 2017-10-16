@@ -66,8 +66,7 @@ class VagaPresencialController extends AbstractActionController
                     
                 $em->persist($vagaPresencial);
                 $em->flush();                  
-                return $this->redirect()->toRoute('vagaPresencial/default', 
-                  array('controller' => 'vagaPresencial', 'action' => 'lancarContratosVaga', 'id'=>$vagaPresencial->getIdalunovaga(), 'idVaga'=>$vagaPresencial->getIdvaga()));
+                return $this->redirect()->toRoute(Constantes::rotaVagaDefault, ['controller' => Constantes::vaga, 'action' => Constantes::lancarContratosVaga, 'id'=>$vagaPresencial->getIdalunovaga(), 'idVaga'=>$vagaPresencial->getIdvaga()]);
               }
            catch (Exception $ex) {
                echo $this->flashMessenger()->render();
@@ -192,7 +191,7 @@ class VagaPresencialController extends AbstractActionController
             $em->flush(); 
         } catch (Exception $ex) {
          }
-         return $this->redirect()->toRoute($this->route,  ['controller' => $this->controller, 'action' => 'acompanhamento','id'=>$idaluno, 'idVaga'=>$idvagaDocumento, 'curso'=>$curso]);   
+         return $this->redirect()->toRoute(Constantes::rotaVagaDefault,  ['controller' => Constantes::vaga, 'action' => Constantes::acompanhamento,'id'=>$idaluno, 'idVaga'=>$idvagaDocumento, 'curso'=>$curso]);   
     }
          return new ViewModel([
             'listaContratos'=>$listaContratos,
@@ -383,8 +382,8 @@ class VagaPresencialController extends AbstractActionController
             $vaga = $em->find(Entity::vaga, $id);
             $em->remove($vaga);
             $em->flush();
-        return $this->redirect()->toRoute('perfilPresencial/default', 
-                  array('controller' => 'alunoPresencial', 'action' => 'perfil', 'id'=>$vaga->getIdalunovaga()));
+        return $this->redirect()->toRoute(Constantes::rotaPerfilAlunoDefault, 
+ ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno, 'id'=>$vaga->getIdalunovaga()]);
      }
 }
 

@@ -5,12 +5,14 @@ use Zend\View\Model\ViewModel;
 use Base\Model\Entity;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
-use Administrador\Entity\Usuario;
 use Base\Model\Constantes;
 use Administrador\Form\alunoForm;
 use Administrador\Model\Aluno;
 use Administrador\Form\empresaForm;
+use Administrador\Form\usuarioForm;
+use Administrador\Model\Usuario;
 use Zend\Mvc\Controller\AbstractActionController;
+use Empresa\Entity\Agente;
 /**
  * @author romario <romariomacedo18@gmail.com>
  */
@@ -21,7 +23,12 @@ class AdministradorController extends AbstractActionController
     public function cadastrarUsuarioAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
         $request = $this->getRequest();
+        $usuarioForm = new usuarioForm();
         if($request->isPost()){
+            $usuario = new Usuario();
+            $usuarioForm->setInputFilter($usuario->getInputFilter());
+            $usuarioForm->setData($request->getPost());
+            if($usuarioForm->isValid()){
             $nome = $request->getPost("nome");
             $login = $request->getPost("login");
             $senha = $request->getPost("senha");
@@ -29,7 +36,7 @@ class AdministradorController extends AbstractActionController
             $cargo = $request->getPost("cargo");
             $nivel = $request->getPost("nivel");
             try {
-                $administrador = new Usuario();
+                $administrador = new \Administrador\Entity\Usuario();
                 $administrador->setNome($nome);
                 $administrador->setLogin($login);
                 $administrador->setSenha($senha);
@@ -39,9 +46,12 @@ class AdministradorController extends AbstractActionController
                 $em->persist($administrador);
                 $em->flush();
             } catch (Exception $ex) {} 
-            $this->redirect()->toUrl('usuarios');
+            $this->redirect()->toUrl('usuarios'); 
+            }  
         }
-        return new ViewModel();
+        return new ViewModel([
+            'usuarioForm'=> $usuarioForm
+        ]);
     } 
     public function usuariosAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
@@ -63,7 +73,12 @@ class AdministradorController extends AbstractActionController
         $idusuario = $this->params()->fromRoute("id", 0);
         $listaUsuario = $em->getRepository(Entity::usuario)->findByIdusuario($idusuario);
         $request = $this->getRequest();
-            if ($request->isPost()){
+           $usuarioForm = new usuarioForm();
+            if($request->isPost()){
+                $usuario = new Usuario();
+                $usuarioForm->setInputFilter($usuario->getInputFilter());
+                $usuarioForm->setData($request->getPost());
+                if($usuarioForm->isValid()){
                 $select = $em->find(Entity::usuario, $idusuario);
                 $nome = $request->getPost("nome");
                 $login = $request->getPost("login");
@@ -81,10 +96,12 @@ class AdministradorController extends AbstractActionController
                     $em->persist($select);
                     $em->flush();
                     } catch (Exception $ex) {}
-                return $this->redirect()->toRoute('usuarios');                 
+                return $this->redirect()->toRoute('usuarios');
+                }               
         }      
         return new ViewModel([
-            'listaUsuario' =>$listaUsuario
+            'listaUsuario' =>$listaUsuario,
+            'usuarioForm' => $usuarioForm
         ]);
     }
     public function buscarAlunoAction(){
@@ -126,12 +143,12 @@ class AdministradorController extends AbstractActionController
         } 
     public function excluirAlunoAction(){
             $page = $this->params()->fromRoute("page", 0);
-            $id = $this->params()->fromRoute("iddelete", 0);
+            $id = $this->params()->fromRoute("id", 0);
             $em = $this->getServiceLocator()->get(Entity::em);
             $aluno = $em->find(Entity::aluno, $id);
             $em->remove($aluno);
             $em->flush();
-        return $this->redirect()->toRoute($this->route ,['controller'=>Constantes::administrador,'action'=>  Constantes::todosAlunos,'id'=>$page]);       
+        return $this->redirect()->toRoute(Constantes::rotaAdministradorDefault,['controller'=>Constantes::administrador,'action'=>  Constantes::todosAlunos,'id'=>$page]);       
     }
     public function perfilAlunoAction(){
       $em = $this->getServiceLocator()->get(Entity::em);
@@ -463,6 +480,50 @@ class AdministradorController extends AbstractActionController
               'empresa' => $this->empresa
           ]);
         } 
+        public function cadastrarAgenteAction(){
+            $empresaForm = new empresaForm();
+            $request = $this->getRequest();
+            $idaluno = $this->params()->fromRoute("id", 0);
+            if ($request->isPost()){
+            $empresaFiltrer = new \Administrador\Model\Empresa();
+            $empresaForm->setInputFilter($empresaFiltrer->getInputFilter());
+            $empresaForm->setData($request->getPost());
+            if($empresaForm->isValid()){
+                $nomeAgente = $request->getPost("empresa");
+                $cnpj = $request->getPost("cnpj");
+                $telefone = $request->getPost("telefone");
+                $endereco = $request->getPost("endereco");
+                $responsavel = $request->getPost("responsavel");
+                $email = $request->getPost("email");
+                try {
+                $agente = new Agente();
+                $agente ->setAgente($nomeAgente);
+                $agente ->setCnpj($cnpj);
+                $agente ->setTelefone($telefone);
+                $agente ->setEndereco($endereco);
+                $agente ->setResponsavel($responsavel);
+                $agente ->setEmail($email);
+
+                $em = $this->getServiceLocator()->get(Entity::em);
+                    $em->persist($agente);
+                    $em->flush();
+
+                } catch (Exception $ex) {}
+                if($idaluno == 0){
+                    $this->resposta = true;
+                    $this->empresa = $agente;
+                }else{
+                    return $this->redirect()->toRoute(Constantes::rotaVagaDefault, ['controller' => Constantes::vaga, 'action' => Constantes::cadastrarVagaPresencial, 'id'=>$idaluno]);
+                }
+            }
+        }
+        return new ViewModel([
+            'resposta' => $this->resposta,
+            'idaluno'=>$idaluno,
+            'empresaForm'=>$empresaForm,
+            'empresa' =>$this->empresa
+        ]);
+        }
     public function documentosPresencialPendenteAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
         $listaDocumentoPendente = $em->getRepository(Entity::documento)->findByOperacao('1','1','1','0');
