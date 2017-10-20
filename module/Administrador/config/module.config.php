@@ -365,8 +365,7 @@ return ['router' =>
     ),
     'controllers' => array(
         'invokables' => array(
-            'Administrador\Controller\Administrador' => Controller\AdministradorController::class,
-            'Administrador\Controller\Empresa' => Controller\EmpresaController::class,
+            'Administrador\Controller\Administrador' => Controller\AdministradorController::class
         ),
     ),
     'view_manager' => array(
