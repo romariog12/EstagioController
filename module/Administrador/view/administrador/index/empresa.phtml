@@ -3,8 +3,7 @@ use Base\Model\Constantes;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
-echo    $this->painel(Constantes::temaBootstrap).
-        $this->painelTitulo("Empresas")?>
+echo    $this->painelTitulo("Empresas")?>
         <div class="caption">
             <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                 <li  class=" active" role="presentation"><a><label>Empresas Concedente </label> <span class="label label-primary"> <?= count($this->listaEmpresa)?></span></a> </li>
@@ -29,6 +28,5 @@ echo    $this->painel(Constantes::temaBootstrap).
             'fa-search',
             'primary'
             ).
-        '</div>'.             
-        $this->painelFim();
+        '</div>';
 ?>

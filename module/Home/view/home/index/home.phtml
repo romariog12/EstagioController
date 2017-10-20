@@ -1,5 +1,5 @@
-<div id="informacao">
-    <div class="pager in well-lg">
+<div id="informacao" class="well-lg">
+    <div class="pager in">
         <?= $this->translate("Bem-Vindo(a)")?>
         <?='<h3 class="in1">'. $this->escapeHtml($this->nome).'</h3>'?> 
     </div>
@@ -50,15 +50,12 @@
     };
     $("#informacao").css({
         'background-color': '#0089cd',
-        'background-position': 'center',
-         height: '400'
+        'background-position': 'center'
     }); 
 });
 function mouseMove(x){
-        $("#div"+x).css({
-        background: '#33c2fc', color: 'white'
-    }).click(function(){
-         $("img").attr("src","img/loader.gif");
+    $("#div"+x).css({
+    background: '#33c2fc', color: 'white'
     });
     $("#div"+x).mouseout(function(){
         $("#div"+x).removeAttr("style")

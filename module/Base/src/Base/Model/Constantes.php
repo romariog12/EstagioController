@@ -24,6 +24,7 @@ class Constantes {
     const aluno = 'alunoPresencial';
     const vaga = 'vagaPresencial';
     const excluir = 'excluir';
+    const relatorio = 'relatoriopresencial';
     const id = 'id';
     //Controllers
     const AdministradorController = 'Administrador\Controller';
@@ -74,4 +75,7 @@ class Constantes {
     const lancarContratos = 'lancarcontratos';
     const lancarContratosVaga = 'lancarContratosVaga';
     const acompanhamento = 'acompanhamento';
+    const rotaDocumentoDefault = 'documentos/default';
+    //Actions módulo: Relatório
+    const rotaRelatorioDefault = 'relatorioPresencial/default';
 }

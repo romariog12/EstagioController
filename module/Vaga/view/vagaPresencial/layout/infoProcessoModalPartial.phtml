@@ -1,7 +1,6 @@
 <div class="modal fade" id="<?= 'modal-'.$this->idDocumento?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <?= $this->painel(\Base\Model\Constantes::temaBootstrap)?>
                 <h4 class="modal-title panel panel-heading " id="myModalLabel">Informações 
                 <button type="button" class="close " data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </h4>
@@ -11,7 +10,6 @@
                     <?= '<label>Fim:</label> '.date_format($this->fim, 'd/m/Y').'<br>'?>
                     <?= '<label>Data de lançamento:</label> '.$this->dataLancamento?>
                 </div>
-            <?= $this->painelFim()?>
         </div>
     </div>
 </div>

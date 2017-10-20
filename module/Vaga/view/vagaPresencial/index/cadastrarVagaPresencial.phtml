@@ -1,5 +1,8 @@
 <?php
 use Base\Model\Constantes;
+/**
+ * @author Romário Macêdo Portela <romariomacedo18@gmail.com>
+ */
 ?>
 <script>
     $(document).ready(function(){ 
@@ -66,96 +69,94 @@ use Base\Model\Constantes;
     echo    $this->form()->openTag($this->vagaForm);    
    ?>
     <br/>
-                            <div class="row">
-                            <div class="aluno col-sm-5 col-sm-offset-1">
-                             <i class=" aluno-valid"></i>
-                                    <?php 
-                                        foreach ($this->aluno as $l):
-                                            echo $this->formRow($this->vagaForm->get("aluno")
-                                                ->setValueOptions([$l->getNome() => $l->getNome()])
-                                                ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'aluno')
-                                                ->setLabel('Aluno'));
-                                        endforeach;
-                                    ?>  
-                            </div> 
-                            <div class=" curso col-sm-5">
-                                <i class=" curso-valid"></i>
-                                <?= $this->formRow($this->vagaForm->get("curso")
-                                                ->setValueOptions($this->cursos($this->listaDados))
-                                                ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'curso')
-                                                ->setLabel('Curso'));
-                                ?>  
-                            </div>
-                            </div>
-                            <br/>
-                            <div class="row">            
-                            <div class="col-sm-5 agente col-sm-offset-1">
-                                <i class=" agente-valid "></i>
-                                    <?= $this->formRow($this->vagaForm->get("agente")
-                                                ->setValueOptions($this->agentes($this->listaAgente))
-                                                ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'agente')
-                                                ->setLabel('Agente'));
-                                    ?>  
-                            </div>
-                            <div class="col-sm-5 nome">
-                                <i class=" empresa-valid "></i>
-                                    <?= $this->formRow($this->vagaForm->get("empresa")
-                                                ->setValueOptions($this->empresas($this->listaEmpresa))
-                                                ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'empresa')
-                                                ->setLabel('Empresa'));
-                                    ?>  
-                            </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                            <div class="  col-sm-3 carga col-sm-offset-1">
-                                <i  class=" carga-valid"></i>
-                                 <?= $this->formRow($this->vagaForm->get("carga")
-                                                ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'carga')
-                                                ->setLabel('Carga'))?>
-                            </div>
-                            <div class="col-sm-3 bolsa">
-                                <i  class=" bolsa-valid "></i>
-                                <?= $this->formRow($this->vagaForm->get("bolsa")
-                                                ->setAttribute('class', 'form-control')
-                                                ->setAttribute('id', 'bolsa')
-                                                ->setLabel('Bolsa'))?>
-                            </div> 
-                                <div class="  col-sm-4 inicio">
-                                    <div >
-                                        <i  class=" inicio-valid "></i>
-                                        <?= $this->formRow($this->vagaForm->get("inicio")
-                                                ->setAttribute('class', 'form-control date')
-                                                ->setAttribute('id', 'inicio')
-                                                ->setLabel('Inicio'))
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>      
-                            <br/> 
-                            <?= $this->formRow($this->vagaForm->get('salvar')
-                                ->setAttribute('id', 'salvar')
-                                ->setAttribute('value', 'Salvar')
-                                ->setAttribute('class', 'btn btn-success')
-                                ->setAttribute('type', 'submit')
-                                ->setLabel(' <i class="fa fa-check-square-o fa-2x pull-left"></i> Salvar<br>vaga')).
-                                ' '.   
-                                $this->botaoGrande(
-                                $this->url(Constantes::rotaEmpresaDefault, ['controller' => Constantes::administrador, 'action' => Constantes::cadastrarEmpresa, 'id'=>$this->idaluno]) ,
-                                'Cadastrar<br> Empresa',
-                                'fa-briefcase',
-                                'primary'
-                                ).' '.
-                                $this->botaoGrande(
-                                $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::aluno, 'action' => Constantes::perfilAluno,'id'=>$this->idaluno]) ,
-                                'Voltar ao <br>Painel',
-                                'fa-arrow-left',
-                                'primary'
-                                ).
-                            $this->form()->closeTag().
-                            $this->painelFim();
+    <div class="row">
+    <div class="aluno col-sm-5 col-sm-offset-1">
+     <i class=" aluno-valid"></i>
+            <?php 
+                foreach ($this->aluno as $l):
+                    echo $this->formRow($this->vagaForm->get("aluno")
+                        ->setValueOptions([$l->getNome() => $l->getNome()])
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'aluno')
+                        ->setLabel('Aluno'));
+                endforeach;
+            ?>  
+    </div> 
+    <div class=" curso col-sm-5">
+        <i class=" curso-valid"></i>
+        <?= $this->formRow($this->vagaForm->get("curso")
+                        ->setValueOptions($this->cursos($this->listaDados))
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'curso')
+                        ->setLabel('Curso'));
+        ?>  
+    </div>
+    </div>
+    <br/>
+    <div class="row">            
+    <div class="col-sm-5 agente col-sm-offset-1">
+        <i class=" agente-valid "></i>
+            <?= $this->formRow($this->vagaForm->get("agente")
+                        ->setValueOptions($this->agentes($this->listaAgente))
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'agente')
+                        ->setLabel('Agente'));
+            ?>  
+    </div>
+    <div class="col-sm-5 nome">
+        <i class=" empresa-valid "></i>
+            <?= $this->formRow($this->vagaForm->get("empresa")
+                        ->setValueOptions($this->empresas($this->listaEmpresa))
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'empresa')
+                        ->setLabel('Empresa'));
+            ?>  
+    </div>
+    </div>
+    <br/>
+    <div class="row">
+    <div class="  col-sm-3 carga col-sm-offset-1">
+        <i  class=" carga-valid"></i>
+         <?= $this->formRow($this->vagaForm->get("carga")
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'carga')
+                        ->setLabel('Carga'))?>
+    </div>
+    <div class="col-sm-3 bolsa">
+        <i  class=" bolsa-valid "></i>
+        <?= $this->formRow($this->vagaForm->get("bolsa")
+                        ->setAttribute('class', 'form-control')
+                        ->setAttribute('id', 'bolsa')
+                        ->setLabel('Bolsa'))?>
+    </div> 
+        <div class="  col-sm-4 inicio">
+                <i  class=" inicio-valid "></i>
+                <?= $this->formRow($this->vagaForm->get("inicio")
+                        ->setAttribute('class', 'form-control date')
+                        ->setAttribute('id', 'inicio')
+                        ->setLabel('Inicio'))
+                ?>
+        </div>
+    </div>      
+    <br/><br/> 
+    <?= $this->formRow($this->vagaForm->get('salvar')
+        ->setAttribute('id', 'salvar')
+        ->setAttribute('value', 'Salvar')
+        ->setAttribute('class', 'btn btn-success')
+        ->setAttribute('type', 'submit')
+        ->setLabel(' <i class="fa fa-check-square-o fa-2x pull-left"></i> Salvar<br>vaga')).
+        ' '.   
+        $this->botaoGrande(
+        $this->url(Constantes::rotaEmpresaDefault, ['controller' => Constantes::administrador, 'action' => Constantes::cadastrarEmpresa, 'id'=>$this->idaluno]) ,
+        'Cadastrar<br> Empresa',
+        'fa-briefcase',
+        'primary'
+        ).' '.
+        $this->botaoGrande(
+        $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$this->idaluno]) ,
+        'Voltar ao <br>Painel',
+        'fa-arrow-left',
+        'primary'
+        ).
+        $this->form()->closeTag().
+        $this->painelFim();

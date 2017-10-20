@@ -21,9 +21,8 @@
 <body style="  background-color: #f2f2f2"> 
    <?=  $this->partial('base/layout/nav-bar');?>
     <div class="container" >
-        <?php
-            echo $this->content;
-            echo $this->inlineScript(); 
+        <?= $this->content.
+        $this->inlineScript(); 
         ?>
     </div>
         <div class="well pager">

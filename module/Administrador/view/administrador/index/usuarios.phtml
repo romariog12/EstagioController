@@ -1,10 +1,8 @@
 <?php
-use Base\Model\Constantes;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
-        echo    $this->painel(Constantes::temaBootstrap).
-                $this->painelTitulo('Usuarios').
+        echo    $this->painelTitulo('Usuarios').
                 '<br>'.
                 '<div class="col-lg-12">'.
                 $this->tabelaUsuarios([ 'Nome','Login','Editar','Excluir',],$this->listaUsuarios).
@@ -16,5 +14,4 @@ use Base\Model\Constantes;
                 'fa-user-plus',
                 'primary'
                 ).
-                '</div>'. 
-                $this->painelFim();
+                '</div>';

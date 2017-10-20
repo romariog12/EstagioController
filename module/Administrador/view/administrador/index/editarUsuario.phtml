@@ -65,8 +65,7 @@ $(document).ready(function(){
 });
 </script>
 <?php
-echo    $this->painel(Constantes::temaBootstrap).
-        $this->painelTitulo("Cadastro de usuário").
+echo    $this->painelTitulo("Cadastro de usuário").
         '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
         $this->usuarioForm->prepare();
         echo $this->form()->openTag($this->usuarioForm);
@@ -143,5 +142,4 @@ echo    $this->painel(Constantes::temaBootstrap).
                         ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro')).
 
             '</div>'.
-            $this->form()->closeTag().
-            $this->painelFim();
+            $this->form()->closeTag();

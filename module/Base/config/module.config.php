@@ -172,7 +172,8 @@ return array(
             'empresas' => 'Base\View\Helper\empresas',
             'alertaDanger' => 'Base\View\Helper\alertaDanger',
             'alertaSuccess' => 'Base\View\Helper\alertaSuccess',
-            'tabelaAlunoEmEstagio' => 'Base\View\Helper\tabelaAlunoEmEstagio'
+            'tabelaAlunoEmEstagio' => 'Base\View\Helper\tabelaAlunoEmEstagio',
+            'tabelaAlunos' => 'Base\View\Helper\tabelaAlunos'
             
       )
         ),

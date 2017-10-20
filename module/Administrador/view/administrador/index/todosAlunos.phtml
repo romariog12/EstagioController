@@ -3,8 +3,7 @@ use Base\Model\Constantes;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
-        echo    $this->painel(Constantes::temaBootstrap).
-                $this->painelTitulo('Todos alunos cadastrados').
+        echo    $this->painelTitulo('Todos alunos cadastrados').
                 '<br>'.
                 '<div class="col-lg-12">'.
                 $this->tabelaTodosAlunos(['Perfil','Aluno','Matricula','Editar','Excluir'],$this->pagination, $this->pageNumber).
@@ -24,6 +23,5 @@ use Base\Model\Constantes;
                 'fa-search',
                 'primary'
                 ).
-                '</div>'. 
-                $this->painelFim();
+                '</div>';
         

@@ -1,4 +1,6 @@
-<?=  $this->doctype(); ?>
+<?php
+use Base\Model\Constantes;
+echo $this->doctype(); ?>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
@@ -10,32 +12,24 @@
 <?= $this->headLink(['rel' => 'shortcut icon', 'type' => '', 'href' => $this->basePath() . ''])
                 ->prependStylesheet($this->basePath('css/bootstrap.css'))
                 ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
-                ->prependStylesheet($this->basePath('css/bootstrap-datepicker.min.css'))
                 ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
                 ->prependStylesheet($this->basePath('fonts/FontAwesome.otf'))
                 ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
-                ->prependStylesheet($this->basePath('css/bootstrap-toggle.min.css'))
                 ->prependStylesheet($this->basePath('css/style.css'))
 ?>
 <?= $this->headScript()
-                ->prependFile($this->basePath('js/jquery.validate.js'))
                 ->prependFile($this->basePath('js/jquery.tablesorter.min.js'))
-                ->prependFile($this->basePath('js/jquery.jquery-latest.js'))
                 ->prependFile($this->basePath('js/bootstrap.min.js'))
-                ->prependFile($this->basePath('js/bootstrap-toggle.min.js'))
-                ->prependFile($this->basePath('js/locales/bootstrap-datepicker.pt-BR.js'))
-                ->prependFile($this->basePath('js/bootstrap-datepicker.js'))
-                ->prependFile($this->basePath('js/bootstrap-datepicker-globalize.js'))
                 ->prependFile($this->basePath('js/jquery.min.js'))
                 ->prependFile($this->basePath('js/pace.js'))
                 ->prependFile($this->basePath('js/Chart.min.js'))
+                ->prependFile($this->basePath('js/loader.js')) 
 ;?>
 </head>
 <body style="  background-color: #f2f2f2">
        <?=  $this->partial('base/layout/nav-bar');?>
         <div class=" container" >
-        <?= 
-            $this->content;
+        <?= $this->painel(Constantes::temaBootstrap).
             $this->inlineScript(); 
         ?>
         </div>

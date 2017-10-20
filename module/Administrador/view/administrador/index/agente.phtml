@@ -3,8 +3,7 @@
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 use Base\Model\Constantes;
-echo    $this->painel(Constantes::temaBootstrap).
-        $this->painelTitulo("Agentes de Integracao")?>
+echo    $this->painelTitulo("Agentes de Integracao")?>
                 <div class="caption">
                     <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                         <li   role="presentation"><a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa']) ?>">Empresas Concedente <span class="label label-default"> <?php echo count($this->listaEmpresa)?></span></a> </li>
@@ -29,5 +28,4 @@ echo    $this->painel(Constantes::temaBootstrap).
                 'fa-search',
                 'primary'
                 ).
-                '</div>'. 
-                $this->painelFIm();
+                '</div>';

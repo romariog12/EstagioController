@@ -4,7 +4,6 @@ $this->editarDocumentoForm->prepare();
 <div class="modal fade" id="<?= 'modal-editar-'.$this->idDocumento?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <?= $this->painel(\Base\Model\Constantes::temaBootstrap)?> 
                 <h4 class="modal-title panel panel-heading " id="myModalLabel">
                     Editar 
                 <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -37,7 +36,6 @@ $this->editarDocumentoForm->prepare();
                         <div class="pager well">
                             <span onclick="return editarDocumento(<?= $this->idDocumento?>)" class="btn btn-success btn-edit">Salvar</span>
                         </div> <?=   $this->form()->closeTag();  ?> 
-            <?= $this->painelFim()?>
         </div>
     </div>
 </div>

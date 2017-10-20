@@ -68,7 +68,6 @@ $(document).ready(function(){
 
 </script>
 <?=
-        $this->painel(Constantes::temaBootstrap).
         $this->painelTitulo("Cadastrar empresa");
         if($this->resposta == false):
         echo '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
@@ -161,5 +160,4 @@ $(document).ready(function(){
                     ). 
         '</div>';
         endif;
-        $this->painelFim();
 

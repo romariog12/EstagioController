@@ -17,7 +17,7 @@ return array(
               'relatorioPresencial' => array(
                 'type'    => Literal::class,
                 'options' => array(
-                    'route'    => '/relatorioPresencial',
+                    'route'    => '/relatorio',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Relatorio\Controller',
                         'controller'    => 'RelatorioPresencial',
@@ -29,7 +29,7 @@ return array(
                     'default' => array(
                         'type'    => Segment::class,
                         'options' => array(
-                            'route'    => '/[:controller[/:action]/[:curso]/[:curso1]/[:page]]',
+                            'route'    => '/[:controller[/:action]/[:curso]/[:curso1]/[:aba]/[:page]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -123,6 +123,9 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
         'view_helpers' => [

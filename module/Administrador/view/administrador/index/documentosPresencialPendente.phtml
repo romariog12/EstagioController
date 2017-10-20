@@ -3,11 +3,10 @@
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 use Base\Model\Constantes;
-echo    $this->painel(Constantes::temaBootstrap).
-        $this->painelTitulo("Vias pendentes")?>
+echo    $this->painelTitulo("Vias pendentes")?>
         <div class="caption">
             <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                <li role="presentation" ><a href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial','id'=>'1'])?>">Documentos vencendo <span class="label label-default"><?= count($this->listaContratosVencendo)?></span></a></li>
+                <li role="presentation" ><a href="<?= $this->url(Constantes::rotaDocumentoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::documentos,'id'=>'1'])?>">Documentos vencendo <span class="label label-default"><?= count($this->listaContratosVencendo)?></span></a></li>
                 <li role="presentation" class="active"><a><label>Vias Pendentes </label> <span class="label label-warning"><?= count($this->listaDocumentoPendente)?></span></a></li>
             </ul>
         </div>
@@ -21,4 +20,3 @@ echo    $this->painel(Constantes::temaBootstrap).
             $this->alertaDanger("Sem dados a apresentar").
             '</div>';
         endif;
-        echo $this->painelFim();?>

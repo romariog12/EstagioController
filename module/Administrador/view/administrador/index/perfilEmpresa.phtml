@@ -3,13 +3,12 @@ use Base\Model\Constantes;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
- echo $this->painel(Constantes::temaBootstrap);
  echo $this->painelTitulo("Perfil da empresa")
 ?>
     <div class="caption" >
         <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
             <li class="  active" role="presentation"><a><label>Painel</label></a></li>
-            <li role="presentation"><a href="<?=$this->url("empresaMensagem/default",['controller'=> 'administrador', 'action'=>'mensagem', 'id'=>$this->idEmpresa]) ?>"><?= $this->translate("<i class='fa fa-envelope-o'></i>")?></a></li>
+            <li role="presentation"><a href="<?=$this->url("empresaMensagem/default",['controller'=> Constantes::administrador, 'action'=>  Constantes::mensagem, 'id'=>$this->idEmpresa]) ?>"><?= $this->translate("<i class='fa fa-envelope-o'></i>")?></a></li>
         </ul> 
     </div>
     <div class="caption">
@@ -48,6 +47,4 @@ use Base\Model\Constantes;
                     'fa-edit',
                     'primary'
                     ).
-                    '</div>'. 
-                    $this->painelFim();
-           ?> 
+                    '</div>';

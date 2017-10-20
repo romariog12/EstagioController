@@ -11,36 +11,26 @@ use Base\Model\Constantes;
     $matricula = $l->getMatricula();
     $curso = $l->getCurso();
     endforeach;
-    echo $this->painel(Constantes::temaBootstrap);
-    echo $this->painelTitulo("Perfil do aluno")
-?>     
-<script>
-$(document).ready(function(){
-$(".situacao-1").css("color","green");  
-$(".situacao-0").css("color","red");  
-});
-</script>      
-        <?=    '<div class="media-body pager well-lg">'.
+    echo $this->painelTitulo("Perfil do aluno").
+   '<div class="media-body pager well-lg">'.
                 '<h4 class="media-heading">'.$nome.'</h4>'.
                 $curso.'<br>'.
                 $matricula.'<br>'.
                 $email.'<br>'.
                 $telefone.
-                '</div>'
-        ?>     
+    '</div>'
+    ?>     
         <div class="caption">
             <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
                 <li  class=" active" role="presentation"><a><label>Estágios </label> <span class="label label-primary"> <?= count($this->listaVagaPresencial)?></span></a> </li>
             </ul> 
         </div>
         <?=     '<div class="col-lg-12 well-lg">';    
-        if(empty($this->listaVagaPresencial)){
+        if(!isset($this->listaVagaPresencial)):
                 echo $this->alertaDanger("Nenhum estágio lançado");
-        }else{
-        echo    $this->painel('default').
-                $this->tabelaEstagios(['Emrpesa','Processo','Excluir'], $this->listaVagaPresencial).
-                $this->painelFim();
-            }
+        else:
+            echo    $this->tabelaEstagios(['Emrpesa','Processo','Excluir'], $this->listaVagaPresencial);
+        endif;
         echo    '</div>'.
                 '<div class=" well-lg">'.
                 $this->botaoGrande(
@@ -56,5 +46,4 @@ $(".situacao-0").css("color","red");
                     'fa-edit',
                     'primary'
                 ). 
-                '</div>'.
-                $this->painelFim();
+                '</div>';

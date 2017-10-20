@@ -15,7 +15,7 @@ class tabelaRelatorio extends AbstractHelper{
         $this->td = $td;
         $this->listaestagiando = $listaestagiando;
         $html  = '';
-        $html .= '<table class="table table-bordered table-striped" id="eficiencia">';
+        $html .= '<table class="table " id="eficiencia">';
         $html .= $this->tdTh($this->th, $this->td,$this->listaestagiando);
         $html .= '</table>';
         return $html;

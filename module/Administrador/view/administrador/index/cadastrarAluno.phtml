@@ -66,9 +66,7 @@ $(document).ready(function(){
     $(".glyphicon-ok-circle").css("display", "none");
 });
 </script>
-    <?=
-        $this->painel(Constantes::temaBootstrap).
-        $this->painelTitulo("Editar aluno").
+    <?= $this->painelTitulo("Editar aluno").
         '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
         $this->alunoForm->prepare();
         echo $this->form()->openTag($this->alunoForm);
@@ -139,4 +137,3 @@ $(document).ready(function(){
                 
                 '</div>'. 
     $this->form()->closeTag();
-    echo $this->painelFim();

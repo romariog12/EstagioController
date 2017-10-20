@@ -1,5 +1,8 @@
  <?php 
  use Base\Model\Constantes;
+ /**
+  * @author Romário Macêdo Portela <romariomacedo18@gmail.com>
+  */
     foreach ($this->listaVaga as $l):
         $empresa = $l->getEmpresa();
         $carga = $l->getCarga();
@@ -208,7 +211,6 @@
                 );
  }
  </script>
-    <?= $this->painel(Constantes::temaBootstrap)?>
     <?= $this->painelTitulo($aluno)?>
         <ul class="nav nav-tabs" role="tablist">
            <li role="presentation" class="active"><a>Início</a></li>
@@ -219,7 +221,6 @@
                 '<p><label>Empresa: </label>'.$empresa.'</p>'.
                 '<p><label>Carga-Horária: </label> '.$carga.' horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$'.$bolsa.',00 </p>';?>
         </div>
-    <?= $this->painel('default well-lg')?>
     <?php
     if (!empty($this->listaContratos)):
         foreach ($this->listaContratos as $l): 
@@ -302,7 +303,6 @@
     else:
         echo    $this->alertaDanger("Nenhum processo lançado"); 
     endif;
-        echo    $this->painelFim();  
                 $this->documentoForm->prepare();
         echo    $this->form()->openTag($this->documentoForm);
     ?>
@@ -352,12 +352,11 @@
             </div>
         </div>
   </div>
-<?= '<div class="well-lg ">'.
-              $this->botaoGrande(
-                        $this->url(Constantes::rotaPerfilDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno]) ,
-                        'Painel do <br>aluno',
-                        'fa-arrow-left',
-                        'primary'
-                    ).           
-                '</div>'.
-$this->painelFim();
+ <?=    '<div class="well-lg ">'.
+            $this->botaoGrande(
+                      $this->url(Constantes::rotaPerfilDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno]) ,
+                      'Painel do <br>aluno',
+                      'fa-arrow-left',
+                      'primary'
+                  ).           
+        '</div>';
