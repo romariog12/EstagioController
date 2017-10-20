@@ -138,9 +138,7 @@ return array(
         'template_map' => array(
             'auth/index/login-empresa' => __DIR__ . '/../view/auth/index/loginEmpresa.phtml',
             'auth/index/login-aluno' => __DIR__ . '/../view/auth/index/loginAluno.phtml',
-            'Auth/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'Auth/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

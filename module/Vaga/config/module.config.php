@@ -110,8 +110,6 @@ return array(
             'vaga/vaga-presencial/lancar-contratos-vaga' => __DIR__ . '/../view/vagaPresencial/index/lancarContratosVaga.phtml',
             'vaga/vaga-presencial/lancarcontratos' => __DIR__ . '/../view/vagaPresencial/index/lancarcontratos.phtml', 
             'vaga/vaga-presencial/acompanhamento' => __DIR__ . '/../view/vagaPresencial/index/acompanhamento.phtml', 
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

@@ -88,9 +88,7 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'home/index/partial-home' => __DIR__ . '/../view/home/helper/partialHome.phtml',
-            'home/index/geral' => __DIR__ . '/../view/home/index/geral.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'home/index/geral' => __DIR__ . '/../view/home/index/geral.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

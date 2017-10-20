@@ -91,9 +91,7 @@ return array(
             'empresa/empresa/painel-empresa-contratos-vencendo' => __DIR__ . '/../view/empresa/index/painelEmpresaContratosVencendo.phtml',
             'empresa/empresa/mensagens' => __DIR__ . '/../view/empresa/index/mensagens.phtml',
             'empresa/empresa/processo' => __DIR__ . '/../view/empresa/index/processo.phtml',
-            'Empresa/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'Empresa/layout/layout'           => __DIR__ . '/../view/layout/layout.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

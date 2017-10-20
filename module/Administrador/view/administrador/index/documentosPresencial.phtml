@@ -4,19 +4,25 @@
  */
 use Base\Model\Constantes;
 echo    $this->painelTitulo("Documentos")?>
+        <script>
+            $(document).ready(function(){
+                $(".aba").removeClass("active");
+                $("#aba-"+<?= $this->resposta?>).addClass("active");
+                $(".aba"+<?= $this->resposta?>).removeClass("label-default");
+                $(".aba"+<?= $this->resposta?>).addClass("label-warning");
+            });
+        </script>
         <div class="caption">
             <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                <li role="presentation" class="active"><a><label>Documentos vencendo</label> <span class="label label-warning"><?= count($this->listaContratosVencendo)?></span></a> </li>
-                <li role="presentation"><a href="<?= $this->url(Constantes::rotaDocumentoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::documentosPendente,'id'=>'1'])?>">Vias Pendentes <span class="label label-default"><?= count($this->listaDocumentoPendente)?></span></a></li>     
+                <li id="aba-1" class="aba" role="presentation"><a href="<?= $this->url(Constantes::rotaDocumentoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::documentos,'aba'=>'a=1', 'page'=>'1'])?>">Documentos vencendo<span class="label label-default aba1"><?= count($this->listaContratosVencendo)?></span></a> </li>
+                <li id="aba-2" class="aba" role="presentation"><a href="<?= $this->url(Constantes::rotaDocumentoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::documentos,'aba'=>'a=2', 'page'=>'1'])?>">Vias Pendentes <span class="label label-default aba2"><?= count($this->listaDocumentoPendente)?></span></a></li>     
             </ul>
         </div>
-        <?php
+         <?= '<div class="well-lg">';
         if(count($this->pagination)>0):
             echo    $this->tabelaDocumentos(['','Processo', 'Início','Fim'],$this->pagination).
                     $this->paginacao($this->pageNumber,$this->count); 
         else:
-            echo
-            '<div class="well-lg">'.
-            $this->alertaDanger("Sem dados a apresentar").
-            '</div>';
+            echo $this->alertaDanger("Sem dados a apresentar");
         endif;
+        echo '</div>';

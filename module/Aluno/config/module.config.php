@@ -53,10 +53,7 @@ return array(
             'aluno/aluno/aluno' => __DIR__ . '/../view/aluno/index/aluno.phtml',
             'aluno/aluno/editar-aluno' => __DIR__ . '/../view/aluno/index/editarAluno.phtml',
             'aluno/aluno/index' => __DIR__ . '/../view/aluno/index/index.phtml',
-            'aluno/aluno/cadastrar' => __DIR__ . '/../view/aluno/index/cadastroAluno.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
-           
+            'aluno/aluno/cadastrar' => __DIR__ . '/../view/aluno/index/cadastroAluno.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

@@ -410,6 +410,7 @@ class AdministradorController extends AbstractActionController
     }
     public function documentosPresencialAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
+        
         $listaDocumentoPendente = $em->getRepository(Entity::documento)->findByOperacao('1','1','1','0');
         $documentoPendenteTCE = $em->getRepository(Entity::documento)->findBySituacaoAndTipoAndData("TCE", date('d/m/Y'));
         $documentoPendente = $em->getRepository(Entity::documento)->findByEntregue("Nao");
@@ -420,8 +421,16 @@ class AdministradorController extends AbstractActionController
             $vencimento5 = new \DateTime(date('Y-m-d').'+4 days');
             $listaContratosVencendo = $em->getRepository(Entity::documento)
             ->findByFim($vencimento1,$vencimento2, $vencimento3,$vencimento4, $vencimento5);
-            $page = $this->params()->fromRoute("id", 0);
-            $pagination = new Paginator( new ArrayAdapter($listaContratosVencendo));
+            $aba = $this->params()->fromRoute("aba", 0);
+            $page = $this->params()->fromRoute("page", 0);
+            switch ($aba){
+                case "a=2": $resposta = '2';
+                    $pagination = new Paginator( new ArrayAdapter($listaDocumentoPendente));
+                    break;
+                default : $resposta = '1';
+                    $pagination = new Paginator( new ArrayAdapter($listaContratosVencendo));
+                    break;
+            }
             $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(Constantes::contadorPorPagina);
                 $count = $pagination->count();
                 $pageNumber = $pagination->getCurrentPageNumber();
@@ -436,7 +445,8 @@ class AdministradorController extends AbstractActionController
                     'count'=>$count,
                     'pagination'=>$pagination,
                     'listaDocumentoPendente' =>$listaDocumentoPendente,
-                    'listaContratosVencendo'=> $listaContratosVencendo
+                    'listaContratosVencendo'=> $listaContratosVencendo,
+                    'resposta' => $resposta
                 ]
                 );
     }
@@ -524,38 +534,6 @@ class AdministradorController extends AbstractActionController
             'empresa' =>$this->empresa
         ]);
         }
-    public function documentosPresencialPendenteAction(){
-        $em = $this->getServiceLocator()->get(Entity::em);
-        $listaDocumentoPendente = $em->getRepository(Entity::documento)->findByOperacao('1','1','1','0');
-        $documentoPendenteTCE = $em->getRepository(Entity::documento)->findBySituacaoAndTipoAndData("TCE", date('d/m/Y'));
-        $documentoPendente = $em->getRepository(Entity::documento)->findByEntregue("Nao");
-        $vencimento1 = new \DateTime(date('Y-m-d'));
-        $vencimento2 = new \DateTime(date('Y-m-d').'+1 days');
-        $vencimento3 = new \DateTime(date('Y-m-d').'+2 days');
-        $vencimento4 = new \DateTime(date('Y-m-d').'+3 days');
-        $vencimento5 = new \DateTime(date('Y-m-d').'+4 days');
-        $listaContratosVencendo = $em->getRepository(Entity::documento)
-            ->findByFim($vencimento1,$vencimento2, $vencimento3,$vencimento4, $vencimento5);
-        $page = $this->params()->fromRoute("id", 0);
-        $pagination = new Paginator( new ArrayAdapter($listaDocumentoPendente));
-        $pagination->setCurrentPageNumber($page)->setDefaultItemCountPerPage(Constantes::contadorPorPagina);
-        $count = $pagination->count();
-        $pageNumber = $pagination->getCurrentPageNumber();
-        $getPages = $pagination->getPages();
-        
-        return new ViewModel(
-                [
-                    'documentoPendente' => $documentoPendente,
-                    'documentoPendenteTCE' => $documentoPendenteTCE,
-                    'getPages'=>$getPages,
-                    'pageNumber'=>$pageNumber,
-                    'count'=>$count,
-                    'pagination'=>$pagination,
-                    'listaDocumentoPendente'=> $listaDocumentoPendente,
-                    'listaContratosVencendo'=> $listaContratosVencendo
-                ]
-                );
-    }
     public function mensagemAction(){
             $idempresa = $this->params()->fromRoute("id", 0);
             $em = $this->getServiceLocator()->get(Entity::em);
