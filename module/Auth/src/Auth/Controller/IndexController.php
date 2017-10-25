@@ -20,8 +20,8 @@ class IndexController extends AbstractActionController
         $senha = $data['senha'];     
         $adapter->setLogin($login)
                 ->setSenha($senha);
-        if ($auth->authenticate()->isValid()) {
-            return $this->redirect()->toRoute('home', array('controller' => 'index', 'action' => 'index')); 
+        if($auth->authenticate()->isValid()) {
+            return $this->redirect()->toRoute('home', ['controller' => Constantes::administrador, 'action' => Constantes::home]); 
         } 
         return new ViewModel([ 'mensagem'=> $auth->getAdapter()->authenticate()->getMessages()[0]]);
     }

@@ -56,19 +56,19 @@ foreach ($this->curso as $l){
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Mês',  'Novos estágios'],
-          ['Jan',       <?= count($this->listaMensal[1])?>],
-          ['Fev',     <?= count($this->listaMensal[2])?>],
-          ['Mar',       <?= count($this->listaMensal[3])?>],
-          ['Abr',     <?= count($this->listaMensal[4])?>],
-          ['Mai',     <?= count($this->listaMensal[5])?>],
-          ['Jun',     <?= count($this->listaMensal[6])?>],
-          ['Jul',      <?= count($this->listaMensal[7])?>],
-          ['Ago',      <?= count($this->listaMensal[8])?>],
-          ['Set',     <?= count($this->listaMensal[9])?>],
-          ['Out',      <?= count($this->listaMensal[10])?>],
-          ['Nov',      <?= count($this->listaMensal[11])?>],
-          ['Dez',      <?= count($this->listaMensal[12])?>]
+          ['Mês',  'Novos estágios', 'Encerrados'],
+          ['Jan',       <?= count($this->listaMensal[1])?>, 0],
+          ['Fev',     <?= count($this->listaMensal[2])?>, 0],
+          ['Mar',       <?= count($this->listaMensal[3])?>, 0],
+          ['Abr',     <?= count($this->listaMensal[4])?>, 0],
+          ['Mai',     <?= count($this->listaMensal[5])?>, 0],
+          ['Jun',     <?= count($this->listaMensal[6])?>, 2],
+          ['Jul',      <?= count($this->listaMensal[7])?>, 0],
+          ['Ago',      <?= count($this->listaMensal[8])?>, 0],
+          ['Set',     <?= count($this->listaMensal[9])?>, 1],
+          ['Out',      <?= count($this->listaMensal[10])?>, 0],
+          ['Nov',      <?= count($this->listaMensal[11])?>, 0],
+          ['Dez',      <?= count($this->listaMensal[12])?>, 0]
         ]);
     var options = {
       title: 'Quantidade de estágios lançados mensalmente no curso de  <?= $curso?>',

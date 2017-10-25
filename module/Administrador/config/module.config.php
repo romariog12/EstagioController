@@ -39,6 +39,17 @@ return ['router' =>
                     ),
                 ),
                ],
+             'home' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/home',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Administrador\Controller',
+                          'controller'    => 'Administrador',
+                          'action'        => 'home'
+                      ),
+                  ),
+              ),
             'cadastrarUsuario' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -375,7 +386,7 @@ return ['router' =>
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'administrador/administrador/dashboard' => __DIR__ . '/../view/administrador/index/dashboard.phtml',
+            'administrador/administrador/home' => __DIR__ . '/../view/administrador/index/home.phtml',
             'administrador/administrador/cadastrar-usuario' => __DIR__ . '/../view/administrador/index/cadastrarUsuario.phtml',
             'administrador/administrador/editar-usuario' => __DIR__ . '/../view/administrador/index/editarUsuario.phtml',
             'administrador/administrador/usuarios' => __DIR__ . '/../view/administrador/index/usuarios.phtml',

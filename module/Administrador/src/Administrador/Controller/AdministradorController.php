@@ -13,6 +13,7 @@ use Administrador\Form\usuarioForm;
 use Administrador\Model\Usuario;
 use Zend\Mvc\Controller\AbstractActionController;
 use Empresa\Entity\Agente;
+use Zend\Authentication\AuthenticationService;
 /**
  * @author romario <romariomacedo18@gmail.com>
  */
@@ -20,6 +21,18 @@ class AdministradorController extends AbstractActionController
 {
     private $resposta = false;
     private $empresa = false;
+    public function homeAction(){
+           $em = $this->getServiceLocator()->get(Entity::em);
+           $auth = new AuthenticationService();
+           $identity = $auth->getIdentity();
+           foreach ($identity as $l){
+               $idUsuario = $l[0]->getIdUsuario();
+           }
+           $usuario = $em->getRepository(Entity::usuario)->findByIdusuario($idUsuario);
+           return new ViewModel([ 
+                'usuario' =>$usuario
+           ] );
+   }
     public function cadastrarUsuarioAction(){
         $em = $this->getServiceLocator()->get(Entity::em);
         $request = $this->getRequest();

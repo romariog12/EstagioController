@@ -14,19 +14,7 @@ use Zend\Mvc\Router\Http\Segment;
 return array(
     'router' => array(
         'routes' => array(
-            'geral' => array(
-                'type' => Literal::class,
-                'options' => array(
-                    'route'    => '/geral',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Home\Controller',
-                        'controller' => 'Index',
-                        'action'     => 'geral',
-                    ),
-                ),
-            
-                ),
-            'home' => array(
+            'index' => array(
                 'type'    => Literal::class,
                 'options' => array(
                     'route'    => '/',
@@ -86,9 +74,7 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'home/index/partial-home' => __DIR__ . '/../view/home/helper/partialHome.phtml',
-            'home/index/geral' => __DIR__ . '/../view/home/index/geral.phtml'
+            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
@@ -99,8 +85,6 @@ return array(
          'mouseMove' => 'Home\View\Helper\mouseMove'
       ),
    ),
-    
-    // Placeholder for console routes
     'console' => array(
         'router' => array(
             'routes' => array(

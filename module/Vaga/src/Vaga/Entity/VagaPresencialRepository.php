@@ -76,7 +76,7 @@ class VagaPresencialRepository extends \Doctrine\ORM\EntityRepository{
     }
      public function findBySituacaoAndIdEmpresaVaga($situacao, $idEmpresa) {
         $result = $this->createQueryBuilder('u')
-                        ->select('u.situacao', 'l')
+                        ->select('u.idvaga', 'l')
                         ->from(Entity::vaga,'l')
                         ->where('l.idEmpresaVaga = :a1','l.situacao = :a2')
                         ->setParameter('a1', $idEmpresa)

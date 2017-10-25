@@ -1,0 +1,73 @@
+<?php   
+foreach ( $this->usuario as $l){
+            $nome = $l->getNome();
+    }
+
+?><div id="informacao" class="well-lg">
+    <div class="pager in">
+        <?= $this->translate("Bem-Vindo(a)")?>
+        <?='<h3 class="in1">'. $this->escapeHtml($nome).'</h3>'?> 
+    </div>
+    <div class=" pager in">
+        <a class=" in" href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos','id'=> '1']) ?>">
+        <div id="div1" onmousemove="mouseMove(1)"><br/>
+            <i  class="fa fa-mortar-board principal" aria-hidden="true"></i>
+            <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de alunos")?></h5>
+        </div>
+        </a>
+        <a class=" in" href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa','id'=> '1']) ?>">
+        <div id="div2" onmousemove="mouseMove(2)"><br/>
+            <i class="fa fa-briefcase principal" aria-hidden="true"></i>
+            <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de empresas")?></h5>
+        </div>
+        </a>
+        <a class=" in" href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial', 'id'=>'1']) ?>">
+            <div id="div3"onmousemove="mouseMove(3)"><br/>
+                <i  class="fa fa-archive principal" aria-hidden="true"></i>
+                <h5 class="in1"><i class=" fa fa-cogs in"></i> <?= $this->translate("Controle de documentos")?></h5>
+            </div>
+        </a>
+        <a class=" in" href="<?= $this->url('usuarios')?>">
+        <div  id="div4" onmousemove="mouseMove(4)"><br/>
+            <i  class="fa fa-users principal" aria-hidden="true"></i>
+            <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de acessos")?></h5>
+        </div>
+        </a>    
+        <a class=" in" href="<?= $this->url('dadosPresencial') ?>">
+            <div id="div5" onmousemove="mouseMove(5)"><br/>
+             <i  class="fa fa-refresh principal" aria-hidden="true"></i>
+                <h5 class="in1">  <?= $this->translate("Atualizar dados")?></h5>
+        </div>
+       </a>
+    </div>
+</div>
+<script>
+ $(document).ready(function(){
+    $(".principal").css("font-size","60px");
+    $(".in").css("color","white");
+    $(".in1").css("color","#fff194");
+    for(var x=0; x<=5; x++){
+    $("#div"+x).addClass("img-thumbnail img-rounded")
+            .css({
+               background: '#0089cd', 
+               width: '200'  
+            });
+    };
+    $("#informacao").css({
+        'background-color': '#0089cd',
+        'background-position': 'center'
+    }); 
+});
+function mouseMove(x){
+    $("#div"+x).css({
+    background: '#33c2fc', color: 'white'
+    });
+    $("#div"+x).mouseout(function(){
+        $("#div"+x).removeAttr("style")
+        .css({
+        background: '#0089cd',
+        width: '200'
+    });
+    });
+}   
+</script>

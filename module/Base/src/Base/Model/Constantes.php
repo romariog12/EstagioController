@@ -60,6 +60,7 @@ class Constantes {
     const cadastrarAgente = 'cadastrarAgente';
     const cadastrarAluno = 'cadastrarAluno';
     const perfilEmpresa = 'perfilEmpresa';
+    const home = 'home';
     
     //actions módulo: Auth
     const login = 'login';
