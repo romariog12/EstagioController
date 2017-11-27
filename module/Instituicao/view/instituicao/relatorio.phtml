@@ -1,0 +1,22 @@
+ <?php
+    /**
+     * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+     */
+    echo  $this->painelTitulo("Relatório");
+?>
+<script>
+    $(document).ready(function() 
+    { 
+        $("#eficiencia").tablesorter ({sortList: [[ 4 , 4], [ 5, 5 ]]});
+    } 
+    );   
+</script>
+<div class="caption">
+            <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                <li class="  active" role="presentation"><a><label><?= $this->translate("Aproveitamento em estágio")?></label></a></li>
+                <!-- <li role="presentation" ><a href="<?php// echo $this->url('relatorioPresencialEstatisticas')?>"><?php //$this->translate("Relatório geral")?></a></li>-->
+            </ul>
+        </div>
+<?=    '<div class="well-lg" id="tab-1">'.
+        $this->tabelaRelatorio(['Curso', 'Quantidade de alunos','Meta','Estagiando', '%','Mais'],$this->listaCursos,$this->listaestagiando).
+        '</div>';

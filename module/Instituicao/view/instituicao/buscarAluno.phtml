@@ -1,0 +1,47 @@
+ <?php
+ use Base\Model\Constantes;
+ /**
+  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+  */
+ echo  $this->painelTitulo("Buscar Aluno")?>
+<script>
+function noenter() {
+   return !(window.event && window.event.keyCode === 13);
+ };
+</script>
+        <form  method="post" onKeyPress="return noenter()">
+            <div class="well-lg"  >  
+                <div class="row ">
+                    <div class="col-lg-6">
+                      <div class="input-group">
+                        <input name="porMatricula" type="text" class="form-control" placeholder="Procurar por matrícula">
+                         <span class="input-group-btn">
+                            <button class="btn btn-primary" name="buscar" value="buscarPorMatricula" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="input-group">
+                         <input name="porNome" type="text" class="form-control" placeholder="Procurar por nome">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" name="buscar" value="buscarPorNome" type="submit"><i class=" glyphicon glyphicon-search"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                </div> 
+            </div>
+        </form>
+<?php 
+if(!empty($this->lista)):
+    echo'<div class=" well-lg">'.
+    $this->tabelaBuscarAluno(['Nome', 'Curso', 'Matricula', 'Perfil'],$this->lista).
+    '</div>';
+endif;
+echo '<div class=" well-lg">'.
+    $this->botaoGrande(
+    $this->url('paginator', ['controller'=>  Constantes::administrador, 'action' =>  Constantes::todosAlunos]) ,
+    'Lista de <br> alunos',
+    'fa-list-alt',
+    'primary'
+        ).
+    '</div>';

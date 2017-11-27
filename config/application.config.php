@@ -8,6 +8,7 @@ return array(
         'Home',
         'Aluno',
         'Empresa',
+        'Instituicao',
         'Vaga',
         'Relatorio',
         'DoctrineModule',

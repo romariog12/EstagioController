@@ -1,0 +1,32 @@
+<?php
+use Base\Model\Constantes;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
+echo    $this->painelTitulo("Empresas")?>
+        <div class="caption">
+            <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                <li  class=" active" role="presentation"><a><label>Empresas Concedente </label> <span class="label label-primary"> <?= count($this->listaEmpresa)?></span></a> </li>
+                <li role="presentation" ><a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'agente']) ?>">Agentes de Integração <span class="label label-default"> <?php echo count($this->listaAgente)?></span></a></li>
+            </ul> 
+        </div>
+<?=     '<br><div class="col-lg-12">'.
+        $this->tabelaEmpresas(['Empresa', 'Telefone','Editar','Excluir'],$this->pagination, $this->pageNumber).
+        $this->paginacao($this->pageNumber,$this->count).
+        '</div>'.
+        '<div class=" well-lg">'.
+        $this->botaoGrande(
+            $this->url(Constantes::rotaEmpresaDefault, ['controller'=>  Constantes::administrador, 'action' =>  Constantes::cadastrarEmpresa,'id'=>'0']),
+            'Cadastrar <br> empresa',
+            'fa-plus',
+            'success'
+            ). 
+        ' '.
+        $this->botaoGrande(
+            $this->url(Constantes::perfilEmpresa) ,
+            'Buscar <br> empresa',
+            'fa-search',
+            'primary'
+            ).
+        '</div>';
+?>

@@ -189,8 +189,7 @@ use Base\Model\Constantes;
                 );
  }
  </script> 
-        <?=     $this->painel(Constantes::temaBootstrap.' well-lg').
-                $this->painelTitulo($this->partial('vagaPresencial/layout/cadastrarVagaPartial'));
+        <?=     $this->painelTitulo($this->partial('vagaPresencial/layout/cadastrarVagaPartial'));
                 if (!empty($this->listaContratos)): 
                     echo '<div class="list-group "><div class="panel-footer"><label>Documentos lançados</label></div>';
                 foreach ($this->listaContratos as $l):
@@ -339,6 +338,5 @@ use Base\Model\Constantes;
                                     'primary'
                                 );
                         endif;
-                        echo '</div>'.
-                        $this->painelFim();
+                        echo '</div>';
                         

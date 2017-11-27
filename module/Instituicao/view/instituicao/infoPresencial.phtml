@@ -1,0 +1,83 @@
+<?php 
+use Base\Model\Constantes;
+/**
+ * @author Romário Macêdo Portela<romariomacedo18@gmail.com>
+ */
+foreach ($this->curso as $l){
+    $curso =  $l->getCurso();
+    $idCurso = $l->getIddados();
+    $orientador = $l->getOrientador();
+}
+    echo$this->painelTitulo($curso);
+ ?>
+<script>
+    $(document).ready(function(){
+        $(".aba").removeClass("active");
+        $("#aba-"+<?= $this->resposta?>).addClass("active");
+    });
+</script>
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li id="aba-1" class="aba" role="presentation"><a href="<?= $this->url(Constantes::rotaRelatorioDefault, ['controller'=>Constantes::relatorio,'action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso,'aba'=>'1'])?>">Estágios <span class="label label-primary"><?= count($this->estagios)?></span> </a></li>
+            <li id="aba-2" class="aba" role="presentation"  ><a href="<?= $this->url(Constantes::rotaRelatorioDefault, ['controller'=>Constantes::relatorio,'action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso,'aba'=>'2'])?>">Ativos <span class="label label-success"> <?= count($this->estagiosEmAndamento)?></span></a></li>
+            <li id="aba-3" class="aba" role="presentation" ><a href="<?= $this->url(Constantes::rotaRelatorioDefault, ['controller'=>Constantes::relatorio,'action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso,'aba'=>'3'])?>">Encerrados <span class="label label-danger"> <?=count($this->estagiosEncerrados) ?></span></a></li>
+            <li id="aba-4" class="aba" role="presentation" ><a href="<?= $this->url(Constantes::rotaRelatorioDefault, ['controller'=>Constantes::relatorio,'action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso,'aba'=>'4'])?>">Alunos cadastrados <span class="label label-warning"><?= count($this->alunosCadastrados) ?></span></a></li>
+            <li id="aba-5" class="aba" role="presentation"><a href="<?= $this->url(Constantes::rotaRelatorioDefault, ['controller'=>Constantes::relatorio,'action'=>'infopresencial','curso'=>$idCurso,'curso1'=>$curso,'aba'=>'5'])?>"> Estatísticas <i class="fa fa-line-chart"></i></a></li>
+        </ul>  
+    <?php
+        switch ($this->resposta):
+            case '4':
+                echo    '<div class="well-lg">'.
+                        $this->tabelaAlunos(['Aluno','Empresa','Agente','Editar', 'Excluir'],$this->pagination, $this->pageNumber)."</br>".
+                        $this->paginacao($this->pageNumber,$this->count).
+                        '</div>';
+                break;
+            case '5':
+                echo    '<br><div id="curve_chart" ></div>';
+                break;
+            default :
+                echo    '<div class="well-lg">';
+                 if(count($this->pagination)>'0'){
+                    echo
+                        $this->tabelaAlunoEmEstagio(['Aluno','Empresa','Agente'],$this->pagination, $this->pageNumber)."</br>".
+                        $this->paginacao($this->pageNumber,$this->count);
+                }else{
+                    echo 
+                        $this->alertaDanger("Sem dados à apresentar!");    
+                }
+                echo    '</div>';
+        endswitch 
+    ?>
+        <div class="pager" >
+            <a href="<?php echo $this->url('relatorioPresencial') ?>"><span class="btn btn-default" >Voltar</span></a>
+        </div>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mês',  'Novos estágios', 'Encerrados'],
+          ['Jan',       <?= count($this->listaMensal[1])?>, 0],
+          ['Fev',     <?= count($this->listaMensal[2])?>, 0],
+          ['Mar',       <?= count($this->listaMensal[3])?>, 0],
+          ['Abr',     <?= count($this->listaMensal[4])?>, 0],
+          ['Mai',     <?= count($this->listaMensal[5])?>, 0],
+          ['Jun',     <?= count($this->listaMensal[6])?>, 2],
+          ['Jul',      <?= count($this->listaMensal[7])?>, 0],
+          ['Ago',      <?= count($this->listaMensal[8])?>, 0],
+          ['Set',     <?= count($this->listaMensal[9])?>, 1],
+          ['Out',      <?= count($this->listaMensal[10])?>, 0],
+          ['Nov',      <?= count($this->listaMensal[11])?>, 0],
+          ['Dez',      <?= count($this->listaMensal[12])?>, 0]
+        ]);
+    var options = {
+      title: 'Quantidade de estágios lançados mensalmente no curso de  <?= $curso?>',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+      }
+</script>

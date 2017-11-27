@@ -218,7 +218,7 @@ class AdministradorController extends AbstractActionController
                 
             ]);
 }
-     public function cadastrarAlunoAction() {
+    public function cadastrarAlunoAction() {
             $alunoForm = new alunoForm();
             $em = $this->getServiceLocator()->get(Entity::em);
             $request = $this->getRequest(); 
@@ -503,7 +503,7 @@ class AdministradorController extends AbstractActionController
               'empresa' => $this->empresa
           ]);
         } 
-        public function cadastrarAgenteAction(){
+    public function cadastrarAgenteAction(){
             $empresaForm = new empresaForm();
             $request = $this->getRequest();
             $idaluno = $this->params()->fromRoute("id", 0);

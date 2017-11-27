@@ -3,6 +3,10 @@ use Base\Model\Constantes;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
+    $cursos = [];
+    foreach ($this->listaCursos as $l):
+    $cursos[$l->getCurso()] = $l->getCurso();
+    endforeach;
 ?>
 <script>
 $(document).ready(function(){
@@ -62,24 +66,16 @@ $(document).ready(function(){
     $(".glyphicon-ok-circle").css("display", "none");
 });
 </script>
-    <?=
-        $this->painelTitulo("Editar aluno").
+    <?= $this->painelTitulo("Editar aluno").
         '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
-        foreach ($this->listaAluno as $l): 
         $this->alunoForm->prepare();
         echo $this->form()->openTag($this->alunoForm);
         ?>
         <div class="col-lg-12">
-            <?php
-            if($this->resposta == true):
-                    echo $this->alertaSuccess(Constantes::alteraçãoSucesso);
-            endif;
-            ?>
-            <div class="col-sm-5  nome">
+            <div class="col-sm-5 col-sm-offset-1 nome">
                 <i  class="nome-valid"></i>
                  <?= $this->formRow($this->alunoForm->get('nome')
                          ->setAttribute('class', 'form-control')
-                         ->setAttribute('value', $l->getNome())
                          ->setAttribute('id', 'nome')
                          ->setLabel('Nome'))
                          ?>
@@ -89,37 +85,33 @@ $(document).ready(function(){
                 <i   class="matricula-valid"></i>
                 <?= $this->formRow($this->alunoForm->get('matricula')
                          ->setAttribute('class', 'form-control')
-                         ->setAttribute('value', $l->getMatricula())
                          ->setAttribute('id', 'matricula')
                          ->setLabel('Matricula'))
                          ?>
                 <br/>
             </div>
-            <div class=" col-sm-4 cpf">
+            <div class=" col-sm-3 cpf">
                 <i class="cpf-valid"></i>
                  <?= $this->formRow($this->alunoForm->get('cpf')
                          ->setAttribute('class', 'form-control')
-                         ->setAttribute('value', $l->getCpf())
                          ->setAttribute('id', 'cpf')
                          ->setLabel('Cpf'))
                          ?>
                 <br/>
             </div>
-            <div class="col-sm-5 email ">
+            <div class="col-sm-3 email col-sm-offset-1">
               <i class=" email-valid "></i>
               <?= $this->formRow($this->alunoForm->get('email')
                         ->setAttribute('class', 'form-control')
-                        ->setAttribute('value', $l->getEmail())
                         ->setAttribute('id', 'email')
                         ->setLabel('Email'))
                         ?>
                <br/>
            </div>
-            <div class="col-sm-3  telefone">
+            <div class="col-sm-4  telefone">
                 <i class=" telefone-valid"></i>
                  <?= $this->formRow($this->alunoForm->get('telefone')
                              ->setAttribute('class', 'form-control')
-                             ->setAttribute('value', $l->getTelefone())
                              ->setAttribute('id', 'telefone')
                              ->setLabel('Telefone'))
                              ?>
@@ -127,12 +119,6 @@ $(document).ready(function(){
             </div>
             <div class="col-sm-4  curso ">
                <i  class=" curso-valid"></i>
-               <?php
-                $cursos = [];
-                foreach ($this->listaCursoPresencial as $f):
-                $cursos[$f->getCurso()] = $f->getCurso();
-                endforeach;
-               ?>
                 <?= $this->formRow($this->alunoForm->get('curso')
                          ->setAttribute('id', 'curso')
                          ->setLabel('Curso')
@@ -141,20 +127,13 @@ $(document).ready(function(){
                 <br/>
             </div>
         </div>
-    <?=         '<div class="well-lg ">'.
+    <?=         '<div class="well-lg col-sm-offset-1">'.
                 $this->formRow($this->alunoForm->get('salvar')
                             ->setAttribute('id', 'salvar')
                             ->setAttribute('value', 'Salvar')
                             ->setAttribute('class', 'btn btn-success')
                             ->setAttribute('type', 'submit')
-                            ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Salvar as<br>alterações')).
-                ' '.
-                $this->botaoGrande(
-                        $this->url(Constantes::rotaPerfilAlunoDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$l->getIdaluno()]),
-                        'Perfil do <br> aluno',
-                        'fa-user',
-                        'primary'
-                    ).'</div>'. 
+                            ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro')).
+                
+                '</div>'. 
     $this->form()->closeTag();
-    endforeach;
-

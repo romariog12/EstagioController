@@ -1,0 +1,27 @@
+<?php
+use Base\Model\Constantes;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
+        echo    $this->painelTitulo('Todos alunos cadastrados').
+                '<br>'.
+                '<div class="col-lg-12">'.
+                $this->tabelaTodosAlunos(['Perfil','Aluno','Matricula','Editar','Excluir'],$this->pagination, $this->pageNumber).
+                $this->paginacao($this->pageNumber,$this->count).
+                '</div>'.
+                '<div class=" well-lg">'.
+                $this->botaoGrande(
+                $this->url(Constantes::rotaAlunoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::cadastrarAluno,'id'=>'0']),
+                'Novo <br> aluno',
+                'fa-plus',
+                'success'
+                ). 
+                ' '.
+                $this->botaoGrande(
+                $this->url(Constantes::rotaPerfilAluno),
+                'Buscar <br> aluno',
+                'fa-search',
+                'primary'
+                ).
+                '</div>';
+        

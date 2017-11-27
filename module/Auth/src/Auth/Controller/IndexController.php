@@ -4,6 +4,7 @@ namespace Auth\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Base\Model\Constantes;
+use Zend\Authentication\AuthenticationService;
 /**
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
@@ -59,4 +60,12 @@ class IndexController extends AbstractActionController
       return new ViewModel(['mensagem'=> $auth->getAdapter()->authenticate()->getMessages()[0]]);
     }
   }
+  public function logoutAction(){
+     $auth = new AuthenticationService();
+        if ($auth->hasIdentity()) {
+            $auth->clearIdentity();
+            $this->flashMessenger()->addSuccessMessage('Voce acabou de ser desconectado!');
+        }
+        return $this->redirect()->toRoute('auth', array('controller' => 'index', 'action' => 'login'));
+    }
 }

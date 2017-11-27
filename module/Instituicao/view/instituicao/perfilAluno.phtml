@@ -1,0 +1,49 @@
+<?php
+use Base\Model\Constantes;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
+    foreach ($this->aluno as $l): 
+    $getidaluno = $l->getidAluno();
+    $nome = $l->getNome();
+    $email = $l->getEmail();
+    $telefone = $l->getTelefone();
+    $matricula = $l->getMatricula();
+    $curso = $l->getCurso();
+    endforeach;
+    echo $this->painelTitulo("Perfil do aluno").
+   '<div class="media-body pager well-lg">'.
+                '<h4 class="media-heading">'.$nome.'</h4>'.
+                $curso.'<br>'.
+                $matricula.'<br>'.
+                $email.'<br>'.
+                $telefone.
+    '</div>'
+    ?>     
+        <div class="caption">
+            <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+                <li  class=" active" role="presentation"><a><label>Estágios </label> <span class="label label-primary"> <?= count($this->listaVagaPresencial)?></span></a> </li>
+            </ul> 
+        </div>
+        <?=     '<div class="col-lg-12 well-lg">';    
+        if(empty($this->listaVagaPresencial)):
+                echo $this->alertaDanger("Nenhum estágio lançado");
+        else:
+            echo    $this->tabelaEstagios(['Emrpesa','Processo','Excluir'], $this->listaVagaPresencial);
+        endif;
+        echo    '</div>'.
+                '<div class=" well-lg">'.
+                $this->botaoGrande(
+                    $this->url(Constantes::rotaVagaDefault, ['controller' => Constantes::vaga   , 'action' => Constantes::cadastrarVagaPresencial, 'idVaga'=>$getidaluno]),
+                    'Nova <br> vaga',
+                    'fa-plus',
+                    'success'
+                ). 
+                 ' '.
+                $this->botaoGrande(
+                    $this->url(Constantes::rotaAdministradorDefault, ['controller'=>  Constantes::administrador, 'action'=>  Constantes::editarAluno, 'id'=>$getidaluno,'page'=>0]),
+                    'Editar <br> aluno',
+                    'fa-edit',
+                    'primary'
+                ). 
+                '</div>';

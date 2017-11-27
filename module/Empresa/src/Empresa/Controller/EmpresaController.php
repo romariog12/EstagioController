@@ -1,7 +1,7 @@
 <?php
 namespace Empresa\Controller;
 
-use Auth\Controller\AdministradorAbstractActionController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Empresa\Entity\Empresa;
 use Base\Model\Entity;
@@ -11,7 +11,7 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 use Vaga\Form\LancarDocumentoForm;
 
 
-class EmpresaController extends AdministradorAbstractActionController{
+class EmpresaController extends AbstractActionController{
     function __construct() {
         $this->itemPorPagina = '5';
     }

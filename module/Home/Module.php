@@ -43,9 +43,9 @@ class Module
     $sharedEvents->attach(__NAMESPACE__ , 'dispatch', function($ev) {
                     $controller = $ev->getTarget();
                     $controller ->layout('Home/layout/layout');
-                    $auth = $ev->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
+                    $auth = $ev->getApplication()->getServiceManager()->get(\Base\Model\Constantes::AuthenticationService);
                     if(empty($auth->hasIdentity())){ 
-                    $controller->plugin('redirect')->toRoute('auth');
+                    return $controller->plugin('redirect')->toRoute('auth');
                     }
                     foreach ($auth->getIdentity()as $l){
                         $nivel = $l[0]->getNivel();

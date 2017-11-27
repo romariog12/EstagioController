@@ -61,14 +61,12 @@ use Base\Model\Constantes;
     $(".glyphicon-ok-circle").css("display", "none");
     });
     
-</script> 
-<div>
-    <?=     $this->painel(Constantes::temaBootstrap.' well-lg').
-            $this->painelTitulo($this->partial('vagaPresencial/layout/cadastrarVagaPartial'));
+</script>
+    <?=     $this->painelTitulo($this->partial('vagaPresencial/layout/cadastrarVagaPartial'));
             $this->vagaForm->prepare();
     echo    $this->form()->openTag($this->vagaForm);    
    ?>
-    <br/>
+<br/><div class="well-lg">
     <div class="row">
     <div class="aluno col-sm-5 col-sm-offset-1">
      <i class=" aluno-valid"></i>
@@ -158,5 +156,5 @@ use Base\Model\Constantes;
         'fa-arrow-left',
         'primary'
         ).
-        $this->form()->closeTag().
-        $this->painelFim();
+        $this->form()->closeTag().'</div>';
+        

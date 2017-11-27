@@ -1,0 +1,50 @@
+<?php
+use Base\Model\Constantes;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
+ echo $this->painelTitulo("Perfil da empresa")
+?>
+    <div class="caption" >
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li class="  active" role="presentation"><a><label>Painel</label></a></li>
+            <li role="presentation"><a href="<?=$this->url("empresaMensagem/default",['controller'=> Constantes::administrador, 'action'=>  Constantes::mensagem, 'id'=>$this->idEmpresa]) ?>"><?= $this->translate("<i class='fa fa-envelope-o'></i>")?></a></li>
+        </ul> 
+    </div>
+    <div class="caption">
+    <?php if(!empty($this->empresaSelect)): foreach ($this->empresaSelect as $l): ?>
+        <?=
+        '<div class="navbar pager">'.
+            '<img src="'.$this->basePath('img/empresa.png').'" class="img-circle " alt="Cinque Terre" width="70" height="70">'.
+        '<h3 class="pager">'.  $l->getEmpresa().'</h3>'?>
+            <span class=" center-block" id="rateYo"></span>
+            <?=
+        '<p class="pager"><label>CNPJ:</label>'.  $l->getCnpj().'<br/>'
+            . '<label>Responável: </label> '. $l->getResponsavel().' '
+            . '<label> Telefone: </label> '.  $l->getTelefone().'<br/></div> ';  
+        ?>
+    <?php endforeach; endif;?>
+    </div>
+    <div class="caption">
+        <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
+            <li  class="  active" role="presentation"><a href="#"><label>Todas as vagas </label>  <span class="label label-primary"> <?php echo count($this->listaVaga) ?></span> </a></li>
+            <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaestagiando','id'=>$this->empresa])?>">Estagiando <span class="label label-success"> <?php echo count($this->listaVagaEstagiando)?></span></a></li>
+             <li role="presentation" ><a href="<?php echo $this->url('perfilEmpresa/default', ['controller'=>'empresa','action'=>'perfilempresaencerrado','id'=>$this->empresa])?>">Encerrado <span class="label label-danger"> <?php echo count($this->listaVaga) - count($this->listaVagaEstagiando)  ?></span></a></li>
+        </ul> 
+    </div>
+    <?php if ($this->listaVaga){
+            echo $this->tabelaAlunoEmEstagio(['Aluno','Empresa','Agente'],$this->pagination, $this->pageNumber).'</br>'.
+                 $this->paginacao($this->pageNumber,$this->count);
+            }else{
+            echo '<div class=" well-lg">'.
+                    $this->alertaDanger('Nenhum estágio lançado').
+                  '</div>';
+            } 
+            echo '<div class=" well-lg">'.
+                    $this->botaoGrande(
+                    $this->url('editarEmpresa/default', array('controller'=>'administrador', 'action'=>'editarEmpresa', 'id'=>$this->idEmpresa)),
+                    'Editar <br> perfil',
+                    'fa-edit',
+                    'primary'
+                    ).
+                    '</div>';

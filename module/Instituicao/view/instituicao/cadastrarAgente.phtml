@@ -1,0 +1,152 @@
+<?php
+use Base\Model\Constantes;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
+?>
+<script>
+$(document).ready(function(){
+ $("#empresaForm").validate({
+        highlight: function(element) {
+        $(element.form).find("." + element.id )
+            .addClass("has-error")
+            .removeClass("has-succes");
+        $("em").css("color","red");
+        $("."+element.id+"-valid").css("display","none");
+        },
+        unhighlight: function(element) {
+        $(element.form).find("." + element.id)
+            .removeClass("has-error")
+            .addClass("has-success"); 
+        $("."+element.id+"-valid").css({
+            display: "inline",
+            color: "green"
+        });
+        },
+        errorElement: "em",
+        messages: {
+        empresa: 'Campo Obrigatório',
+        cnpj: 'cnpj inválido',
+        telefone: 'Telefone inválido',
+        endereco: 'Campo Obrigatório',
+        email:'Email inválido',
+        responsavel:'Campo Obrigatório',
+        tamanho: 'Campo Obrigatório'
+        },
+        rules:{
+        empresa: {
+           required: true
+        },
+        cnpj: {
+           required: true,
+          rangelength: [14, 14],
+          max: 99999999999999
+        },
+        telefone:{
+            required: true,
+            max: 99999999999999,
+            min: 111111111
+        },
+        endereco:{
+            required: true
+        },
+        email:{
+            required: true,
+            email: true
+        },
+        responsavel:{
+            required: true
+        },
+        tamanho:{
+            required: true
+        }
+        }
+    });
+});
+</script>
+<?=     $this->painelTitulo("Cadastrar agente");
+        if($this->resposta == false):
+        echo '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
+        $this->empresaForm->prepare();
+        echo $this->form()->openTag($this->empresaForm);
+        ?>
+        <div class="col-lg-12">
+            <div class="col-sm-6 col-sm-offset-1 nome">
+                <i class=" empresa-valid"></i>
+                <?= $this->formRow($this->empresaForm->get('empresa')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'empresa')
+                         ->setLabel('Empresa'))
+                         ?>
+           </div>
+            <div class="col-sm-4 cnpj">
+                <i class=" cnpj-valid"></i>
+                <?= $this->formRow($this->empresaForm->get('cnpj')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'cnpj')
+                         ->setLabel('Cnpj'))
+                         ?>
+                <br/>
+            </div>
+            <div class="col-sm-offset-1 col-sm-3 telefone">
+                <i class=" telefone-valid"></i>
+                <?= $this->formRow($this->empresaForm->get('telefone')
+                         ->setAttribute('class', 'form-control')
+                         ->setAttribute('id', 'telefone')
+                         ->setLabel('Telefone'))
+                         ?><br/>
+            </div>
+            <div class="col-sm-4  endereco">
+                <i  class=" endereco-valid"></i>
+                <?= $this->formRow($this->empresaForm->get('endereco')
+                             ->setAttribute('class', 'form-control')
+                             ->setAttribute('id', 'endereco')
+                             ->setLabel('Endereço'))
+                             ?><br/>
+            </div>
+             <div class="col-sm-3 email">
+                <i class=" email-valid"></i>
+                <?= $this->formRow($this->empresaForm->get('email')
+                             ->setAttribute('class', 'form-control')
+                             ->setAttribute('id', 'email')
+                             ->setLabel('Email'))
+                             ?><br/>
+             </div>
+              <div class="col-sm-offset-1 col-sm-5 responsavel">
+                <i class=" responsavel-valid"></i>
+                <?= $this->formRow($this->empresaForm->get('responsavel')
+                             ->setAttribute('class', 'form-control')
+                             ->setAttribute('id', 'responsavel')
+                             ->setLabel('Responsável'))
+                             ?><br/>
+             </div>
+        </div>
+<?=     '<div class="well-lg col-sm-offset-1">'.
+        $this->formRow($this->empresaForm->get('salvar')
+                    ->setAttribute('id', 'salvar')
+                    ->setAttribute('value', 'Salvar')
+                    ->setAttribute('class', 'btn btn-success')
+                    ->setAttribute('type', 'submit')
+                    ->setLabel(' <i class="fa fa-check fa-2x pull-left"></i> Finalizar<br>Cadastro')).
+        '</div>'. 
+        $this->form()->closeTag();
+        else: ?>
+         <div  class="list-group-item ">
+            <h3 class="list-group-item-heading "><?= $this->empresa->getAgente()?></h3>
+            <p class="list-group-item-text"><?= '<label>Telefone:</label> '.     $this->empresa->getTelefone()?></p>
+            <p class="list-group-item-text"><?= '<label>Email:</label>'.         $this->empresa->getEmail()?></p>
+            <p class="list-group-item-text"><?= '<label>Cnpj:</label> '.         $this->empresa->getCnpj()?></p>
+            <p class="list-group-item-text"><?= '<label>Endereço:</label> '.     $this->empresa->getEndereco()?></p>
+            <p class="list-group-item-text"><?= '<label>Responsavel:</label> '.  $this->empresa->getResponsavel()?></p>
+        </div>
+        <?php
+        echo  '<div class=" well-lg">'.
+        $this->alertaSuccess(Constantes::cadastroSucesso).
+                    $this->botaoGrande(
+                        $this->url(Constantes::rotaPerfilEmpresaDefault, ['controller' => Constantes::administrador, 'action' => Constantes::editarAgente, 'id'=>$this->empresa->getIdAgente()]),
+                        'Editar empresa<br> cadastrada ',
+                        'fa-edit',
+                        'primary'
+                    ). 
+        '</div>';
+        endif;

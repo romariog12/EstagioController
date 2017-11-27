@@ -8,8 +8,7 @@ $(document).ready(function(){
  $(".fim").removeClass("disabled").addClass("active");
 });
 </script>           
-        <?=     $this->painel(Constantes::temaBootstrap.' well-lg').
-                $this->painelTitulo($this->partial('vagaPresencial/layout/cadastrarVagaPartial'));
+        <?=     $this->painelTitulo($this->partial('vagaPresencial/layout/cadastrarVagaPartial'));
                 if (!empty($this->listaVaga)):
                     foreach ($this->listaVaga as $l):       
         ?>  
@@ -33,7 +32,6 @@ $(document).ready(function(){
                          'Perfil da <br> empresa',
                          'fa-briefcase',
                          'primary'
-                     ).
-                '</div> ';
+                     );
                 endforeach;
                 endif;   

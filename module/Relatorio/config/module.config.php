@@ -128,12 +128,12 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
-        'view_helpers' => [
-        'invokables' =>
-            [
-                'tabelaRelatorio' => 'Relatorio\View\Helper\tabelaRelatorio'
-                ]
-        ],
+    'view_helpers' => [
+    'invokables' =>
+        [
+            'tabelaRelatorio' => 'Relatorio\View\Helper\tabelaRelatorio'
+            ]
+    ],
     
     // Placeholder for console routes
     'console' => array(
