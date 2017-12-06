@@ -2,13 +2,11 @@
 foreach ( $this->usuario as $l){
             $nome = $l->getNome();
     }
+echo  $this->painelTitulo("Bem-Vindo(a)".'<h4>'. $this->escapeHtml($nome).'</h4>')?>
 
-?><div id="informacao" class="well-lg">
-    <div class="pager in">
-        <?= $this->translate("Bem-Vindo(a)")?>
-        <?='<h3 class="in1">'. $this->escapeHtml($nome).'</h3>'?> 
-    </div>
+<div id="informacao" class="well-lg" >
     <div class=" pager in">
+        
         <a class=" in" href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos','id'=> '1']) ?>">
         <div id="div1" onmousemove="mouseMove(1)"><br/>
             <i  class="fa fa-mortar-board principal" aria-hidden="true"></i>
@@ -16,11 +14,15 @@ foreach ( $this->usuario as $l){
         </div>
         </a>
         <a class=" in" href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa','id'=> '1']) ?>">
-        <div id="div2" onmousemove="mouseMove(2)"><br/>
+        <div id="div2" onmousemove="mouseMove(2)"  type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><br/>
             <i class="fa fa-briefcase principal" aria-hidden="true"></i>
             <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de empresas")?></h5>
-        </div>
-        </a>
+        <div class="collapse" id="collapseExample">
+        <div class="well-sm">
+         <i class="fa fa-spinner fa-pulse fa-fw"></i>
+<span class="sr-only">Loading...</span>
+        </div></div>
+        </div></a>
         <a class=" in" href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial', 'id'=>'1']) ?>">
             <div id="div3"onmousemove="mouseMove(3)"><br/>
                 <i  class="fa fa-archive principal" aria-hidden="true"></i>
@@ -33,10 +35,10 @@ foreach ( $this->usuario as $l){
             <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de acessos")?></h5>
         </div>
         </a>    
-        <a class=" in" href="<?= $this->url('dadosPresencial') ?>">
+        <a class=" in" style=" color: #275d8d"href="<?= $this->url('relatorioPresencial') ?>">
             <div id="div5" onmousemove="mouseMove(5)"><br/>
-             <i  class="fa fa-refresh principal" aria-hidden="true"></i>
-                <h5 class="in1">  <?= $this->translate("Atualizar dados")?></h5>
+             <i  class="fa fa-bar-chart principal" aria-hidden="true"></i>
+                <h5 class="in1">  <?= $this->translate("Relatório")?></h5>
         </div>
        </a>
     </div>
@@ -46,7 +48,7 @@ foreach ( $this->usuario as $l){
     $(".principal").css("font-size","60px");
     $(".in").css("color","white");
     $(".in1").css("color","#fff194");
-    for(var x=0; x<=5; x++){
+    for(var x=0; x<=6; x++){
     $("#div"+x).addClass("img-thumbnail img-rounded")
             .css({
                background: '#0089cd', 
@@ -54,13 +56,13 @@ foreach ( $this->usuario as $l){
             });
     };
     $("#informacao").css({
-        'background-color': '#0089cd',
+        'background-color': 'WHITE',
         'background-position': 'center'
     }); 
 });
 function mouseMove(x){
     $("#div"+x).css({
-    background: '#33c2fc', color: 'white'
+    background: ' #275d8d', color: 'white'
     });
     $("#div"+x).mouseout(function(){
         $("#div"+x).removeAttr("style")
