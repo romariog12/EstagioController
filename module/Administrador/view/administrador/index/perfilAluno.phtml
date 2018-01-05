@@ -12,6 +12,11 @@ use Base\Model\Constantes;
     $curso = $l->getCurso();
     endforeach;
     echo $this->painelTitulo("Perfil do aluno").
+    '<ol class="breadcrumb">
+        <li><a href="'.$this->url('home').'">Home</a></li>
+        <li><a href="'.$this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos','id'=> '1']).'">Alunos</a></li>
+        <li class="active">Perfil do aluno</li>
+    </ol>'.
    '<div class="media-body pager well-lg">'.
                 '<h4 class="media-heading">'.$nome.'</h4>'.
                 $curso.'<br>'.

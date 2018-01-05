@@ -1,12 +1,14 @@
 <?php   
+use Base\Model\Constantes;
 foreach ( $this->usuario as $l){
             $nome = $l->getNome();
     }
-echo  $this->painelTitulo("Bem-Vindo(a)".'<h4>'. $this->escapeHtml($nome).'</h4>')?>
-
+echo  $this->painelTitulo($this->escapeHtml($nome))?>
+<ol class="breadcrumb">
+  <li class="active">Home</li>
+</ol>
 <div id="informacao" class="well-lg" >
     <div class=" pager in">
-        
         <a class=" in" href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos','id'=> '1']) ?>">
         <div id="div1" onmousemove="mouseMove(1)"><br/>
             <i  class="fa fa-mortar-board principal" aria-hidden="true"></i>
@@ -17,13 +19,8 @@ echo  $this->painelTitulo("Bem-Vindo(a)".'<h4>'. $this->escapeHtml($nome).'</h4>
         <div id="div2" onmousemove="mouseMove(2)"  type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><br/>
             <i class="fa fa-briefcase principal" aria-hidden="true"></i>
             <h5 class="in1"><i class=" fa fa-cogs in" ></i>  <?= $this->translate("Controle de empresas")?></h5>
-        <div class="collapse" id="collapseExample">
-        <div class="well-sm">
-         <i class="fa fa-spinner fa-pulse fa-fw"></i>
-<span class="sr-only">Loading...</span>
-        </div></div>
         </div></a>
-        <a class=" in" href="<?= $this->url('documentos/default',['controller'=>'administrador','action'=>'documentosPresencial', 'id'=>'1']) ?>">
+        <a class=" in" href="<?= $this->url(Constantes::rotaDocumentoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::documentos,'aba'=>'a=1', 'page'=>'1']) ?>">
             <div id="div3"onmousemove="mouseMove(3)"><br/>
                 <i  class="fa fa-archive principal" aria-hidden="true"></i>
                 <h5 class="in1"><i class=" fa fa-cogs in"></i> <?= $this->translate("Controle de documentos")?></h5>

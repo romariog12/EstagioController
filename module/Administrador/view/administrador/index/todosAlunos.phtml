@@ -4,6 +4,10 @@ use Base\Model\Constantes;
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
         echo    $this->painelTitulo('Todos alunos cadastrados').
+                '<ol class="breadcrumb">
+                <li><a href="'.$this->url('home').'">Home</a></li>
+                <li class="active">Alunos</li>
+                </ol>'.
                 '<br>'.
                 '<div class="col-lg-12">'.
                 $this->tabelaTodosAlunos(['Perfil','Aluno','Matricula','Editar','Excluir'],$this->pagination, $this->pageNumber).

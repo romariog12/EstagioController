@@ -212,10 +212,12 @@
  }
  </script>
     <?= $this->painelTitulo($aluno)?>
-        <ul class="nav nav-tabs" role="tablist">
-           <li role="presentation" class="active"><a>Início</a></li>
-          <!-- <li role="presentation"><a href="<?php //$this->url('vagaPresencial/default', ['controller' => 'vagapresencial', 'action' => 'acompanhamento','id'=>$idAluno, 'idVaga'=>$idVaga,'curso'=> $cursoVaga]); ?>">Acompanhamento</a></li>-->
-        </ul>
+        <ol class="breadcrumb">
+            <li><a href="<?=$this->url('home')?>">Home</a></li>
+            <li><a href="<?=$this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos','id'=> '1'])?>">Alunos</a></li>
+            <li><a href="<?=$this->url(Constantes::rotaPerfilDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno])?>">Perfil do aluno</a></li>
+            <li class="active">Processos</li>
+        </ol>
         <div class="navbar pager">
         <?=     '<p><label>Agente de Integração: </label>  '.$agente.'</p>'.
                 '<p><label>Empresa: </label>'.$empresa.'</p>'.
@@ -235,7 +237,28 @@
                         'relatorio'=>$l->getRelatorio()
                     ]
                 ]).
-        '<div class="collapse" id="list-'.$l->getIddocumento().'">'.
+        '<div class="collapse" id="list-'.$l->getIddocumento().'">'?>
+             <div class="progress">  
+    <?php
+                $progress = $l->getOperacao1()+$l->getOperacao2()+$l->getOperacao3()+$l->getOperacao4();
+                switch($progress){
+                    case 1: $width = "25%" ;
+                        break;
+                        case 2: $width = "50%" ;
+                            break;
+                            case 3: $width = "75%" ;
+                                break;
+                                case 4: $width = "100%" ;
+                                    break;
+                                    case 0: $width = "10%" ;
+                                        break;
+        }
+    ?>
+    <div class="<?= 'progress-'.$l->getIddocumento()?> progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="10" aria-valuemax="100" style="width:<?= $width?>">
+        <?= $width?> 
+    </div> 
+    </div>
+            <?=
         '<div class="pager">'.
             $this->partial('vagaPresencial/layout/painelProcessoPartial').
         '</div>';
