@@ -4,9 +4,13 @@ use Base\Model\Constantes;
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 echo    $this->painelTitulo("Empresas")?>
+<ol class="breadcrumb">
+    <li><a href="<?=$this->url('home')?>">Home</a></li>
+    <li class="active">Controle de empresas</li>
+</ol>
         <div class="caption">
-            <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                <li  class=" active" role="presentation"><a><label>Empresas Concedente </label> <span class="label label-primary"> <?= count($this->listaEmpresa)?></span></a> </li>
+            <ul class="nav  nav-tabs">
+                <li  class=" active" role="presentation"><a> <span class="label label-primary"> <?= count($this->listaEmpresa)?></span></a> </li>
                 <li role="presentation" ><a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'agente']) ?>">Agentes de Integração <span class="label label-default"> <?php echo count($this->listaAgente)?></span></a></li>
             </ul> 
         </div>

@@ -66,14 +66,17 @@ use Base\Model\Constantes;
 
 
 </script>
-    <div class=" panel panel-primary">
-        <div class="panel-heading"><?= $this->translate('Editar Empresa')?></div>
+    <?php
+    echo    $this->painelTitulo("Editar empresa")?>
+    <ol class="breadcrumb">
+        <li><a href="<?=$this->url('home')?>">Home</a></li>
+        <li><a href="<?= $this->url('paginator', ['controller'=>'administrador', 'action' =>'empresa','id'=> '1']) ?>">Controle de empresas</a></li>
+        <li class="active"> Editar empresa</li>
+    </ol>
 
         <?php if($this->alerta): ?>
             <?='<div class="alert-danger" style=" text-align: center">'. $this->alerta.'</div>'; ?> 
         <?php endif; ?>
-        
-        <?='<div class="well well-sm">'. $this->translate('Todos os campos são obrigatórios').'</div>'?> 
         
         <?php foreach ($this->listaEmpresa as $l):?>
         <form method="post" id="cadastrarEmpresaForm">
@@ -122,4 +125,3 @@ use Base\Model\Constantes;
         </div>  
     </form>
         <?php endforeach?>
-    </div>

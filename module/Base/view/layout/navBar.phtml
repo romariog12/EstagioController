@@ -43,7 +43,7 @@ foreach ($identidade as $l){
                                 <ul  class="dropdown-menu nav  " >
                                     <li><a href="<?= $this->url('paginator', ['controller'=> Constantes::administrador, 'action' =>  Constantes::todosAlunos,'id'=> '1'])?>">   <?= $this->translate('Alunos') ?></a></li>
                                     <li><a href="<?= $this->url('paginator', ['controller'=> Constantes::administrador, 'action' =>  Constantes::empresa,'id'=> '1']) ?>">      <?= $this->translate('Empresa') ?></a></li>
-                                    <li><a href="<?= $this->url('documentos/default',['controller'=>Constantes::administrador,'action'=>  Constantes::documentos, 'id'=>'1']) ?>">          <?= $this->translate('Documentos') ?></a></li>
+                                    <li><a href="<?= $this->url(Constantes::rotaDocumentoDefault,['controller'=>  Constantes::administrador,'action'=>  Constantes::documentos,'aba'=>'a=1', 'page'=>'1']) ?>">          <?= $this->translate('Documentos') ?></a></li>
                                     <li><a href="<?= $this->url('usuarios') ?>"> <?= $this->translate("Controle de acessos") ?></a></li>
                                     <li><a href="<?= $this->url('dadosPresencial') ?>"> <?= $this->translate("Atualizar dados") ?></a></li>
                                 </ul>

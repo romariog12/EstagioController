@@ -64,7 +64,11 @@ $(document).ready(function(){
 </script>
     <?=
         $this->painelTitulo("Editar aluno").
-        '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
+        '<ol class="breadcrumb">
+            <li><a href="'.$this->url('home').'">Home</a></li>
+            <li><a href="'.$this->url('paginator', ['controller'=>'administrador', 'action' =>'todosAlunos','id'=> '1']).'">Alunos</a></li>
+            <li class="active">Editar aluno</li>
+        </ol>';
         foreach ($this->listaAluno as $l): 
         $this->alunoForm->prepare();
         echo $this->form()->openTag($this->alunoForm);

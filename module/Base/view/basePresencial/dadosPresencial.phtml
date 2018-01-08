@@ -3,12 +3,11 @@
  * @author Romário Macedo Portela <romariomacedo18@gmail.com>
  */
 echo    $this->painelTitulo("Dados")?>
-                <div class="caption">
-                    <ul class="nav  nav-tabs" style=" background-color: #f4f4f4">
-                        <li  class=" active" role="presentation"><a href=""><label>Modalidade Presencial</label></a></li> 
-                    </ul> 
-                </div>
-      <div class="well-lg">
+        <ol class="breadcrumb">
+            <li><a href="<?=$this->url('home')?>">Home</a></li>
+            <li class="active">Dados</li>
+        </ol>
+        <div class="well-lg">
             <form  method="post">
                      <table class="table">
                        <?php foreach ( $this->listaPresencial as $l){?>

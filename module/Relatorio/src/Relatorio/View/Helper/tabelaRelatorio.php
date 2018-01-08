@@ -37,7 +37,7 @@ class tabelaRelatorio extends AbstractHelper{
                 $html   .= '<td>'.round($l->getQuantidadealunos()*$l->getMeta()/100,2).'</td>';
                 $html   .= '<td>'.$listaestagiando[0][$l->getIddados()].'</td>';
                 $html   .= '<td>'.round($listaestagiando[0][$l->getIddados()]/($l->getQuantidadealunos()*$l->getMeta()/100)*100,2).'</td>';
-                $html   .= '<td><a  href="'.$this->view->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action' => 'infopresencial', 'curso' => $l->getIddados(),'curso1' => $l->getCurso()]).'"><i class="glyphicon glyphicon-plus "></i></a></td>';
+                $html   .= '<td><a  href="'.$this->view->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action' => 'infopresencial', 'curso' => $l->getIddados(),'curso1' => $l->getCurso(),'aba'=>'1']).'"><i class="glyphicon glyphicon-plus "></i></a></td>';
                 $html   .= '</tr>';
             else:
                 $html   .= '<tr style=" background-color:  #defdd7" >';
@@ -46,7 +46,7 @@ class tabelaRelatorio extends AbstractHelper{
                 $html   .= '<td>'.round($l->getQuantidadealunos()*$l->getMeta()/100,2).'</td>';
                 $html   .= '<td>'.$listaestagiando[0][$l->getIddados()].'</td>';
                 $html   .= '<td>'.round($listaestagiando[0][$l->getIddados()]/($l->getQuantidadealunos()*$l->getMeta()/100)*100,2).'</td>';
-                $html   .= '<td><a  href="'.$this->view->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action' => 'infopresencial', 'curso' => $l->getIddados(),'curso1' => $l->getCurso()]).'"><i class="glyphicon glyphicon-plus "></i></a></td>';
+                $html   .= '<td><a  href="'.$this->view->url('relatorioPresencial/default', ['controller'=>'relatoriopresencial','action' => 'infopresencial', 'curso' => $l->getIddados(),'curso1' => $l->getCurso(),'aba'=>'1']).'"><i class="glyphicon glyphicon-plus "></i></a></td>';
                 $html   .= '</tr>';
             endif;
         }
