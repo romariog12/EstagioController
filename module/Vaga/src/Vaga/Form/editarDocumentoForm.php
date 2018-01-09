@@ -37,8 +37,8 @@ class editarDocumentoForm extends Form {
              'options' => array(
                     'disable_inarray_validator' => true,
                     'value_options' => array(
-                        'TCE' => 'TCE',
-                        'TA' => 'TA',
+                        'Termo de Compromisso' => 'Termo de Compromisso',
+                        'Termo Aditivo' => 'Termo Aditivo'
                          
                      ),
              )    

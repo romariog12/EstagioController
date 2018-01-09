@@ -66,7 +66,11 @@ $(document).ready(function(){
 </script>
 <?php
 echo    $this->painelTitulo("Cadastro de usuário").
-        '<div class="well well-sm"> Todos os campos são obrigatórios</div>';
+        '<ol class="breadcrumb">
+            <li><a href="'.$this->url('home').'">Home</a></li>
+            <li><a href="'.$this->url('usuarios').'">Usuários</a></li>   
+            <li class="active">Editar usuário</li>
+        </ol>';
         $this->usuarioForm->prepare();
         echo $this->form()->openTag($this->usuarioForm);
         foreach ($this->listaUsuario as $l):

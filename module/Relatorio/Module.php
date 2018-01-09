@@ -45,7 +45,7 @@ class Module
                     $controller ->layout('relatorioPresencial/layout/layout');
                     $auth = $ev->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
                     if(empty($auth->hasIdentity())){ 
-                    $controller->plugin('redirect')->toRoute('auth');
+                    return $controller->plugin('redirect')->toRoute('auth');
                     }
                     foreach ($auth->getIdentity()as $l){
                         $nivel = $l[0]->getNivel();

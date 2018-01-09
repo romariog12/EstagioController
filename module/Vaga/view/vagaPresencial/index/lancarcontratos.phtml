@@ -103,6 +103,15 @@
         width: '125',
         style: 'android'
     });
+    $(".recisao").bootstrapToggle({
+        on: 'Encerrado',
+        off: 'Em andamento',
+        onstyle: 'danger',
+        offstyle: 'success',
+        size: 'mini',
+        width: '125',
+        style: 'android'
+    });
     //jquery Validate
   
  });
@@ -375,6 +384,12 @@
             </div>
         </div>
   </div>
+ <div class="well-lg">
+     <label for="recisao">Estágio</label><br>
+     <input type="checkbox" class="recisao" id="recisao"/>
+ </div>
+     
+ </div>
  <?=    '<div class="well-lg ">'.
             $this->botaoGrande(
                       $this->url(Constantes::rotaPerfilDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno]) ,
