@@ -109,7 +109,7 @@
         onstyle: 'danger',
         offstyle: 'success',
         size: 'mini',
-        width: '125',
+        width: '100',
         style: 'android'
     });
     //jquery Validate
@@ -231,6 +231,8 @@
         <?=     '<p><label>Agente de Integração: </label>  '.$agente.'</p>'.
                 '<p><label>Empresa: </label>'.$empresa.'</p>'.
                 '<p><label>Carga-Horária: </label> '.$carga.' horas &nbsp;&nbsp; <label>Bolsa-Auxílo: </label> R$'.$bolsa.',00 </p>';?>
+            <label for="recisao">Estágio</label><br>
+            <input type="checkbox" class="recisao" id="recisao"/>
         </div>
     <?php
     if (!empty($this->listaContratos)):
@@ -384,12 +386,9 @@
             </div>
         </div>
   </div>
- <div class="well-lg">
-     <label for="recisao">Estágio</label><br>
-     <input type="checkbox" class="recisao" id="recisao"/>
- </div>
+ 
      
- </div>
+ 
  <?=    '<div class="well-lg ">'.
             $this->botaoGrande(
                       $this->url(Constantes::rotaPerfilDefault, ['controller' => Constantes::administrador, 'action' => Constantes::perfilAluno,'id'=>$idAluno]) ,

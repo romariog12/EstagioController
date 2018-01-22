@@ -73,6 +73,15 @@ class AdministradorController extends AbstractActionController
             'listaUsuarios'=>$listaUsuarios
         ]);
     }
+    public function perfilUsuarioAction(){
+        $em = $this->getServiceLocator()->get(Entity::em);
+        $id = $this->params()->fromRoute("id", 0);
+        $usuario = $em->getRepository(Entity::usuario)->findByIdusuario($id);
+        return new ViewModel([
+            'usuario'=>$usuario
+        ]);
+    }
+
     public function excluirUsuarioAction(){
         $id = $this->params()->fromRoute("deleteUsuario", 0);
         $em = $this->getServiceLocator()->get(Entity::em);

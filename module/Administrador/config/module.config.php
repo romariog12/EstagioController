@@ -390,6 +390,7 @@ return ['router' =>
             'administrador/administrador/cadastrar-usuario' => __DIR__ . '/../view/administrador/index/cadastrarUsuario.phtml',
             'administrador/administrador/editar-usuario' => __DIR__ . '/../view/administrador/index/editarUsuario.phtml',
             'administrador/administrador/usuarios' => __DIR__ . '/../view/administrador/index/usuarios.phtml',
+            'administrador/administrador/perfil-usuario' => __DIR__ . '/../view/administrador/index/perfilUsuario.phtml',
             'administrador/administrador/aluno' => __DIR__ . '/../view/administrador/index/aluno.phtml',
             'administrador/administrador/todos-alunos' => __DIR__ . '/../view/administrador/index/todosAlunos.phtml',
             'administrador/administrador/editar-aluno' => __DIR__ . '/../view/administrador/index/editarAluno.phtml',

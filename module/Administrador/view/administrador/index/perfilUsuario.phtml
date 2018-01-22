@@ -1,0 +1,11 @@
+<?php
+//use Base\Model\Constantes;
+/**
+ * @author Romário Macedo Portela <romariomacedo18@gmail.com>
+ */
+ echo $this->painelTitulo("Perfil do usuário");
+ foreach ($this->usuario as $u):
+     echo $u->getNome();
+ endforeach;
+ 
+    

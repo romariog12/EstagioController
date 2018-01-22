@@ -28,9 +28,8 @@ class tabelaUsuarios extends AbstractHelper{
         $html   .= '</tr>';
         foreach ($valueTd as $l){
             $html   .= '<tr>';
-            $html   .= '<td>'.$l->getNome().'</td>';
+            $html   .= '<td><a href="'.$this->view->url('usuarios/default', ['controller'=>'administrador','action' => 'perfilUsuario', 'id' => $l->getIdusuario()]).'"><i class="fa fa-user"></i></a> '.$l->getNome().'</td>';
             $html   .= '<td>'.$l->getLogin().'</td>';
-            $html   .= '<td><a href="#"><i class="fa fa-cogs"></i></a></td>';
             $html   .= '<td><a href="'.$this->view->url('usuarios/default', ['controller'=>'administrador','action' => 'editarUsuario', 'id' => $l->getIdusuario()]).'"><i class=" glyphicon glyphicon-edit"></i></a></td>';
             $html   .= '<td><a onclick="return confirm("Tem certeza que deseja deletar este registro?")" style="color: #c81616" class="btn" href="'.$this->view->url('excluirUsuario', ['action' => 'excluirUsuario', 'deleteUsuario' => $l->getIdusuario()]).'"><i class=" glyphicon glyphicon-remove"></i></a></td>';  
             $html   .= '</tr>';
